@@ -49,4 +49,23 @@ class Hyde
 
         return getcwd() . DIRECTORY_SEPARATOR . $path;
     }
+
+
+    /**
+     * Inject the proper number of `../` before the links
+     * 
+     * @param string $destination the route to format
+     * @param string $current the current route
+     * @return string
+     */
+    public static function relativePath(string $destination, string $current = ""): string
+    {
+        $nestCount = substr_count($current, '/');
+        $route = '';
+        if ($nestCount > 0) {
+            $route .= str_repeat('../', $nestCount);
+        }
+        $route .= $destination ;
+        return $route;
+    }
 }
