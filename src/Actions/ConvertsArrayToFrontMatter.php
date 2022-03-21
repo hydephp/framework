@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Actions;
+namespace Hyde\Core\Actions;
 
 class ConvertsArrayToFrontMatter
 {

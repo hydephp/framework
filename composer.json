@@ -1,10 +1,10 @@
 {
-    "name": "app/core",
+    "name": "hyde/core",
     "description": "The HydePHP Framework",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\Core\\": "src/"
+            "Hyde\\Core\\": "src/"
         }
     },
     "authors": [

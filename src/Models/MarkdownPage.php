@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Models;
+namespace Hyde\Core\Models;
 
-use App\Core\Hyde;
+use Hyde\Core\Hyde;
 
 /**
  * A simple class that contains the content of a basic Markdown Page.

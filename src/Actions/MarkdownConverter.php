@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Actions;
+namespace Hyde\Core\Actions;
 
-use App\Core\Hyde;
+use Hyde\Core\Hyde;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;

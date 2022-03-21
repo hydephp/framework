@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace Hyde\Core;
 
 /**
  * Allows features to be enabled and disabled in a simple object oriented manner.
