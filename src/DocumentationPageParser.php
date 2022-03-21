@@ -1,9 +1,9 @@
 <?php
 
-namespace Hyde\Core;
+namespace Hyde\Framework;
 
-use Hyde\Core\Hyde;
-use Hyde\Core\Models\DocumentationPage;
+use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\DocumentationPage;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 use Illuminate\Support\Str;

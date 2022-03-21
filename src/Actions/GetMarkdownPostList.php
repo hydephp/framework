@@ -1,8 +1,8 @@
 <?php
 
-namespace Hyde\Core\Actions;
+namespace Hyde\Framework\Actions;
 
-use Hyde\Core\Hyde;
+use Hyde\Framework\Hyde;
 
 /**
  * Creates and returns a list of markdown paths

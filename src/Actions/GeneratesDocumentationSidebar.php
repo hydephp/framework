@@ -1,9 +1,9 @@
 <?php
 
-namespace Hyde\Core\Actions;
+namespace Hyde\Framework\Actions;
 
-use Hyde\Core\Models\DocumentationPage;
-use Hyde\Core\Services\CollectionService;
+use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
 use function config;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Core;
+namespace Hyde\Framework;
 
 /**
  * General interface for Hyde services
