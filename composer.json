@@ -13,5 +13,10 @@
             "email": "caen@desilva.se"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.0"
+    },
+    "suggest": {
+        "hyde/hyde" : "The Framework package contains the Hyde Core. To create your site you should use the Hyde/Hyde project."
+    }
 }
