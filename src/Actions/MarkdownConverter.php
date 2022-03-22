@@ -31,9 +31,9 @@ class MarkdownConverter
         $html = $converter->convert($markdown);
 
         if (Hyde::hasTorchlight()
-            && config('torchlight.attribution', true)
+            && config('torchlight.attribution.enabled', true)
             && str_contains($html, 'Syntax highlighted by torchlight.dev')) {
-            $html .= file_get_contents(Hyde::path('src/resources/stubs/torchlight-badge.html'));
+            $html .= $converter->convert(config('torchlight.attribution.markdown', 'Syntax highlighted by torchlight.dev'));
         }
 
         return $html;
