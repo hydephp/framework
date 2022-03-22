@@ -3,5 +3,5 @@
 		{{ config('hyde.name') }} Docs
 	</a>
 
-	@include('components.docs.sidebar-toggle')
+	@include('hyde::components.docs.sidebar-toggle')
 </div>

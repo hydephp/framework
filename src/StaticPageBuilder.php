@@ -96,7 +96,7 @@ class StaticPageBuilder
      */
     private function compilePost(): string
     {
-        return view('post')->with([
+        return view('hyde::post')->with([
             'post' => $this->page,
             'title' => $this->page->matter['title'],
             'markdown' => MarkdownConverter::parse($this->page->body),
@@ -110,7 +110,7 @@ class StaticPageBuilder
      */
     private function compileDocs(): string
     {
-        return view('docs')->with([
+        return view('hyde::docs')->with([
             'docs' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->content),
@@ -124,7 +124,7 @@ class StaticPageBuilder
     */
     private function compilePage(): string
     {
-        return view('page')->with([
+        return view('hyde::page')->with([
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->content),
             'currentPage' => $this->page->slug

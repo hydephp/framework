@@ -1,4 +1,4 @@
-@include('components.docs.sidebar-header')
+@include('hyde::components.docs.sidebar-header')
 <nav id="sidebar-navigation" class="p-4 overflow-y-auto" aria-label="Secondary Navigation Menu">
 	<ul>
 		@foreach (Hyde\Framework\Actions\GeneratesDocumentationSidebar::get($currentPage) as $item)
@@ -16,4 +16,4 @@
 		@endforeach
 	</ul>
 </nav>
-@include('components.docs.sidebar-footer')
+@include('hyde::components.docs.sidebar-footer')

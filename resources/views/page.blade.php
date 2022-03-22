@@ -1,5 +1,5 @@
 {{-- The Markdown Page Layout --}}
-@extends('layouts.app')
+@extends('hyde::layouts.app')
 @section('content')
 
 <main class="mx-auto max-w-7xl py-16 px-8">

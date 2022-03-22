@@ -4,7 +4,7 @@
     and you can customize this to your hearts desire!
 --}}
 @php($title = 'Latest Posts')
-@extends('layouts.app')
+@extends('hyde::layouts.app')
 @section('content')
 
 <main class="mx-auto max-w-7xl py-12 px-8">
@@ -16,7 +16,7 @@
 
     <div class="max-w-3xl mx-auto">
         @foreach(\Hyde\Framework\Models\MarkdownPost::getCollection() as $post)
-        @include('components.article-excerpt')
+        @include('hyde::components.article-excerpt')
         @endforeach
     </div>
 </main>
