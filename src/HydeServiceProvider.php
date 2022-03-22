@@ -25,5 +25,7 @@ class HydeServiceProvider extends ServiceProvider
     public function boot()
     {
         (new CreatesDefaultDirectories)->__invoke();
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
     }
 }
