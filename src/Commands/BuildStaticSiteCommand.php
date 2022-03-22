@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Commands;
 
 use Exception;
+use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use LaravelZero\Framework\Commands\Command;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\DocumentationPageParser;
@@ -15,6 +16,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\DocumentationPage;
+use Illuminate\Support\Facades\File;
 
 class BuildStaticSiteCommand extends Command
 {
@@ -23,7 +25,12 @@ class BuildStaticSiteCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'build {--pretty : Should the build files be prettified?}';
+    protected $signature = 'build 
+    {--run-dev : Run the NPM dev script after build}
+    {--run-prod : Run the NPM prod script after build}
+    {--pretty : Should the build files be prettified?}
+    {--clean : Should the output directory be emptied before building?}
+    {--force : Allow file deletions when using --clean without confirmation?}';
 
     /**
      * The description of the command.
@@ -54,68 +61,118 @@ class BuildStaticSiteCommand extends Command
 
         $this->title('Building your static site!');
 
-        if ($this->getOutput()->isVeryVerbose()) {
-            $this->warn('Running with high verbosity');
+        if ($this->option('clean')) {
+            if ($this->option('force')) {
+                $this->purge();
+            } else {
+                $this->warn('The --clean option will remove all files in the output directory before building.');
+                if ($this->confirm(' Are you sure?')) {
+                    $this->purge();
+                } else {
+                    $this->warn('Aborting.');
+                    return 1;
+                }
+            }
         }
 
-        $this->line('Transferring Media Assets...');
-        $this->withProgressBar(
-            glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico}'), GLOB_BRACE),
-            function ($filepath) {
-                if ($this->getOutput()->isVeryVerbose()) {
-                    $this->line(' > Copying media file '
-                    . basename($filepath). ' to the output media directory');
-                }
+        if ($this->getOutput()->isVeryVerbose()) {
+            $this->warn('Running with high verbosity');
+            $this->newLine();
+        }
 
-                copy($filepath, Hyde::path('_site/media/'. basename($filepath)));
-            }
-        );
-
-        if (Features::hasBlogPosts()) {
-            $this->newLine(2);
-            $this->line('Creating Markdown Posts...');
+        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico}'), GLOB_BRACE);
+        if (sizeof($collection) < 1) {
+            $this->line('No Media Assets found. Skipping...');
+            $this->newLine();
+        } else {
+            $this->comment('Transferring Media Assets...');
             $this->withProgressBar(
-                CollectionService::getSourceSlugsOfModels(MarkdownPost::class),
-                function ($slug) {
-                    $this->debug((new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true))
-                    ->getDebugOutput());
+                $collection,
+                function ($filepath) {
+                    if ($this->getOutput()->isVeryVerbose()) {
+                        $this->line(' > Copying media file '
+                            . basename($filepath) . ' to the output media directory');
+                    }
+                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
                 }
             );
+            $this->newLine(2);
+        }
+
+        if (Features::hasBlogPosts()) {
+            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPost::class);
+            if (sizeof($collection) < 1) {
+                $this->line('No Markdown Posts found. Skipping...');
+                $this->newLine();
+            } else {
+                $this->comment('Creating Markdown Posts...');
+                $this->withProgressBar(
+                    $collection,
+                    function ($slug) {
+                        $this->debug((new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true))
+                            ->getDebugOutput());
+                    }
+                );
+                $this->newLine(2);
+            }
         }
 
         if (Features::hasMarkdownPages()) {
-            $this->newLine(2);
-            $this->line('Creating Markdown Pages...');
-            $this->withProgressBar(
-                CollectionService::getSourceSlugsOfModels(MarkdownPage::class),
-                function ($slug) {
-                    $this->debug((new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true))
-                        ->getDebugOutput());
-                }
-            );
+            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPage::class);
+            if (sizeof($collection) < 1) {
+                $this->line('No Markdown Pages found. Skipping...');
+                $this->newLine();
+            } else {
+                $this->comment('Creating Markdown Pages...');
+                $this->withProgressBar(
+                    $collection,
+                    function ($slug) {
+                        $this->debug((new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true))
+                            ->getDebugOutput());
+                    }
+                );
+                $this->newLine(2);
+            }
         }
 
         if (Features::hasDocumentationPages()) {
-            $this->newLine(2);
-            $this->line('Creating Documentation Pages...');
-            $this->withProgressBar(
-                CollectionService::getSourceSlugsOfModels(DocumentationPage::class),
-                function ($slug) {
-                    $this->debug((new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true))
-                    ->getDebugOutput());
-                }
-            );
+            $collection = CollectionService::getSourceSlugsOfModels(DocumentationPage::class);
+
+            if (sizeof($collection) < 1) {
+                $this->line('No Documentation Pages found. Skipping...');
+                $this->newLine();
+            } else {
+                $this->comment('Creating Documentation Pages...');
+                $this->withProgressBar(
+                    $collection,
+                    function ($slug) {
+                        $this->debug((new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true))
+                            ->getDebugOutput());
+                    }
+                );
+                $this->newLine(2);
+            }
         }
 
         if (Features::hasBladePages()) {
-            $this->newLine(2);
-            $this->line('Creating Custom Blade Pages...');
-            $this->withProgressBar(CollectionService::getSourceSlugsOfModels(BladePage::class), function ($slug) {
-                $this->debug((new StaticPageBuilder((new BladePage($slug)), true))->getDebugOutput());
-            });
+            $collection = CollectionService::getSourceSlugsOfModels(BladePage::class);
+
+            if (sizeof($collection) < 1) {
+                $this->line('No Blade Pages found. Skipping...');
+                $this->newLine();
+            } else {
+                $this->comment('Creating Custom Blade Pages...');
+                $this->withProgressBar(
+                    $collection,
+                    function ($slug) {
+                        $this->debug((new StaticPageBuilder((new BladePage($slug)), true))
+                            ->getDebugOutput());
+                    }
+                );
+                $this->newLine(2);
+            }
         }
 
-        $this->newLine(2);
 
         if ($this->option('pretty')) {
             $this->info('Prettifying code! This may take a second.');
@@ -126,16 +183,33 @@ class BuildStaticSiteCommand extends Command
             }
         }
 
+        if ($this->option('run-dev')) {
+            $this->info('Building frontend assets for development! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run dev'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
+            }
+        }
+
+        if ($this->option('run-prod')) {
+            $this->info('Building frontend assets for production! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run prod'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
+            }
+        }
+
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
         $this->info('All done! Finished in ' . number_format(
             $execution_time,
             2
-        ) .' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
+        ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        echo(
-            "Your new homepage is stored here -> file://" . str_replace(
+        echo ("Your new homepage is stored here -> file://" . str_replace(
                 '\\',
                 '/',
                 realpath(Hyde::path('_site/index.html'))
@@ -143,5 +217,20 @@ class BuildStaticSiteCommand extends Command
         );
 
         return 0;
+    }
+
+    public function purge()
+    {
+        $this->warn('Removing all files from build directory.');
+
+        File::deleteDirectory(Hyde::path('_site'));
+        mkdir(Hyde::path('_site'));
+
+        $this->line('<fg=gray> > Directory purged');
+
+        $this->line(' > Recreating directories');
+        (new CreatesDefaultDirectories)->__invoke();
+
+        $this->line('</>');
     }
 }
