@@ -23,7 +23,10 @@ class BuildStaticSiteCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'build {--pretty : Should the build files be prettified?}';
+    protected $signature = 'build 
+        {--run-dev : Run the NPM dev script after build}
+        {--run-prod : Run the NPM prod script after build}
+        {--pretty : Should the build files be prettified?}';
 
     /**
      * The description of the command.
@@ -123,6 +126,24 @@ class BuildStaticSiteCommand extends Command
                 $this->line(shell_exec('npx prettier _site/ --write'));
             } catch (Exception) {
                 $this->warn('Could not prettify code! Is NPM installed?');
+            }
+        }
+        
+        if ($this->option('run-dev')) {
+            $this->info('Building frontend assets for development! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run dev'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
+            }
+        }
+
+        if ($this->option('run-prod')) {
+            $this->info('Building frontend assets for production! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run prod'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
             }
         }
 
