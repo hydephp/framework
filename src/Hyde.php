@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework;
 
+use Hyde\Framework\Models\MarkdownPost;
+
 /**
  * General interface for Hyde services
  */
@@ -72,5 +74,18 @@ class Hyde
         }
         $route .= $destination ;
         return $route;
+    }
+
+    /**
+     * Get a Laravel Collection of all Posts as MarkdownPost objects.
+     * 
+     * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()
+     * @see MarkdownPost::getCollection
+     * 
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getLatestPosts(): \Illuminate\Support\Collection
+    {
+        return \Hyde\Framework\Models\MarkdownPost::getCollection();
     }
 }
