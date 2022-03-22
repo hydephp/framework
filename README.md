@@ -14,12 +14,13 @@
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
 
-HydePHP is a Static Site Builder focused on making Blog posts easy and fun. Under the hood, it is powered by Laravel Zero which is a stripped-down version of the robust Laravel Framework. Using Blade templates the site is intelligently compiled into static HTML. Content is created using Markdown, which supports YAML Front Matter.
+HydePHP is a Static Site Builder focused on making Blog posts easy and fun. Under the hood, it is powered by Laravel Zero which is a stripped-down version of the robust Laravel Framework. Using Blade templates the site is intelligently compiled into static HTML. Content is created using Markdown, which supports YAML Front Matter, or optionally with pure Blade/HTML.
 
 See the documentation for Hyde at https://hydephp.github.io/docs/
 
 ### Requirements 
 > These requirements are for your local development environment. The static HTML can be hosted virtually anywhere, including on GitHub Pages.
+
 Hyde uses Laravel 9 which requires PHP >= 8.0. You should also have Composer and NPM installed.
 
 
