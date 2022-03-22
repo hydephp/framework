@@ -40,25 +40,6 @@ class CollectionService
         return false;
     }
 
-    
-    /**
-     * Get all the default Blade files in the vendor/hyde/framework/resources/views/pages directory.
-     * 
-     * @todo make this more intelligent so we don't waste time compiling pages that will immediately get overwritten.
-     * 
-     * @return array
-     */
-    public static function getDefaultBladePageList(): array
-    {
-        $array = [];
-
-        foreach (glob(Hyde::path('vendor/hyde/framework/resources/views/pages/*.blade.php')) as $filepath) {
-            $array[] = basename($filepath, '.blade.php');
-        }
-
-        return $array;
-    }
-
     /**
      * Get all the Blade files in the resources/views/vendor/hyde/pages directory.
      * @return array
@@ -67,7 +48,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('resources/views/vendor/hyde/pages/*.blade.php')) as $filepath) {
+        foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $filepath) {
             $array[] = basename($filepath, '.blade.php');
         }
 

@@ -109,12 +109,6 @@ class BuildStaticSiteCommand extends Command
 
         if (Features::hasBladePages()) {
             $this->newLine(2);
-            $this->line('Creating Default Blade Pages...');
-            $this->withProgressBar(CollectionService::getDefaultBladePageList(), function ($slug) {
-                $this->debug((new StaticPageBuilder((new BladePage($slug)), true))->getDebugOutput());
-            });
-
-            $this->newLine(2);
             $this->line('Creating Custom Blade Pages...');
             $this->withProgressBar(CollectionService::getSourceSlugsOfModels(BladePage::class), function ($slug) {
                 $this->debug((new StaticPageBuilder((new BladePage($slug)), true))->getDebugOutput());
