@@ -10,6 +10,8 @@ class Hyde
     /**
      * Is Torchlight enabled?
      *
+     * @deprecated v0.4.1 will be moved into the Features class
+     * 
      * Torchlight is an API for Syntax Highlighting. By default, it is enabled
      * automatically when an API token is set in the .env file.
      * @return bool
