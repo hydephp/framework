@@ -23,6 +23,9 @@ class Hyde
 
     /**
      * Return the path where the Blade views are located
+     * 
+     * @deprecated v0.4.1 as it is not needed
+     * 
      * @return string
      */
     public static function viewPath()
