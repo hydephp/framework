@@ -14,7 +14,7 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+      
     }
 
     /**
@@ -28,6 +28,9 @@ class HydeServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
+        $this->publishes([
+            __DIR__.'/../config' => config_path(''),
+        ], 'configs');
             
         $this->publishes([
             __DIR__.'/../resources/views/layouts' => resource_path('views/vendor/hyde/layouts'),
