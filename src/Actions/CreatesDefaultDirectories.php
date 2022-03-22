@@ -17,13 +17,14 @@ class CreatesDefaultDirectories
         '_site/posts',
         '_site/media',
         '_site/docs',
+        'resources/views/pages',
     ];
 
     public function __invoke(): void
     {
         foreach ($this->requiredDirectories as $directory) {
             // Does the directory exist?     // Otherwise, create it.
-            is_dir(Hyde::path($directory)) || mkdir(Hyde::path($directory));
+            is_dir(Hyde::path($directory)) || mkdir(Hyde::path($directory), recursive: true);
         }
     }
 
