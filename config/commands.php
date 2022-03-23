@@ -71,6 +71,7 @@ return [
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         LaravelZero\Framework\Commands\StubPublishCommand::class,
         Hyde\Framework\Commands\MakeValidatorCommand::class,
+        Hyde\Framework\Commands\PublishStubsCommand::class,
         Hyde\Framework\Commands\Debug::class,
     ],
 

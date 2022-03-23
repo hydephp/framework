@@ -14,7 +14,9 @@
         }
     ],
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "illuminate/support": "^9.5",
+        "symfony/yaml": "^6.0"
     },
     "suggest": {
         "hyde/hyde" : "The Framework package contains the Hyde Core. To create your site you should use the Hyde/Hyde project."
