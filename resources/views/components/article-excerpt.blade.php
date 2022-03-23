@@ -21,6 +21,6 @@
 			{{ $post->matter['description'] }}
 			@endisset
 		</p>
-		<a href="posts/{{ $post->matter['slug'] }}.html" class="text-indigo-500 hover:underline font-medium">Read more</a>
+		<a href="posts/{{ $post->matter['slug'] }}.html" class="text-indigo-500 hover:underline font-medium">Read post</a>
 	</div>	
 </article>
