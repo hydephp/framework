@@ -12,7 +12,7 @@
 	</footer>
 	<header>
 		<a href="posts/{{ $post->matter['slug'] }}.html">
-			<h3 class="text-2xl font-bold opacity-75 hover:opacity-100">{{ $post->matter['title'] }}</h3>
+			<h2 class="text-2xl font-bold opacity-75 hover:opacity-100">{{ $post->matter['title'] }}</h2>
 		</a>
 	</header>
 	<div>
