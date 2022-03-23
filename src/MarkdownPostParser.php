@@ -144,6 +144,8 @@ class MarkdownPostParser
 
             // Trim trailing whitespace
             $value = trim($value, ' ');
+            // Trim trailing return character
+            $value = trim($value, "\r");
 
             $matter[$key] = $value;
         }
