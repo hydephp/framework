@@ -14,7 +14,7 @@ $author = $post->matter['author'] ?? false;
 <!-- Blog Post Meta Tags -->
 @if($description) <meta name="description" content="{{ $description }}"> @endif
 @if($author) <meta name="author" content="{{ $author }}"> @endif
-@if($category) <meta name="keywords" itemprop="keywords" content="{{ $category }}"> @endif
+@if($category) <meta name="keywords" content="{{ $category }}"> @endif
 
 <meta property="og:type" content="article" />
 @if($title) <meta property="og:title" content="{{ $title }}"> @endif
