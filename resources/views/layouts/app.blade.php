@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name=generator content="HydePHP">
 
+    @stack('meta')
+
     <title>
         @if (isset($title))
         {{ config('hyde.name', 'HydePHP') }} - {{ $title }}
