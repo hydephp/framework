@@ -42,9 +42,20 @@ class HydePublishHomepageCommand extends BasePublishingCommand
         $choice = $this->choice(
             "Which homepage do you want to publish?",
             $choices = $this->publishableChoices()
-        );
+        , 2);
 
         $this->parseChoice($choice);
+    }
+
+    /**
+     * Parse the answer that was given via the prompt.
+     *
+     * @param  string  $choice
+     * @return void
+     */
+    protected function parseChoice($choice)
+    {
+        $this->tags = [$choice];
     }
 
     /**
@@ -56,13 +67,13 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         return array_merge(
             [],
-            preg_filter('/^/', '<comment>Tag: </comment>', Arr::sort(
+            Arr::sort(
                 array_flip(array_filter(
                     array_flip(ServiceProvider::publishableGroups()),
                     fn($key) => str_starts_with($key, 'homepage-'),
                     ARRAY_FILTER_USE_KEY
                 ))
-            ))
+            )
         );
     }
 
