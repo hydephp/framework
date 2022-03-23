@@ -2,13 +2,21 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Models\MarkdownPost;
-
 /**
  * General interface for Hyde services
  */
 class Hyde
 {
+    /**
+     * Return the Composer Package Version
+     * 
+     * @return string
+     */
+    public static function version(): string
+    {
+        return \Composer\InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+    }
+
     /**
      * Is Torchlight enabled?
      *

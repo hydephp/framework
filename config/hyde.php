@@ -71,7 +71,7 @@ return [
         // 'author' => 'Mr. Hyde',
         // 'description' => 'My Hyde Blog',
         // 'keywords' => 'Static Sites, Blogs, Documentation',
-        'generator' => 'HydePHP ' . app('hyde.version'),
+        'generator' => 'HydePHP ' . Hyde\Framework\Hyde::version(),
     ],
 
     /*
