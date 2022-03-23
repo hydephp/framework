@@ -1,13 +1,23 @@
-<article class="mt-4 mb-8">
+<article class="mt-4 mb-8" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="identifier" content="{{ $post->slug }}">
+	@if(Hyde::uriPath())
+    <meta itemprop="url" content="{{ Hyde::uriPath($post->slug) }}">
+    @endif
+    
 	<footer>
 		@isset($post->matter['date'])
 		<span class="opacity-75">
-			{{ date('M jS, Y', strtotime($post->matter['date'])) }},
+			<span itemprop="dateCreated datePublished">
+				{{ date('M jS, Y', strtotime($post->matter['date'])) }}</span>,
 		</span>
 		@endisset
 		@isset($post->matter['author'])
-		<span class="opacity-75">by</span>
-		{{ $post->matter['author'] }}
+		<span itemprop="author" itemscope itemtype="https://schema.org/Person">
+			<span class="opacity-75">by</span>
+			<span itemprop="name">
+				{{ $post->matter['author'] }}
+			</span>
+		</span>
 		@endisset
 	</footer>
 	<header>
