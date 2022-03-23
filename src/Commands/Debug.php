@@ -32,6 +32,11 @@ class Debug extends Command
         $this->info('HydePHP Debug Screen');
 
         $this->newLine();
+        $this->comment('Git Version: ' . app('git.version'));
+        $this->comment('Hyde Version: ' . app('hyde.version'));
+        $this->comment('Framework Version: ' . app('framework.version'));
+
+        $this->newLine();
         $this->line('Project directory:');
         $this->line(' > ' . Hyde::path());
 

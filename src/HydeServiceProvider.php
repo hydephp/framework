@@ -3,6 +3,7 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class HydeServiceProvider extends ServiceProvider
@@ -14,7 +15,19 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-      
+        $this->app->bind(
+            'hyde.version',
+            function (Application $app) {
+                return \Composer\InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+            }
+        );
+
+        $this->app->bind(
+            'framework.version',
+            function (Application $app) {
+                return \Composer\InstalledVersions::getVersion('hyde/framework') ?: 'unreleased';
+            }
+        );
     }
 
     /**
