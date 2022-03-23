@@ -77,6 +77,21 @@ class Hyde
     }
 
     /**
+     * Return a qualified URI path, if SITE_URL is set in .env, else return false.
+     * 
+     * @param string|null $path optional relative path suffix. Omit to return base url.
+     * @return string|false
+     */
+    public static function uriPath(?string $path = ''): string|false
+    {
+        if (config('hyde.site_url', false)) {
+            return rtrim(config('hyde.site_url'), '/') . '/' . (trim($path, '/') ?? '');
+        }
+
+        return false;
+    }
+
+    /**
      * Get a Laravel Collection of all Posts as MarkdownPost objects.
      * 
      * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()

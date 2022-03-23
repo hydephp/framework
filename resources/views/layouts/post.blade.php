@@ -19,6 +19,10 @@ $author = $post->matter['author'] ?? false;
 <meta property="og:type" content="article" />
 @if($title) <meta property="og:title" content="{{ $title }}"> @endif
 @if($date) <meta property="og:article:published_time" content="{{ $date }}"> @endif
+@if(Hyde::uriPath())
+<meta property="og:url" content="{{ Hyde::uriPath($post->slug) }}">
+@endif
+
 @endpush
 
 <main class="mx-auto max-w-7xl py-16 px-8">
