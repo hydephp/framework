@@ -6,6 +6,7 @@
 $title = $post->matter['title'] ?? false;
 $date = $post->matter['date'] ?? false;
 $description = $post->matter['description'] ?? false;
+$category = $post->matter['category'] ?? false;
 $author = $post->matter['author'] ?? false;
 @endphp
 
