@@ -5,6 +5,7 @@ namespace Hyde\Framework\Services;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Author;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -95,12 +96,16 @@ EOF
     /**
      * Find and retrieve an Author by their username.
      *
-     * @param string $username
+     * @param string $username of the Author to search for
+     * @param bool $forgiving should the search be fuzzy?
      * @return Author|false
      */
-    public static function find(string $username): Author|false
+    public static function find(string $username, bool $forgiving = true): Author|false
     {
         $service = new self;
+        if ($forgiving) {
+            $username = Str::snake($username);
+        }
         return $service->authors->firstWhere('username', $username) ?? false;
     }
 }
