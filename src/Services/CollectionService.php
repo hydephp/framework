@@ -7,6 +7,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\DocumentationPage;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Contains service methods to return helpful collections of arrays and lists.
@@ -44,7 +45,7 @@ class CollectionService
      * Get all the Blade files in the resources/views/vendor/hyde/pages directory.
      * @return array
      */
-    public static function getBladePageList(): array
+    #[Pure] public static function getBladePageList(): array
     {
         $array = [];
 
@@ -59,7 +60,7 @@ class CollectionService
      * Get all the Markdown files in the _pages directory.
      * @return array
      */
-    public static function getMarkdownPageList(): array
+    #[Pure] public static function getMarkdownPageList(): array
     {
         $array = [];
 
@@ -74,7 +75,7 @@ class CollectionService
      * Get all the Markdown files in the _posts directory.
      * @return array
      */
-    public static function getMarkdownPostList(): array
+    #[Pure] public static function getMarkdownPostList(): array
     {
         $array = [];
 
@@ -90,7 +91,7 @@ class CollectionService
      * Get all the Markdown files in the _docs directory.
      * @return array
      */
-    public static function getDocumentationPageList(): array
+    #[Pure] public static function getDocumentationPageList(): array
     {
         $array = [];
 
