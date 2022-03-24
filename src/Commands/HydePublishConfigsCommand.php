@@ -78,6 +78,7 @@ class HydePublishConfigsCommand extends Command
      * Execute the console command.
      *
      * @return int
+     * @throws \League\Flysystem\FilesystemException
      */
     public function handle(): int
     {
@@ -171,12 +172,13 @@ class HydePublishConfigsCommand extends Command
             $this->tags = [$value];
         }
     }
-    
+
     /**
      * Publishes the assets for a tag.
      *
-     * @param  string  $tag
+     * @param string $tag
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishTag($tag)
     {
@@ -215,9 +217,10 @@ class HydePublishConfigsCommand extends Command
     /**
      * Publish the given item from and to the given location.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishItem($from, $to)
     {
@@ -251,9 +254,10 @@ class HydePublishConfigsCommand extends Command
     /**
      * Publish the directory to the given directory.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishDirectory($from, $to)
     {
@@ -270,8 +274,12 @@ class HydePublishConfigsCommand extends Command
     /**
      * Move all the files in the given MountManager.
      *
-     * @param  \League\Flysystem\MountManager  $manager
+     * @param \League\Flysystem\MountManager $manager
      * @return void
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function moveManagedFiles($manager)
     {

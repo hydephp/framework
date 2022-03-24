@@ -107,9 +107,10 @@ class Hyde
      * Get a Laravel Collection of all Posts as MarkdownPost objects.
      *
      * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()
+     * @return \Illuminate\Support\Collection
+     * @throws \Exception
      * @see MarkdownPost::getCollection
      *
-     * @return \Illuminate\Support\Collection
      */
     public static function getLatestPosts(): Collection
     {
