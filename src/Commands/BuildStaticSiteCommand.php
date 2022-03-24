@@ -80,7 +80,7 @@ class BuildStaticSiteCommand extends Command
             $this->newLine();
         }
 
-        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico}'), GLOB_BRACE);
+        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
         if (sizeof($collection) < 1) {
             $this->line('No Media Assets found. Skipping...');
             $this->newLine();

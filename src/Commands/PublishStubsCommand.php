@@ -45,6 +45,7 @@ class PublishStubsCommand extends Command
 
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_posts'), Hyde::path('_posts'));
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_data'), Hyde::path('_data'));
+        File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_media'), Hyde::path('_media'));
 
         $this->info('Done!');
     }
