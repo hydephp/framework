@@ -46,6 +46,15 @@ class PublishStubsCommand extends Command
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_posts'), Hyde::path('_posts'));
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_data'), Hyde::path('_data'));
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_media'), Hyde::path('_media'));
+        File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_pages'), Hyde::path('_pages'));
+
+        // Note that this overwrites existing files, though since this command should never be run
+        // outside of testing I think it's okay.
+        copy(Hyde::path('vendor/hyde/framework/resources/views/homepages/post-feed.blade.php'),
+            Hyde::path('resources/views/pages/index.blade.php'));
+
+        copy(Hyde::path('vendor/hyde/framework/resources/views/pages/404.blade.php'),
+            Hyde::path('resources/views/pages/404.blade.php'));
 
         $this->info('Done!');
 
