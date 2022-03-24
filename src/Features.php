@@ -62,6 +62,26 @@ class Features
         return static::enabled(static::documentationPages());
     }
 
+    
+    /**
+     * Determine if the site has Torchlight enabled.
+     * 
+     * Torchlight is an API for Syntax Highlighting. By default, it is enabled
+     * automatically when an API token is set in the .env file.
+     * 
+     * It is disabled when running tests.
+     * 
+     * @param bool $bypassAutomaticCheck if set to true the function will not check if a token is set.
+     * @return bool
+     */
+    public static function hasTorchlight(bool $bypassAutomaticCheck = false)
+    {
+        if ($bypassAutomaticCheck) {
+            return static::enabled(static::torchlight());
+        }
+        return static::enabled(static::torchlight()) && (config('torchlight.token') !== null);
+    }
+
 
     /**
      * Enable the blog post feature.
@@ -102,4 +122,15 @@ class Features
     {
         return 'documentation-pages';
     }
+
+    /**
+     * Enable the Torchlight integration.
+     *
+     * @return string
+     */
+    public static function torchlight()
+    {
+        return 'torchlight';
+    }
+    
 }

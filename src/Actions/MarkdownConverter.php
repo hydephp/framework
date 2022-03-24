@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use Hyde\Framework\Hyde;
+use Hyde\Framework\Features;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
@@ -24,13 +24,13 @@ class MarkdownConverter
 
         $converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
 
-        if (Hyde::hasTorchlight()) {
+        if (Features::hasTorchlight()) {
             $converter->getEnvironment()->addExtension(new TorchlightExtension());
         }
 
         $html = $converter->convert($markdown);
 
-        if (Hyde::hasTorchlight()
+        if (Features::hasTorchlight()
             && config('torchlight.attribution.enabled', true)
             && str_contains($html, 'Syntax highlighted by torchlight.dev')) {
             $html .= $converter->convert(config('torchlight.attribution.markdown', 'Syntax highlighted by torchlight.dev'));
