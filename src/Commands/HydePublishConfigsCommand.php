@@ -2,65 +2,20 @@
 
 namespace Hyde\Framework\Commands;
 
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\Events\VendorTagPublished;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
-use League\Flysystem\Filesystem as Flysystem;
-use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
-use League\Flysystem\MountManager;
-use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
-use League\Flysystem\Visibility;
 
 /**
- * Publish the Hyde assets
- *
- * Based on Illuminate\Foundation\Console\VendorPublishCommand
- * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
- * @license MIT
+ * Publish the Hyde Config Files
+ * 
+ * @uses BasePublishingCommand
  */
-class HydePublishConfigsCommand extends Command
+class HydePublishConfigsCommand extends BasePublishingCommand
 {
-    /**
-     * The signature of the command.
-     *
-     * @var string
-     */
     protected $signature = 'publish:configs {--force : Overwrite any existing files}';
 
-    /**
-     * The description of the command.
-     *
-     * @var string
-     */
     protected $description = 'Publish the Hyde configuration files';
     
-    /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $files;
-
-    
-    /**
-     * The provider to publish.
-     *
-     * @var string
-     */
-    protected $provider = null;
-
-
-    /**
-     * The tags to publish.
-     *
-     * @var array
-     */
-    protected $tags = [];
-
-
     /**
      * Create a new command instance.
      *
@@ -97,20 +52,14 @@ class HydePublishConfigsCommand extends Command
         return 0;
     }
 
-        /**
+    /**
      * Determine the provider or tag(s) to publish.
      *
      * @return void
      */
     protected function determineWhatShouldBePublished()
     {
-        if ($this->option('all')) {
-            return;
-        }
-
-        if (!$this->tags) {
-            $this->promptForProviderOrTag();
-        }
+        return;
     }
 
     /**
@@ -120,21 +69,7 @@ class HydePublishConfigsCommand extends Command
      */
     protected function promptForProviderOrTag()
     {
-        $choice = $this->choice(
-            "Which view categories (tags) would you like to publish?",
-            $choices = $this->publishableChoices()
-        );
-
-        if ($choice == $choices[0] || is_null($choice)) {
-            $this->tags = array_flip(array_filter(
-                array_flip(ServiceProvider::publishableGroups()),
-                fn($key) => str_starts_with($key, 'hyde-'),
-                ARRAY_FILTER_USE_KEY
-            ));
-            return;
-        }
-
-        $this->parseChoice($choice);
+        return;
     }
 
     /**
@@ -144,181 +79,7 @@ class HydePublishConfigsCommand extends Command
      */
     protected function publishableChoices()
     {
-        return array_merge(
-            ['<comment>Publish files from all tags listed below</comment>'],
-            preg_filter('/^/', '<comment>Tag: </comment>', Arr::sort(
-                array_flip(array_filter(
-                    array_flip(ServiceProvider::publishableGroups()),
-                    fn($key) => str_starts_with($key, 'hyde-'),
-                    ARRAY_FILTER_USE_KEY
-                ))
-            ))
-        );
+        return [];
     }
 
-    /**
-     * Parse the answer that was given via the prompt.
-     *
-     * @param  string  $choice
-     * @return void
-     */
-    protected function parseChoice($choice)
-    {
-        [$type, $value] = explode(': ', strip_tags($choice));
-
-        if ($type === 'Provider') {
-            $this->provider = $value;
-        } elseif ($type === 'Tag') {
-            $this->tags = [$value];
-        }
-    }
-
-    /**
-     * Publishes the assets for a tag.
-     *
-     * @param string $tag
-     * @return void
-     * @throws \League\Flysystem\FilesystemException
-     */
-    protected function publishTag($tag)
-    {
-        $published = false;
-
-        $pathsToPublish = $this->pathsToPublish($tag);
-
-        foreach ($pathsToPublish as $from => $to) {
-            $this->publishItem($from, $to);
-
-            $published = true;
-        }
-
-        if ($published === false) {
-            $this->comment('No publishable resources for tag ['.$tag.'].');
-        } else {
-            $this->laravel['events']->dispatch(new VendorTagPublished($tag, $pathsToPublish));
-        }
-    }
-
-      /**
-     * Get all the paths to publish.
-     *
-     * @param string $tag
-     * @return array
-     */
-    protected function pathsToPublish(string $tag): array
-    {
-        return ServiceProvider::pathsToPublish(
-            $this->provider,
-            $tag
-        );
-    }
-
-
-    /**
-     * Publish the given item from and to the given location.
-     *
-     * @param string $from
-     * @param string $to
-     * @return void
-     * @throws \League\Flysystem\FilesystemException
-     */
-    protected function publishItem($from, $to)
-    {
-        if ($this->files->isFile($from)) {
-            return $this->publishFile($from, $to);
-        } elseif ($this->files->isDirectory($from)) {
-            return $this->publishDirectory($from, $to);
-        }
-
-        $this->error("Can't locate path: <{$from}>");
-    }
-
-    /**
-     * Publish the file to the given path.
-     *
-     * @param  string  $from
-     * @param  string  $to
-     * @return void
-     */
-    protected function publishFile($from, $to)
-    {
-        if (! $this->files->exists($to) || $this->option('force')) {
-            $this->createParentDirectory(dirname($to));
-
-            $this->files->copy($from, $to);
-
-            $this->status($from, $to, 'File');
-        }
-    }
-
-    /**
-     * Publish the directory to the given directory.
-     *
-     * @param string $from
-     * @param string $to
-     * @return void
-     * @throws \League\Flysystem\FilesystemException
-     */
-    protected function publishDirectory($from, $to)
-    {
-        $visibility = PortableVisibilityConverter::fromArray([], Visibility::PUBLIC);
-
-        $this->moveManagedFiles(new MountManager([
-            'from' => new Flysystem(new LocalAdapter($from)),
-            'to' => new Flysystem(new LocalAdapter($to, $visibility)),
-        ]));
-
-        $this->status($from, $to, 'Directory');
-    }
-
-    /**
-     * Move all the files in the given MountManager.
-     *
-     * @param \League\Flysystem\MountManager $manager
-     * @return void
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     */
-    protected function moveManagedFiles($manager)
-    {
-        foreach ($manager->listContents('from://', true) as $file) {
-            $path = Str::after($file['path'], 'from://');
-
-            if ($file['type'] === 'file' && (! $manager->fileExists('to://'.$path) || $this->option('force'))) {
-                $manager->write('to://'.$path, $manager->read($file['path']));
-            }
-        }
-    }
-
-    /**
-     * Create the directory to house the published files if needed.
-     *
-     * @param  string  $directory
-     * @return void
-     */
-    protected function createParentDirectory($directory)
-    {
-        if (! $this->files->isDirectory($directory)) {
-            $this->files->makeDirectory($directory, 0755, true);
-        }
-    }
-
-    /**
-     * Write a status message to the console.
-     *
-     * @param  string  $from
-     * @param  string  $to
-     * @param  string  $type
-     * @return void
-     */
-    protected function status($from, $to, $type)
-    {
-        $from = str_replace(base_path(), '', realpath($from));
-
-        $to = str_replace(base_path(), '', realpath($to));
-
-        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> <info>To</info> <comment>['.$to.']</comment>');
-    }
 }
