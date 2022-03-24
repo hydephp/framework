@@ -37,6 +37,9 @@ class Debug extends Command
         $this->comment('Framework Version: ' . app('framework.version'));
 
         $this->newLine();
+        $this->comment('App Env: ' . app('env'));
+
+        $this->newLine();
         $this->line('Project directory:');
         $this->line(' > ' . Hyde::path());
 
