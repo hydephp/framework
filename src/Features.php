@@ -3,7 +3,7 @@
 namespace Hyde\Framework;
 
 /**
- * Allows features to be enabled and disabled in a simple object oriented manner.
+ * Allows features to be enabled and disabled in a simple object-oriented manner.
  *
  * Based entirely on Laravel Jetstream (License MIT)
  * @see https://jetstream.laravel.com/
