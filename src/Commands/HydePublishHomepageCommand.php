@@ -41,8 +41,9 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         $choice = $this->choice(
             "Which homepage do you want to publish?",
-            $choices = $this->publishableChoices()
-        , 2);
+            $choices = $this->publishableChoices(),
+            2
+        );
 
         $this->parseChoice($choice);
     }
@@ -84,5 +85,4 @@ class HydePublishHomepageCommand extends BasePublishingCommand
             Artisan::call('build');
         };
     }
-
 }

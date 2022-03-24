@@ -13,9 +13,10 @@ use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\MountManager;
 use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use League\Flysystem\Visibility;
+
 /**
  * Publish the Hyde assets
- * 
+ *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
  * @license MIT
@@ -205,7 +206,8 @@ class HydePublishViewsCommand extends Command
     protected function pathsToPublish($tag)
     {
         return ServiceProvider::pathsToPublish(
-            $this->provider, $tag
+            $this->provider,
+            $tag
         );
     }
 

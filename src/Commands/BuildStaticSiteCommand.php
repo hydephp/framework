@@ -210,11 +210,10 @@ class BuildStaticSiteCommand extends Command
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line("Your new homepage is stored here -> file://" . str_replace(
-                '\\',
-                '/',
-                realpath(Hyde::path('_site/index.html'))
-            )
-        );
+            '\\',
+            '/',
+            realpath(Hyde::path('_site/index.html'))
+        ));
 
         return 0;
     }

@@ -88,8 +88,7 @@ class HydeInstallerCommand extends Command
             $default
         );
 
-        if (
-            ($this->installer->homepage !== null)
+        if (($this->installer->homepage !== null)
             && ($this->installer->homepage !== 'current')
             && file_exists(Hyde::path('resources/views/index.blade.php'))
         ) {
@@ -138,5 +137,4 @@ class HydeInstallerCommand extends Command
 
         $this->newLine();
     }
-
 }

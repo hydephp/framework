@@ -13,9 +13,10 @@ use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\MountManager;
 use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use League\Flysystem\Visibility;
+
 /**
  * Publish the Hyde assets
- * 
+ *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
  * @license MIT
@@ -81,10 +82,10 @@ class HydePublishConfigsCommand extends Command
     public function handle()
     {
         $this->tags = array_flip(array_filter(
-			array_flip(ServiceProvider::publishableGroups()),
-			fn($key) => str_starts_with($key, 'configs'),
-			ARRAY_FILTER_USE_KEY
-		));
+            array_flip(ServiceProvider::publishableGroups()),
+            fn($key) => str_starts_with($key, 'configs'),
+            ARRAY_FILTER_USE_KEY
+        ));
 
         foreach ($this->tags ?: [null] as $tag) {
             $this->publishTag($tag);
@@ -101,7 +102,6 @@ class HydePublishConfigsCommand extends Command
     protected function determineWhatShouldBePublished()
     {
         if ($this->option('all')) {
-            
             return;
         }
 
@@ -204,7 +204,8 @@ class HydePublishConfigsCommand extends Command
     protected function pathsToPublish($tag)
     {
         return ServiceProvider::pathsToPublish(
-            $this->provider, $tag
+            $this->provider,
+            $tag
         );
     }
 

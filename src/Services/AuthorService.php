@@ -50,7 +50,7 @@ authors:
     name: Mr Hyde
     website: https://github.com/hydephp/hyde
 EOF
-);
+            );
         }
         
         return $filepath;

@@ -22,7 +22,6 @@ class HydeInstaller
     public function __construct()
     {
         $this->loadDefaults();
-        
     }
 
     /**
@@ -153,5 +152,4 @@ class HydeInstaller
             Hyde::path("resources/views/index.blade.php")
         );
     }
-
 }

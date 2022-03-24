@@ -9,7 +9,7 @@ class Hyde
 {
     /**
      * Return the Composer Package Version
-     * 
+     *
      * @return string
      */
     public static function version(): string
@@ -21,7 +21,7 @@ class Hyde
      * Is Torchlight enabled?
      *
      * @deprecated v0.4.1 will be moved into the Features class
-     * 
+     *
      * Torchlight is an API for Syntax Highlighting. By default, it is enabled
      * automatically when an API token is set in the .env file.
      * @return bool
@@ -33,9 +33,9 @@ class Hyde
 
     /**
      * Return the path where the Blade views are located
-     * 
+     *
      * @deprecated v0.4.1 as it is not needed
-     * 
+     *
      * @return string
      */
     public static function viewPath()
@@ -68,7 +68,7 @@ class Hyde
 
     /**
      * Inject the proper number of `../` before the links
-     * 
+     *
      * @param string $destination the route to format
      * @param string $current the current route
      * @return string
@@ -86,7 +86,7 @@ class Hyde
 
     /**
      * Return a qualified URI path, if SITE_URL is set in .env, else return false.
-     * 
+     *
      * @param string|null $path optional relative path suffix. Omit to return base url.
      * @return string|false
      */
@@ -101,10 +101,10 @@ class Hyde
 
     /**
      * Get a Laravel Collection of all Posts as MarkdownPost objects.
-     * 
+     *
      * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()
      * @see MarkdownPost::getCollection
-     * 
+     *
      * @return \Illuminate\Support\Collection
      */
     public static function getLatestPosts(): \Illuminate\Support\Collection

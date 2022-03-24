@@ -16,19 +16,19 @@ use League\Flysystem\Visibility;
 
 /**
  * Base command to publish the Hyde assets
- * 
+ *
  * @internal
- * 
+ *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
  * @license MIT
  */
 abstract class BasePublishingCommand extends Command
 {
-	protected $signature; 
-	protected $description; 
+    protected $signature;
+    protected $description;
 
-	abstract protected function publishableChoices();
+    abstract protected function publishableChoices();
 
     /**
      * The filesystem instance.
@@ -52,7 +52,7 @@ abstract class BasePublishingCommand extends Command
      */
     protected $tags = [];
 
-	
+    
     /**
      * Execute the console command.
      *
@@ -157,7 +157,8 @@ abstract class BasePublishingCommand extends Command
     protected function pathsToPublish($tag)
     {
         return ServiceProvider::pathsToPublish(
-            $this->provider, $tag
+            $this->provider,
+            $tag
         );
     }
 
@@ -263,5 +264,4 @@ abstract class BasePublishingCommand extends Command
 
         $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> <info>To</info> <comment>['.$to.']</comment>');
     }
-
 }

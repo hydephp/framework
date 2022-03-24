@@ -65,12 +65,12 @@ class Features
     
     /**
      * Determine if the site has Torchlight enabled.
-     * 
+     *
      * Torchlight is an API for Syntax Highlighting. By default, it is enabled
      * automatically when an API token is set in the .env file.
-     * 
+     *
      * It is disabled when running tests.
-     * 
+     *
      * @param bool $bypassAutomaticCheck if set to true the function will not check if a token is set.
      * @return bool
      */
@@ -134,5 +134,4 @@ class Features
     {
         return 'torchlight';
     }
-    
 }
