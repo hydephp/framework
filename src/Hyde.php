@@ -2,6 +2,10 @@
 
 namespace Hyde\Framework;
 
+use Composer\InstalledVersions;
+use Hyde\Framework\Models\MarkdownPost;
+use Illuminate\Support\Collection;
+
 /**
  * General interface for Hyde services
  */
@@ -14,7 +18,7 @@ class Hyde
      */
     public static function version(): string
     {
-        return \Composer\InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+        return InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
     }
 
     /**
@@ -107,8 +111,8 @@ class Hyde
      *
      * @return \Illuminate\Support\Collection
      */
-    public static function getLatestPosts(): \Illuminate\Support\Collection
+    public static function getLatestPosts(): Collection
     {
-        return \Hyde\Framework\Models\MarkdownPost::getCollection();
+        return MarkdownPost::getCollection();
     }
 }
