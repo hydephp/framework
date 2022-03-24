@@ -82,7 +82,9 @@ class GeneratesNavigationMenu
                     $links[] = [
                         'title' => 'Docs',
                         'route' => $this->getRelativeRoutePathForSlug(
-                            file_exists('_docs/index.md') ? 'docs/index' : 'docs/readme'
+                            file_exists('_docs/index.md')
+                                ? Hyde::docsDirectory() . '/index'
+                                : Hyde::docsDirectory() . '/readme'
                         ),
                         'current' => false,
                         'priority' => 500,
