@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\NoReturn;
@@ -130,7 +129,7 @@ class MarkdownPostParser
             // Separate the key from the value
             $array = (explode(': ', $line, 2));
 
-            // Assign the split values into variables so it's easier to keep track of them.
+            // Assign the split values into variables, so it's easier to keep track of them.
             $key = $array[0];
             $value = $array[1];
 

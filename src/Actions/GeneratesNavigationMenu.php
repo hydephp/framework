@@ -5,6 +5,7 @@ namespace Hyde\Framework\Actions;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
 use function config;
 
@@ -120,7 +121,7 @@ class GeneratesNavigationMenu
                 $links[] = [
                     'title' => $link['title'],
                     'route' => $link['destination'] ?? $this->getRelativeRoutePathForSlug($link['slug']),
-                    'current' => isset($link['slug']) ? $this->currentPage == $link['slug'] : false,
+                    'current' => isset($link['slug']) && $this->currentPage == $link['slug'],
                     'priority' =>  $link['priority'] ?? 999,
                 ];
             }
@@ -156,8 +157,13 @@ class GeneratesNavigationMenu
         foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $path) {
             $array[] = basename($path, '.blade.php');
         }
-
-        return array_unique(array_merge($array, array_keys(MarkdownPage::allAsArray())));
+    
+        return array_unique(
+            array_merge(
+                $array,
+                CollectionService::getMarkdownPageList()
+            )
+        );
     }
 
     /**

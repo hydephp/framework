@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPage;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\NoReturn;
@@ -51,6 +50,8 @@ class MarkdownPageParser
     /**
      * Handle the parsing job.
      * @return void
+     * @throws \Exception
+     * @throws \Exception
      */
     #[NoReturn]
     public function execute(): void
@@ -73,6 +74,8 @@ class MarkdownPageParser
      * Split the front matter from the markdown.
      * @param string $stream
      * @return array
+     * @throws \Exception
+     * @throws \Exception
      */
     #[ArrayShape(['matter' => "array", 'markdown' => "array"])]
     public function split(string $stream): array

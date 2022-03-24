@@ -24,14 +24,16 @@ class Validate extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Running validation tests!');
 
         $this->line(shell_exec(Hyde::path('vendor/bin/pest') . ' --group=validators'));
 
         $this->info('All done!');
+
+        return 0;
     }
 }

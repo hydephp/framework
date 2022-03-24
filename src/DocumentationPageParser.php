@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
@@ -72,7 +71,7 @@ class DocumentationPageParser
 
         foreach ($lines as $line) {
             if (str_starts_with($line, '# ')) {
-                return substr($line, 2);
+                return trim(substr($line, 2), ' ');
             }
         }
 

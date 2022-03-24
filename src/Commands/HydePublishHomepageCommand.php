@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Commands;
 
-use Hyde\Framework\Commands\BasePublishingCommand;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
@@ -33,6 +31,28 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     }
     
     /**
+     * Execute the console command.
+     *
+     * @return int
+     * @throws \League\Flysystem\FilesystemException
+     */
+    public function handle(): int
+    {
+        $this->determineWhatShouldBePublished();
+
+        foreach ($this->tags ?: [null] as $tag) {
+            $this->publishTag($tag);
+        }
+
+        $this->info('Published selected homepage');
+
+        $this->postHandleHook();
+
+        return 0;
+    }
+
+
+    /**
      * Prompt for which tag to publish.
      *
      * @return void
@@ -41,8 +61,12 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         $choice = $this->choice(
             "Which homepage do you want to publish?",
-            $choices = $this->publishableChoices()
-        , 2);
+            choices: $this->publishableChoices(),
+            default: 2
+        );
+
+        $this->line('<info>Selected page </info>[<comment>'. str_replace('homepage-', '', $choice).'</comment>]');
+        $this->newLine();
 
         $this->parseChoice($choice);
     }
@@ -50,10 +74,10 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param  string  $choice
+     * @param string $choice
      * @return void
      */
-    protected function parseChoice($choice)
+    protected function parseChoice(string $choice)
     {
         $this->tags = [$choice];
     }
@@ -63,7 +87,7 @@ class HydePublishHomepageCommand extends BasePublishingCommand
      *
      * @return array
      */
-    protected function publishableChoices()
+    protected function publishableChoices(): array
     {
         return array_merge(
             [],
@@ -81,8 +105,11 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         $prompt = $this->ask('Would you like to rebuild the site?', 'Yes');
         if (str_contains(strtolower($prompt), 'y')) {
+            $this->line('Okay, building site!');
             Artisan::call('build');
-        };
+            $this->info('Site is built!');
+        } else {
+            $this->line('Okay, you can always run the build later!');
+        }
     }
-
 }

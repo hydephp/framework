@@ -50,7 +50,7 @@ authors:
     name: Mr Hyde
     website: https://github.com/hydephp/hyde
 EOF
-);
+            );
         }
         
         return $filepath;
@@ -106,6 +106,9 @@ EOF
         if ($forgiving) {
             $username = Str::snake($username);
         }
-        return $service->authors->firstWhere('username', $username) ?? false;
+        if (isset($service->authors)) {
+            return $service->authors->firstWhere('username', $username) ?? false;
+        }
+        return false;
     }
 }

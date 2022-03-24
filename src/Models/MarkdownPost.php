@@ -46,6 +46,7 @@ class MarkdownPost
     /**
      * Get a Laravel Collection of all Posts as MarkdownPost objects.
      * @return Collection
+     * @throws \Exception
      */
     public static function getCollection(): Collection
     {

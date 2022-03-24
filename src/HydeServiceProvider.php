@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework;
 
+use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class HydeServiceProvider extends ServiceProvider
@@ -17,15 +17,15 @@ class HydeServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'hyde.version',
-            function (Application $app) {
-                return \Composer\InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+            function () {
+                return InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
             }
         );
 
         $this->app->bind(
             'framework.version',
-            function (Application $app) {
-                return \Composer\InstalledVersions::getVersion('hyde/framework') ?: 'unreleased';
+            function () {
+                return InstalledVersions::getVersion('hyde/framework') ?: 'unreleased';
             }
         );
     }
@@ -42,7 +42,7 @@ class HydeServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
         $this->publishes([
-            __DIR__.'/../config' => config_path(''),
+            __DIR__.'/../config' => config_path(),
         ], 'configs');
             
         $this->publishes([
@@ -54,10 +54,6 @@ class HydeServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views/components' => resource_path('views/vendor/hyde/components'),
         ], 'hyde-components');
 
-        
-        $this->publishes([
-            __DIR__.'/../resources/views/pages/index.blade.php' => resource_path('views/pages/index.blade.php'),
-        ], 'hyde-page-index');
 
         $this->publishes([
             __DIR__.'/../resources/views/pages/404.blade.php' => resource_path('views/pages/404.blade.php'),

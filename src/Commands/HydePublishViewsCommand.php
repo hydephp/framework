@@ -13,9 +13,10 @@ use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\MountManager;
 use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use League\Flysystem\Visibility;
+
 /**
  * Publish the Hyde assets
- * 
+ *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
  * @license MIT
@@ -77,9 +78,10 @@ class HydePublishViewsCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
+     * @throws \League\Flysystem\FilesystemException
      */
-    public function handle()
+    public function handle(): int
     {
         $this->determineWhatShouldBePublished();
 
@@ -88,6 +90,8 @@ class HydePublishViewsCommand extends Command
         }
 
         $this->info('Publishing complete.');
+
+        return 0;
     }
 
         /**
@@ -170,12 +174,13 @@ class HydePublishViewsCommand extends Command
             $this->tags = [$value];
         }
     }
-    
+
     /**
      * Publishes the assets for a tag.
      *
-     * @param  string  $tag
-     * @return mixed
+     * @param string $tag
+     * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishTag($tag)
     {
@@ -197,7 +202,7 @@ class HydePublishViewsCommand extends Command
     }
 
       /**
-     * Get all of the paths to publish.
+     * Get all the paths to publish.
      *
      * @param  string  $tag
      * @return array
@@ -205,7 +210,8 @@ class HydePublishViewsCommand extends Command
     protected function pathsToPublish($tag)
     {
         return ServiceProvider::pathsToPublish(
-            $this->provider, $tag
+            $this->provider,
+            $tag
         );
     }
 
@@ -213,9 +219,10 @@ class HydePublishViewsCommand extends Command
     /**
      * Publish the given item from and to the given location.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishItem($from, $to)
     {
@@ -249,9 +256,10 @@ class HydePublishViewsCommand extends Command
     /**
      * Publish the directory to the given directory.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function publishDirectory($from, $to)
     {
@@ -268,8 +276,9 @@ class HydePublishViewsCommand extends Command
     /**
      * Move all the files in the given MountManager.
      *
-     * @param  \League\Flysystem\MountManager  $manager
+     * @param \League\Flysystem\MountManager $manager
      * @return void
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function moveManagedFiles($manager)
     {

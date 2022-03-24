@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Hyde;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Creates and returns a list of markdown paths
@@ -13,7 +14,7 @@ class GetMarkdownPostList
     /**
      * @return array
      */
-    public function execute(): array
+    #[Pure] public function execute(): array
     {
         $array = [];
 

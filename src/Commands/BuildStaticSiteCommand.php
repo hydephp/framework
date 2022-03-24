@@ -80,7 +80,7 @@ class BuildStaticSiteCommand extends Command
             $this->newLine();
         }
 
-        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico}'), GLOB_BRACE);
+        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
         if (sizeof($collection) < 1) {
             $this->line('No Media Assets found. Skipping...');
             $this->newLine();
@@ -209,12 +209,11 @@ class BuildStaticSiteCommand extends Command
         ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        echo ("Your new homepage is stored here -> file://" . str_replace(
-                '\\',
-                '/',
-                realpath(Hyde::path('_site/index.html'))
-            )
-        );
+        $this->line("Your new homepage is stored here -> file://" . str_replace(
+            '\\',
+            '/',
+            realpath(Hyde::path('_site/index.html'))
+        ));
 
         return 0;
     }

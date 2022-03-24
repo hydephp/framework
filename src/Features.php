@@ -3,7 +3,7 @@
 namespace Hyde\Framework;
 
 /**
- * Allows features to be enabled and disabled in a simple object oriented manner.
+ * Allows features to be enabled and disabled in a simple object-oriented manner.
  *
  * Based entirely on Laravel Jetstream (License MIT)
  * @see https://jetstream.laravel.com/
@@ -16,7 +16,7 @@ class Features
      * @param  string  $feature
      * @return bool
      */
-    public static function enabled(string $feature)
+    public static function enabled(string $feature): bool
     {
         return in_array($feature, config('hyde.features', []));
     }
@@ -27,7 +27,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasBlogPosts()
+    public static function hasBlogPosts(): bool
     {
         return static::enabled(static::blogPosts());
     }
@@ -37,7 +37,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasBladePages()
+    public static function hasBladePages(): bool
     {
         return static::enabled(static::bladePages());
     }
@@ -47,7 +47,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasMarkdownPages()
+    public static function hasMarkdownPages(): bool
     {
         return static::enabled(static::markdownPages());
     }
@@ -57,9 +57,31 @@ class Features
      *
      * @return bool
      */
-    public static function hasDocumentationPages()
+    public static function hasDocumentationPages(): bool
     {
         return static::enabled(static::documentationPages());
+    }
+
+    
+    /**
+     * Determine if the site has Torchlight enabled.
+     *
+     * Torchlight is an API for Syntax Highlighting. By default, it is enabled
+     * automatically when an API token is set in the .env file.
+     *
+     * It is disabled when running tests.
+     *
+     * @param bool $bypassAutomaticCheck if set to true the function will not check if a token is set.
+     * @return bool
+     */
+    public static function hasTorchlight(bool $bypassAutomaticCheck = false): bool
+    {
+        if ($bypassAutomaticCheck) {
+            return static::enabled(static::torchlight());
+        }
+        return static::enabled(static::torchlight())
+            && (config('torchlight.token') !== null)
+            && (app('env') !== 'testing');
     }
 
 
@@ -68,7 +90,7 @@ class Features
      *
      * @return string
      */
-    public static function blogPosts()
+    public static function blogPosts(): string
     {
         return 'blog-posts';
     }
@@ -78,7 +100,7 @@ class Features
      *
      * @return string
      */
-    public static function bladePages()
+    public static function bladePages(): string
     {
         return 'blade-pages';
     }
@@ -88,7 +110,7 @@ class Features
      *
      * @return string
      */
-    public static function markdownPages()
+    public static function markdownPages(): string
     {
         return 'markdown-pages';
     }
@@ -98,8 +120,18 @@ class Features
      *
      * @return string
      */
-    public static function documentationPages()
+    public static function documentationPages(): string
     {
         return 'documentation-pages';
+    }
+
+    /**
+     * Enable the Torchlight integration.
+     *
+     * @return string
+     */
+    public static function torchlight(): string
+    {
+        return 'torchlight';
     }
 }
