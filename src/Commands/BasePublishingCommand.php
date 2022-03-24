@@ -2,16 +2,15 @@
 
 namespace Hyde\Framework\Commands;
 
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Filesystem\Filesystem;
+use LaravelZero\Framework\Commands\Command;
 use Illuminate\Foundation\Events\VendorTagPublished;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
-use League\Flysystem\MountManager;
 use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
+use League\Flysystem\MountManager;
 use League\Flysystem\Visibility;
 
 /**
@@ -35,14 +34,14 @@ abstract class BasePublishingCommand extends Command
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $files;
+    protected Filesystem $files;
     
     /**
      * The provider to publish.
      *
-     * @var string
+     * @var string|null
      */
-    protected $provider = null;
+    protected ?string $provider = null;
 
 
     /**
@@ -50,7 +49,7 @@ abstract class BasePublishingCommand extends Command
      *
      * @var array
      */
-    protected $tags = [];
+    protected array $tags = [];
 
 
     /**
@@ -103,7 +102,7 @@ abstract class BasePublishingCommand extends Command
     {
         $choice = $this->choice(
             "Which view categories (tags) would you like to publish?",
-            $choices = $this->publishableChoices()
+            $this->publishableChoices()
         );
 
         $this->parseChoice($choice);
@@ -112,10 +111,10 @@ abstract class BasePublishingCommand extends Command
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param  string  $choice
+     * @param string $choice
      * @return void
      */
-    protected function parseChoice($choice)
+    protected function parseChoice(string $choice)
     {
         [$type, $value] = explode(': ', strip_tags($choice));
 
@@ -133,7 +132,7 @@ abstract class BasePublishingCommand extends Command
      * @return int
      * @throws \League\Flysystem\FilesystemException
      */
-    protected function publishTag($tag): int
+    protected function publishTag(string $tag): int
     {
         $published = false;
 
@@ -157,15 +156,12 @@ abstract class BasePublishingCommand extends Command
       /**
      * Get all the paths to publish.
      *
-     * @param  string  $tag
+     * @param string $tag
      * @return array
      */
-    protected function pathsToPublish($tag)
+    protected function pathsToPublish(string $tag): array
     {
-        return ServiceProvider::pathsToPublish(
-            $this->provider,
-            $tag
-        );
+        return ServiceProvider::pathsToPublish($this->provider, $tag);
     }
 
 
@@ -177,12 +173,14 @@ abstract class BasePublishingCommand extends Command
      * @return void
      * @throws \League\Flysystem\FilesystemException
      */
-    protected function publishItem($from, $to)
+    protected function publishItem(string $from, string $to): void
     {
         if ($this->files->isFile($from)) {
-            return $this->publishFile($from, $to);
+            $this->publishFile($from, $to);
+            return;
         } elseif ($this->files->isDirectory($from)) {
-            return $this->publishDirectory($from, $to);
+            $this->publishDirectory($from, $to);
+            return ;
         }
 
         $this->error("Can't locate path: <{$from}>");
@@ -191,11 +189,11 @@ abstract class BasePublishingCommand extends Command
     /**
      * Publish the file to the given path.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
      * @return void
      */
-    protected function publishFile($from, $to)
+    protected function publishFile(string $from, string $to): void
     {
         if (! $this->files->exists($to) || $this->option('force')) {
             $this->createParentDirectory(dirname($to));
@@ -214,7 +212,7 @@ abstract class BasePublishingCommand extends Command
      * @return void
      * @throws \League\Flysystem\FilesystemException
      */
-    protected function publishDirectory($from, $to)
+    protected function publishDirectory(string $from, string $to): void
     {
         $visibility = PortableVisibilityConverter::fromArray([], Visibility::PUBLIC);
 
@@ -230,14 +228,14 @@ abstract class BasePublishingCommand extends Command
      * Move all the files in the given MountManager.
      *
      * @param \League\Flysystem\MountManager $manager
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
      * @return void
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
      */
-    protected function moveManagedFiles($manager)
+    protected function moveManagedFiles(MountManager $manager): void
     {
         foreach ($manager->listContents('from://', true) as $file) {
             $path = Str::after($file['path'], 'from://');
@@ -251,10 +249,10 @@ abstract class BasePublishingCommand extends Command
     /**
      * Create the directory to house the published files if needed.
      *
-     * @param  string  $directory
+     * @param string $directory
      * @return void
      */
-    protected function createParentDirectory($directory)
+    protected function createParentDirectory(string $directory): void
     {
         if (! $this->files->isDirectory($directory)) {
             $this->files->makeDirectory($directory, 0755, true);
@@ -264,17 +262,18 @@ abstract class BasePublishingCommand extends Command
     /**
      * Write a status message to the console.
      *
-     * @param  string  $from
-     * @param  string  $to
-     * @param  string  $type
+     * @param string $from
+     * @param string $to
+     * @param string $type
      * @return void
      */
-    protected function status($from, $to, $type)
+    protected function status(string $from, string $to, string $type): void
     {
         $from = str_replace(base_path(), '', realpath($from));
 
         $to = str_replace(base_path(), '', realpath($to));
 
-        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> <info>To</info> <comment>['.$to.']</comment>');
+        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> ' .
+            '<info>To</info> <comment>['.$to.']</comment>');
     }
 }

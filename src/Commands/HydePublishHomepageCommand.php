@@ -51,10 +51,10 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param  string  $choice
+     * @param string $choice
      * @return void
      */
-    protected function parseChoice($choice)
+    protected function parseChoice(string $choice)
     {
         $this->tags = [$choice];
     }

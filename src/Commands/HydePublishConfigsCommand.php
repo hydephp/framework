@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Publish the Hyde Config Files
- * 
+ *
  * @uses BasePublishingCommand
  */
 class HydePublishConfigsCommand extends BasePublishingCommand
@@ -81,5 +81,4 @@ class HydePublishConfigsCommand extends BasePublishingCommand
     {
         return [];
     }
-
 }
