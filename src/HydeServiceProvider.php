@@ -54,10 +54,6 @@ class HydeServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views/components' => resource_path('views/vendor/hyde/components'),
         ], 'hyde-components');
 
-        
-        $this->publishes([
-            __DIR__.'/../resources/views/pages/index.blade.php' => resource_path('views/pages/index.blade.php'),
-        ], 'hyde-page-index');
 
         $this->publishes([
             __DIR__.'/../resources/views/pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
