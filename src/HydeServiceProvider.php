@@ -28,6 +28,19 @@ class HydeServiceProvider extends ServiceProvider
                 return InstalledVersions::getVersion('hyde/framework') ?: 'unreleased';
             }
         );
+
+        $this->commands([
+            Commands\HydePublishHomepageCommand::class,
+            Commands\HydePublishConfigsCommand::class,
+            Commands\HydePublishViewsCommand::class,
+            Commands\BuildStaticSiteCommand::class,
+            Commands\HydeInstallerCommand::class,
+            Commands\MakeValidatorCommand::class,
+            Commands\PublishStubsCommand::class,
+            Commands\MakePostCommand::class,
+            Commands\Validate::class,
+            Commands\Debug::class,
+        ]);
     }
 
     /**
