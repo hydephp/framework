@@ -4,6 +4,11 @@
     <meta itemprop="url" content="{{ Hyde::uriPath($post->slug) }}">
     @endif
     
+	<header>
+		<a href="posts/{{ $post->matter['slug'] }}.html">
+			<h2 class="text-2xl font-bold opacity-75 hover:opacity-100">{{ $post->matter['title'] }}</h2>
+		</a>
+	</header>
 	<footer>
 		@isset($post->matter['date'])
 		<span class="opacity-75">
@@ -20,11 +25,7 @@
 		</span>
 		@endisset
 	</footer>
-	<header>
-		<a href="posts/{{ $post->matter['slug'] }}.html">
-			<h2 class="text-2xl font-bold opacity-75 hover:opacity-100">{{ $post->matter['title'] }}</h2>
-		</a>
-	</header>
+	
 	<div>
 		<p class="leading-relaxed my-1">
 			@isset($post->matter['description'])
