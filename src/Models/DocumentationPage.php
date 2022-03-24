@@ -2,9 +2,6 @@
 
 namespace Hyde\Framework\Models;
 
-use Hyde\Framework\Hyde;
-use JetBrains\PhpStorm\Pure;
-
 /**
  * A simple class that contains the content of a Documentation Page.
  */
@@ -42,18 +39,4 @@ class DocumentationPage
         $this->content = $content;
     }
 
-    /**
-     * Get an array of all the available Markdown Pages
-     * @return array
-     */
-    #[Pure] public static function allAsArray(): array
-    {
-        $array = [];
-
-        foreach (glob(Hyde::path('_docs/*.md')) as $filepath) {
-            $array[basename($filepath, '.md')] = $filepath;
-        }
-
-        return $array;
-    }
 }
