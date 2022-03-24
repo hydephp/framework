@@ -33,6 +33,28 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     }
     
     /**
+     * Execute the console command.
+     *
+     * @return int
+     * @throws \League\Flysystem\FilesystemException
+     */
+    public function handle(): int
+    {
+        $this->determineWhatShouldBePublished();
+
+        foreach ($this->tags ?: [null] as $tag) {
+            $this->publishTag($tag);
+        }
+
+        $this->info('Published selected homepage');
+
+        $this->postHandleHook();
+
+        return 0;
+    }
+
+
+    /**
      * Prompt for which tag to publish.
      *
      * @return void
@@ -44,6 +66,9 @@ class HydePublishHomepageCommand extends BasePublishingCommand
             $choices = $this->publishableChoices(),
             2
         );
+
+        $this->line('<info>Selected page </info>[<comment>'. str_replace('homepage-', '', $choice).'</comment>]');
+        $this->newLine();
 
         $this->parseChoice($choice);
     }
@@ -82,7 +107,11 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         $prompt = $this->ask('Would you like to rebuild the site?', 'Yes');
         if (str_contains(strtolower($prompt), 'y')) {
+            $this->line('Okay, building site!');
             Artisan::call('build');
+            $this->info('Site is built!');
+        } else {
+            $this->line('Okay, you can always run the build later!');
         }
     }
 }
