@@ -106,6 +106,9 @@ EOF
         if ($forgiving) {
             $username = Str::snake($username);
         }
-        return $service->authors->firstWhere('username', $username) ?? false;
+        if (isset($service->authors)) {
+            return $service->authors->firstWhere('username', $username) ?? false;
+        }
+        return false;
     }
 }
