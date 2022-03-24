@@ -42,19 +42,4 @@ class MarkdownPage
         $this->content = $content;
     }
 
-
-    /**
-     * Get an array of all the available Markdown Pages
-     * @return array
-     */
-    #[Pure] public static function allAsArray(): array
-    {
-        $array = [];
-
-        foreach (glob(Hyde::path('_pages/*.md')) as $filepath) {
-            $array[basename($filepath, '.md')] = $filepath;
-        }
-
-        return $array;
-    }
 }
