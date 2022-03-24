@@ -71,7 +71,7 @@ class DocumentationPageParser
 
         foreach ($lines as $line) {
             if (str_starts_with($line, '# ')) {
-                return substr($line, 2);
+                return trim(substr($line, 2), ' ');
             }
         }
 
