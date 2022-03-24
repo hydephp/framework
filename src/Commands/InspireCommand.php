@@ -6,6 +6,9 @@ use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 use function Termwind\render;
 
+/**
+ * @deprecated 0.5.0 - Please update (republish your config/commands.php)
+ */
 class InspireCommand extends Command
 {
     /**
