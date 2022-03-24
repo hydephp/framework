@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Commands;
 
-use App\Actions\Installer\Installer;
 use Hyde\Framework\Hyde;
 use LaravelZero\Framework\Commands\Command;
 
