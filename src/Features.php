@@ -79,7 +79,9 @@ class Features
         if ($bypassAutomaticCheck) {
             return static::enabled(static::torchlight());
         }
-        return static::enabled(static::torchlight()) && (config('torchlight.token') !== null);
+        return static::enabled(static::torchlight())
+            && (config('torchlight.token') !== null)
+            && (app('env') !== 'testing');
     }
 
 
