@@ -58,7 +58,10 @@ class StaticPageBuilder
         }
 
         if ($this->page instanceof DocumentationPage) {
-            return $this->save('docs/' . $this->page->slug, $this->compileDocs());
+            if (!file_exists(Hyde::path('_site/' . Hyde::docsDirectory()))) {
+                mkdir(Hyde::path('_site/' . Hyde::docsDirectory()));
+            }
+            return $this->save(Hyde::docsDirectory() . '/' . $this->page->slug, $this->compileDocs());
         }
     }
 

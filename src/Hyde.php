@@ -48,6 +48,15 @@ class Hyde
     }
 
     /**
+     * Get the subdirectory documentation files are stored in
+     * @return string
+     */
+    public static function docsDirectory(): string
+    {
+        return trim(config('hyde.docsDirectory', 'docs'), '/\\');
+    }
+
+    /**
      * Get an absolute path from a supplied relative path.
      *
      * The function returns the fully qualified path to your site's root directory.
