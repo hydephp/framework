@@ -16,7 +16,7 @@ class Features
      * @param  string  $feature
      * @return bool
      */
-    public static function enabled(string $feature)
+    public static function enabled(string $feature): bool
     {
         return in_array($feature, config('hyde.features', []));
     }
@@ -27,7 +27,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasBlogPosts()
+    public static function hasBlogPosts(): bool
     {
         return static::enabled(static::blogPosts());
     }
@@ -37,7 +37,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasBladePages()
+    public static function hasBladePages(): bool
     {
         return static::enabled(static::bladePages());
     }
@@ -47,7 +47,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasMarkdownPages()
+    public static function hasMarkdownPages(): bool
     {
         return static::enabled(static::markdownPages());
     }
@@ -57,7 +57,7 @@ class Features
      *
      * @return bool
      */
-    public static function hasDocumentationPages()
+    public static function hasDocumentationPages(): bool
     {
         return static::enabled(static::documentationPages());
     }
@@ -74,7 +74,7 @@ class Features
      * @param bool $bypassAutomaticCheck if set to true the function will not check if a token is set.
      * @return bool
      */
-    public static function hasTorchlight(bool $bypassAutomaticCheck = false)
+    public static function hasTorchlight(bool $bypassAutomaticCheck = false): bool
     {
         if ($bypassAutomaticCheck) {
             return static::enabled(static::torchlight());
@@ -90,7 +90,7 @@ class Features
      *
      * @return string
      */
-    public static function blogPosts()
+    public static function blogPosts(): string
     {
         return 'blog-posts';
     }
@@ -100,7 +100,7 @@ class Features
      *
      * @return string
      */
-    public static function bladePages()
+    public static function bladePages(): string
     {
         return 'blade-pages';
     }
@@ -110,7 +110,7 @@ class Features
      *
      * @return string
      */
-    public static function markdownPages()
+    public static function markdownPages(): string
     {
         return 'markdown-pages';
     }
@@ -120,7 +120,7 @@ class Features
      *
      * @return string
      */
-    public static function documentationPages()
+    public static function documentationPages(): string
     {
         return 'documentation-pages';
     }
@@ -130,7 +130,7 @@ class Features
      *
      * @return string
      */
-    public static function torchlight()
+    public static function torchlight(): string
     {
         return 'torchlight';
     }

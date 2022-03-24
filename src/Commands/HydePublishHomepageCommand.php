@@ -89,7 +89,7 @@ class HydePublishHomepageCommand extends BasePublishingCommand
      *
      * @return array
      */
-    protected function publishableChoices()
+    protected function publishableChoices(): array
     {
         return array_merge(
             [],

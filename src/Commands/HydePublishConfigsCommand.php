@@ -77,7 +77,7 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      *
      * @return array
      */
-    protected function publishableChoices()
+    protected function publishableChoices(): array
     {
         return [];
     }
