@@ -56,9 +56,9 @@ abstract class BasePublishingCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->determineWhatShouldBePublished();
 
@@ -69,6 +69,8 @@ abstract class BasePublishingCommand extends Command
         $this->info('Publishing complete.');
 
         $this->postHandleHook();
+
+        return 0;
     }
 
     /**
@@ -127,9 +129,9 @@ abstract class BasePublishingCommand extends Command
      * Publishes the assets for a tag.
      *
      * @param  string  $tag
-     * @return mixed
+     * @return int
      */
-    protected function publishTag($tag)
+    protected function publishTag($tag): int
     {
         $published = false;
 
@@ -146,10 +148,12 @@ abstract class BasePublishingCommand extends Command
         } else {
             $this->laravel['events']->dispatch(new VendorTagPublished($tag, $pathsToPublish));
         }
+
+        return 0;
     }
 
       /**
-     * Get all of the paths to publish.
+     * Get all the paths to publish.
      *
      * @param  string  $tag
      * @return array

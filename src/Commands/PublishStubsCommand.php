@@ -27,9 +27,9 @@ class PublishStubsCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         if ($this->option('clean')) {
             if ((config('app.env', 'production') === 'development') || $this->option('force')) {
@@ -48,6 +48,8 @@ class PublishStubsCommand extends Command
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_media'), Hyde::path('_media'));
 
         $this->info('Done!');
+
+        return 0;
     }
 
 

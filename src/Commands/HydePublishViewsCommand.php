@@ -78,9 +78,9 @@ class HydePublishViewsCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->determineWhatShouldBePublished();
 
@@ -89,6 +89,8 @@ class HydePublishViewsCommand extends Command
         }
 
         $this->info('Publishing complete.');
+
+        return 0;
     }
 
         /**
@@ -176,7 +178,7 @@ class HydePublishViewsCommand extends Command
      * Publishes the assets for a tag.
      *
      * @param  string  $tag
-     * @return mixed
+     * @return void
      */
     protected function publishTag($tag)
     {
@@ -198,7 +200,7 @@ class HydePublishViewsCommand extends Command
     }
 
       /**
-     * Get all of the paths to publish.
+     * Get all the paths to publish.
      *
      * @param  string  $tag
      * @return array

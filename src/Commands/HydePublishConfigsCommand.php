@@ -77,9 +77,9 @@ class HydePublishConfigsCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->tags = array_flip(array_filter(
             array_flip(ServiceProvider::publishableGroups()),
@@ -92,6 +92,8 @@ class HydePublishConfigsCommand extends Command
         }
 
         $this->info('Publishing complete.');
+
+        return 0;
     }
 
         /**
@@ -174,7 +176,7 @@ class HydePublishConfigsCommand extends Command
      * Publishes the assets for a tag.
      *
      * @param  string  $tag
-     * @return mixed
+     * @return void
      */
     protected function publishTag($tag)
     {
@@ -196,12 +198,12 @@ class HydePublishConfigsCommand extends Command
     }
 
       /**
-     * Get all of the paths to publish.
+     * Get all the paths to publish.
      *
-     * @param  string  $tag
+     * @param string $tag
      * @return array
      */
-    protected function pathsToPublish($tag)
+    protected function pathsToPublish(string $tag): array
     {
         return ServiceProvider::pathsToPublish(
             $this->provider,
