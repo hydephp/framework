@@ -120,7 +120,7 @@ class GeneratesNavigationMenu
                 $links[] = [
                     'title' => $link['title'],
                     'route' => $link['destination'] ?? $this->getRelativeRoutePathForSlug($link['slug']),
-                    'current' => isset($link['slug']) ? $this->currentPage == $link['slug'] : false,
+                    'current' => isset($link['slug']) && $this->currentPage == $link['slug'],
                     'priority' =>  $link['priority'] ?? 999,
                 ];
             }

@@ -83,6 +83,6 @@ class HydePublishHomepageCommand extends BasePublishingCommand
         $prompt = $this->ask('Would you like to rebuild the site?', 'Yes');
         if (str_contains(strtolower($prompt), 'y')) {
             Artisan::call('build');
-        };
+        }
     }
 }

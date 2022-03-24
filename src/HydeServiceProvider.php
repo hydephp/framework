@@ -42,7 +42,7 @@ class HydeServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
         $this->publishes([
-            __DIR__.'/../config' => config_path(''),
+            __DIR__.'/../config' => config_path(),
         ], 'configs');
             
         $this->publishes([

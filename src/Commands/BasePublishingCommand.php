@@ -78,7 +78,7 @@ abstract class BasePublishingCommand extends Command
      */
     protected function postHandleHook()
     {
-        return;
+        //
     }
 
         /**
