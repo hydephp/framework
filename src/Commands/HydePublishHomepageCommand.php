@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Commands;
 
-use Hyde\Framework\Commands\BasePublishingCommand;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
@@ -63,8 +61,8 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     {
         $choice = $this->choice(
             "Which homepage do you want to publish?",
-            $choices = $this->publishableChoices(),
-            2
+            choices: $this->publishableChoices(),
+            default: 2
         );
 
         $this->line('<info>Selected page </info>[<comment>'. str_replace('homepage-', '', $choice).'</comment>]');

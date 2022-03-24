@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;

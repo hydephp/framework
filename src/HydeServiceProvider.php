@@ -4,7 +4,6 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class HydeServiceProvider extends ServiceProvider

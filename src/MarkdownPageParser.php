@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPage;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\NoReturn;
