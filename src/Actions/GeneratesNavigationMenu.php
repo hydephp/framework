@@ -112,7 +112,7 @@ class GeneratesNavigationMenu
      * Get the custom navigation links from the config, if there are any
      * @return array
      */
-    private function getLinksFromConfig(): array
+    public function getLinksFromConfig(): array
     {
         $configLinks = config('hyde.navigationMenuLinks', []);
 
