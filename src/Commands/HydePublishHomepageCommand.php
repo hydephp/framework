@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Artisan;
  */
 class HydePublishHomepageCommand extends BasePublishingCommand
 {
-    protected $signature = 'publish:homepage {--force : Overwrite any existing files}';
+    protected $signature = 'publish:homepage
+                                {homepage? : The name of the page to publish}
+                                {--force : Overwrite any existing files}';
 
     protected $description = 'Publish one of the default homepages';
 
@@ -38,7 +40,11 @@ class HydePublishHomepageCommand extends BasePublishingCommand
      */
     public function handle(): int
     {
-        $this->determineWhatShouldBePublished();
+        if ($this->argument('homepage') !== null) {
+            $this->tags = [$this->argument('homepage')];
+        } else {
+            $this->determineWhatShouldBePublished();
+        }
 
         foreach ($this->tags ?: [null] as $tag) {
             $this->publishTag($tag);
@@ -46,7 +52,9 @@ class HydePublishHomepageCommand extends BasePublishingCommand
 
         $this->info('Published selected homepage');
 
-        $this->postHandleHook();
+        if (!$this->option('no-interaction')) {
+            $this->postHandleHook();
+        }
 
         return 0;
     }
