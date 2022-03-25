@@ -41,5 +41,4 @@ class MarkdownPage
         $this->title = $title;
         $this->content = $content;
     }
-
 }

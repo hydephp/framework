@@ -38,5 +38,4 @@ class DocumentationPage
         $this->title = $title;
         $this->content = $content;
     }
-
 }

@@ -50,11 +50,15 @@ class PublishStubsCommand extends Command
 
         // Note that this overwrites existing files, though since this command should never be run
         // outside of testing I think it's okay.
-        copy(Hyde::path('vendor/hyde/framework/resources/views/homepages/post-feed.blade.php'),
-            Hyde::path('resources/views/pages/index.blade.php'));
+        copy(
+            Hyde::path('vendor/hyde/framework/resources/views/homepages/post-feed.blade.php'),
+            Hyde::path('resources/views/pages/index.blade.php')
+        );
 
-        copy(Hyde::path('vendor/hyde/framework/resources/views/pages/404.blade.php'),
-            Hyde::path('resources/views/pages/404.blade.php'));
+        copy(
+            Hyde::path('vendor/hyde/framework/resources/views/pages/404.blade.php'),
+            Hyde::path('resources/views/pages/404.blade.php')
+        );
 
         $this->info('Done!');
 
