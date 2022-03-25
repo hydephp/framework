@@ -17,7 +17,6 @@ class HydeInstaller
     public string|null $homepage;
 
     public array $warnings = [];
-    public bool $allowFileOverwrites = false;
 
     public function __construct()
     {
@@ -138,18 +137,9 @@ class HydeInstaller
      */
     private function publishHomepage(): void
     {
-        if (file_exists(Hyde::path('resources/views/index.blade.php')) && $this->allowFileOverwrites !== true) {
-            $this->warnings[] = [
-                'level' => 'warn',
-                'message' => 'Refusing to publish homepage as an index.blade.php already exists.',
-                'context' => 'You can force the file to overwritten using php hyde publish:homepage --force.'
-            ];
-            return;
-        }
-
         copy(
             Hyde::path("vendor/hyde/framework/resources/views/homepages/$this->homepage.blade.php"),
-            Hyde::path("resources/views/index.blade.php")
+            Hyde::path("resources/views/pages/index.blade.php")
         );
     }
 }
