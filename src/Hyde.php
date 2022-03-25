@@ -22,32 +22,6 @@ class Hyde
     }
 
     /**
-     * Is Torchlight enabled?
-     *
-     * @deprecated v0.4.1 will be moved into the Features class
-     *
-     * Torchlight is an API for Syntax Highlighting. By default, it is enabled
-     * automatically when an API token is set in the .env file.
-     * @return bool
-     */
-    public static function hasTorchlight(): bool
-    {
-        return (config('torchlight.token') !== null);
-    }
-
-    /**
-     * Return the path where the Blade views are located
-     *
-     * @deprecated v0.4.1 as it is not needed
-     *
-     * @return string
-     */
-    public static function viewPath()
-    {
-        return resource_path('views') ;
-    }
-
-    /**
      * Get the subdirectory documentation files are stored in
      * @return string
      */
