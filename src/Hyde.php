@@ -31,6 +31,23 @@ class Hyde
     }
 
     /**
+     * Get the path to the frontpage for the documentation
+     * @return string|false returns false if no frontpage is found
+     */
+    public static function docsIndexPath(): string|false
+    {
+        if (file_exists(Hyde::path('_docs/index.md'))) {
+            return Hyde::docsDirectory() . '/index.html';
+        }
+
+        if (file_exists(Hyde::path('_docs/readme.md'))) {
+            return Hyde::docsDirectory() . '/readme.html';
+        }
+
+        return false;
+    }
+
+    /**
      * Get an absolute path from a supplied relative path.
      *
      * The function returns the fully qualified path to your site's root directory.
