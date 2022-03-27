@@ -6,24 +6,62 @@ use Exception;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Str;
 
+/**
+ * Offloads logic for the make:post command.
+ * 
+ * This class is executed when creating a new Markdown Post
+ * using the Hyde command, and converts and formats the
+ * data input by the user, and then saves the file.
+ * 
+ * @see Hyde\Framework\Commands\MakePostCommand
+ */
 class CreatesNewMarkdownPostFile
 {
+    /**
+     * The Post Title.
+     * @var string
+     */
     public string $title;
+
+    /**
+     * The Post Meta Description.
+     * @var string
+     */
     public string $description;
+ 
+    /**
+     * The Primary Post Category.
+     * @var string
+     */
     public string $category;
+
+    /**
+     * The Username of the Author.
+     * @var string
+     */
     public string $author;
+
+    /**
+     * The Publishing Date.
+     * @var string
+     */
     public string $date;
+
+    /**
+     * The Post Slug.
+     * @var string
+     */
     public string $slug;
 
     /**
      * Construct the class.
      *
-     * @param  string  $title
-     * @param  string|null  $description
-     * @param  string|null  $category
-     * @param  string|null  $author
-     * @param  string|null  $date
-     * @param  string|null  $slug
+     * @param  string       $title         The Post Title.
+     * @param  string|null  $description   The Post Meta Description.
+     * @param  string|null  $category      The Primary Post Category.
+     * @param  string|null  $author        The Username of the Author.
+     * @param  string|null  $date          The Publishing Date.
+     * @param  string|null  $slug          The Post Slug.
      */
     public function __construct(
         string $title,
