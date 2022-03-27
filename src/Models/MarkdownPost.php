@@ -2,27 +2,11 @@
 
 namespace Hyde\Framework\Models;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\MarkdownPostParser;
-use Illuminate\Support\Collection;
-
 /**
- * A simple class that contains the Front Matter and Markdown text of a post.
+ * The basis for Markdown Blog Posts.
  */
-class MarkdownPost
+class MarkdownPost extends MarkdownDocument
 {
-    /**
-     * The Front Matter
-     * @var array
-     */
-    public array $matter;
-
-    /**
-     * The Markdown body
-     * @var string
-     */
-    public string $body;
-
     /**
      * The Post slug
      * @var string
@@ -41,21 +25,5 @@ class MarkdownPost
         $this->matter = $matter;
         $this->body = $body;
         $this->slug = $slug;
-    }
-
-    /**
-     * Get a Laravel Collection of all Posts as MarkdownPost objects.
-     * @return Collection
-     * @throws \Exception
-     */
-    public static function getCollection(): Collection
-    {
-        $collection = new Collection();
-
-        foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
-            $collection->push((new MarkdownPostParser(basename($filepath, '.md')))->get());
-        }
-
-        return $collection->sortByDesc('matter.date');
     }
 }

@@ -109,11 +109,15 @@ class Hyde
      * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()
      * @return \Illuminate\Support\Collection
      * @throws \Exception
-     * @see MarkdownPost::getCollection
-     *
      */
     public static function getLatestPosts(): Collection
     {
-        return MarkdownPost::getCollection();
+        $collection = new Collection();
+
+        foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
+            $collection->push((new MarkdownPostParser(basename($filepath, '.md')))->get());
+        }
+
+        return $collection->sortByDesc('matter.date');
     }
 }

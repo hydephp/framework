@@ -85,6 +85,6 @@ class MarkdownPageParser
     #[Pure]
     public function get(): MarkdownPage
     {
-        return new MarkdownPage($this->slug, $this->title, $this->body);
+        return new MarkdownPage([], $this->body, $this->slug, $this->title);
     }
 }
