@@ -4,8 +4,9 @@ namespace Hyde\Framework\Services;
 
 use Exception;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\MarkdownDocument;
 use JetBrains\PhpStorm\Pure;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Hyde\Framework\Models\MarkdownDocument;
 
 /**
  * Prepares a Markdown file for further usage.
@@ -16,77 +17,29 @@ use JetBrains\PhpStorm\Pure;
  */
 class MarkdownFileService
 {
-    protected string $filepath;
-
-    protected array $lines;
-
+    /**
+     * The extracted Front Matter
+     * @var array
+     */
     public array $matter = [];
 
+    /**
+     * The extracted Markdown body
+     * @var string
+     */
     public string $body = "";
 
-
-    /**
-     * @example new MarkdownFileService('_posts/hello-world')
-     * @param string $relativeSlugPath the slug of the file to process
-     * @throws Exception
-     */
-    public function __construct(string $relativeSlugPath)
+    public function __construct(string $filepath)
     {
-        $this->filepath = $this->getFilepath($relativeSlugPath);
-        $this->lines = $this->parseFileStream();
-    }
+        $object = YamlFrontMatter::parse(file_get_contents($filepath));
 
-    /**
-     * Get the qualified filepath or throw exception if file does not exist
-     * @param string $relativeSlugPath
-     * @return string
-     * @throws Exception
-     */
-    public function getFilepath(string $relativeSlugPath): string
-    {
-        $filepath = Hyde::path("$relativeSlugPath.md");
-        if (!file_exists($filepath)) {
-            throw new Exception("File $relativeSlugPath.md not found.", 404);
+        if ($object->matter()) {
+            $this->matter = $object->matter();
         }
-        return $filepath;
-    }
 
-    /**
-     * Does the file contain front matter?
-     * @return bool
-     */
-    public function containsFrontMatter(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Parse the file contents into an array of the lines.
-     * @return array
-     */
-    public function parseFileStream(): array
-    {
-        $stream = file_get_contents($this->filepath);
-        return explode("\n", $stream);
-    }
-
-    /**
-     * Split the Front Matter from the Markdown.
-     */
-    public function split(): void
-    {
-        $this->body = "";
-        $this->matter = $this->parseFrontMatter([]);
-    }
-
-    /**
-     * Parse array of lines of Front Matter YAML into an associative array.
-     * @param array $frontMatterLines
-     * @return array
-     */
-    public function parseFrontMatter(array $frontMatterLines): array
-    {
-        return [];
+        if ($object->body()) {
+            $this->body = $object->body();
+        }
     }
 
     /**
