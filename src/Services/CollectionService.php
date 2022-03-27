@@ -48,16 +48,16 @@ class CollectionService
      * @return array
      */
     #[Pure]
- public static function getBladePageList(): array
- {
-     $array = [];
+    public static function getBladePageList(): array
+    {
+        $array = [];
 
-     foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $filepath) {
-         $array[] = basename($filepath, '.blade.php');
-     }
+        foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $filepath) {
+            $array[] = basename($filepath, '.blade.php');
+        }
 
-     return $array;
- }
+        return $array;
+    }
 
     /**
      * Get all the Markdown files in the _pages directory.
@@ -65,16 +65,16 @@ class CollectionService
      * @return array
      */
     #[Pure]
- public static function getMarkdownPageList(): array
- {
-     $array = [];
+    public static function getMarkdownPageList(): array
+    {
+        $array = [];
 
-     foreach (glob(Hyde::path('_pages/*.md')) as $filepath) {
-         $array[] = basename($filepath, '.md');
-     }
+        foreach (glob(Hyde::path('_pages/*.md')) as $filepath) {
+            $array[] = basename($filepath, '.md');
+        }
 
-     return $array;
- }
+        return $array;
+    }
 
     /**
      * Get all the Markdown files in the _posts directory.
@@ -82,16 +82,16 @@ class CollectionService
      * @return array
      */
     #[Pure]
- public static function getMarkdownPostList(): array
- {
-     $array = [];
+    public static function getMarkdownPostList(): array
+    {
+        $array = [];
 
-     foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
-         $array[] = basename($filepath, '.md');
-     }
+        foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
+            $array[] = basename($filepath, '.md');
+        }
 
-     return $array;
- }
+        return $array;
+    }
 
     /**
      * Get all the Markdown files in the _docs directory.
@@ -99,14 +99,14 @@ class CollectionService
      * @return array
      */
     #[Pure]
- public static function getDocumentationPageList(): array
- {
-     $array = [];
+    public static function getDocumentationPageList(): array
+    {
+        $array = [];
 
-     foreach (glob(Hyde::path('_docs/*.md')) as $filepath) {
-         $array[] = basename($filepath, '.md');
-     }
+        foreach (glob(Hyde::path('_docs/*.md')) as $filepath) {
+            $array[] = basename($filepath, '.md');
+        }
 
-     return $array;
- }
+        return $array;
+    }
 }

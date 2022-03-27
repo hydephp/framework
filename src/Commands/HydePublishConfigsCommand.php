@@ -60,7 +60,6 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      */
     protected function determineWhatShouldBePublished()
     {
-
     }
 
     /**
@@ -70,7 +69,6 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      */
     protected function promptForProviderOrTag()
     {
-
     }
 
     /**

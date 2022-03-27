@@ -32,10 +32,10 @@ class MarkdownPage extends MarkdownDocument
      * @param  string  $title
      */
     #[Pure]
- public function __construct(array $matter, string $body, string $slug, string $title)
- {
-     parent::__construct($matter, $body);
-     $this->title = $title;
-     $this->slug = $slug;
- }
+    public function __construct(array $matter, string $body, string $slug, string $title)
+    {
+        parent::__construct($matter, $body);
+        $this->title = $title;
+        $this->slug = $slug;
+    }
 }

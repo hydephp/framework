@@ -24,9 +24,9 @@ class MarkdownPost extends MarkdownDocument
      * @param  string  $slug
      */
     #[Pure]
- public function __construct(array $matter, string $body, string $slug)
- {
-     parent::__construct($matter, $body);
-     $this->slug = $slug;
- }
+    public function __construct(array $matter, string $body, string $slug)
+    {
+        parent::__construct($matter, $body);
+        $this->slug = $slug;
+    }
 }
