@@ -2,23 +2,18 @@
 
 namespace Hyde\Framework\Commands;
 
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\Events\VendorTagPublished;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
-use League\Flysystem\Filesystem as Flysystem;
-use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
-use League\Flysystem\MountManager;
-use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
-use League\Flysystem\Visibility;
+use LaravelZero\Framework\Commands\Command;
 
 /**
- * Publish the Hyde assets
+ * Publish the Hyde assets.
  *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
+ *
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
+ *
  * @license MIT
  */
 class HydePublishViewsCommand extends BasePublishingCommand
@@ -37,8 +32,6 @@ class HydePublishViewsCommand extends BasePublishingCommand
      * @var string
      */
     protected $description = 'Publish the Hyde resource view files for customization';
-    
-
 
     /**
      * Create a new command instance.
@@ -63,13 +56,14 @@ class HydePublishViewsCommand extends BasePublishingCommand
         if ($this->option('all')) {
             $this->tags = array_flip(array_filter(
                 array_flip(ServiceProvider::publishableGroups()),
-                fn($key) => str_starts_with($key, 'hyde-'),
+                fn ($key) => str_starts_with($key, 'hyde-'),
                 ARRAY_FILTER_USE_KEY
             ));
+
             return;
         }
 
-        if (!$this->tags) {
+        if (! $this->tags) {
             $this->promptForProviderOrTag();
         }
     }
@@ -82,16 +76,17 @@ class HydePublishViewsCommand extends BasePublishingCommand
     protected function promptForProviderOrTag()
     {
         $choice = $this->choice(
-            "Which view categories (tags) would you like to publish?",
+            'Which view categories (tags) would you like to publish?',
             $choices = $this->publishableChoices()
         );
 
         if ($choice == $choices[0] || is_null($choice)) {
             $this->tags = array_flip(array_filter(
                 array_flip(ServiceProvider::publishableGroups()),
-                fn($key) => str_starts_with($key, 'hyde-'),
+                fn ($key) => str_starts_with($key, 'hyde-'),
                 ARRAY_FILTER_USE_KEY
             ));
+
             return;
         }
 
@@ -110,7 +105,7 @@ class HydePublishViewsCommand extends BasePublishingCommand
             preg_filter('/^/', '<comment>Tag: </comment>', Arr::sort(
                 array_flip(array_filter(
                     array_flip(ServiceProvider::publishableGroups()),
-                    fn($key) => str_starts_with($key, 'hyde-'),
+                    fn ($key) => str_starts_with($key, 'hyde-'),
                     ARRAY_FILTER_USE_KEY
                 ))
             ))

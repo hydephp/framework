@@ -2,13 +2,13 @@
 
 namespace Hyde\Framework\Commands;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\ServiceProvider;
 
 /**
- * Publish one of the default homepages
+ * Publish one of the default homepages.
  */
 class HydePublishHomepageCommand extends BasePublishingCommand
 {
@@ -17,7 +17,6 @@ class HydePublishHomepageCommand extends BasePublishingCommand
                                 {--force : Overwrite any existing files}';
 
     protected $description = 'Publish one of the default homepages';
-
 
     /**
      * Create a new command instance.
@@ -31,11 +30,12 @@ class HydePublishHomepageCommand extends BasePublishingCommand
 
         $this->files = $files;
     }
-    
+
     /**
      * Execute the console command.
      *
      * @return int
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     public function handle(): int
@@ -52,13 +52,12 @@ class HydePublishHomepageCommand extends BasePublishingCommand
 
         $this->info('Published selected homepage');
 
-        if (!$this->option('no-interaction')) {
+        if (! $this->option('no-interaction')) {
             $this->postHandleHook();
         }
 
         return 0;
     }
-
 
     /**
      * Prompt for which tag to publish.
@@ -68,12 +67,12 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     protected function promptForProviderOrTag()
     {
         $choice = $this->choice(
-            "Which homepage do you want to publish?",
+            'Which homepage do you want to publish?',
             choices: $this->publishableChoices(),
             default: 2
         );
 
-        $this->line('<info>Selected page </info>[<comment>'. str_replace('homepage-', '', $choice).'</comment>]');
+        $this->line('<info>Selected page </info>[<comment>'.str_replace('homepage-', '', $choice).'</comment>]');
         $this->newLine();
 
         $this->parseChoice($choice);
@@ -82,7 +81,7 @@ class HydePublishHomepageCommand extends BasePublishingCommand
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param string $choice
+     * @param  string  $choice
      * @return void
      */
     protected function parseChoice(string $choice)
@@ -102,7 +101,7 @@ class HydePublishHomepageCommand extends BasePublishingCommand
             Arr::sort(
                 array_flip(array_filter(
                     array_flip(ServiceProvider::publishableGroups()),
-                    fn($key) => str_starts_with($key, 'homepage-'),
+                    fn ($key) => str_starts_with($key, 'homepage-'),
                     ARRAY_FILTER_USE_KEY
                 ))
             )

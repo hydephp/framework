@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Actions;
 
-use Hyde\Framework\Hyde;
 use Exception;
+use Hyde\Framework\Hyde;
 use Illuminate\Support\Str;
 
 class CreatesNewMarkdownPostFile
@@ -18,12 +18,12 @@ class CreatesNewMarkdownPostFile
     /**
      * Construct the class.
      *
-     * @param string $title
-     * @param string|null $description
-     * @param string|null $category
-     * @param string|null $author
-     * @param string|null $date
-     * @param string|null $slug
+     * @param  string  $title
+     * @param  string|null  $description
+     * @param  string|null  $category
+     * @param  string|null  $author
+     * @param  string|null  $date
+     * @param  string|null  $slug
      */
     public function __construct(
         string $title,
@@ -41,20 +41,20 @@ class CreatesNewMarkdownPostFile
             $this->date = date('Y-m-d H:i');
         }
         if ($slug === null) {
-            $this->slug = Str::slug($title) ;
+            $this->slug = Str::slug($title);
         }
     }
 
     /**
      * Save the class object to a Markdown file.
      *
-     * @param bool $force Should the file be created even if a file with the same path already exists?
+     * @param  bool  $force  Should the file be created even if a file with the same path already exists?
      * @return string|false Returns the path to the file if successful, or false if the file could not be saved.
+     *
      * @throws Exception if a file with the same slug already exists and the force flag is not set.
      */
     public function save(bool $force = false): string|false
     {
-
         $path = Hyde::path("_posts/$this->slug.md");
 
         if ($force !== true && file_exists($path)) {
@@ -65,7 +65,7 @@ class CreatesNewMarkdownPostFile
 
         unset($arrayWithoutSlug['slug']);
 
-        $contents = (new ConvertsArrayToFrontMatter)->execute($arrayWithoutSlug) .
+        $contents = (new ConvertsArrayToFrontMatter)->execute($arrayWithoutSlug).
             "\n## Write something awesome.\n\n";
 
         return file_put_contents($path, $contents) ? $path : false;

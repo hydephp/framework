@@ -10,7 +10,8 @@ use JetBrains\PhpStorm\Pure;
 class MarkdownPost extends MarkdownDocument
 {
     /**
-     * The Post Slug
+     * The Post Slug.
+     *
      * @var string
      */
     public string $slug;
@@ -18,13 +19,14 @@ class MarkdownPost extends MarkdownDocument
     /**
      * Construct the object.
      *
-     * @param array $matter
-     * @param string $body
-     * @param string $slug
+     * @param  array  $matter
+     * @param  string  $body
+     * @param  string  $slug
      */
-    #[Pure] public function __construct(array $matter, string $body, string $slug)
-    {
-        parent::__construct($matter, $body);
-        $this->slug = $slug;
-    }
+    #[Pure]
+ public function __construct(array $matter, string $body, string $slug)
+ {
+     parent::__construct($matter, $body);
+     $this->slug = $slug;
+ }
 }

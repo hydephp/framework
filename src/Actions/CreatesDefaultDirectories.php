@@ -29,8 +29,9 @@ class CreatesDefaultDirectories
         }
     }
 
-    #[Pure] public static function getRequiredDirectories(): array
-    {
-        return (new CreatesDefaultDirectories)->requiredDirectories;
-    }
+    #[Pure]
+ public static function getRequiredDirectories(): array
+ {
+     return (new CreatesDefaultDirectories)->requiredDirectories;
+ }
 }

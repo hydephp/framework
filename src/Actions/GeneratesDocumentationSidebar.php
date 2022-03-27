@@ -2,10 +2,10 @@
 
 namespace Hyde\Framework\Actions;
 
+use function config;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
-use function config;
 
 /**
  * Create the sidebar items for the documentation page.
@@ -15,10 +15,10 @@ class GeneratesDocumentationSidebar
     /**
      * Create and get the array.
      *
-     * @param string $current
+     * @param  string  $current
      * @return array
      */
-    public static function get(string $current = ""): array
+    public static function get(string $current = ''): array
     {
         $orderArray = config('hyde.documentationPageOrder');
 
@@ -42,7 +42,7 @@ class GeneratesDocumentationSidebar
             $array[] = [
                 'slug' => $slug,
                 'title' => Str::title(str_replace('-', ' ', $slug)),
-                'active' => 'docs/' . $slug == $current,
+                'active' => 'docs/'.$slug == $current,
                 'order' =>  $order,
             ];
         }

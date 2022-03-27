@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Actions;
 
-use Illuminate\Support\Str;
 use function config;
+use Illuminate\Support\Str;
 
 class ConvertsFooterMarkdown
 {

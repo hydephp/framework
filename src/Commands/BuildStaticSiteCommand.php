@@ -4,19 +4,19 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use LaravelZero\Framework\Commands\Command;
-use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\StaticPageBuilder;
+use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Services\CollectionService;
+use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\File;
+use LaravelZero\Framework\Commands\Command;
 
 class BuildStaticSiteCommand extends Command
 {
@@ -39,7 +39,6 @@ class BuildStaticSiteCommand extends Command
      */
     protected $description = 'Build the static site';
 
-
     private function debug(array $output)
     {
         if ($this->getOutput()->isVeryVerbose()) {
@@ -53,6 +52,7 @@ class BuildStaticSiteCommand extends Command
      * Execute the console command.
      *
      * @return int
+     *
      * @throws Exception
      */
     public function handle(): int
@@ -70,6 +70,7 @@ class BuildStaticSiteCommand extends Command
                     $this->purge();
                 } else {
                     $this->warn('Aborting.');
+
                     return 1;
                 }
             }
@@ -91,9 +92,9 @@ class BuildStaticSiteCommand extends Command
                 function ($filepath) {
                     if ($this->getOutput()->isVeryVerbose()) {
                         $this->line(' > Copying media file '
-                            . basename($filepath) . ' to the output media directory');
+                            .basename($filepath).' to the output media directory');
                     }
-                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
+                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
                 }
             );
             $this->newLine(2);
@@ -173,7 +174,6 @@ class BuildStaticSiteCommand extends Command
             }
         }
 
-
         if ($this->option('pretty')) {
             $this->info('Prettifying code! This may take a second.');
             try {
@@ -203,13 +203,13 @@ class BuildStaticSiteCommand extends Command
 
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
-        $this->info('All done! Finished in ' . number_format(
+        $this->info('All done! Finished in '.number_format(
             $execution_time,
             2
-        ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
+        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        $this->line("Your new homepage is stored here -> file://" . str_replace(
+        $this->line('Your new homepage is stored here -> file://'.str_replace(
             '\\',
             '/',
             realpath(Hyde::path('_site/index.html'))

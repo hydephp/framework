@@ -3,23 +3,25 @@
 namespace Hyde\Framework\Commands;
 
 use Illuminate\Filesystem\Filesystem;
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Foundation\Events\VendorTagPublished;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use LaravelZero\Framework\Commands\Command;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
-use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use League\Flysystem\MountManager;
+use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use League\Flysystem\Visibility;
 
 /**
- * Base command to publish the Hyde assets
+ * Base command to publish the Hyde assets.
  *
  * @internal
  *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
+ *
  * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
+ *
  * @license MIT
  */
 abstract class BasePublishingCommand extends Command
@@ -35,14 +37,13 @@ abstract class BasePublishingCommand extends Command
      * @var \Illuminate\Filesystem\Filesystem
      */
     protected Filesystem $files;
-    
+
     /**
      * The provider to publish.
      *
      * @var string|null
      */
     protected ?string $provider = null;
-
 
     /**
      * The tags to publish.
@@ -51,11 +52,11 @@ abstract class BasePublishingCommand extends Command
      */
     protected array $tags = [];
 
-
     /**
      * Execute the console command.
      *
      * @return int
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     public function handle(): int
@@ -81,14 +82,14 @@ abstract class BasePublishingCommand extends Command
         //
     }
 
-        /**
+    /**
      * Determine the provider or tag(s) to publish.
      *
      * @return void
      */
     protected function determineWhatShouldBePublished()
     {
-        if (!$this->tags) {
+        if (! $this->tags) {
             $this->promptForProviderOrTag();
         }
     }
@@ -101,7 +102,7 @@ abstract class BasePublishingCommand extends Command
     protected function promptForProviderOrTag()
     {
         $choice = $this->choice(
-            "Which view categories (tags) would you like to publish?",
+            'Which view categories (tags) would you like to publish?',
             $this->publishableChoices()
         );
 
@@ -111,7 +112,7 @@ abstract class BasePublishingCommand extends Command
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param string $choice
+     * @param  string  $choice
      * @return void
      */
     protected function parseChoice(string $choice)
@@ -128,8 +129,9 @@ abstract class BasePublishingCommand extends Command
     /**
      * Publishes the assets for a tag.
      *
-     * @param string $tag
+     * @param  string  $tag
      * @return int
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     protected function publishTag(string $tag): int
@@ -153,10 +155,10 @@ abstract class BasePublishingCommand extends Command
         return 0;
     }
 
-      /**
+    /**
      * Get all the paths to publish.
      *
-     * @param string $tag
+     * @param  string  $tag
      * @return array
      */
     protected function pathsToPublish(string $tag): array
@@ -164,23 +166,25 @@ abstract class BasePublishingCommand extends Command
         return ServiceProvider::pathsToPublish($this->provider, $tag);
     }
 
-
     /**
      * Publish the given item from and to the given location.
      *
-     * @param string $from
-     * @param string $to
+     * @param  string  $from
+     * @param  string  $to
      * @return void
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     protected function publishItem(string $from, string $to): void
     {
         if ($this->files->isFile($from)) {
             $this->publishFile($from, $to);
+
             return;
         } elseif ($this->files->isDirectory($from)) {
             $this->publishDirectory($from, $to);
-            return ;
+
+            return;
         }
 
         $this->error("Can't locate path: <{$from}>");
@@ -189,8 +193,8 @@ abstract class BasePublishingCommand extends Command
     /**
      * Publish the file to the given path.
      *
-     * @param string $from
-     * @param string $to
+     * @param  string  $from
+     * @param  string  $to
      * @return void
      */
     protected function publishFile(string $from, string $to): void
@@ -207,9 +211,10 @@ abstract class BasePublishingCommand extends Command
     /**
      * Publish the directory to the given directory.
      *
-     * @param string $from
-     * @param string $to
+     * @param  string  $from
+     * @param  string  $to
      * @return void
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     protected function publishDirectory(string $from, string $to): void
@@ -227,13 +232,14 @@ abstract class BasePublishingCommand extends Command
     /**
      * Move all the files in the given MountManager.
      *
-     * @param \League\Flysystem\MountManager $manager
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
-     * @throws \League\Flysystem\FilesystemException
+     * @param  \League\Flysystem\MountManager  $manager
      * @return void
+     *
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
      */
     protected function moveManagedFiles(MountManager $manager): void
     {
@@ -249,7 +255,7 @@ abstract class BasePublishingCommand extends Command
     /**
      * Create the directory to house the published files if needed.
      *
-     * @param string $directory
+     * @param  string  $directory
      * @return void
      */
     protected function createParentDirectory(string $directory): void
@@ -262,9 +268,9 @@ abstract class BasePublishingCommand extends Command
     /**
      * Write a status message to the console.
      *
-     * @param string $from
-     * @param string $to
-     * @param string $type
+     * @param  string  $from
+     * @param  string  $to
+     * @param  string  $type
      * @return void
      */
     protected function status(string $from, string $to, string $type): void
@@ -273,7 +279,7 @@ abstract class BasePublishingCommand extends Command
 
         $to = str_replace(base_path(), '', realpath($to));
 
-        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> ' .
+        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> '.
             '<info>To</info> <comment>['.$to.']</comment>');
     }
 }

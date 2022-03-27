@@ -2,11 +2,11 @@
 
 namespace Hyde\Framework;
 
+use Exception;
 use Hyde\Framework\Models\DocumentationPage;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
-use Illuminate\Support\Str;
-use Exception;
 
 /**
  * Parses a Documentation file into an object.
@@ -21,26 +21,30 @@ class DocumentationPageParser
     private string $filepath;
 
     /**
-     * The extracted Documentation body
+     * The extracted Documentation body.
+     *
      * @var string
      */
     public string $body;
 
     /**
-     * The page title
+     * The page title.
+     *
      * @var string
      */
     public string $title;
 
     /**
-     * @param string $slug of the Documentation file (without extension)
+     * @param  string  $slug  of the Documentation file (without extension)
+     *
      * @throws Exception if the file cannot be found in _docs
+     *
      * @example `new DocumentationPageParser('example-doc')`
      */
     public function __construct(protected string $slug)
     {
         $this->filepath = Hyde::path("_docs/$slug.md");
-        if (!file_exists($this->filepath)) {
+        if (! file_exists($this->filepath)) {
             throw new Exception("File _docs/$slug.md not found.", 404);
         }
 
@@ -49,6 +53,7 @@ class DocumentationPageParser
 
     /**
      * Handle the parsing job.
+     *
      * @return void
      */
     #[NoReturn]
@@ -63,7 +68,7 @@ class DocumentationPageParser
     }
 
     /**
-     * Attempt to find the title based on the first H1 tag
+     * Attempt to find the title based on the first H1 tag.
      */
     public function findTitleTag(string $stream): string|false
     {
@@ -80,6 +85,7 @@ class DocumentationPageParser
 
     /**
      * Get the Documentation Page Object.
+     *
      * @return DocumentationPage
      */
     #[Pure]

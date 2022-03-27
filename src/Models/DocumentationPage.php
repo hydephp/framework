@@ -8,19 +8,22 @@ namespace Hyde\Framework\Models;
 class DocumentationPage
 {
     /**
-     * The Page Title
+     * The Page Title.
+     *
      * @var string
      */
     public string $title;
 
     /**
-     * The Markdown Content
+     * The Markdown Content.
+     *
      * @var string
      */
     public string $content;
 
     /**
-     * The Post Slug
+     * The Post Slug.
+     *
      * @var string
      */
     public string $slug;
@@ -28,9 +31,9 @@ class DocumentationPage
     /**
      * Construct the object.
      *
-     * @param string $slug
-     * @param string $title
-     * @param string $content
+     * @param  string  $slug
+     * @param  string  $title
+     * @param  string  $content
      */
     public function __construct(string $slug, string $title, string $content)
     {
