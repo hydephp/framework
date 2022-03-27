@@ -4,6 +4,7 @@ namespace Hyde\Framework;
 
 use Hyde\Framework\Services\MarkdownFileService;
 use Hyde\Framework\Models\MarkdownPage;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 use Exception;
@@ -53,7 +54,8 @@ class MarkdownPageParser
         if (isset($document->matter['title'])) {
             $this->title = $document->matter['title'];
         } else {
-            $this->title = $this->findTitleTag($document->body) ?? Str::title(str_replace('-', ' ', $this->slug));
+            $this->title = $this->findTitleTag($document->body) ??
+                Str::title(str_replace('-', ' ', $this->slug));
         }
 
         $this->body = $document->body;
