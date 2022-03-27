@@ -2,13 +2,15 @@
 
 namespace Hyde\Framework\Models;
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * The basis for Markdown Blog Posts.
  */
 class MarkdownPost extends MarkdownDocument
 {
     /**
-     * The Post slug
+     * The Post Slug
      * @var string
      */
     public string $slug;
@@ -20,10 +22,9 @@ class MarkdownPost extends MarkdownDocument
      * @param string $body
      * @param string $slug
      */
-    public function __construct(array $matter, string $body, string $slug)
+    #[Pure] public function __construct(array $matter, string $body, string $slug)
     {
-        $this->matter = $matter;
-        $this->body = $body;
+        parent::__construct($matter, $body);
         $this->slug = $slug;
     }
 }
