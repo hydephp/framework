@@ -2,18 +2,13 @@
 
 namespace Hyde\Framework\Services;
 
-use Exception;
-use Hyde\Framework\Hyde;
 use JetBrains\PhpStorm\Pure;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Hyde\Framework\Models\MarkdownDocument;
 
 /**
  * Prepares a Markdown file for further usage.
- *
- * Main functionality is as a pre-processor to split out Front Matter from the Body.
- *
- * Suggested usage is to supply a relative file slug path, and then retrieve a MarkdownDocument object.
+ * The service splits the Front Matter and creates a Markdown Document Object
  */
 class MarkdownFileService
 {
@@ -47,7 +42,7 @@ class MarkdownFileService
      * @return MarkdownDocument
      */
     #[Pure]
-    public function getDocument(): MarkdownDocument
+    public function get(): MarkdownDocument
     {
         return new MarkdownDocument($this->matter, $this->body);
     }
