@@ -6,3 +6,7 @@
 .env
 csout
 StormRunner.php
+
+docs
+.phpdoc
+phpDocumentor.phar
