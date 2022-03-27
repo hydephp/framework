@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Contains service methods relating to blog post authors
+ * Contains service methods relating to blog post authors.
  */
 class AuthorService
 {
@@ -54,7 +54,7 @@ authors:
 EOF
         );
     }
-    
+
     /**
      * Parse the Yaml file.
      *
@@ -62,18 +62,19 @@ EOF
      */
     public function getYaml(): array
     {
-        if (!file_exists($this->filepath)) {
+        if (! file_exists($this->filepath)) {
             return [];
         }
         $parsed = Yaml::parse(file_get_contents($this->filepath));
-        if (!is_array($parsed)) {
+        if (! is_array($parsed)) {
             return [];
         }
+
         return $parsed;
     }
 
     /**
-     * Use the Yaml array to parse and collect the Authors
+     * Use the Yaml array to parse and collect the Authors.
      *
      * @return Collection
      */
@@ -93,8 +94,8 @@ EOF
     /**
      * Find and retrieve an Author by their username.
      *
-     * @param string $username of the Author to search for
-     * @param bool $forgiving should the search be fuzzy?
+     * @param  string  $username  of the Author to search for
+     * @param  bool  $forgiving  should the search be fuzzy?
      * @return Author|false
      */
     public static function find(string $username, bool $forgiving = true): Author|false
@@ -106,6 +107,7 @@ EOF
         if (isset($service->authors)) {
             return $service->authors->firstWhere('username', $username) ?? false;
         }
+
         return false;
     }
 }

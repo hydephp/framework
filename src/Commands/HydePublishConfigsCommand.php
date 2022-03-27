@@ -6,7 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Publish the Hyde Config Files
+ * Publish the Hyde Config Files.
  *
  * @uses BasePublishingCommand
  */
@@ -15,7 +15,7 @@ class HydePublishConfigsCommand extends BasePublishingCommand
     protected $signature = 'publish:configs {--force : Overwrite any existing files}';
 
     protected $description = 'Publish the Hyde configuration files';
-    
+
     /**
      * Create a new command instance.
      *
@@ -33,13 +33,14 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      * Execute the console command.
      *
      * @return int
+     *
      * @throws \League\Flysystem\FilesystemException
      */
     public function handle(): int
     {
         $this->tags = array_flip(array_filter(
             array_flip(ServiceProvider::publishableGroups()),
-            fn($key) => str_starts_with($key, 'configs'),
+            fn ($key) => str_starts_with($key, 'configs'),
             ARRAY_FILTER_USE_KEY
         ));
 
@@ -59,7 +60,7 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      */
     protected function determineWhatShouldBePublished()
     {
-        return;
+
     }
 
     /**
@@ -69,7 +70,7 @@ class HydePublishConfigsCommand extends BasePublishingCommand
      */
     protected function promptForProviderOrTag()
     {
-        return;
+
     }
 
     /**

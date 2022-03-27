@@ -6,6 +6,7 @@ namespace Hyde\Framework;
  * Allows features to be enabled and disabled in a simple object-oriented manner.
  *
  * Based entirely on Laravel Jetstream (License MIT)
+ *
  * @see https://jetstream.laravel.com/
  */
 class Features
@@ -20,7 +21,6 @@ class Features
     {
         return in_array($feature, config('hyde.features', []));
     }
-
 
     /**
      * Determine if the site has blog posts enabled.
@@ -62,7 +62,6 @@ class Features
         return static::enabled(static::documentationPages());
     }
 
-    
     /**
      * Determine if the site has Torchlight enabled.
      *
@@ -71,7 +70,7 @@ class Features
      *
      * It is disabled when running tests.
      *
-     * @param bool $bypassAutomaticCheck if set to true the function will not check if a token is set.
+     * @param  bool  $bypassAutomaticCheck  if set to true the function will not check if a token is set.
      * @return bool
      */
     public static function hasTorchlight(bool $bypassAutomaticCheck = false): bool
@@ -79,11 +78,11 @@ class Features
         if ($bypassAutomaticCheck) {
             return static::enabled(static::torchlight());
         }
+
         return static::enabled(static::torchlight())
             && (config('torchlight.token') !== null)
             && (app('env') !== 'testing');
     }
-
 
     /**
      * Enable the blog post feature.

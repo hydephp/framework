@@ -2,12 +2,12 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Services\MarkdownFileService;
+use Exception;
 use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Services\MarkdownFileService;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
-use Exception;
 
 /**
  * Parses a Markdown file into an object with support for Front Matter.
@@ -17,25 +17,29 @@ use Exception;
 class MarkdownPageParser
 {
     /**
-     * The page title
+     * The page title.
+     *
      * @var string
      */
     public string $title;
-    
+
     /**
-     * The extracted page body
+     * The extracted page body.
+     *
      * @var string
      */
     public string $body;
 
     /**
-     * @param string $slug of the Markdown file (without extension)
+     * @param  string  $slug  of the Markdown file (without extension)
+     *
      * @throws Exception if the file cannot be found in _pages
+     *
      * @example `new MarkdownPageParser('example-page')`
      */
     public function __construct(protected string $slug)
     {
-        if (!file_exists(Hyde::path("_pages/$slug.md"))) {
+        if (! file_exists(Hyde::path("_pages/$slug.md"))) {
             throw new Exception("File _pages/$slug.md not found.", 404);
         }
 
@@ -44,6 +48,7 @@ class MarkdownPageParser
 
     /**
      * Handle the parsing job.
+     *
      * @return void
      */
     #[NoReturn]
@@ -62,7 +67,7 @@ class MarkdownPageParser
     }
 
     /**
-     * Attempt to find the title based on the first H1 tag
+     * Attempt to find the title based on the first H1 tag.
      */
     public function findTitleTag(string $stream): string|false
     {
@@ -79,6 +84,7 @@ class MarkdownPageParser
 
     /**
      * Get the Markdown Page Object.
+     *
      * @return MarkdownPage
      */
     #[Pure]

@@ -56,16 +56,14 @@ class HydeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config' => config_path(),
         ], 'configs');
-            
+
         $this->publishes([
             __DIR__.'/../resources/views/layouts' => resource_path('views/vendor/hyde/layouts'),
         ], 'hyde-layouts');
 
-            
         $this->publishes([
             __DIR__.'/../resources/views/components' => resource_path('views/vendor/hyde/components'),
         ], 'hyde-components');
-
 
         $this->publishes([
             __DIR__.'/../resources/views/pages/404.blade.php' => resource_path('views/pages/404.blade.php'),

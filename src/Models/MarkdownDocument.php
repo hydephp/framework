@@ -10,20 +10,23 @@ class MarkdownDocument
 {
     /**
      * The Front Matter Array.
+     *
      * @var array
      */
     public array $matter;
 
     /**
      * The Markdown Body String.
+     *
      * @var string
      */
     public string $body;
 
     /**
      * Construct the class.
-     * @param array $matter
-     * @param string $body
+     *
+     * @param  array  $matter
+     * @param  string  $body
      */
     public function __construct(array $matter, string $body)
     {

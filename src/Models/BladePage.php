@@ -9,6 +9,7 @@ class BladePage
 {
     /**
      * The name of the Blade View to compile.
+     *
      * @var string
      *
      * Must be a top level file relative to
@@ -18,7 +19,7 @@ class BladePage
     public string $view;
 
     /**
-     * @param string $view
+     * @param  string  $view
      */
     public function __construct(string $view)
     {

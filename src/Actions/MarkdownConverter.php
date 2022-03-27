@@ -8,14 +8,14 @@ use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
 
 /**
- * Converts Markdown into HTML
+ * Converts Markdown into HTML.
  */
 class MarkdownConverter
 {
     /**
      * Parse the Markdown into HTML.
      *
-     * @param string $markdown
+     * @param  string  $markdown
      * @return string $html
      */
     public static function parse(string $markdown): string

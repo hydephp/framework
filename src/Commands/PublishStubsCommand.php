@@ -4,8 +4,8 @@ namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Hyde;
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Support\Facades\File;
+use LaravelZero\Framework\Commands\Command;
 
 class PublishStubsCommand extends Command
 {
@@ -37,6 +37,7 @@ class PublishStubsCommand extends Command
                 $this->purge();
             } else {
                 $this->error('This command cannot be run in production unless the force flag is set.');
+
                 return 403;
             }
         }
@@ -64,7 +65,6 @@ class PublishStubsCommand extends Command
 
         return 0;
     }
-
 
     public function purge()
     {

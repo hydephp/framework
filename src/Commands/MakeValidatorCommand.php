@@ -3,8 +3,8 @@
 namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Hyde;
-use LaravelZero\Framework\Commands\Command;
 use Illuminate\Support\Str;
+use LaravelZero\Framework\Commands\Command;
 
 class MakeValidatorCommand extends Command
 {
@@ -32,7 +32,7 @@ class MakeValidatorCommand extends Command
         $this->info('Creating new Validation Test!');
         $name = $this->option('name') ?? $this->ask('What does the validator do?');
         $testName = strtolower($name);
-        $slug = str_replace(' ', '', Str::title($name)) . 'Test.php';
+        $slug = str_replace(' ', '', Str::title($name)).'Test.php';
 
         $content =
         "<?php
@@ -44,11 +44,11 @@ test('{$testName}', function () {
 
         $path = Hyde::path("tests/Validators/$slug");
 
-        if (file_exists($path) && !$this->option('force')) {
+        if (file_exists($path) && ! $this->option('force')) {
             $this->error('Validator already exists!');
+
             return 409;
         }
-
 
         file_put_contents($path, $content);
 

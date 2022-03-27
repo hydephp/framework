@@ -9,19 +9,20 @@ class ConvertsArrayToFrontMatter
      *
      * @todo add support for nested arrays
      *
-     * @param array $array
+     * @param  array  $array
      * @return string $yaml front matter
      */
     public function execute(array $array): string
     {
         $yaml = [];
-        $yaml[] = "---";
+        $yaml[] = '---';
         foreach ($array as $key => $value) {
             $yaml[] = "$key: $value";
         }
 
         $yaml[] = '---';
         $yaml[] = '';
+
         return implode("\n", $yaml);
     }
 }

@@ -10,13 +10,15 @@ use JetBrains\PhpStorm\Pure;
 class MarkdownPage extends MarkdownDocument
 {
     /**
-     * The Page Title
+     * The Page Title.
+     *
      * @var string
      */
     public string $title;
 
     /**
-     * The Post Slug
+     * The Post Slug.
+     *
      * @var string
      */
     public string $slug;
@@ -24,15 +26,16 @@ class MarkdownPage extends MarkdownDocument
     /**
      * Construct the object.
      *
-     * @param array $matter
-     * @param string $body
-     * @param string $slug
-     * @param string $title
+     * @param  array  $matter
+     * @param  string  $body
+     * @param  string  $slug
+     * @param  string  $title
      */
-    #[Pure] public function __construct(array $matter, string $body, string $slug, string $title)
-    {
-        parent::__construct($matter, $body);
-        $this->title = $title;
-        $this->slug = $slug;
-    }
+    #[Pure]
+ public function __construct(array $matter, string $body, string $slug, string $title)
+ {
+     parent::__construct($matter, $body);
+     $this->title = $title;
+     $this->slug = $slug;
+ }
 }

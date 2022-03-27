@@ -2,27 +2,29 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Models\MarkdownDocument;
 use JetBrains\PhpStorm\Pure;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
-use Hyde\Framework\Models\MarkdownDocument;
 
 /**
  * Prepares a Markdown file for further usage.
- * The service splits the Front Matter and creates a Markdown Document Object
+ * The service splits the Front Matter and creates a Markdown Document Object.
  */
 class MarkdownFileService
 {
     /**
-     * The extracted Front Matter
+     * The extracted Front Matter.
+     *
      * @var array
      */
     public array $matter = [];
 
     /**
-     * The extracted Markdown body
+     * The extracted Markdown body.
+     *
      * @var string
      */
-    public string $body = "";
+    public string $body = '';
 
     public function __construct(string $filepath)
     {
@@ -39,6 +41,7 @@ class MarkdownFileService
 
     /**
      * Get the processed Markdown file as a MarkdownDocument.
+     *
      * @return MarkdownDocument
      */
     #[Pure]

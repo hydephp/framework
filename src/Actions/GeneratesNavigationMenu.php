@@ -2,12 +2,11 @@
 
 namespace Hyde\Framework\Actions;
 
+use function config;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
-use function config;
 
 /**
  * Generate the dynamic navigation menu.
@@ -15,7 +14,7 @@ use function config;
 class GeneratesNavigationMenu
 {
     /**
-     * The current page route string
+     * The current page route string.
      *
      * Used to check if a given link is active,
      * and more importantly it is needed to
@@ -29,14 +28,16 @@ class GeneratesNavigationMenu
     public string $currentPage;
 
     /**
-     * The created array of navigation links
+     * The created array of navigation links.
+     *
      * @var array
      */
     public array $links;
 
     /**
-     * Construct the class
-     * @param string $currentPage
+     * Construct the class.
+     *
+     * @param  string  $currentPage
      */
     public function __construct(string $currentPage)
     {
@@ -46,7 +47,7 @@ class GeneratesNavigationMenu
     }
 
     /**
-     * Create the link array
+     * Create the link array.
      *
      * @todo Cache the base array and only update the 'current' attribute on each request.
      *
@@ -60,12 +61,12 @@ class GeneratesNavigationMenu
         foreach ($this->getListOfCustomPages() as $slug) {
             $title = $this->getTitleFromSlug($slug);
             // Only add the automatic link if it is not present in the config array
-            if (!in_array($title, array_column($links, 'title'))) {
+            if (! in_array($title, array_column($links, 'title'))) {
                 $links[] = [
                     'title' => $title,
                     'route' => $this->getRelativeRoutePathForSlug($slug),
                     'current' => $this->currentPage == $slug,
-                    'priority' => $slug == "index" ? 100 : 999,
+                    'priority' => $slug == 'index' ? 100 : 999,
                 ];
             }
         }
@@ -75,7 +76,7 @@ class GeneratesNavigationMenu
         // If the documentation feature is enabled...
         if (Features::hasDocumentationPages()) {
             // And there is no link to the docs...
-            if (!in_array('Docs', array_column($links, 'title'))) {
+            if (! in_array('Docs', array_column($links, 'title'))) {
                 // But a suitable file exists...
                 if (file_exists('_docs/index.md') || file_exists('_docs/readme.md')) {
                     // Then we can add a link.
@@ -83,8 +84,8 @@ class GeneratesNavigationMenu
                         'title' => 'Docs',
                         'route' => $this->getRelativeRoutePathForSlug(
                             file_exists('_docs/index.md')
-                                ? Hyde::docsDirectory() . '/index'
-                                : Hyde::docsDirectory() . '/readme'
+                                ? Hyde::docsDirectory().'/index'
+                                : Hyde::docsDirectory().'/readme'
                         ),
                         'current' => false,
                         'priority' => 500,
@@ -109,7 +110,8 @@ class GeneratesNavigationMenu
     }
 
     /**
-     * Get the custom navigation links from the config, if there are any
+     * Get the custom navigation links from the config, if there are any.
+     *
      * @return array
      */
     public function getLinksFromConfig(): array
@@ -133,23 +135,25 @@ class GeneratesNavigationMenu
     }
 
     /**
-     * Get the page title
+     * Get the page title.
      *
      * @todo fetch this from the front matter
      *
-     * @param string $slug
+     * @param  string  $slug
      * @return string
      */
     public function getTitleFromSlug(string $slug): string
     {
-        if ($slug == "index") {
-            return "Home";
+        if ($slug == 'index') {
+            return 'Home';
         }
+
         return Str::title(str_replace('-', ' ', $slug));
     }
 
     /**
-     * Get a list of all the top level pages
+     * Get a list of all the top level pages.
+     *
      * @return array
      */
     private function getListOfCustomPages(): array
@@ -159,7 +163,7 @@ class GeneratesNavigationMenu
         foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $path) {
             $array[] = basename($path, '.blade.php');
         }
-    
+
         return array_unique(
             array_merge(
                 $array,
@@ -169,29 +173,33 @@ class GeneratesNavigationMenu
     }
 
     /**
-     * Inject the proper number of `../` before the links
-     * @param string $slug
+     * Inject the proper number of `../` before the links.
+     *
+     * @param  string  $slug
      * @return string
      */
     private function getRelativeRoutePathForSlug(string $slug): string
     {
         $nestCount = substr_count($this->currentPage, '/');
-        $route = "";
+        $route = '';
         if ($nestCount > 0) {
             $route .= str_repeat('../', $nestCount);
         }
-        $route .= $slug . '.html';
+        $route .= $slug.'.html';
+
         return $route;
     }
 
     /**
-     * Static helper to get the array of navigation links
-     * @param string $currentPage
+     * Static helper to get the array of navigation links.
+     *
+     * @param  string  $currentPage
      * @return array
      */
     public static function getNavigationLinks(string $currentPage = 'index'): array
     {
         $generator = new self($currentPage);
+
         return $generator->links;
     }
 }
