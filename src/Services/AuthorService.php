@@ -15,9 +15,11 @@ class AuthorService
 {
     protected string $filepath;
     protected array $yaml;
+
     public Collection $authors;
 
     /**
+     * Construct the class.
      */
     public function __construct()
     {
