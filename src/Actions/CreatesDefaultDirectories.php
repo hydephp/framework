@@ -3,7 +3,6 @@
 namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Hyde;
-use JetBrains\PhpStorm\Pure;
 
 class CreatesDefaultDirectories
 {
@@ -24,14 +23,13 @@ class CreatesDefaultDirectories
     public function __invoke(): void
     {
         foreach ($this->requiredDirectories as $directory) {
-            // Does the directory exist?     // Otherwise, create it.
+            // Does the directory exist?      // Otherwise, create it.
             is_dir(Hyde::path($directory)) || mkdir(Hyde::path($directory), recursive: true);
         }
     }
 
-    #[Pure]
- public static function getRequiredDirectories(): array
- {
-     return (new CreatesDefaultDirectories)->requiredDirectories;
- }
+    public static function getRequiredDirectories(): array
+    {
+        return (new CreatesDefaultDirectories)->requiredDirectories;
+    }
 }
