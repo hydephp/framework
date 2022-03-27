@@ -13,32 +13,34 @@ use Symfony\Component\Yaml\Yaml;
  */
 class AuthorService
 {
-    protected string $filepath;
-    protected array $yaml;
+    public string $filepath;
+    public array $yaml = [];
+
     public Collection $authors;
 
     /**
+     * Construct the class.
      */
     public function __construct()
     {
-        $this->filepath = $this->getFilepath();
-        $this->yaml = $this->getYaml();
-        $this->authors = $this->getAuthors();
+        $this->filepath = Hyde::path('_data/authors.yml');
+
+        if (file_exists($this->filepath)) {
+            $this->yaml = $this->getYaml();
+            $this->authors = $this->getAuthors();
+        } else {
+            $this->authors = new Collection();
+        }
     }
 
     /**
      * Returns the filepath of the Yaml file.
      *
      * If the file does not exist, it will be created.
-     *
-     * @return string
      */
-    public function getFilepath(): string
+    public function publishFile()
     {
-        $filepath = Hyde::path('_data/authors.yml');
-
-        if (!file_exists($filepath)) {
-            file_put_contents($filepath, <<<'EOF'
+        file_put_contents($this->filepath, <<<'EOF'
 # In this file you can declare custom authors.
 
 # In the default example, `mr_hyde` is the username. 
@@ -50,31 +52,24 @@ authors:
     name: Mr Hyde
     website: https://github.com/hydephp/hyde
 EOF
-            );
-        }
-        
-        return $filepath;
+        );
     }
     
     /**
      * Parse the Yaml file.
      *
-     * If the Yaml cannot be parsed, it will back up the file and regenerate it.
-     *
      * @return array
      */
     public function getYaml(): array
     {
-        $yaml = Yaml::parse(file_get_contents($this->filepath));
-
-        if (!isset($yaml['authors'])) {
-            copy($this->filepath, $this->filepath . '.corrupted');
-            unlink($this->filepath);
-            $this->getFilepath();
-            return $this->getYaml();
+        if (!file_exists($this->filepath)) {
+            return [];
         }
-
-        return $yaml;
+        $parsed = Yaml::parse(file_get_contents($this->filepath));
+        if (!is_array($parsed)) {
+            return [];
+        }
+        return $parsed;
     }
 
     /**
@@ -86,8 +81,10 @@ EOF
     {
         $collection = new Collection();
 
-        foreach ($this->yaml['authors'] as $username => $data) {
-            $collection->push(new Author($username, $data));
+        if (isset($this->yaml['authors'])) {
+            foreach ($this->yaml['authors'] as $username => $data) {
+                $collection->push(new Author($username, $data));
+            }
         }
 
         return $collection;

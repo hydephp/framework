@@ -115,6 +115,9 @@ class MarkdownPostParser
 
     /**
      * Parse lines of Front Matter YAML into an associative array.
+     * 
+     * @deprecated 0.6.0 - Please use the MarkdownFileService for preprocessing
+     * 
      * @param array $lines
      * @return array
      */
