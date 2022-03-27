@@ -129,7 +129,7 @@ class StaticPageBuilder
     {
         return view('hyde::layouts/page')->with([
             'title' => $this->page->title,
-            'markdown' => MarkdownConverter::parse($this->page->content),
+            'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => $this->page->slug
         ])->render();
     }

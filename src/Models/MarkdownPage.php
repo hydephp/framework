@@ -2,25 +2,18 @@
 
 namespace Hyde\Framework\Models;
 
-use Hyde\Framework\Hyde;
 use JetBrains\PhpStorm\Pure;
 
 /**
- * A simple class that contains the content of a basic Markdown Page.
+ * The basis for custom Markdown Pages.
  */
-class MarkdownPage
+class MarkdownPage extends MarkdownDocument
 {
     /**
      * The Page Title
      * @var string
      */
     public string $title;
-
-    /**
-     * The Markdown Content
-     * @var string
-     */
-    public string $content;
 
     /**
      * The Post Slug
@@ -31,14 +24,15 @@ class MarkdownPage
     /**
      * Construct the object.
      *
+     * @param array $matter
+     * @param string $body
      * @param string $slug
      * @param string $title
-     * @param string $content
      */
-    public function __construct(string $slug, string $title, string $content)
+    #[Pure] public function __construct(array $matter, string $body, string $slug, string $title)
     {
-        $this->slug = $slug;
+        parent::__construct($matter, $body);
         $this->title = $title;
-        $this->content = $content;
+        $this->slug = $slug;
     }
 }

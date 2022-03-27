@@ -33,7 +33,10 @@ class MarkdownConverter
         if (Features::hasTorchlight()
             && config('torchlight.attribution.enabled', true)
             && str_contains($html, 'Syntax highlighted by torchlight.dev')) {
-            $html .= $converter->convert(config('torchlight.attribution.markdown', 'Syntax highlighted by torchlight.dev'));
+            $html .= $converter->convert(config(
+                'torchlight.attribution.markdown',
+                'Syntax highlighted by torchlight.dev'
+            ));
         }
 
         return $html;

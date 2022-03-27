@@ -2,8 +2,9 @@
 
 namespace Hyde\Framework;
 
+use Hyde\Framework\Services\MarkdownFileService;
 use Hyde\Framework\Models\MarkdownPage;
-use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 use Exception;
@@ -16,21 +17,16 @@ use Exception;
 class MarkdownPageParser
 {
     /**
-     * @var string the full path to the Markdown file
+     * The page title
+     * @var string
      */
-    private string $filepath;
-
+    public string $title;
+    
     /**
      * The extracted page body
      * @var string
      */
     public string $body;
-
-    /**
-     * The page title
-     * @var string
-     */
-    public string $title;
 
     /**
      * @param string $slug of the Markdown file (without extension)
@@ -39,8 +35,7 @@ class MarkdownPageParser
      */
     public function __construct(protected string $slug)
     {
-        $this->filepath = Hyde::path("_pages/$slug.md");
-        if (!file_exists($this->filepath)) {
+        if (!file_exists(Hyde::path("_pages/$slug.md"))) {
             throw new Exception("File _pages/$slug.md not found.", 404);
         }
 
@@ -54,12 +49,16 @@ class MarkdownPageParser
     #[NoReturn]
     public function execute(): void
     {
-        // Get the text stream from the markdown file
-        $stream = file_get_contents($this->filepath);
+        $document = (new MarkdownFileService(Hyde::path("_pages/$this->slug.md")))->get();
 
-        $this->title = $this->findTitleTag($stream) ?? Str::title(str_replace('-', ' ', $this->slug));
+        if (isset($document->matter['title'])) {
+            $this->title = $document->matter['title'];
+        } else {
+            $this->title = $this->findTitleTag($document->body) ??
+                Str::title(str_replace('-', ' ', $this->slug));
+        }
 
-        $this->body = $stream;
+        $this->body = $document->body;
     }
 
     /**
@@ -85,6 +84,6 @@ class MarkdownPageParser
     #[Pure]
     public function get(): MarkdownPage
     {
-        return new MarkdownPage($this->slug, $this->title, $this->body);
+        return new MarkdownPage([], $this->body, $this->slug, $this->title);
     }
 }
