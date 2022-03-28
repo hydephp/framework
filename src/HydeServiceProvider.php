@@ -38,7 +38,7 @@ class HydeServiceProvider extends ServiceProvider
             Commands\PublishStubsCommand::class,
             Commands\MakePostCommand::class,
             Commands\Validate::class,
-            Commands\Debug::class,
+            Commands\HydeDebugCommand::class,
         ]);
     }
 
