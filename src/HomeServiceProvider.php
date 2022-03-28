@@ -4,6 +4,9 @@ namespace Hyde\Framework;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Registers the publishable Home (Index) Pages.
+ */
 class HomeServiceProvider extends ServiceProvider
 {
     public function register()

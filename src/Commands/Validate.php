@@ -5,6 +5,9 @@ namespace Hyde\Framework\Commands;
 use Hyde\Framework\Hyde;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Runs the validation tests.
+ */
 class Validate extends Command
 {
     /**
