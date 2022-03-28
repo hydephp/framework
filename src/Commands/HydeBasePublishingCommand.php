@@ -24,7 +24,7 @@ use League\Flysystem\Visibility;
  *
  * @license MIT
  */
-abstract class BasePublishingCommand extends Command
+abstract class HydeBasePublishingCommand extends Command
 {
     protected $signature;
     protected $description;
