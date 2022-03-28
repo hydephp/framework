@@ -34,7 +34,7 @@ class HydeServiceProvider extends ServiceProvider
             Commands\HydePublishConfigsCommand::class,
             Commands\HydePublishViewsCommand::class,
             Commands\HydeBuildStaticSiteCommand::class,
-            Commands\MakeValidatorCommand::class,
+            Commands\HydeMakeValidatorCommand::class,
             Commands\PublishStubsCommand::class,
             Commands\HydeMakePostCommand::class,
             Commands\Validate::class,
