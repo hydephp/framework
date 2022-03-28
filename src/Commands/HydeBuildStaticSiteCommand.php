@@ -21,7 +21,7 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Hyde Command to run the Build Process.
  */
-class BuildStaticSiteCommand extends Command
+class HydeBuildStaticSiteCommand extends Command
 {
     /**
      * The signature of the command.
