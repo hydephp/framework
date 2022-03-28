@@ -6,10 +6,10 @@ use Hyde\Framework\Hyde;
 
 /**
  * Create the default directories required by the Application.
- * 
+ *
  * To prevent any issues with file generations, this action
  * is automatically whenever the application is booted.
- * 
+ *
  * This behavior is handled in the Service Provider.
  * @see Hyde\Framework\HydeServiceProvider
  */
@@ -36,7 +36,7 @@ class CreatesDefaultDirectories
 
     /**
      * Execute the action.
-     * 
+     *
      * @return void
      */
     public function __invoke(): void
@@ -49,7 +49,7 @@ class CreatesDefaultDirectories
 
     /**
      * Retrieve the array of default directories.
-     * 
+     *
      * @return array
      */
     public static function getRequiredDirectories(): array

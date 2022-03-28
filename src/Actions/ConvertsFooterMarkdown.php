@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 /**
  * Parse the Markdown text to show in the Footer.
- * 
+ *
  * Tries to convert the Markdown text if supplied in the config,
  * otherwise, it falls back to a default string.
  */

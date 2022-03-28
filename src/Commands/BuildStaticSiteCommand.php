@@ -99,7 +99,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                       (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
+                        (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -116,7 +116,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                       (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
+                        (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -134,7 +134,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                       (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
+                        (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -152,7 +152,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                       (new StaticPageBuilder((new BladePage($slug)), true));
+                        (new StaticPageBuilder((new BladePage($slug)), true));
                     }
                 );
                 $this->newLine(2);
