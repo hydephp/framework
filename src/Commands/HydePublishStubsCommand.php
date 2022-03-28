@@ -12,7 +12,7 @@ use LaravelZero\Framework\Commands\Command;
  *
  * @internal
  */
-class PublishStubsCommand extends Command
+class HydePublishStubsCommand extends Command
 {
     /**
      * The signature of the command.

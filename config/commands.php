@@ -63,7 +63,7 @@ return [
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         LaravelZero\Framework\Commands\StubPublishCommand::class,
         Hyde\Framework\Commands\HydeMakeValidatorCommand::class,
-        Hyde\Framework\Commands\PublishStubsCommand::class,
+        Hyde\Framework\Commands\HydePublishStubsCommand::class,
         Hyde\Framework\Commands\HydeDebugCommand::class,
     ],
 
