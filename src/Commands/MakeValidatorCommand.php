@@ -6,6 +6,11 @@ use Hyde\Framework\Hyde;
 use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Scaffold a new Validation Test File.
+ *
+ * @internal
+ */
 class MakeValidatorCommand extends Command
 {
     /**

@@ -5,11 +5,16 @@ namespace Hyde\Framework\Actions;
 use function config;
 use Illuminate\Support\Str;
 
+/**
+ * Parse the Markdown text to show in the Footer.
+ *
+ * Tries to convert the Markdown text if supplied in the config,
+ * otherwise, it falls back to a default string.
+ */
 class ConvertsFooterMarkdown
 {
     /**
-     * Convert the Markdown text if supplied in the config,
-     * or fall back to default to generate HTML for the footer.
+     * Execute the action.
      *
      * @return string $html
      */

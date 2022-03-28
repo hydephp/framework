@@ -6,6 +6,9 @@ use Exception;
 use Hyde\Framework\Actions\CreatesNewMarkdownPostFile;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Hyde Command to scaffold a new Markdown Post.
+ */
 class MakePostCommand extends Command
 {
     /**

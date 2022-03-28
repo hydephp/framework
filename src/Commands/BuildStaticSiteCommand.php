@@ -18,6 +18,9 @@ use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Hyde Command to run the Build Process.
+ */
 class BuildStaticSiteCommand extends Command
 {
     /**
@@ -26,11 +29,11 @@ class BuildStaticSiteCommand extends Command
      * @var string
      */
     protected $signature = 'build 
-    {--run-dev : Run the NPM dev script after build}
-    {--run-prod : Run the NPM prod script after build}
-    {--pretty : Should the build files be prettified?}
-    {--clean : Should the output directory be emptied before building?}
-    {--force : Allow file deletions when using --clean without confirmation?}';
+        {--run-dev : Run the NPM dev script after build}
+        {--run-prod : Run the NPM prod script after build}
+        {--pretty : Should the build files be prettified?}
+        {--clean : Should the output directory be emptied before building?}
+        {--force : Allow file deletions when using --clean without confirmation?}';
 
     /**
      * The description of the command.
@@ -38,15 +41,6 @@ class BuildStaticSiteCommand extends Command
      * @var string
      */
     protected $description = 'Build the static site';
-
-    private function debug(array $output)
-    {
-        if ($this->getOutput()->isVeryVerbose()) {
-            $this->newLine();
-            $this->line("<fg=gray>Created {$output['createdFileSize']} byte file {$output['createdFilePath']}</>");
-            $this->newLine();
-        }
-    }
 
     /**
      * Execute the console command.
@@ -74,11 +68,6 @@ class BuildStaticSiteCommand extends Command
                     return 1;
                 }
             }
-        }
-
-        if ($this->getOutput()->isVeryVerbose()) {
-            $this->warn('Running with high verbosity');
-            $this->newLine();
         }
 
         $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
@@ -110,8 +99,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                        $this->debug((new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true))
-                            ->getDebugOutput());
+                        (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -128,8 +116,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                        $this->debug((new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true))
-                            ->getDebugOutput());
+                        (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -147,8 +134,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                        $this->debug((new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true))
-                            ->getDebugOutput());
+                        (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
                     }
                 );
                 $this->newLine(2);
@@ -166,8 +152,7 @@ class BuildStaticSiteCommand extends Command
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
-                        $this->debug((new StaticPageBuilder((new BladePage($slug)), true))
-                            ->getDebugOutput());
+                        (new StaticPageBuilder((new BladePage($slug)), true));
                     }
                 );
                 $this->newLine(2);
@@ -218,6 +203,11 @@ class BuildStaticSiteCommand extends Command
         return 0;
     }
 
+    /**
+     * Clear the entire _site directory before running the build.
+     *
+     * @return void
+     */
     public function purge()
     {
         $this->warn('Removing all files from build directory.');

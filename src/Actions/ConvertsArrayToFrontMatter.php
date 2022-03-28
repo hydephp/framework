@@ -2,10 +2,13 @@
 
 namespace Hyde\Framework\Actions;
 
+/**
+ * Convert an array into YAML Front Matter.
+ */
 class ConvertsArrayToFrontMatter
 {
     /**
-     * Convert an array into YAML Front Matter.
+     * Execute the action.
      *
      * @todo add support for nested arrays
      *
@@ -14,15 +17,24 @@ class ConvertsArrayToFrontMatter
      */
     public function execute(array $array): string
     {
+        // Initialize the array
         $yaml = [];
+
+        // Set the first line to the opening starting block
         $yaml[] = '---';
+
+        // For each line, add the key-value pair as YAML
         foreach ($array as $key => $value) {
             $yaml[] = "$key: $value";
         }
 
+        // Set the closing block
         $yaml[] = '---';
+
+        // Add an extra line
         $yaml[] = '';
 
+        // Return the array imploded into a string with newline characters
         return implode("\n", $yaml);
     }
 }
