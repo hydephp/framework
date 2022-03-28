@@ -5,6 +5,11 @@ namespace Hyde\Framework\Commands;
 use Hyde\Framework\Hyde;
 use LaravelZero\Framework\Commands\Command;
 
+/**
+ * Hyde Command to print debug information.
+ * 
+ * @deprecated 0.6.0 - Class will be renamed to DebugCommand
+ */
 class Debug extends Command
 {
     /**
