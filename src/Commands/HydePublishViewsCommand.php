@@ -16,7 +16,7 @@ use LaravelZero\Framework\Commands\Command;
  *
  * @license MIT
  */
-class HydePublishViewsCommand extends BasePublishingCommand
+class HydePublishViewsCommand extends HydeBasePublishingCommand
 {
     /**
      * The signature of the command.

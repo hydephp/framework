@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Publish one of the default homepages.
  */
-class HydePublishHomepageCommand extends BasePublishingCommand
+class HydePublishHomepageCommand extends HydeBasePublishingCommand
 {
     protected $signature = 'publish:homepage
                                 {homepage? : The name of the page to publish}

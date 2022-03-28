@@ -11,7 +11,7 @@ use LaravelZero\Framework\Commands\Command;
  *
  * @internal
  */
-class MakeValidatorCommand extends Command
+class HydeMakeValidatorCommand extends Command
 {
     /**
      * The signature of the command.

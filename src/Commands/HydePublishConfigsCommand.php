@@ -8,9 +8,9 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Publish the Hyde Config Files.
  *
- * @uses BasePublishingCommand
+ * @uses HydeBasePublishingCommand
  */
-class HydePublishConfigsCommand extends BasePublishingCommand
+class HydePublishConfigsCommand extends HydeBasePublishingCommand
 {
     protected $signature = 'publish:configs {--force : Overwrite any existing files}';
 

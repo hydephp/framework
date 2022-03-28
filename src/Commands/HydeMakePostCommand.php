@@ -9,7 +9,7 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Hyde Command to scaffold a new Markdown Post.
  */
-class MakePostCommand extends Command
+class HydeMakePostCommand extends Command
 {
     /**
      * The signature of the command.

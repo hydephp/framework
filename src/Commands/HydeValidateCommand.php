@@ -8,7 +8,7 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Runs the validation tests.
  */
-class Validate extends Command
+class HydeValidateCommand extends Command
 {
     /**
      * The signature of the command.
