@@ -9,6 +9,7 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Publish test file stubs.
+ *
  * @internal
  */
 class PublishStubsCommand extends Command
@@ -70,9 +71,9 @@ class PublishStubsCommand extends Command
         return 0;
     }
 
-    
     /**
      * Clear all the _content directories before publishing the stubs.
+     *
      * @return void
      */
     public function purge()

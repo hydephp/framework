@@ -205,6 +205,7 @@ class BuildStaticSiteCommand extends Command
 
     /**
      * Clear the entire _site directory before running the build.
+     *
      * @return void
      */
     public function purge()

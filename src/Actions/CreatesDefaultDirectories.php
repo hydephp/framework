@@ -11,6 +11,7 @@ use Hyde\Framework\Hyde;
  * is automatically whenever the application is booted.
  *
  * This behavior is handled in the Service Provider.
+ *
  * @see Hyde\Framework\HydeServiceProvider
  */
 class CreatesDefaultDirectories
