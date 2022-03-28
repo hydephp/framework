@@ -32,5 +32,8 @@
     </section>
 
     @includeUnless(config('hyde.footer.enabled', true) && ($withoutNavigation ?? false), 'hyde::layouts.footer') 
+
+    <!-- The main app script -->
+    <script defer src="{{ Hyde::relativePath('media/app.js', $currentPage) }}"></script>
 </body>
 </html>
