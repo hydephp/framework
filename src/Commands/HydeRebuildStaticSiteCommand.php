@@ -27,7 +27,6 @@ class HydeRebuildStaticSiteCommand extends Command
      */
     protected $description = 'Run the static site builder for a single file';
 
-
     /**
      * The Service Class.
      * @var BuildService
@@ -69,10 +68,15 @@ class HydeRebuildStaticSiteCommand extends Command
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
 
-        $this->info('Created ' . $this->createClickableFilepath($this->service->builder->createdFilePath) . ' in ' .number_format(
-            $execution_time,
-            2
-        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
+        $this->info(sprintf(
+            "Created %s in %s seconds. (%sms)",
+            $this->createClickableFilepath($this->service->builder->createdFilePath),
+            number_format(
+                $execution_time,
+                2
+            ),
+            number_format(($execution_time * 1000), 2)
+        ));
 
         return 0;
     }
@@ -107,7 +111,12 @@ class HydeRebuildStaticSiteCommand extends Command
         }
     }
 
-    public function handleException(Exception $exception)
+    /**
+     * Output the contents of an exception.
+     * @param Exception $exception
+     * @return int Error code
+     */
+    public function handleException(Exception $exception): int
     {
         $this->error('Something went wrong!');
         $this->warn($exception->getMessage());
@@ -115,6 +124,11 @@ class HydeRebuildStaticSiteCommand extends Command
         return $exception->getCode();
     }
 
+    /**
+     * Create a filepath that can be opened in the browser from a terminal.
+     * @param string $filepath
+     * @return string
+     */
     public function createClickableFilepath(string $filepath)
     {
         return 'file://'.str_replace(
