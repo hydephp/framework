@@ -34,6 +34,13 @@ class BuildService
     public string $model;
 
     /**
+     * The page builder instance.
+     * Used to get debug output from the builder.
+     * @var StaticPageBuilder
+     */
+    public StaticPageBuilder $builder;
+
+    /**
      * @param string $filepath
      */
     public function __construct(string $filepath)
@@ -60,22 +67,22 @@ class BuildService
     {
         if ($this->model === MarkdownPost::class) {
             $slug = basename(str_replace('_posts/', '', $this->filepath), '.md');
-            return (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
+            return $this->builder = (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
         }
 
         if ($this->model === MarkdownPage::class) {
             $slug = basename(str_replace('_pages/', '', $this->filepath), '.md');
-            return (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
+            return $this->builder = (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
         }
 
         if ($this->model === DocumentationPage::class) {
             $slug = basename(str_replace('_docs/', '', $this->filepath), '.md');
-            return (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
+            return $this->builder = (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
         }
 
         if ($this->model === BladePage::class) {
             $slug = basename(str_replace('resources/views/pages/', '', $this->filepath), '.blade.php');
-            return (new StaticPageBuilder((new BladePage($slug)), true));
+            return $this->builder = (new StaticPageBuilder((new BladePage($slug)), true));
         }
 
         throw new Exception('Could not run the builder.', 400);
