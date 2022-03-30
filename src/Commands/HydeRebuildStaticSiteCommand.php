@@ -129,7 +129,7 @@ class HydeRebuildStaticSiteCommand extends Command
      * @param string $filepath
      * @return string
      */
-    public function createClickableFilepath(string $filepath)
+    public function createClickableFilepath(string $filepath): string
     {
         return 'file://'.str_replace(
             '\\',
