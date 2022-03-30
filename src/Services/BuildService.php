@@ -3,13 +3,13 @@
 namespace Hyde\Framework\Services;
 
 use Exception;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\MarkdownPageParser;
 use Hyde\Framework\MarkdownPostParser;
+use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\StaticPageBuilder;
 
 /**
@@ -22,13 +22,16 @@ class BuildService
     /**
      * The source file to build.
      * Should be relative to the Hyde::path() helper.
+     *
      * @var string
      */
     public string $filepath;
 
     /**
      * The model of the source file.
+     *
      * @var string
+     *
      * @internal
      */
     public string $model;
@@ -36,12 +39,13 @@ class BuildService
     /**
      * The page builder instance.
      * Used to get debug output from the builder.
+     *
      * @var StaticPageBuilder
      */
     public StaticPageBuilder $builder;
 
     /**
-     * @param string $filepath
+     * @param  string  $filepath
      */
     public function __construct(string $filepath)
     {
@@ -50,6 +54,7 @@ class BuildService
 
     /**
      * Execute the service action.
+     *
      * @throws Exception
      */
     public function execute()
@@ -61,27 +66,32 @@ class BuildService
 
     /**
      * Handle the service action.
+     *
      * @throws Exception
      */
     public function handle(): StaticPageBuilder
     {
         if ($this->model === MarkdownPost::class) {
             $slug = basename(str_replace('_posts/', '', $this->filepath), '.md');
+
             return $this->builder = (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
         }
 
         if ($this->model === MarkdownPage::class) {
             $slug = basename(str_replace('_pages/', '', $this->filepath), '.md');
+
             return $this->builder = (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
         }
 
         if ($this->model === DocumentationPage::class) {
             $slug = basename(str_replace('_docs/', '', $this->filepath), '.md');
+
             return $this->builder = (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
         }
 
         if ($this->model === BladePage::class) {
             $slug = basename(str_replace('resources/views/pages/', '', $this->filepath), '.blade.php');
+
             return $this->builder = (new StaticPageBuilder((new BladePage($slug)), true));
         }
 
@@ -90,6 +100,7 @@ class BuildService
 
     /**
      * Determine the proper model of the source file.
+     *
      * @throws Exception
      */
     public function determineModel(): string
