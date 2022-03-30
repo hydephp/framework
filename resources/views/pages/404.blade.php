@@ -478,7 +478,7 @@
                     Sorry, the page you are looking for could not be found.
                 </p>
 
-                <a href="index.html">
+                <a href="{{ config('hyde.site_url') ?? '/' }}">
                     <button
                         class="bg-transparent text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg">
                         Go Home
