@@ -88,7 +88,7 @@ class HydeRebuildStaticSiteCommand extends Command
      */
     public function sanitizePathString(string $path): string
     {
-        return ltrim($path, '.\\/');
+        return str_replace('\\', '/', trim($path, '.\\/'));
     }
 
     /**
