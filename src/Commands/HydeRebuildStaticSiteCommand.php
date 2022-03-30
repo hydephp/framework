@@ -29,12 +29,14 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * The Service Class.
+     *
      * @var BuildService
      */
     protected BuildService $service;
 
     /**
      * The source path.
+     *
      * @var string
      */
     public string $path;
@@ -56,7 +58,6 @@ class HydeRebuildStaticSiteCommand extends Command
             return $this->handleException($exception);
         }
 
-
         $this->service = new BuildService($this->path);
 
         try {
@@ -69,7 +70,7 @@ class HydeRebuildStaticSiteCommand extends Command
         $execution_time = ($time_end - $time_start);
 
         $this->info(sprintf(
-            "Created %s in %s seconds. (%sms)",
+            'Created %s in %s seconds. (%sms)',
             $this->createClickableFilepath($this->service->builder->createdFilePath),
             number_format(
                 $execution_time,
@@ -83,7 +84,8 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * Perform a basic sanitation to strip trailing characters.
-     * @param string $path
+     *
+     * @param  string  $path
      * @return string
      */
     public function sanitizePathString(string $path): string
@@ -93,11 +95,12 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * Validate the path to catch common errors.
+     *
      * @throws Exception
      */
     public function validate(): void
     {
-        if (!(
+        if (! (
             str_starts_with($this->path, '_docs') ||
             str_starts_with($this->path, '_posts') ||
             str_starts_with($this->path, '_pages') ||
@@ -106,14 +109,15 @@ class HydeRebuildStaticSiteCommand extends Command
             throw new Exception("Path [$this->path] is not in a valid source directory.", 400);
         }
 
-        if (!file_exists(Hyde::path($this->path))) {
+        if (! file_exists(Hyde::path($this->path))) {
             throw new Exception("File [$this->path] not found.", 404);
         }
     }
 
     /**
      * Output the contents of an exception.
-     * @param Exception $exception
+     *
+     * @param  Exception  $exception
      * @return int Error code
      */
     public function handleException(Exception $exception): int
@@ -126,7 +130,8 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * Create a filepath that can be opened in the browser from a terminal.
-     * @param string $filepath
+     *
+     * @param  string  $filepath
      * @return string
      */
     public function createClickableFilepath(string $filepath): string
