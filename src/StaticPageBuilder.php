@@ -10,7 +10,7 @@ use Hyde\Framework\Models\MarkdownPost;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * Generates a static HTML page and saves it.
+ * Converts a Page Model into a static HTML page.
  */
 class StaticPageBuilder
 {
