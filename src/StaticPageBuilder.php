@@ -127,7 +127,7 @@ class StaticPageBuilder
             'docs' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->content),
-            'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/') . '/' . $this->page->slug
+            'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/').'/'.$this->page->slug,
         ])->render();
     }
 
