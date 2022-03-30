@@ -1,7 +1,7 @@
 <header class="h-16 p-4 border-b flex items-center">
     <h2 class="font-bold opacity-75 hover:opacity-100 w-fit">
         @if(Hyde::docsIndexPath() !== false)
-        <a href="../{{ Hyde::docsIndexPath() }}">
+        <a href="{{ Hyde::relativePath(Hyde::docsIndexPath(), $currentPage) }}">
             {{ config('hyde.name') }} Docs
         </a>
         @else
