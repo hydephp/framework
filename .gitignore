@@ -10,3 +10,4 @@ StormRunner.php
 docs
 .phpdoc
 phpDocumentor.phar
+phpdoc.dist.xml
