@@ -25,6 +25,11 @@ class CreatesNewPageSourceFile
 	 */
 	public string $slug;
 
+	/**
+	 * The file path.
+	 */
+	public string $path;
+
     /**
      * Construct the class.
      *
@@ -67,8 +72,9 @@ class CreatesNewPageSourceFile
 	 */
 	public function createMarkdownFile(): int|false
     {
+		$this->path = Hyde::path("_pages/$this->slug.md");
 		return file_put_contents(
-			Hyde::path("_pages/$this->slug.md"),
+			$this->path,
 			"---\ntitle: $this->title\n---\n\n# $this->title\n"
 		);
 	}
@@ -80,8 +86,10 @@ class CreatesNewPageSourceFile
 	 */
 	public function createBladeFile(): int|false
     {
+		$this->path = Hyde::path("resources/views/pages/$this->slug.blade.php");
+
 		return file_put_contents(
-			Hyde::path("resources/views/pages/$this->slug.blade.php"),
+			$this->path,
 			<<<EOF
 @extends('hyde::layouts.app')
 @section('content')
