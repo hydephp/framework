@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:site_name" content="{{ config('hyde.name', 'HydePHP') }}">
 
+    @if (file_exists(Hyde::path('_media/favicon.ico')))
+        <link rel="shortcut icon" href="{{ Hyde::relativePath('media/favicon.ico', $currentPage) }}" type="image/x-icon">
+    @endif
+
     @stack('meta')
     
     @include('hyde::layouts.meta') 
