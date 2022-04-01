@@ -63,7 +63,7 @@ class StaticPageBuilder
 
         if ($this->page instanceof DocumentationPage) {
             if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
-                mkdir(Hyde::path('_site/'.Hyde::docsDirectory()));
+                mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
             }
 
             return $this->save(Hyde::docsDirectory().'/'.$this->page->slug, $this->compileDocs());
