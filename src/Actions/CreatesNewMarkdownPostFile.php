@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 /**
  * Offloads logic for the make:post command.
- * 
+ *
  * @todo Create a unit test.
  *
  * This class is executed when creating a new Markdown Post
