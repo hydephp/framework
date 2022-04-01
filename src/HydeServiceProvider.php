@@ -38,6 +38,7 @@ class HydeServiceProvider extends ServiceProvider
             Commands\HydeMakeValidatorCommand::class,
             Commands\HydePublishStubsCommand::class,
             Commands\HydeMakePostCommand::class,
+            Commands\HydeMakePageCommand::class,
             Commands\HydeValidateCommand::class,
             Commands\HydeDebugCommand::class,
         ]);
