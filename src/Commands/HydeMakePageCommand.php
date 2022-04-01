@@ -13,80 +13,82 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeMakePageCommand extends Command
 {
-	/**
-	 * The name and signature of the console command.
-	 *
-	 * @var string
-	 */
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'make:page 
 		{title : The name of the page file to create. Will be used to generate the slug}
 		{--type=markdown : The type of page to create (markdown or blade)}
 		{--force : Overwrite any existing files}';
 
-	/**
-	 * The console command description.
-	 * 
-	 * @var string
-	 */
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Scaffold a new Markdown or Blade page file';
 
-	/**
-	 * The page title.
-	 */
-	public string $title;
+    /**
+     * The page title.
+     */
+    public string $title;
 
-	/**
-	 * The page type.
-	 */
-	public string $type;
+    /**
+     * The page type.
+     */
+    public string $type;
 
-	/**
-	 * Can the file be overwritten?
-	 */
-	public bool $force;
+    /**
+     * Can the file be overwritten?
+     */
+    public bool $force;
 
     /**
      * Execute the console command.
      *
      * @return int the exit code of the command.
+     *
      * @throws Exception if the page type is invalid.
      */
-	public function handle(): int
-	{
-		$this->title('Creating a new page!');
+    public function handle(): int
+    {
+        $this->title('Creating a new page!');
 
-		$this->title = $this->argument('title');
+        $this->title = $this->argument('title');
 
-		$this->validateOptions();
+        $this->validateOptions();
 
-		$this->force = $this->option('force') ?? false;
+        $this->force = $this->option('force') ?? false;
 
-		$creator = new CreatesNewPageSourceFile($this->title, $this->type, $this->force);
+        $creator = new CreatesNewPageSourceFile($this->title, $this->type, $this->force);
 
-		$this->info("Created file $creator->path");
+        $this->info("Created file $creator->path");
 
-		return 0;
-	}
+        return 0;
+    }
 
     /**
      * Validate the options passed to the command.
      *
      * @return void
+     *
      * @throws Exception if the page type is invalid.
      */
-	protected function validateOptions(): void
-	{
-		$type = strtolower($this->option('type') ?? 'markdown');
+    protected function validateOptions(): void
+    {
+        $type = strtolower($this->option('type') ?? 'markdown');
 
-		if (!in_array($type, ['markdown', 'blade'])) {
-			throw new Exception("Invalid page type: $type", 400);
-		}
+        if (! in_array($type, ['markdown', 'blade'])) {
+            throw new Exception("Invalid page type: $type", 400);
+        }
 
-		// Set the type to the fully qualified class name
-		if ($type === 'markdown') {
-			$this->type = MarkdownPage::class;
-		} else {
-			$this->type = BladePage::class;
-		}
-	}
+        // Set the type to the fully qualified class name
+        if ($type === 'markdown') {
+            $this->type = MarkdownPage::class;
+        } else {
+            $this->type = BladePage::class;
+        }
+    }
 }

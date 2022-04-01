@@ -9,107 +9,112 @@ use Hyde\Framework\Models\MarkdownPage;
 use Illuminate\Support\Str;
 
 /**
- * Scaffold a new Markdown or Blade page
+ * Scaffold a new Markdown or Blade page.
  */
 class CreatesNewPageSourceFile
 {
-	/**
-	 * The Page title.
-	 *
-	 * @var string
-	 */
-	public string $title;
+    /**
+     * The Page title.
+     *
+     * @var string
+     */
+    public string $title;
 
-	/**
-	 * The Page slug.
-	 */
-	public string $slug;
+    /**
+     * The Page slug.
+     */
+    public string $slug;
 
-	/**
-	 * The file path.
-	 */
-	public string $path;
+    /**
+     * The file path.
+     */
+    public string $path;
 
     /**
      * Construct the class.
      *
-     * @param string $title - The page title, will be used to generate the slug
-     * @param string $type - The page type, either 'markdown' or 'blade'
-	 * @param bool $force - Overwrite any existing files
+     * @param  string  $title  - The page title, will be used to generate the slug
+     * @param  string  $type  - The page type, either 'markdown' or 'blade'
+     * @param  bool  $force  - Overwrite any existing files
+     *
      * @throws Exception if the page type is not 'markdown' or 'blade'
-	 */
-	public function __construct(string $title, string $type = MarkdownPage::class, public bool $force = false)
-	{
-		$this->title = $title;
-		$this->slug = Str::slug($title);
+     */
+    public function __construct(string $title, string $type = MarkdownPage::class, public bool $force = false)
+    {
+        $this->title = $title;
+        $this->slug = Str::slug($title);
 
-		$this->createPage($type);
-	}
+        $this->createPage($type);
+    }
 
     /**
      * Check if the file can be saved.
+     *
      * @throws Exception if the file already exists and cannot be overwritten
-	 */
-	public function canSaveFile(string $path): void
-	{
-		if (file_exists($path) && !$this->force) {
-			throw new Exception("File $path already exists!", 409);
-		}
-	}
+     */
+    public function canSaveFile(string $path): void
+    {
+        if (file_exists($path) && ! $this->force) {
+            throw new Exception("File $path already exists!", 409);
+        }
+    }
 
     /**
      * Create the page.
      *
-     * @param string $type - The page type, either 'markdown' or 'blade'
+     * @param  string  $type  - The page type, either 'markdown' or 'blade'
+     * @return int|false the size of the file created, or false on failure.
+     *
      * @throws Exception if the page type is not 'markdown' or 'blade'
-	 * @return int|false the size of the file created, or false on failure.
-	 */
-	public function createPage(string $type): int|false
+     */
+    public function createPage(string $type): int|false
     {
-		// Check that the page type is either 'markdown' or 'blade'
-		if ($type === MarkdownPage::class) {
-			return $this->createMarkdownFile();
-		} 
-		if ($type === BladePage::class) {
-			return $this->createBladeFile();
-		} 
+        // Check that the page type is either 'markdown' or 'blade'
+        if ($type === MarkdownPage::class) {
+            return $this->createMarkdownFile();
+        }
+        if ($type === BladePage::class) {
+            return $this->createBladeFile();
+        }
 
-		throw new Exception('The page type must be either "markdown" or "blade"');
-	}
+        throw new Exception('The page type must be either "markdown" or "blade"');
+    }
 
     /**
      * Create the Markdown file.
      *
      * @return int|false the size of the file created, or false on failure.
+     *
      * @throws Exception if the file cannot be saved.
      */
-	public function createMarkdownFile(): int|false
+    public function createMarkdownFile(): int|false
     {
-		$this->path = Hyde::path("_pages/$this->slug.md");
+        $this->path = Hyde::path("_pages/$this->slug.md");
 
-		$this->canSaveFile($this->path);
+        $this->canSaveFile($this->path);
 
-		return file_put_contents(
-			$this->path,
-			"---\ntitle: $this->title\n---\n\n# $this->title\n"
-		);
-	}
+        return file_put_contents(
+            $this->path,
+            "---\ntitle: $this->title\n---\n\n# $this->title\n"
+        );
+    }
 
-	/**
-	 * Create the Blade file.
-	 * 
-	 * @return int|false the size of the file created, or false on failure.
+    /**
+     * Create the Blade file.
+     *
+     * @return int|false the size of the file created, or false on failure.
+     *
      * @throws Exception if the file cannot be saved.
-	 */
-	public function createBladeFile(): int|false
+     */
+    public function createBladeFile(): int|false
     {
-		$this->path = Hyde::path("resources/views/pages/$this->slug.blade.php");
-		
-		$this->canSaveFile($this->path);
+        $this->path = Hyde::path("resources/views/pages/$this->slug.blade.php");
 
-		return file_put_contents(
-			$this->path,
-			<<<EOF
+        $this->canSaveFile($this->path);
+
+        return file_put_contents(
+            $this->path,
+            <<<EOF
 @extends('hyde::layouts.app')
 @section('content')
 @php(\$title = "$this->title")
@@ -122,5 +127,5 @@ class CreatesNewPageSourceFile
 
 EOF
 );
-	}
+    }
 }
