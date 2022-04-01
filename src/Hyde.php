@@ -18,7 +18,7 @@ class Hyde
      */
     public static function version(): string
     {
-        return InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+        return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
     }
 
     /**
