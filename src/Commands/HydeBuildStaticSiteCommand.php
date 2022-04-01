@@ -162,7 +162,7 @@ class HydeBuildStaticSiteCommand extends Command
         if ($this->option('pretty')) {
             $this->info('Prettifying code! This may take a second.');
             try {
-                $this->line(shell_exec('npx prettier _site/ --write'));
+                $this->line(shell_exec('npx prettier _site/ --write --bracket-same-line'));
             } catch (Exception) {
                 $this->warn('Could not prettify code! Is NPM installed?');
             }
