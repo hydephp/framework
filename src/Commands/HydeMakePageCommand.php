@@ -64,7 +64,7 @@ class HydeMakePageCommand extends Command
 	{
 		$this->title = $this->argument('title');
 		
-		$type = $this->option('type') ?? 'markdown';
+		$type = strtolower($this->option('type') ?? 'markdown');
 
 		if (!in_array($type, ['markdown', 'blade'])) {
 			throw new Exception("Invalid page type: $type", 400);
