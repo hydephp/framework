@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
+use Exception;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -25,10 +26,11 @@ class CreatesNewStaticPageSourceFile
 	public string $slug;
 
     /**
-	 * Construct the class.
-	 *
-	 * @param string $title - The page title, will be used to generate the slug
-	 * @param string $type - The page type, either 'markdown' or 'blade'
+     * Construct the class.
+     *
+     * @param string $title - The page title, will be used to generate the slug
+     * @param string $type - The page type, either 'markdown' or 'blade'
+     * @throws Exception if the page type is not 'markdown' or 'blade'
 	 */
 	public function __construct(string $title, string $type = MarkdownPage::class)
 	{
@@ -42,10 +44,11 @@ class CreatesNewStaticPageSourceFile
      * Create the page.
      *
      * @param string $type - The page type, either 'markdown' or 'blade'
-     * @throws \Exception if the page type is not 'markdown' or 'blade'
+     * @throws Exception if the page type is not 'markdown' or 'blade'
+	 * @return int|false the size of the file created, or false on failure.
 	 */
-	public function createPage(string $type)
-	{
+	public function createPage(string $type): int|false
+    {
 		// Check that the page type is either 'markdown' or 'blade'
 		if ($type === MarkdownPage::class) {
 			return $this->createMarkdownFile();
@@ -54,36 +57,43 @@ class CreatesNewStaticPageSourceFile
 			return $this->createBladeFile();
 		} 
 
-		throw new \Exception('The page type must be either "markdown" or "blade"');
+		throw new Exception('The page type must be either "markdown" or "blade"');
 	}
 
 	/**
 	 * Create the Markdown file.
+	 * 
+	 * @return int|false the size of the file created, or false on failure.
 	 */
-	public function createMarkdownFile()
-	{
+	public function createMarkdownFile(): int|false
+    {
 		return file_put_contents(
-			Hyde::path("_pages/{$this->slug}.md"),
-			"---\ntitle: {$this->title}\n---\n\n# {$this->title}\n"
+			Hyde::path("_pages/$this->slug.md"),
+			"---\ntitle: $this->title\n---\n\n# $this->title\n"
 		);
 	}
 
 	/**
 	 * Create the Blade file.
+	 * 
+	 * @return int|false the size of the file created, or false on failure.
 	 */
-	public function createBladeFile()
-	{
+	public function createBladeFile(): int|false
+    {
 		return file_put_contents(
-			Hyde::path("resources/views/pages/{$this->slug}.blade.php"),
-			"@extends('hyde::layouts.app')
+			Hyde::path("resources/views/pages/$this->slug.blade.php"),
+			<<<EOF
+@extends('hyde::layouts.app')
 @section('content')
-@php(\$title = \"{$this->title}\")
+@php(\$title = "$this->title")
 
-<main class=\"mx-auto max-w-7xl py-16 px-8\">
-	<h1 class=\"text-center text-3xl font-bold\">{$this->title}</h1>
+<main class="mx-auto max-w-7xl py-16 px-8">
+	<h1 class="text-center text-3xl font-bold">$this->title</h1>
 </main>
 
 @endsection
-");
+
+EOF
+);
 	}
 }
