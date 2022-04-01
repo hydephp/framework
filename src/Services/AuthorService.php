@@ -23,7 +23,7 @@ class AuthorService
      */
     public function __construct()
     {
-        $this->filepath = Hyde::path('_data/authors.yml');
+        $this->filepath = Hyde::path('config/authors.yml');
 
         if (file_exists($this->filepath)) {
             $this->yaml = $this->getYaml();

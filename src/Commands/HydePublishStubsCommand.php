@@ -50,7 +50,6 @@ class HydePublishStubsCommand extends Command
         $this->info('Publishing test stubs');
 
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_posts'), Hyde::path('_posts'));
-        File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_data'), Hyde::path('_data'));
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_media'), Hyde::path('_media'));
         File::copyDirectory(Hyde::path('vendor/hyde/framework/tests/stubs/_pages'), Hyde::path('_pages'));
 
@@ -80,9 +79,7 @@ class HydePublishStubsCommand extends Command
     {
         $this->warn('Removing all _content directories.');
 
-        File::deleteDirectory(Hyde::path('_data'));
         File::deleteDirectory(Hyde::path('_docs'));
-        File::deleteDirectory(Hyde::path('_drafts'));
         File::deleteDirectory(Hyde::path('_media'));
         File::deleteDirectory(Hyde::path('_pages'));
         File::deleteDirectory(Hyde::path('_posts'));

@@ -5,7 +5,7 @@ namespace Hyde\Framework\Models;
 /**
  * The Post Author Object Model.
  *
- * The Author is parsed from the authors.yml file using the AuthorService class
+ * The Author is parsed from the config/authors.yml file using the AuthorService class
  */
 class Author
 {

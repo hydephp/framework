@@ -22,12 +22,10 @@ class CreatesDefaultDirectories
      * @var array
      */
     protected array $requiredDirectories = [
-        '_drafts',
         '_pages',
         '_posts',
         '_media',
         '_docs',
-        '_data',
         '_site',
         '_site/posts',
         '_site/media',
