@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * Scaffold a new Markdown or Blade page
  */
-class CreatesNewStaticPageSourceFile
+class CreatesNewPageSourceFile
 {
 	/**
 	 * The Page title.
