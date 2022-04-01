@@ -3,6 +3,9 @@
 namespace Hyde\Framework\Commands;
 
 use Exception;
+use Hyde\Framework\Actions\CreatesNewPageSourceFile;
+use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\MarkdownPage;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -37,29 +40,31 @@ class HydeMakePageCommand extends Command
 	 */
 	public string $type;
 
-	/**
-	 * Execute the console command.
-	 * 
-	 * @return int
-	 */
+    /**
+     * Execute the console command.
+     *
+     * @return int the exit code of the command.
+     * @throws Exception if the page type is invalid.
+     */
 	public function handle(): int
 	{
 		$this->title('Creating a new page!');
 
 		$this->validateOptions();
 
-		$creator = new \Hyde\Framework\Actions\CreatesNewPageSourceFile($this->title, $this->type);
+		$creator = new CreatesNewPageSourceFile($this->title, $this->type);
 
 		$this->line("Created file $creator->path");
 
 		return 0;
 	}
 
-	/**
-	 * Validate the options passed to the command.
-	 * 
-	 * @return void
-	 */
+    /**
+     * Validate the options passed to the command.
+     *
+     * @return void
+     * @throws Exception if the page type is invalid.
+     */
 	protected function validateOptions(): void
 	{
 		$this->title = $this->argument('title');
@@ -72,9 +77,9 @@ class HydeMakePageCommand extends Command
 
 		// Set the type to the fully qualified class name
 		if ($type === 'markdown') {
-			$this->type = \Hyde\Framework\Models\MarkdownPage::class;
+			$this->type = MarkdownPage::class;
 		} else {
-			$this->type = \Hyde\Framework\Models\BladePage::class;
+			$this->type = BladePage::class;
 		}
 	}
 }
