@@ -35,14 +35,26 @@ class CreatesNewPageSourceFile
      *
      * @param string $title - The page title, will be used to generate the slug
      * @param string $type - The page type, either 'markdown' or 'blade'
+	 * @param bool $force - Overwrite any existing files
      * @throws Exception if the page type is not 'markdown' or 'blade'
 	 */
-	public function __construct(string $title, string $type = MarkdownPage::class)
+	public function __construct(string $title, string $type = MarkdownPage::class, public bool $force = false)
 	{
 		$this->title = $title;
 		$this->slug = Str::slug($title);
 
 		$this->createPage($type);
+	}
+
+    /**
+     * Check if the file can be saved.
+     * @throws Exception if the file already exists and cannot be overwritten
+	 */
+	public function canSaveFile(string $path): void
+	{
+		if (file_exists($path) && !$this->force) {
+			throw new Exception("File $path already exists!", 409);
+		}
 	}
 
     /**
@@ -65,14 +77,18 @@ class CreatesNewPageSourceFile
 		throw new Exception('The page type must be either "markdown" or "blade"');
 	}
 
-	/**
-	 * Create the Markdown file.
-	 * 
-	 * @return int|false the size of the file created, or false on failure.
-	 */
+    /**
+     * Create the Markdown file.
+     *
+     * @return int|false the size of the file created, or false on failure.
+     * @throws Exception if the file cannot be saved.
+     */
 	public function createMarkdownFile(): int|false
     {
 		$this->path = Hyde::path("_pages/$this->slug.md");
+
+		$this->canSaveFile($this->path);
+
 		return file_put_contents(
 			$this->path,
 			"---\ntitle: $this->title\n---\n\n# $this->title\n"
@@ -83,10 +99,13 @@ class CreatesNewPageSourceFile
 	 * Create the Blade file.
 	 * 
 	 * @return int|false the size of the file created, or false on failure.
+     * @throws Exception if the file cannot be saved.
 	 */
 	public function createBladeFile(): int|false
     {
 		$this->path = Hyde::path("resources/views/pages/$this->slug.blade.php");
+		
+		$this->canSaveFile($this->path);
 
 		return file_put_contents(
 			$this->path,

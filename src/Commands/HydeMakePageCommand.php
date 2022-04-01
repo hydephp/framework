@@ -40,6 +40,11 @@ class HydeMakePageCommand extends Command
 	 */
 	public string $type;
 
+	/**
+	 * Can the file be overwritten?
+	 */
+	public bool $force;
+
     /**
      * Execute the console command.
      *
@@ -50,11 +55,15 @@ class HydeMakePageCommand extends Command
 	{
 		$this->title('Creating a new page!');
 
+		$this->title = $this->argument('title');
+
 		$this->validateOptions();
 
-		$creator = new CreatesNewPageSourceFile($this->title, $this->type);
+		$this->force = $this->option('force') ?? false;
 
-		$this->line("Created file $creator->path");
+		$creator = new CreatesNewPageSourceFile($this->title, $this->type, $this->force);
+
+		$this->info("Created file $creator->path");
 
 		return 0;
 	}
@@ -67,8 +76,6 @@ class HydeMakePageCommand extends Command
      */
 	protected function validateOptions(): void
 	{
-		$this->title = $this->argument('title');
-		
 		$type = strtolower($this->option('type') ?? 'markdown');
 
 		if (!in_array($type, ['markdown', 'blade'])) {
