@@ -18,14 +18,14 @@ class HydeServiceProvider extends ServiceProvider
         $this->app->bind(
             'hyde.version',
             function () {
-                return InstalledVersions::getVersion('hyde/hyde') ?: 'unreleased';
+                return InstalledVersions::getPrettyVersion('hyde/hyde') ?: 'unreleased';
             }
         );
 
         $this->app->bind(
             'framework.version',
             function () {
-                return InstalledVersions::getVersion('hyde/framework') ?: 'unreleased';
+                return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
             }
         );
 
