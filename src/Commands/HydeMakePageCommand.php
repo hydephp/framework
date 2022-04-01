@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Commands;
 
+use Exception;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -61,20 +62,13 @@ class HydeMakePageCommand extends Command
 	 */
 	protected function validateOptions(): void
 	{
-		$title = $this->argument('title');
+		$this->title = $this->argument('title');
+		
 		$type = $this->option('type') ?? 'markdown';
 
 		if (!in_array($type, ['markdown', 'blade'])) {
-			$this->error("Invalid page type: $type");
-			exit(1);
+			throw new Exception("Invalid page type: $type", 400);
 		}
-
-		if (empty($title)) {
-			$this->error('You must specify a title for the page');
-			exit(1);
-		}
-
-		$this->title = $title;
 
 		// Set the type to the fully qualified class name
 		if ($type === 'markdown') {
