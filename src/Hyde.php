@@ -3,7 +3,6 @@
 namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
-use Hyde\Framework\Models\MarkdownPost;
 use Illuminate\Support\Collection;
 
 /**

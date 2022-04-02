@@ -5,7 +5,6 @@ namespace Hyde\Framework\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use LaravelZero\Framework\Commands\Command;
 
 /**
  * Publish the Hyde assets.

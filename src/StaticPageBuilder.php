@@ -7,7 +7,6 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Converts a Page Model into a static HTML page.
