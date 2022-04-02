@@ -21,6 +21,7 @@ class CollectionService
      * @param  string  $model
      * @return array|false array on success, false if the class was not found
      */
+    #[Pure]
     public static function getSourceSlugsOfModels(string $model): array|false
     {
         if ($model == BladePage::class) {

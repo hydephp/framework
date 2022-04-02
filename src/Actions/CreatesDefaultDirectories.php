@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Hyde;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Create the default directories required by the Application.
@@ -51,6 +52,7 @@ class CreatesDefaultDirectories
      *
      * @return array
      */
+    #[Pure]
     public static function getRequiredDirectories(): array
     {
         return (new CreatesDefaultDirectories)->requiredDirectories;

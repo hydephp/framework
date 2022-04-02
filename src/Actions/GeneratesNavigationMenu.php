@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Actions;
 
 use function config;
+use JetBrains\PhpStorm\Pure;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
@@ -156,6 +157,7 @@ class GeneratesNavigationMenu
      *
      * @return array
      */
+    #[Pure]
     private function getListOfCustomPages(): array
     {
         $array = [];
