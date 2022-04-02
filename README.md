@@ -9,8 +9,9 @@
     <a href="https://github.styleci.io/repos/472503421?branch=master"><img style="display: inline; margin: 4px 2px;" src="https://github.styleci.io/repos/472503421/shield?branch=master" alt="StyleCI"></a>
 </p>
 
-## ⚠ Alpha Software Warning ⚠
-### This is a very new repo that has been made public to run further tests before the initial release. Please wait until v1.0 for production use.
+## ⚠ Beta Software Warning ⚠
+### Heads up! HydePHP is still very new. As such there may be bugs (please report them) and breaking changes.
+#### Please wait until v1.0 for production use and remember to backup your source files before updating (use Git!).
 ---
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
