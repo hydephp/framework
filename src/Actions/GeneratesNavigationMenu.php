@@ -3,11 +3,11 @@
 namespace Hyde\Framework\Actions;
 
 use function config;
-use JetBrains\PhpStorm\Pure;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Generate the dynamic navigation menu.
