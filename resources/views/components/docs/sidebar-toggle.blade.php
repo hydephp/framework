@@ -1,4 +1,4 @@
-<div class="sidebar-button-wrapper flex items-center open">
+<div class="sidebar-button-wrapper flex items-center px-4 open">
 	<!-- Icons by Google Material Icons - Apache 2.0 -->
 	<button class="sidebar-toggle-button open" title="Open sidebar menu" onClick="showSidebar()">
 		<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
