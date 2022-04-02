@@ -71,23 +71,6 @@ class StaticPageBuilder
     }
 
     /**
-     * Get the debug data.
-     *
-     * @param  bool  $relativeFilePath  should the returned filepath be relative instead of absolute?
-     * @return array
-     */
-    #[ArrayShape(['createdFileSize' => 'mixed', 'createdFilePath' => 'mixed'])]
-    public function getDebugOutput(bool $relativeFilePath = true): array
-    {
-        return [
-            'createdFileSize' => $this->createdFileSize,
-            'createdFilePath' => $relativeFilePath
-                ? str_replace(Hyde::path(), '', $this->createdFilePath)
-                : $this->createdFilePath,
-        ];
-    }
-
-    /**
      * Save the compiled HTML to file.
      *
      * @param  string  $location  of the output file relative to _site/
