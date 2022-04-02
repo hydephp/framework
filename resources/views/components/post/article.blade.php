@@ -2,7 +2,7 @@
     @class(['mx-auto prose', 'torchlight-enabled' => Hyde\Framework\Features::hasTorchlight()])>
     <meta itemprop="identifier" content="{{ $post->slug }}">
     @if(Hyde::uriPath())
-    <meta itemprop="url" content="{{ Hyde::uriPath($post->slug) }}">
+    <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $post->slug) }}">
     @endif
     
     <header role="doc-pageheader">
