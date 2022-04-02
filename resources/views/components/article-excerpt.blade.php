@@ -1,7 +1,7 @@
 <article class="mt-4 mb-8" itemscope itemtype="https://schema.org/Article">
     <meta itemprop="identifier" content="{{ $post->slug }}">
 	@if(Hyde::uriPath())
-    <meta itemprop="url" content="{{ Hyde::uriPath($post->slug) }}">
+    <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $post->slug) }}">
     @endif
     
 	<header>
