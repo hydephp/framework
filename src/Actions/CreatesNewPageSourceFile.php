@@ -126,6 +126,6 @@ class CreatesNewPageSourceFile
 @endsection
 
 EOF
-);
+        );
     }
 }
