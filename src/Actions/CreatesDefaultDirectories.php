@@ -13,7 +13,7 @@ use JetBrains\PhpStorm\Pure;
  *
  * This behavior is handled in the Service Provider.
  *
- * @see Hyde\Framework\HydeServiceProvider
+ * @see \Hyde\Framework\HydeServiceProvider
  */
 class CreatesDefaultDirectories
 {

@@ -98,7 +98,7 @@ class HydePublishViewsCommand extends HydeBasePublishingCommand
      *
      * @return array
      */
-    protected function publishableChoices()
+    protected function publishableChoices(): array
     {
         return array_merge(
             ['<comment>Publish files from all tags listed below</comment>'],
