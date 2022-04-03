@@ -15,6 +15,7 @@ use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
 
@@ -33,7 +34,8 @@ class HydeBuildStaticSiteCommand extends Command
         {--run-prod : Run the NPM prod script after build}
         {--pretty : Should the build files be prettified?}
         {--clean : Should the output directory be emptied before building?}
-        {--force : Allow file deletions when using --clean without confirmation?}';
+        {--force : Allow file deletions when using --clean without confirmation?}
+        {--no-api : Disable external API calls, such as Torchlight}';
 
     /**
      * The description of the command.
@@ -54,6 +56,13 @@ class HydeBuildStaticSiteCommand extends Command
         $time_start = microtime(true);
 
         $this->title('Building your static site!');
+
+        if ($this->option('no-api')) {
+            $this->info('Disabling external API calls, such as Torchlight');
+            $config = config('hyde.features');
+            unset($config[array_search('torchlight', $config)]);
+            Config::set(['hyde.features' => $config]);
+        }
 
         if ($this->option('clean')) {
             if ($this->option('force')) {
