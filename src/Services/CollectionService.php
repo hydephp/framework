@@ -15,14 +15,15 @@ use JetBrains\PhpStorm\Pure;
 class CollectionService
 {
     /**
-     * Return an array of all the source markdown slugs of the specified model.
-     * Array format is ['_relative/path.md' => 'path.md'].
+     * Supply a model::class constant and get a list of all the existing source file names,
+     * where each value follows the format of "basename.extension".
      *
      * @param  string  $model
      * @return array|false array on success, false if the class was not found
+     * @example CollectionService::getSourceFileListForModel(BladePage::class)
      */
     #[Pure]
-    public static function getSourceSlugsOfModels(string $model): array|false
+    public static function getSourceFileListForModel(string $model): array|false
     {
         if ($model == BladePage::class) {
             return self::getBladePageList();

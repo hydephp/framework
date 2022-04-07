@@ -103,7 +103,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         if (Features::hasBlogPosts()) {
-            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPost::class);
+            $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
             if (sizeof($collection) < 1) {
                 $this->line('No Markdown Posts found. Skipping...');
                 $this->newLine();
@@ -120,7 +120,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         if (Features::hasMarkdownPages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPage::class);
+            $collection = CollectionService::getSourceFileListForModel(MarkdownPage::class);
             if (sizeof($collection) < 1) {
                 $this->line('No Markdown Pages found. Skipping...');
                 $this->newLine();
@@ -137,7 +137,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         if (Features::hasDocumentationPages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(DocumentationPage::class);
+            $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
 
             if (sizeof($collection) < 1) {
                 $this->line('No Documentation Pages found. Skipping...');
@@ -155,7 +155,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         if (Features::hasBladePages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(BladePage::class);
+            $collection = CollectionService::getSourceFileListForModel(BladePage::class);
 
             if (sizeof($collection) < 1) {
                 $this->line('No Blade Pages found. Skipping...');
