@@ -2,10 +2,8 @@
 
 namespace Hyde\Framework\Commands;
 
-use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Actions\PublishesDefaultFrontendResourceFiles;
 use Hyde\Framework\Hyde;
-use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -34,29 +32,29 @@ class HydePublishFrontendResourcesCommand extends Command
      */
     public function handle(): int
     {
-		$this->info('Publishing frontend resources!');
-		if (!$this->option('force')) {
-			$this->newLine();
-			$this->warn('Please note that the following files will be overwritten:');
-			foreach (PublishesDefaultFrontendResourceFiles::$files as $file) {
-				$this->line('  - resources/frontend/' . $file);
-			}
+        $this->info('Publishing frontend resources!');
+        if (! $this->option('force')) {
+            $this->newLine();
+            $this->warn('Please note that the following files will be overwritten:');
+            foreach (PublishesDefaultFrontendResourceFiles::$files as $file) {
+                $this->line('  - resources/frontend/'.$file);
+            }
 
-			$this->warn('You should make sure you have a backup of these files before proceeding. Tip: Use Git!');
-			$this->newLine();
-			if (!$this->confirm('Would you like to continue?', true)) {
-				$this->line('Okay. Aborting.');
-				return 1;
-			} else {
-				$this->line('Okay. Proceeding.');
-			}
-		}
+            $this->warn('You should make sure you have a backup of these files before proceeding. Tip: Use Git!');
+            $this->newLine();
+            if (! $this->confirm('Would you like to continue?', true)) {
+                $this->line('Okay. Aborting.');
 
-		(new PublishesDefaultFrontendResourceFiles(true))->__invoke();
+                return 1;
+            } else {
+                $this->line('Okay. Proceeding.');
+            }
+        }
 
-		$this->info('Done!');
+        (new PublishesDefaultFrontendResourceFiles(true))->__invoke();
+
+        $this->info('Done!');
 
         return 0;
     }
-
 }
