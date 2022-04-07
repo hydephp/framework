@@ -13,6 +13,12 @@ use Hyde\Framework\Hyde;
  */
 class PublishesDefaultFrontendResourceFiles
 {
+	public static array $files = [
+		'app.css',
+		'hyde.css',
+		'hyde.js'
+	];
+
 	public function __construct(protected ?bool $force = false)
 	{
 		//
@@ -20,17 +26,11 @@ class PublishesDefaultFrontendResourceFiles
 
 	public function __invoke(): void
 	{
-		$files = [
-			'app.css',
-			'hyde.css',
-			'hyde.js'
-		];
-
 		if (! is_dir(Hyde::path('resources/frontend'))) {
 			mkdir(Hyde::path('resources/frontend'), 0755, true);
 		}
 
-		foreach ($files as $file) {
+		foreach (static::$files as $file) {
 			$this->handleFile($file);
 		}
 	}
