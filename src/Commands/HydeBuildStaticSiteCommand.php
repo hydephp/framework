@@ -4,7 +4,6 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Hyde\Framework\Actions\PublishesDefaultFrontendResourceFiles;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
@@ -95,9 +94,9 @@ class HydeBuildStaticSiteCommand extends Command
                 function ($filepath) {
                     if ($this->getOutput()->isVeryVerbose()) {
                         $this->line(' > Copying media file '
-                            . basename($filepath) . ' to the output media directory');
+                            .basename($filepath).' to the output media directory');
                     }
-                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
+                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
                 }
             );
             $this->newLine(2);
@@ -202,13 +201,13 @@ class HydeBuildStaticSiteCommand extends Command
 
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
-        $this->info('All done! Finished in ' . number_format(
+        $this->info('All done! Finished in '.number_format(
             $execution_time,
             2
-        ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
+        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        $this->line('Your new homepage is stored here -> file://' . str_replace(
+        $this->line('Your new homepage is stored here -> file://'.str_replace(
             '\\',
             '/',
             realpath(Hyde::path('_site/index.html'))
