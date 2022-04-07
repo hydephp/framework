@@ -15,8 +15,7 @@ use JetBrains\PhpStorm\Pure;
 class CollectionService
 {
     /**
-     * Supply a model::class constant and get a list of all the existing source file names,
-     * where each value follows the format of "basename.extension".
+     * Supply a model::class constant and get a list of all the existing source file base names.
      *
      * @param  string  $model
      * @return array|false array on success, false if the class was not found
@@ -110,5 +109,17 @@ class CollectionService
         }
 
         return $array;
+    }
+
+    /**
+     * Get all the Media asset file paths.
+     * Returns a full file path, unlike the other get*List methods.
+     */
+    public static function getMediaAssetFiles(): array
+    {
+        return array_merge(glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE), [
+            Hyde::path('resources/frontend/hyde.css'),
+            Hyde::path('resources/frontend/hyde.js'),
+        ]);
     }
 }
