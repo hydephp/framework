@@ -80,6 +80,10 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
+        $collection = array_merge($collection, [
+            Hyde::path('resources/frontend/hyde.css'),
+            Hyde::path('resources/frontend/hyde.js'),
+        ]);
         if (sizeof($collection) < 1) {
             $this->line('No Media Assets found. Skipping...');
             $this->newLine();
