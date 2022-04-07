@@ -50,6 +50,10 @@ class HydeRebuildStaticSiteCommand extends Command
     {
         $time_start = microtime(true);
 
+        if ($this->argument('path') === '_media') {
+            return $this->handleMediaFiles();
+        }
+
         $this->path = $this->sanitizePathString($this->argument('path'));
 
         try {
@@ -141,5 +145,38 @@ class HydeRebuildStaticSiteCommand extends Command
             '/',
             realpath($filepath)
         );
+    }
+
+    /**
+     * Handle the media files command.
+     *
+     * @return int
+     */
+    public function handleMediaFiles(): int
+    {
+        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
+        $collection = array_merge($collection, [
+            Hyde::path('resources/frontend/hyde.css'),
+            Hyde::path('resources/frontend/hyde.js'),
+        ]);
+        if (sizeof($collection) < 1) {
+            $this->line('No Media Assets found. Skipping...');
+            $this->newLine();
+        } else {
+            $this->comment('Transferring Media Assets...');
+            $this->withProgressBar(
+                $collection,
+                function ($filepath) {
+                    if ($this->getOutput()->isVeryVerbose()) {
+                        $this->line(' > Copying media file '
+                            .basename($filepath).' to the output media directory');
+                    }
+                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
+                }
+            );
+            $this->newLine(2);
+        }
+
+        return 1;
     }
 }
