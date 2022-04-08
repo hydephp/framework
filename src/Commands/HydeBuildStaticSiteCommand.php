@@ -5,11 +5,8 @@ namespace Hyde\Framework\Commands;
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Commands\Traits\RunsNodeCommands;
-use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -62,7 +59,7 @@ class HydeBuildStaticSiteCommand extends Command
         $this->title('Building your static site!');
 
         $this->printInitialInformation();
-        
+
         if ($this->handleCleanOption() !== 0) {
             return 1;
         }
@@ -74,64 +71,28 @@ class HydeBuildStaticSiteCommand extends Command
                 function ($filepath) {
                     if ($this->getOutput()->isVeryVerbose()) {
                         $this->line(' > Copying media file '
-                            .basename($filepath).' to the output media directory');
+                            . basename($filepath) . ' to the output media directory');
                     }
-                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
+                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
                 }
             );
             $this->newLine(2);
         }
 
         if (Features::hasBlogPosts()) {
-            $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
-            if ($this->canRunBuildAction($collection, 'Markdown Posts')) {
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
+            $this->runBuildAction(MarkdownPost::class);
         }
 
         if (Features::hasMarkdownPages()) {
-            $collection = CollectionService::getSourceFileListForModel(MarkdownPage::class);
-            if ($this->canRunBuildAction($collection, 'Markdown Pages')) {
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
+            $this->runBuildAction(MarkdownPage::class);
         }
 
         if (Features::hasDocumentationPages()) {
-            $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
-            if ($this->canRunBuildAction($collection, 'Documentation Pages')) {
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
+            $this->runBuildAction(DocumentationPage::class);
         }
 
         if (Features::hasBladePages()) {
-            $collection = CollectionService::getSourceFileListForModel(BladePage::class);
-            if ($this->canRunBuildAction($collection, 'Blade Pages')) {
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new BladePage($slug)), true));
-                    }
-                );
-                $this->newLine(2);
-            }
+            $this->runBuildAction(BladePage::class);
         }
 
         $this->postBuildActions();
@@ -139,6 +100,27 @@ class HydeBuildStaticSiteCommand extends Command
         $this->printFinishMessage($time_start);
 
         return 0;
+    }
+
+    protected function runBuildAction(string $model)
+    {
+        $collection = CollectionService::getSourceFileListForModel($model);
+        $modelName = $this->getModelPluralName($model);
+        if ($this->canRunBuildAction($collection, $modelName)) {
+            $this->withProgressBar(
+                $collection,
+                function ($basename) use ($model) {
+                    new StaticPageBuilder(
+                        BuildService::getParserInstanceForModel(
+                            $model,
+                            $basename
+                        )->get(),
+                        true
+                    );
+                }
+            );
+            $this->newLine(2);
+        }
     }
 
     /** @internal */
@@ -157,14 +139,15 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
-        $this->info('All done! Finished in '.number_format(
+        $this->info('All done! Finished in ' . number_format(
             $execution_time,
             2
-        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
+        ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        $this->line('Your new homepage is stored here -> ' .
-            BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
+        $this->line(
+            'Your new homepage is stored here -> ' .
+                BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
         );
     }
 
@@ -233,12 +216,18 @@ class HydeBuildStaticSiteCommand extends Command
     protected function canRunBuildAction(array $collection, string $name, ?string $verb = null): bool
     {
         if (sizeof($collection) < 1) {
-            $this->line('No '.$name.' found. Skipping...');
+            $this->line('No ' . $name . ' found. Skipping...');
             $this->newLine();
             return false;
         }
 
-        $this->comment(($verb ?? 'Creating') ." $name...");
+        $this->comment(($verb ?? 'Creating') . " $name...");
         return true;
+    }
+
+    /** @internal */
+    protected function getModelPluralName(string $model): string
+    {
+        return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)) . 's';
     }
 }
