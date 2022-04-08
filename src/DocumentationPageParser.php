@@ -5,33 +5,29 @@ namespace Hyde\Framework;
 use Exception;
 use Hyde\Framework\Models\DocumentationPage;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\NoReturn;
-use JetBrains\PhpStorm\Pure;
 
 class DocumentationPageParser extends AbstractPageParser
 {
     protected string $slug;
 
-    private string $filepath;
-
     public string $body;
-
     public string $title;
 
+    /**
+     * @throws Exception If the file does not exist.
+     */
     public function __construct(string $slug)
     {
         $this->slug = $slug;
-        $this->filepath = Hyde::path("_docs/$slug.md");
-        if (!file_exists($this->filepath)) {
-            throw new Exception("File _docs/$slug.md not found.", 404);
-        }
+
+        $this->validateExistence(DocumentationPage::class, $slug);
 
         $this->execute();
     }
 
     public function execute(): void
     {
-        $stream = file_get_contents($this->filepath);
+        $stream = file_get_contents(Hyde::path("_docs/$this->slug.md"));
 
         $this->title = $this->findTitleTag($stream) ??
             Str::title(str_replace('-', ' ', $this->slug));

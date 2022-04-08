@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework;
 
+use Hyde\Framework\Actions\ValidatesExistence;
 use Hyde\Framework\Models\AbstractPage;
 
 /**
@@ -17,6 +18,8 @@ use Hyde\Framework\Models\AbstractPage;
  */
 abstract class AbstractPageParser
 {
+    use ValidatesExistence;
+
     /**
      * @var string $slug of the page to parse.
      */

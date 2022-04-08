@@ -6,27 +6,27 @@ use Exception;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\NoReturn;
-use JetBrains\PhpStorm\Pure;
 
 class MarkdownPostParser extends AbstractPageParser
 {
+
     protected string $slug;
 
     public array $matter;
     public string $body;
     public string $title;
 
+    /**
+     * @throws Exception If the file does not exist.
+     */
     public function __construct(string $slug)
     {
         $this->slug = $slug;
-        if (!file_exists(Hyde::path("_posts/$slug.md"))) {
-            throw new Exception("File _posts/$slug.md not found.", 404);
-        }
+
+        $this->validateExistence(MarkdownPost::class, $slug);
 
         $this->execute();
     }
-
 
     public function execute(): void
     {
