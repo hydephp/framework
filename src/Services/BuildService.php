@@ -15,6 +15,11 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class BuildService
 {
+    /**
+     * Determine the Page Model to use for a given file path.
+     * 
+     * @return string|false The model class constant, or false if none was found.
+     */
     public static function findModelFromFilePath(string $filepath): string|false
     {
         if (str_starts_with($filepath, '_posts')) {
@@ -57,6 +62,16 @@ class BuildService
         return false;
     }
 
+    /**
+     * Create and get a constructed instance of a Model's Parser class.
+     *
+     * @param string $model Class constant of the Model to get the Parser for.
+     * @param string $slug The slug of the source file to parse.
+     * 
+     * @example getParserForModel(MarkdownPost::class, 'hello-world')
+     * 
+     * @return object|false The constructed Parser instance, or false if the Model is not valid.
+     */
     public static function getParserInstanceForModel(string $model, string $slug): object|false
     {
         if ($model === MarkdownPost::class) {
@@ -78,46 +93,28 @@ class BuildService
         return false;
     }
 
+    /**
+     * Get the file extension for a models source files.
+     */
     public static function getFileExtensionForModelFiles(string $model): string|false
     {
-        if ($model === MarkdownPost::class) {
-            return '.md';
+        try {
+            return $model::$fileExtension;
+        } catch (\Error) {
+            return false;
         }
-
-        if ($model === MarkdownPage::class) {
-            return '.md';
-        }
-
-        if ($model === DocumentationPage::class) {
-            return '.md';
-        }
-
-        if ($model === BladePage::class) {
-            return '.blade.php';
-        }
-
-        return false;
     }
 
+    /**
+     * Get the source directory path of a model.
+     */
     public static function getFilePathForModelClassFiles(string $model): string|false
     {
-        if ($model === MarkdownPost::class) {
-            return '_posts';
+        try {
+            return $model::$sourceDirectory;
+        } catch (\Error) {
+            return false;
         }
-
-        if ($model === MarkdownPage::class) {
-            return '_pages';
-        }
-
-        if ($model === DocumentationPage::class) {
-            return '_docs';
-        }
-
-        if ($model === BladePage::class) {
-            return 'resources/views/pages';
-        }
-
-        return false;
     }
 
     /**
