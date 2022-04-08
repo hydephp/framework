@@ -28,6 +28,7 @@ class BladePage extends AbstractPage
 
     public static string $sourceDirectory = 'resources/views/pages';
     public static string $fileExtension = '.blade.php';
+    public static string $parserClass = self::class;
 
     /**
      * Since this model also acts as a Blade View compiler,

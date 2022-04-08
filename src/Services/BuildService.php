@@ -15,51 +15,13 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class BuildService
 {
-    /**
-     * Determine the Page Model to use for a given file path.
-     * 
-     * @return string|false The model class constant, or false if none was found.
-     */
-    public static function findModelFromFilePath(string $filepath): string|false
-    {
-        if (str_starts_with($filepath, '_posts')) {
-            return MarkdownPost::class;
-        }
-
-        if (str_starts_with($filepath, '_pages')) {
-            return MarkdownPage::class;
-        }
-
-        if (str_starts_with($filepath, '_docs')) {
-            return DocumentationPage::class;
-        }
-
-        if (str_starts_with($filepath, 'resources/views/pages')) {
-            return BladePage::class;
-        }
-
-        return false;
-    }
-
     public static function getParserClassForModel(string $model): string|false
     {
-        if ($model === MarkdownPost::class) {
-            return MarkdownPostParser::class;
+        try {
+            return $model::$parserClass;
+        } catch (\Error) {
+            return false;
         }
-
-        if ($model === MarkdownPage::class) {
-            return MarkdownPageParser::class;
-        }
-
-        if ($model === DocumentationPage::class) {
-            return DocumentationPageParser::class;
-        }
-
-        if ($model === BladePage::class) {
-            return BladePage::class;
-        }
-
-        return false;
     }
 
     /**
@@ -74,23 +36,11 @@ class BuildService
      */
     public static function getParserInstanceForModel(string $model, string $slug): object|false
     {
-        if ($model === MarkdownPost::class) {
-            return new MarkdownPostParser($slug);
+        try {
+            return new $model::$parserClass($slug);
+        } catch (\Error) {
+            return false;
         }
-
-        if ($model === MarkdownPage::class) {
-            return new MarkdownPageParser($slug);
-        }
-
-        if ($model === DocumentationPage::class) {
-            return new DocumentationPageParser($slug);
-        }
-
-        if ($model === BladePage::class) {
-            return new BladePage($slug);
-        }
-
-        return false;
     }
 
     /**
@@ -117,6 +67,32 @@ class BuildService
         }
     }
 
+     /**
+     * Determine the Page Model to use for a given file path.
+     * 
+     * @return string|false The model class constant, or false if none was found.
+     */
+    public static function findModelFromFilePath(string $filepath): string|false
+    {
+        if (str_starts_with($filepath, '_posts')) {
+            return MarkdownPost::class;
+        }
+
+        if (str_starts_with($filepath, '_pages')) {
+            return MarkdownPage::class;
+        }
+
+        if (str_starts_with($filepath, '_docs')) {
+            return DocumentationPage::class;
+        }
+
+        if (str_starts_with($filepath, 'resources/views/pages')) {
+            return BladePage::class;
+        }
+
+        return false;
+    }
+
     /**
      * Create a filepath that can be opened in the browser from a terminal.
      *
@@ -125,7 +101,7 @@ class BuildService
      */
     public static function createClickableFilepath(string $filepath): string
     {
-        return 'file://'.str_replace(
+        return 'file://' . str_replace(
             '\\',
             '/',
             realpath($filepath)

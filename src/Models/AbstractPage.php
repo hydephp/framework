@@ -12,4 +12,5 @@ abstract class AbstractPage
 {
     public static string $sourceDirectory;
     public static string $fileExtension;
+    public static string $parserClass;
 }
