@@ -15,13 +15,9 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class BuildService
 {
-    public static function getParserClassForModel(string $model): string|false
+    public static function getParserClassForModel(string $model): string
     {
-        try {
-            return $model::$parserClass;
-        } catch (\Error) {
-            return false;
-        }
+        return $model::$parserClass;
     }
 
     /**
@@ -32,45 +28,33 @@ class BuildService
      * 
      * @example getParserForModel(MarkdownPost::class, 'hello-world')
      * 
-     * @return object|false The constructed Parser instance, or false if the Model is not valid.
+     * @return object The constructed Parser instance.
      */
-    public static function getParserInstanceForModel(string $model, string $slug): object|false
+    public static function getParserInstanceForModel(string $model, string $slug): object
     {
-        try {
-            return new $model::$parserClass($slug);
-        } catch (\Error) {
-            return false;
-        }
+        return new $model::$parserClass($slug);
     }
 
     /**
      * Get the file extension for a models source files.
      */
-    public static function getFileExtensionForModelFiles(string $model): string|false
+    public static function getFileExtensionForModelFiles(string $model): string
     {
-        try {
-            return $model::$fileExtension;
-        } catch (\Error) {
-            return false;
-        }
+        return $model::$fileExtension;
     }
 
     /**
      * Get the source directory path of a model.
      */
-    public static function getFilePathForModelClassFiles(string $model): string|false
+    public static function getFilePathForModelClassFiles(string $model): string
     {
-        try {
-            return $model::$sourceDirectory;
-        } catch (\Error) {
-            return false;
-        }
+        return $model::$sourceDirectory;
     }
 
-     /**
+    /**
      * Determine the Page Model to use for a given file path.
      * 
-     * @return string|false The model class constant, or false if none was found.
+     * @return string The model class constant, or false if none was found.
      */
     public static function findModelFromFilePath(string $filepath): string|false
     {
