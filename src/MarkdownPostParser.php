@@ -2,31 +2,18 @@
 
 namespace Hyde\Framework;
 
-use Exception;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
 use Illuminate\Support\Str;
 
 class MarkdownPostParser extends AbstractPageParser
 {
-
+    protected string $pageModel = MarkdownPost::class;
     protected string $slug;
 
     public array $matter;
     public string $body;
     public string $title;
-
-    /**
-     * @throws Exception If the file does not exist.
-     */
-    public function __construct(string $slug)
-    {
-        $this->slug = $slug;
-
-        $this->validateExistence(MarkdownPost::class, $slug);
-
-        $this->execute();
-    }
 
     public function execute(): void
     {

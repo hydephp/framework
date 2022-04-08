@@ -2,28 +2,16 @@
 
 namespace Hyde\Framework;
 
-use Exception;
 use Hyde\Framework\Models\DocumentationPage;
 use Illuminate\Support\Str;
 
 class DocumentationPageParser extends AbstractPageParser
 {
+    protected string $pageModel = DocumentationPage::class;
     protected string $slug;
 
     public string $body;
     public string $title;
-
-    /**
-     * @throws Exception If the file does not exist.
-     */
-    public function __construct(string $slug)
-    {
-        $this->slug = $slug;
-
-        $this->validateExistence(DocumentationPage::class, $slug);
-
-        $this->execute();
-    }
 
     public function execute(): void
     {

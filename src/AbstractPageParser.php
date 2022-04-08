@@ -26,9 +26,19 @@ abstract class AbstractPageParser
     protected string $slug;
 
     /**
-     * Construct the class.
+     * @var string $pageModel the parser is for.
      */
-    abstract public function __construct(string $slug);
+    protected string $pageModel = AbstractPage::class;
+
+    /**
+     * Construct the class.
+     * @throws \Exception if the source file does not exist.
+     */
+    public function __construct(string $slug) {
+        $this->slug = $slug;
+        $this->validateExistence($this->pageModel, $slug);
+        $this->execute();
+    }
 
     /**
      * Handle the parsing job.

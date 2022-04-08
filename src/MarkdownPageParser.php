@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework;
 
-use Exception;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Services\MarkdownFileService;
 use Illuminate\Support\Str;
@@ -12,22 +11,11 @@ use Illuminate\Support\Str;
  */
 class MarkdownPageParser extends AbstractPageParser
 {
+    protected string $pageModel = MarkdownPage::class;
     protected string $slug;
 
     public string $title;
     public string $body;
-
-    /**
-     * @throws Exception If the file does not exist.
-     */
-    public function __construct(string $slug)
-    {
-        $this->slug = $slug;
-        
-        $this->validateExistence(MarkdownPage::class, $slug);
-
-        $this->execute();
-    }
 
     public function execute(): void
     {
