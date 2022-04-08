@@ -3,8 +3,6 @@
 @section('content')
 @php($withoutNavigation = true)
 
-<style> /* Base styles for compatibility */ .hidden { display: none; } </style>
-
 <nav id="documentation-navigation" class="md:hidden fixed top-0 w-screen h-16 p-4 shadow-lg sm:shadow-xl overflow-hidden bg-white z-30">
 	@include('hyde::components.docs.navigation')
 </nav>
