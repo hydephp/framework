@@ -19,6 +19,7 @@ class CollectionService
      *
      * @param  string  $model
      * @return array|false array on success, false if the class was not found
+     *
      * @example CollectionService::getSourceFileListForModel(BladePage::class)
      */
     #[Pure]

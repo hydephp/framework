@@ -11,59 +11,60 @@ use Hyde\Framework\StaticPageBuilder;
  */
 class RebuildService
 {
-	/**
-	 * The source file to build.
-	 * Should be relative to the Hyde installation.
-	 *
-	 * @var string
-	 */
-	public string $filepath;
+    /**
+     * The source file to build.
+     * Should be relative to the Hyde installation.
+     *
+     * @var string
+     */
+    public string $filepath;
 
-	/**
-	 * The model of the source file.
-	 *
-	 * @var string
-	 *
-	 * @internal
-	 */
-	public string $model;
+    /**
+     * The model of the source file.
+     *
+     * @var string
+     *
+     * @internal
+     */
+    public string $model;
 
-	/**
-	 * The page builder instance.
-	 * Used to get debug output from the builder.
-	 *
-	 * @var StaticPageBuilder
-	 */
-	public StaticPageBuilder $builder;
+    /**
+     * The page builder instance.
+     * Used to get debug output from the builder.
+     *
+     * @var StaticPageBuilder
+     */
+    public StaticPageBuilder $builder;
 
-	/**
-	 * Construct the service class instance.
-	 * @param  string  $filepath
-	 */
-	public function __construct(string $filepath)
-	{
-		$this->filepath = $filepath;
-		$this->model = BuildService::findModelFromFilePath($this->filepath);
-	}
-
-	/**
-	 * Execute the service action.
-	 */
-	public function execute(): StaticPageBuilder
+    /**
+     * Construct the service class instance.
+     *
+     * @param  string  $filepath
+     */
+    public function __construct(string $filepath)
     {
-		return $this->builder = (new StaticPageBuilder(
-			BuildService::getParserInstanceForModel(
-				$this->model,
-				basename(
-					str_replace(
-						BuildService::getFilePathForModelClassFiles($this->model) . '/',
-						'',
-						$this->filepath
-					),
-					BuildService::getFileExtensionForModelFiles($this->model)
-				)
-			)->get(),
-			true
-		));
-	}
+        $this->filepath = $filepath;
+        $this->model = BuildService::findModelFromFilePath($this->filepath);
+    }
+
+    /**
+     * Execute the service action.
+     */
+    public function execute(): StaticPageBuilder
+    {
+        return $this->builder = (new StaticPageBuilder(
+            BuildService::getParserInstanceForModel(
+                $this->model,
+                basename(
+                    str_replace(
+                        BuildService::getFilePathForModelClassFiles($this->model).'/',
+                        '',
+                        $this->filepath
+                    ),
+                    BuildService::getFileExtensionForModelFiles($this->model)
+                )
+            )->get(),
+            true
+        ));
+    }
 }

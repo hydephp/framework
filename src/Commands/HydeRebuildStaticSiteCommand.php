@@ -56,6 +56,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
         if ($this->argument('path') === '_media') {
             $this->transferMediaAssets();
+
             return 0;
         }
 
@@ -109,7 +110,7 @@ class HydeRebuildStaticSiteCommand extends Command
      */
     public function validate(): void
     {
-        if (!(str_starts_with($this->path, '_docs') ||
+        if (! (str_starts_with($this->path, '_docs') ||
             str_starts_with($this->path, '_posts') ||
             str_starts_with($this->path, '_pages') ||
             str_starts_with($this->path, 'resources/views/pages')
@@ -117,7 +118,7 @@ class HydeRebuildStaticSiteCommand extends Command
             throw new Exception("Path [$this->path] is not in a valid source directory.", 400);
         }
 
-        if (!file_exists(Hyde::path($this->path))) {
+        if (! file_exists(Hyde::path($this->path))) {
             throw new Exception("File [$this->path] not found.", 404);
         }
     }

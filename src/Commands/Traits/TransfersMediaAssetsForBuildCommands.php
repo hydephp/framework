@@ -7,8 +7,10 @@ use Hyde\Framework\Services\CollectionService;
 
 /**
  * Extracts common code for static site building commands.
+ *
  * @see \Hyde\Framework\Commands\HydeBuildStaticSiteCommand
  * @see \Hyde\Framework\Commands\HydeRebuildStaticSiteCommand
+ *
  * @internal
  */
 trait TransfersMediaAssetsForBuildCommands
@@ -23,7 +25,7 @@ trait TransfersMediaAssetsForBuildCommands
             $this->withProgressBar(
                 $collection,
                 function ($filepath) {
-                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
+                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
                 }
             );
             $this->newLine(2);
