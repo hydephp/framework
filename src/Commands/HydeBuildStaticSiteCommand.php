@@ -65,8 +65,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         $collection = CollectionService::getMediaAssetFiles();
-        if ($this->canRunBuildAction($collection, 'Media Assets')) {
-            $this->comment('Transferring Media Assets...');
+        if ($this->canRunBuildAction($collection, 'Media Assets', 'Transferring')) {
             $this->withProgressBar(
                 $collection,
                 function ($filepath) {
@@ -83,7 +82,6 @@ class HydeBuildStaticSiteCommand extends Command
         if (Features::hasBlogPosts()) {
             $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
             if ($this->canRunBuildAction($collection, 'Markdown Posts')) {
-                $this->comment('Creating Markdown Posts...');
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
@@ -97,7 +95,6 @@ class HydeBuildStaticSiteCommand extends Command
         if (Features::hasMarkdownPages()) {
             $collection = CollectionService::getSourceFileListForModel(MarkdownPage::class);
             if ($this->canRunBuildAction($collection, 'Markdown Pages')) {
-                $this->comment('Creating Markdown Pages...');
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
@@ -111,7 +108,6 @@ class HydeBuildStaticSiteCommand extends Command
         if (Features::hasDocumentationPages()) {
             $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
             if ($this->canRunBuildAction($collection, 'Documentation Pages')) {
-                $this->comment('Creating Documentation Pages...');
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
@@ -125,7 +121,6 @@ class HydeBuildStaticSiteCommand extends Command
         if (Features::hasBladePages()) {
             $collection = CollectionService::getSourceFileListForModel(BladePage::class);
             if ($this->canRunBuildAction($collection, 'Blade Pages')) {
-                $this->comment('Creating Custom Blade Pages...');
                 $this->withProgressBar(
                     $collection,
                     function ($slug) {
@@ -248,7 +243,7 @@ class HydeBuildStaticSiteCommand extends Command
     }
 
     /** @internal */
-    protected function canRunBuildAction(array $collection, $name): bool
+    protected function canRunBuildAction(array $collection, string $name, ?string $verb = null): bool
     {
         if (sizeof($collection) < 1) {
             $this->line('No '.$name.' found. Skipping...');
@@ -256,6 +251,7 @@ class HydeBuildStaticSiteCommand extends Command
             return false;
         }
 
+        $this->comment(($verb ?? 'Creating') ." $name...");
         return true;
     }
 }
