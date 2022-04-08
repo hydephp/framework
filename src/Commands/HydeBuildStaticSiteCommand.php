@@ -4,6 +4,8 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Hyde\Framework\Commands\Traits\BuildActionRunner;
+use Hyde\Framework\Commands\Traits\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
@@ -22,6 +24,9 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeBuildStaticSiteCommand extends Command
 {
+    use BuildActionRunner;
+    use TransfersMediaAssetsForBuildCommands;
+
     /**
      * The signature of the command.
      *
@@ -61,16 +66,7 @@ class HydeBuildStaticSiteCommand extends Command
             return 1;
         }
 
-        $collection = CollectionService::getMediaAssetFiles();
-        if ($this->canRunBuildAction($collection, 'Media Assets', 'Transferring')) {
-            $this->withProgressBar(
-                $collection,
-                function ($filepath) {
-                    copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
-                }
-            );
-            $this->newLine(2);
-        }
+        $this->transferMediaAssets();
 
         if (Features::hasBlogPosts()) {
             $this->runBuildAction(MarkdownPost::class);
@@ -95,26 +91,7 @@ class HydeBuildStaticSiteCommand extends Command
         return 0;
     }
 
-    protected function runBuildAction(string $model)
-    {
-        $collection = CollectionService::getSourceFileListForModel($model);
-        $modelName = $this->getModelPluralName($model);
-        if ($this->canRunBuildAction($collection, $modelName)) {
-            $this->withProgressBar(
-                $collection,
-                function ($basename) use ($model) {
-                    new StaticPageBuilder(
-                        BuildService::getParserInstanceForModel(
-                            $model,
-                            $basename
-                        )->get(),
-                        true
-                    );
-                }
-            );
-            $this->newLine(2);
-        }
-    }
+    
 
     /** @internal */
     protected function printInitialInformation(): void
@@ -210,19 +187,6 @@ class HydeBuildStaticSiteCommand extends Command
     }
 
     /** @internal */
-    protected function canRunBuildAction(array $collection, string $name, ?string $verb = null): bool
-    {
-        if (sizeof($collection) < 1) {
-            $this->line('No ' . $name . ' found. Skipping...');
-            $this->newLine();
-            return false;
-        }
-
-        $this->comment(($verb ?? 'Creating') . " $name...");
-        return true;
-    }
-
-    /** @internal */
     protected function getModelPluralName(string $model): string
     {
         return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)) . 's';
@@ -241,4 +205,6 @@ class HydeBuildStaticSiteCommand extends Command
             $this->warn('Could not '.($actionMessage ?? 'run script').'! Is NPM installed?');
         }
     }
+
+
 }
