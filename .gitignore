@@ -11,3 +11,6 @@ docs
 .phpdoc
 phpDocumentor.phar
 phpdoc.dist.xml
+phpstan.phar
+psalm.phar
+psalm.xml
