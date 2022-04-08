@@ -9,6 +9,10 @@
  *	           to declare your own styles.
  */
 
+/* Base styles for compatibility */
+ 
+.hidden { display: none; }
+
 #post-article {
 	max-width: 960px;
 	#byline {
