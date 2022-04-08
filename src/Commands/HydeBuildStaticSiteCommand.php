@@ -143,6 +143,7 @@ class HydeBuildStaticSiteCommand extends Command
         return 0;
     }
 
+    /** @internal */
     protected function printInitialInformation(): void
     {
         if ($this->option('no-api')) {
@@ -153,6 +154,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
     }
 
+    /** @internal */
     protected function printFinishMessage(float $time_start): void
     {
         $time_end = microtime(true);
@@ -168,6 +170,7 @@ class HydeBuildStaticSiteCommand extends Command
         );
     }
 
+    /** @internal */
     protected function handleCleanOption(): int
     {
         if ($this->option('clean')) {
@@ -190,6 +193,7 @@ class HydeBuildStaticSiteCommand extends Command
     /**
      * Clear the entire _site directory before running the build.
      *
+     * @internal
      * @return void
      */
     public function purge()
@@ -210,6 +214,7 @@ class HydeBuildStaticSiteCommand extends Command
     /**
      * Run any post-build actions.
      *
+     * @internal
      * @return void
      */
     public function postBuildActions()
@@ -242,6 +247,7 @@ class HydeBuildStaticSiteCommand extends Command
         }
     }
 
+    /** @internal */
     protected function canRunBuildAction(array $collection, $name): bool
     {
         if (sizeof($collection) < 1) {
