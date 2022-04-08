@@ -4,7 +4,6 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Hyde\Framework\Commands\Traits\RunsNodeCommands;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
@@ -23,8 +22,6 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeBuildStaticSiteCommand extends Command
 {
-    use RunsNodeCommands;
-
     /**
      * The signature of the command.
      *
@@ -196,15 +193,19 @@ class HydeBuildStaticSiteCommand extends Command
     public function postBuildActions()
     {
         if ($this->option('pretty')) {
-            $this->runNodeCommand('pretty', 'Prettifying code!', 'prettify code');
+            $this->runNodeCommand(
+                'npx prettier _site/ --write --bracket-same-line',
+                'Prettifying code!',
+                'prettify code'
+            );
         }
 
         if ($this->option('run-dev')) {
-            $this->runNodeCommand('dev', 'Building frontend assets for development!');
+            $this->runNodeCommand('npm run dev', 'Building frontend assets for development!');
         }
 
         if ($this->option('run-prod')) {
-            $this->runNodeCommand('prod', 'Building frontend assets for production!');
+            $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
         }
     }
 
@@ -225,5 +226,19 @@ class HydeBuildStaticSiteCommand extends Command
     protected function getModelPluralName(string $model): string
     {
         return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)) . 's';
+    }
+
+    /* @internal */
+    private function runNodeCommand(string $command, string $message, ?string $actionMessage = null): void
+    {
+        $this->info($message . ' This may take a second.');
+
+        try {
+            if (app()->environment() !== 'testing') {
+                $this->line(shell_exec($command));
+            }
+        } catch (Exception) {
+            $this->warn('Could not '.($actionMessage ?? 'run script').'! Is NPM installed?');
+        }
     }
 }
