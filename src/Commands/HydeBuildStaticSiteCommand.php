@@ -79,15 +79,8 @@ class HydeBuildStaticSiteCommand extends Command
             }
         }
 
-        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
-        $collection = array_merge($collection, [
-            Hyde::path('resources/frontend/hyde.css'),
-            Hyde::path('resources/frontend/hyde.js'),
-        ]);
-        if (sizeof($collection) < 1) {
-            $this->line('No Media Assets found. Skipping...');
-            $this->newLine();
-        } else {
+        $collection = CollectionService::getMediaAssetFiles();
+        if ($this->canRunBuildAction($collection, 'Media Assets')) {
             $this->comment('Transferring Media Assets...');
             $this->withProgressBar(
                 $collection,
@@ -104,10 +97,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         if (Features::hasBlogPosts()) {
             $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
-            if (sizeof($collection) < 1) {
-                $this->line('No Markdown Posts found. Skipping...');
-                $this->newLine();
-            } else {
+            if ($this->canRunBuildAction($collection, 'Markdown Posts')) {
                 $this->comment('Creating Markdown Posts...');
                 $this->withProgressBar(
                     $collection,
@@ -121,10 +111,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         if (Features::hasMarkdownPages()) {
             $collection = CollectionService::getSourceFileListForModel(MarkdownPage::class);
-            if (sizeof($collection) < 1) {
-                $this->line('No Markdown Pages found. Skipping...');
-                $this->newLine();
-            } else {
+            if ($this->canRunBuildAction($collection, 'Markdown Pages')) {
                 $this->comment('Creating Markdown Pages...');
                 $this->withProgressBar(
                     $collection,
@@ -138,11 +125,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         if (Features::hasDocumentationPages()) {
             $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
-
-            if (sizeof($collection) < 1) {
-                $this->line('No Documentation Pages found. Skipping...');
-                $this->newLine();
-            } else {
+            if ($this->canRunBuildAction($collection, 'Documentation Pages')) {
                 $this->comment('Creating Documentation Pages...');
                 $this->withProgressBar(
                     $collection,
@@ -156,11 +139,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         if (Features::hasBladePages()) {
             $collection = CollectionService::getSourceFileListForModel(BladePage::class);
-
-            if (sizeof($collection) < 1) {
-                $this->line('No Blade Pages found. Skipping...');
-                $this->newLine();
-            } else {
+            if ($this->canRunBuildAction($collection, 'Blade Pages')) {
                 $this->comment('Creating Custom Blade Pages...');
                 $this->withProgressBar(
                     $collection,
@@ -234,5 +213,16 @@ class HydeBuildStaticSiteCommand extends Command
         (new CreatesDefaultDirectories)->__invoke();
 
         $this->line('</>');
+    }
+
+    protected function canRunBuildAction(array $collection, $name): bool
+    {
+        if (sizeof($collection) < 1) {
+            $this->line('No '.$name.' found. Skipping...');
+            $this->newLine();
+            return false;
+        }
+
+        return true;
     }
 }
