@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Services;
 
-use Exception;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\MarkdownPageParser;
 use Hyde\Framework\MarkdownPostParser;
@@ -10,7 +9,6 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\StaticPageBuilder;
 
 /**
  * Static service helpers for building static pages.
@@ -76,6 +74,8 @@ class BuildService
         if ($model === BladePage::class) {
             return new BladePage($slug);
         }
+
+        return false;
     }
 
     public static function getFileExtensionForModelFiles(string $model): string|false
