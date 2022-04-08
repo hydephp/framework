@@ -4,17 +4,15 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Hyde\Framework\DocumentationPageParser;
+use Hyde\Framework\Commands\Traits\BuildActionRunner;
+use Hyde\Framework\Commands\Traits\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\CollectionService;
-use Hyde\Framework\StaticPageBuilder;
+use Hyde\Framework\Services\BuildService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -24,6 +22,9 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeBuildStaticSiteCommand extends Command
 {
+    use BuildActionRunner;
+    use TransfersMediaAssetsForBuildCommands;
+
     /**
      * The signature of the command.
      *
@@ -57,19 +58,74 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->title('Building your static site!');
 
+        $this->printInitialInformation();
+
+        if ($this->handleCleanOption() !== 0) {
+            return 1;
+        }
+
+        $this->transferMediaAssets();
+
+        if (Features::hasBlogPosts()) {
+            $this->runBuildAction(MarkdownPost::class);
+        }
+
+        if (Features::hasMarkdownPages()) {
+            $this->runBuildAction(MarkdownPage::class);
+        }
+
+        if (Features::hasDocumentationPages()) {
+            $this->runBuildAction(DocumentationPage::class);
+        }
+
+        if (Features::hasBladePages()) {
+            $this->runBuildAction(BladePage::class);
+        }
+
+        $this->postBuildActions();
+
+        $this->printFinishMessage($time_start);
+
+        return 0;
+    }
+
+    /** @internal */
+    protected function printInitialInformation(): void
+    {
         if ($this->option('no-api')) {
-            $this->info('Disabling external API calls, such as Torchlight');
+            $this->info('Disabling external API calls');
             $config = config('hyde.features');
             unset($config[array_search('torchlight', $config)]);
             Config::set(['hyde.features' => $config]);
         }
+    }
 
+    /** @internal */
+    protected function printFinishMessage(float $time_start): void
+    {
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start);
+        $this->info('All done! Finished in '.number_format(
+            $execution_time,
+            2
+        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
+
+        $this->info('Congratulations! 🎉 Your static site has been built!');
+        $this->line(
+            'Your new homepage is stored here -> '.
+                BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
+        );
+    }
+
+    /** @internal */
+    protected function handleCleanOption(): int
+    {
         if ($this->option('clean')) {
             if ($this->option('force')) {
                 $this->purge();
             } else {
                 $this->warn('The --clean option will remove all files in the output directory before building.');
-                if ($this->confirm(' Are you sure?')) {
+                if ($this->confirm('Are you sure?')) {
                     $this->purge();
                 } else {
                     $this->warn('Aborting.');
@@ -79,145 +135,13 @@ class HydeBuildStaticSiteCommand extends Command
             }
         }
 
-        $collection = glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE);
-        $collection = array_merge($collection, [
-            Hyde::path('resources/frontend/hyde.css'),
-            Hyde::path('resources/frontend/hyde.js'),
-        ]);
-        if (sizeof($collection) < 1) {
-            $this->line('No Media Assets found. Skipping...');
-            $this->newLine();
-        } else {
-            $this->comment('Transferring Media Assets...');
-            $this->withProgressBar(
-                $collection,
-                function ($filepath) {
-                    if ($this->getOutput()->isVeryVerbose()) {
-                        $this->line(' > Copying media file '
-                            .basename($filepath).' to the output media directory');
-                    }
-                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
-                }
-            );
-            $this->newLine(2);
-        }
-
-        if (Features::hasBlogPosts()) {
-            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPost::class);
-            if (sizeof($collection) < 1) {
-                $this->line('No Markdown Posts found. Skipping...');
-                $this->newLine();
-            } else {
-                $this->comment('Creating Markdown Posts...');
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
-        }
-
-        if (Features::hasMarkdownPages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(MarkdownPage::class);
-            if (sizeof($collection) < 1) {
-                $this->line('No Markdown Pages found. Skipping...');
-                $this->newLine();
-            } else {
-                $this->comment('Creating Markdown Pages...');
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
-        }
-
-        if (Features::hasDocumentationPages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(DocumentationPage::class);
-
-            if (sizeof($collection) < 1) {
-                $this->line('No Documentation Pages found. Skipping...');
-                $this->newLine();
-            } else {
-                $this->comment('Creating Documentation Pages...');
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
-                    }
-                );
-                $this->newLine(2);
-            }
-        }
-
-        if (Features::hasBladePages()) {
-            $collection = CollectionService::getSourceSlugsOfModels(BladePage::class);
-
-            if (sizeof($collection) < 1) {
-                $this->line('No Blade Pages found. Skipping...');
-                $this->newLine();
-            } else {
-                $this->comment('Creating Custom Blade Pages...');
-                $this->withProgressBar(
-                    $collection,
-                    function ($slug) {
-                        (new StaticPageBuilder((new BladePage($slug)), true));
-                    }
-                );
-                $this->newLine(2);
-            }
-        }
-
-        if ($this->option('pretty')) {
-            $this->info('Prettifying code! This may take a second.');
-            try {
-                $this->line(shell_exec('npx prettier _site/ --write --bracket-same-line'));
-            } catch (Exception) {
-                $this->warn('Could not prettify code! Is NPM installed?');
-            }
-        }
-
-        if ($this->option('run-dev')) {
-            $this->info('Building frontend assets for development! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run dev'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
-        }
-
-        if ($this->option('run-prod')) {
-            $this->info('Building frontend assets for production! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run prod'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
-        }
-
-        $time_end = microtime(true);
-        $execution_time = ($time_end - $time_start);
-        $this->info('All done! Finished in '.number_format(
-            $execution_time,
-            2
-        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
-
-        $this->info('Congratulations! 🎉 Your static site has been built!');
-        $this->line('Your new homepage is stored here -> file://'.str_replace(
-            '\\',
-            '/',
-            realpath(Hyde::path('_site/index.html'))
-        ));
-
         return 0;
     }
 
     /**
      * Clear the entire _site directory before running the build.
+     *
+     * @internal
      *
      * @return void
      */
@@ -234,5 +158,50 @@ class HydeBuildStaticSiteCommand extends Command
         (new CreatesDefaultDirectories)->__invoke();
 
         $this->line('</>');
+    }
+
+    /**
+     * Run any post-build actions.
+     *
+     * @return void
+     */
+    public function postBuildActions()
+    {
+        if ($this->option('pretty')) {
+            $this->runNodeCommand(
+                'npx prettier _site/ --write --bracket-same-line',
+                'Prettifying code!',
+                'prettify code'
+            );
+        }
+
+        if ($this->option('run-dev')) {
+            $this->runNodeCommand('npm run dev', 'Building frontend assets for development!');
+        }
+
+        if ($this->option('run-prod')) {
+            $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
+        }
+    }
+
+    /** @internal */
+    protected function getModelPluralName(string $model): string
+    {
+        return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)).'s';
+    }
+
+    /* @internal */
+    private function runNodeCommand(string $command, string $message, ?string $actionMessage = null): void
+    {
+        $this->info($message.' This may take a second.');
+
+        if (app()->environment() === 'testing') {
+            $command = 'echo '.$command;
+        }
+        $output = shell_exec($command);
+
+        $this->line(
+            $output ?? '<fg=red>Could not '.($actionMessage ?? 'run script').'! Is NPM installed?</>'
+        );
     }
 }

@@ -10,16 +10,16 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Publish test file stubs.
  *
- * @internal
+ * @deprecated 0.9.0 - Please construct the test files in the tests for a more predictable state. Commands like these may be extracted into a package-dev-tools package.
  */
-class HydePublishStubsCommand extends Command
+class HydePublishTestFilesCommand extends Command
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'stubs:publish {--clean : Should all _directories be emptied first?} 
+    protected $signature = 'test:publish-stubs {--clean : Should all _directories be emptied first?} 
                 {--force : Should the command be allowed to run in production?}';
 
     /**
@@ -28,6 +28,8 @@ class HydePublishStubsCommand extends Command
      * @var string
      */
     protected $description = 'Publish the test stubs';
+
+    protected $hidden = true;
 
     /**
      * Execute the console command.

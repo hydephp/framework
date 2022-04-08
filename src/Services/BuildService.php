@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Services;
 
-use Exception;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\MarkdownPageParser;
 use Hyde\Framework\MarkdownPostParser;
@@ -10,111 +9,129 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\StaticPageBuilder;
 
 /**
- * Build static pages, but intelligently.
- *
- * Runs the static page builder for a given path.
+ * Static service helpers for building static pages.
  */
 class BuildService
 {
-    /**
-     * The source file to build.
-     * Should be relative to the Hyde::path() helper.
-     *
-     * @var string
-     */
-    public string $filepath;
+    public static function findModelFromFilePath(string $filepath): string|false
+    {
+        if (str_starts_with($filepath, '_posts')) {
+            return MarkdownPost::class;
+        }
+
+        if (str_starts_with($filepath, '_pages')) {
+            return MarkdownPage::class;
+        }
+
+        if (str_starts_with($filepath, '_docs')) {
+            return DocumentationPage::class;
+        }
+
+        if (str_starts_with($filepath, 'resources/views/pages')) {
+            return BladePage::class;
+        }
+
+        return false;
+    }
+
+    public static function getParserClassForModel(string $model): string|false
+    {
+        if ($model === MarkdownPost::class) {
+            return MarkdownPostParser::class;
+        }
+
+        if ($model === MarkdownPage::class) {
+            return MarkdownPageParser::class;
+        }
+
+        if ($model === DocumentationPage::class) {
+            return DocumentationPageParser::class;
+        }
+
+        if ($model === BladePage::class) {
+            return BladePage::class;
+        }
+
+        return false;
+    }
+
+    public static function getParserInstanceForModel(string $model, string $slug): object|false
+    {
+        if ($model === MarkdownPost::class) {
+            return new MarkdownPostParser($slug);
+        }
+
+        if ($model === MarkdownPage::class) {
+            return new MarkdownPageParser($slug);
+        }
+
+        if ($model === DocumentationPage::class) {
+            return new DocumentationPageParser($slug);
+        }
+
+        if ($model === BladePage::class) {
+            return new BladePage($slug);
+        }
+
+        return false;
+    }
+
+    public static function getFileExtensionForModelFiles(string $model): string|false
+    {
+        if ($model === MarkdownPost::class) {
+            return '.md';
+        }
+
+        if ($model === MarkdownPage::class) {
+            return '.md';
+        }
+
+        if ($model === DocumentationPage::class) {
+            return '.md';
+        }
+
+        if ($model === BladePage::class) {
+            return '.blade.php';
+        }
+
+        return false;
+    }
+
+    public static function getFilePathForModelClassFiles(string $model): string|false
+    {
+        if ($model === MarkdownPost::class) {
+            return '_posts';
+        }
+
+        if ($model === MarkdownPage::class) {
+            return '_pages';
+        }
+
+        if ($model === DocumentationPage::class) {
+            return '_docs';
+        }
+
+        if ($model === BladePage::class) {
+            return 'resources/views/pages';
+        }
+
+        return false;
+    }
 
     /**
-     * The model of the source file.
+     * Create a filepath that can be opened in the browser from a terminal.
      *
-     * @var string
-     *
-     * @internal
-     */
-    public string $model;
-
-    /**
-     * The page builder instance.
-     * Used to get debug output from the builder.
-     *
-     * @var StaticPageBuilder
-     */
-    public StaticPageBuilder $builder;
-
-    /**
      * @param  string  $filepath
+     * @return string
      */
-    public function __construct(string $filepath)
+    public static function createClickableFilepath(string $filepath): string
     {
-        $this->filepath = $filepath;
-    }
-
-    /**
-     * Execute the service action.
-     *
-     * @throws Exception
-     */
-    public function execute()
-    {
-        $this->model = $this->determineModel();
-
-        $this->handle();
-    }
-
-    /**
-     * Handle the service action.
-     *
-     * @throws Exception
-     */
-    public function handle(): StaticPageBuilder
-    {
-        if ($this->model === MarkdownPost::class) {
-            $slug = basename(str_replace('_posts/', '', $this->filepath), '.md');
-
-            return $this->builder = (new StaticPageBuilder((new MarkdownPostParser($slug))->get(), true));
-        }
-
-        if ($this->model === MarkdownPage::class) {
-            $slug = basename(str_replace('_pages/', '', $this->filepath), '.md');
-
-            return $this->builder = (new StaticPageBuilder((new MarkdownPageParser($slug))->get(), true));
-        }
-
-        if ($this->model === DocumentationPage::class) {
-            $slug = basename(str_replace('_docs/', '', $this->filepath), '.md');
-
-            return $this->builder = (new StaticPageBuilder((new DocumentationPageParser($slug))->get(), true));
-        }
-
-        if ($this->model === BladePage::class) {
-            $slug = basename(str_replace('resources/views/pages/', '', $this->filepath), '.blade.php');
-
-            return $this->builder = (new StaticPageBuilder((new BladePage($slug)), true));
-        }
-
-        throw new Exception('Could not run the builder.', 400);
-    }
-
-    /**
-     * Determine the proper model of the source file.
-     *
-     * @throws Exception
-     */
-    public function determineModel(): string
-    {
-        if (str_starts_with($this->filepath, '_posts')) {
-            return $this->model = MarkdownPost::class;
-        } elseif (str_starts_with($this->filepath, '_pages')) {
-            return $this->model = MarkdownPage::class;
-        } elseif (str_starts_with($this->filepath, '_docs')) {
-            return $this->model = DocumentationPage::class;
-        } elseif (str_starts_with($this->filepath, 'resources/views/pages')) {
-            return $this->model = BladePage::class;
-        } else {
-            throw new Exception('Invalid source path.', 400);
-        }
+        return 'file://'.str_replace(
+            '\\',
+            '/',
+            realpath($filepath)
+        );
     }
 }

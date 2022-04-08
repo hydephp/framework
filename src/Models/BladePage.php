@@ -25,4 +25,13 @@ class BladePage
     {
         $this->view = $view;
     }
+
+    /**
+     * Since this model also acts as a Blade View compiler,
+     * we implement the get method for compatability.
+     */
+    public function get(): BladePage
+    {
+        return $this;
+    }
 }

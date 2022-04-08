@@ -13,17 +13,7 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class StaticPageBuilder
 {
-    /**
-     * Debug output: The size of the created file.
-     *
-     * @var int|bool|void|null
-     */
     public null|int|false $createdFileSize;
-    /**
-     * Debug output: The path of the created file.
-     *
-     * @var string|null
-     */
     public null|string $createdFilePath;
 
     /**

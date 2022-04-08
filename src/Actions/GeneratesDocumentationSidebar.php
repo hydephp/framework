@@ -28,7 +28,7 @@ class GeneratesDocumentationSidebar
 
         $array = [];
 
-        foreach (CollectionService::getSourceSlugsOfModels(DocumentationPage::class) as $slug) {
+        foreach (CollectionService::getSourceFileListForModel(DocumentationPage::class) as $slug) {
             if ($slug == 'index') {
                 continue;
             }
