@@ -1,7 +1,10 @@
-{{-- The Documentation Page Layout based on Laradocgen --}}
+{{-- The Documentation Page Layout is based on Laradocgen --}}
 @extends('hyde::layouts.app')
 @section('content')
 @php($withoutNavigation = true)
+
+<style> /* Base styles for compatibility */ .hidden { display: none; } </style>
+
 <nav id="documentation-navigation" class="md:hidden fixed top-0 w-screen h-16 p-4 shadow-lg sm:shadow-xl overflow-hidden bg-white z-30">
 	@include('hyde::components.docs.navigation')
 </nav>
@@ -12,5 +15,5 @@
 	@include('hyde::components.docs.content')
 </main>
 
-<div id="sidebar-backdrop" class="hidden" title="Click to close sidebar" onClick="hideSidebar()"></div>
+<div id="sidebar-backdrop" title="Click to close sidebar" onClick="hideSidebar()" style="display: none;"></div>
 @endsection
