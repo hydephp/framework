@@ -1,1 +1,1 @@
-Posted <time itemprop="dateCreated datePublished" datetime="{{ $date }}" title="{{ $date }}">{{ $date }}</time>
+Posted <time itemprop="dateCreated datePublished" datetime="{{ $date }} {{ date('e', strtotime($date)) }}" title="{{ date('l M jS, Y, \a\t g:ia', strtotime($date)) }}">{{ date('M jS, Y', strtotime($date)) }}</time>
