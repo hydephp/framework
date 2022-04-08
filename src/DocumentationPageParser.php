@@ -79,6 +79,6 @@ class DocumentationPageParser
     #[Pure]
     public function get(): DocumentationPage
     {
-        return new DocumentationPage(body: $this->body, title: $this->title, slug: $this->slug);
+        return new DocumentationPage(matter: [], body: $this->body, title: $this->title, slug: $this->slug);
     }
 }
