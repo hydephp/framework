@@ -5,7 +5,7 @@ namespace Hyde\Framework\Models;
 /**
  * A simple class that contains the body of a Documentation Page.
  */
-class DocumentationPage extends PageModel
+class DocumentationPage extends MarkdownDocument
 {
     /**
      * The Page Title.

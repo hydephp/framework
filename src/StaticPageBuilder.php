@@ -7,7 +7,7 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\PageModel;
+use Hyde\Framework\Models\MarkdownDocument;
 
 /**
  * Converts a Page Model into a static HTML page.
@@ -20,10 +20,10 @@ class StaticPageBuilder
     /**
      * Construct the class.
      *
-     * @param PageModel|BladePage $page the Page to compile into HTML
+     * @param MarkdownDocument|BladePage $page the Page to compile into HTML
      * @param bool $runAutomatically if set to true the class will invoke when constructed
      */
-    public function __construct(protected PageModel|BladePage $page, bool $runAutomatically = false)
+    public function __construct(protected MarkdownDocument|BladePage $page, bool $runAutomatically = false)
     {
         if ($runAutomatically) {
             $this->createdFileSize = $this->__invoke();

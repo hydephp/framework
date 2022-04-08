@@ -6,7 +6,7 @@ namespace Hyde\Framework\Models;
  * Intermediate object model created by the MarkdownFileService
  * and contains the Front Matter and Markdown body found in a document.
  */
-class MarkdownDocument extends PageModel
+class MarkdownDocument
 {
     /**
      * The Front Matter Array.
