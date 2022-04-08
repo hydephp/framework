@@ -14,11 +14,14 @@ use JetBrains\PhpStorm\Pure;
  */
 class MarkdownPageParser extends AbstractPageParser
 {
+    protected string $slug;
+
     public string $title;
     public string $body;
 
-    public function __construct(protected string $slug)
+    public function __construct(string $slug)
     {
+        $this->slug = $slug;
         if (!file_exists(Hyde::path("_pages/$slug.md"))) {
             throw new Exception("File _pages/$slug.md not found.", 404);
         }

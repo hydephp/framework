@@ -10,14 +10,17 @@ use JetBrains\PhpStorm\Pure;
 
 class DocumentationPageParser extends AbstractPageParser
 {
+    protected string $slug;
+
     private string $filepath;
 
     public string $body;
 
     public string $title;
 
-    public function __construct(protected string $slug)
+    public function __construct(string $slug)
     {
+        $this->slug = $slug;
         $this->filepath = Hyde::path("_docs/$slug.md");
         if (!file_exists($this->filepath)) {
             throw new Exception("File _docs/$slug.md not found.", 404);

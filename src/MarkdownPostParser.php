@@ -11,12 +11,15 @@ use JetBrains\PhpStorm\Pure;
 
 class MarkdownPostParser extends AbstractPageParser
 {
+    protected string $slug;
+
     public array $matter;
     public string $body;
     public string $title;
 
-    public function __construct(protected string $slug)
+    public function __construct(string $slug)
     {
+        $this->slug = $slug;
         if (!file_exists(Hyde::path("_posts/$slug.md"))) {
             throw new Exception("File _posts/$slug.md not found.", 404);
         }

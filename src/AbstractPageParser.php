@@ -18,8 +18,12 @@ use Hyde\Framework\Models\AbstractPage;
 abstract class AbstractPageParser
 {
     /**
+     * @var string $slug of the page to parse.
+     */
+    protected string $slug;
+
+    /**
      * Construct the class.
-     * @param string $slug of the page to parse.
      */
     abstract public function __construct(string $slug);
 
