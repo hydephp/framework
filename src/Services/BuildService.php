@@ -17,7 +17,7 @@ use Hyde\Framework\StaticPageBuilder;
  */
 class BuildService
 {
-    public static function determineModelFromFilePath(string $filepath): string|false
+    public static function findModelFromFilePath(string $filepath): string|false
     {
         if (str_starts_with($filepath, '_posts')) {
             return MarkdownPost::class;
@@ -38,7 +38,7 @@ class BuildService
         return false;
     }
 
-    public static function getParserForModel(string $model): string|false
+    public static function getParserClassForModel(string $model): string|false
     {
         if ($model === MarkdownPost::class) {
             return MarkdownPostParser::class;
@@ -57,6 +57,25 @@ class BuildService
         }
 
         return false;
+    }
+
+    public static function getParserInstanceForModel(string $model, string $slug): object|false
+    {
+        if ($model === MarkdownPost::class) {
+            return new MarkdownPostParser($slug);
+        }
+
+        if ($model === MarkdownPage::class) {
+            return new MarkdownPageParser($slug);
+        }
+
+        if ($model === DocumentationPage::class) {
+            return new DocumentationPageParser($slug);
+        }
+
+        if ($model === BladePage::class) {
+            return new BladePage($slug);
+        }
     }
 
     public static function getFileExtensionForModelFiles(string $model): string|false
