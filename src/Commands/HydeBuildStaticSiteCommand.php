@@ -58,26 +58,10 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->title('Building your static site!');
 
-        if ($this->option('no-api')) {
-            $this->info('Disabling external API calls, such as Torchlight');
-            $config = config('hyde.features');
-            unset($config[array_search('torchlight', $config)]);
-            Config::set(['hyde.features' => $config]);
-        }
-
-        if ($this->option('clean')) {
-            if ($this->option('force')) {
-                $this->purge();
-            } else {
-                $this->warn('The --clean option will remove all files in the output directory before building.');
-                if ($this->confirm(' Are you sure?')) {
-                    $this->purge();
-                } else {
-                    $this->warn('Aborting.');
-
-                    return 1;
-                }
-            }
+        $this->printInitialInformation();
+        
+        if ($this->handleCleanOption() !== 0) {
+            return 1;
         }
 
         $collection = CollectionService::getMediaAssetFiles();
@@ -154,6 +138,23 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->postBuildActions();
 
+        $this->printFinishMessage($time_start);
+
+        return 0;
+    }
+
+    protected function printInitialInformation(): void
+    {
+        if ($this->option('no-api')) {
+            $this->info('Disabling external API calls, such as Torchlight');
+            $config = config('hyde.features');
+            unset($config[array_search('torchlight', $config)]);
+            Config::set(['hyde.features' => $config]);
+        }
+    }
+
+    protected function printFinishMessage(float $time_start): void
+    {
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
         $this->info('All done! Finished in '.number_format(
@@ -165,7 +166,24 @@ class HydeBuildStaticSiteCommand extends Command
         $this->line('Your new homepage is stored here -> ' .
             BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
         );
+    }
 
+    protected function handleCleanOption(): int
+    {
+        if ($this->option('clean')) {
+            if ($this->option('force')) {
+                $this->purge();
+            } else {
+                $this->warn('The --clean option will remove all files in the output directory before building.');
+                if ($this->confirm(' Are you sure?')) {
+                    $this->purge();
+                } else {
+                    $this->warn('Aborting.');
+
+                    return 1;
+                }
+            }
+        }
         return 0;
     }
 
