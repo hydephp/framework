@@ -6,9 +6,11 @@ use Hyde\Framework\Services\BuildService;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
 
-/** 
+/**
  * Offloads logic for static site building commands.
+ *
  * @see \Hyde\Framework\Commands\HydeBuildStaticSiteCommand
+ *
  * @internal
  */
 trait BuildActionRunner
@@ -17,12 +19,14 @@ trait BuildActionRunner
     protected function canRunBuildAction(array $collection, string $name, ?string $verb = null): bool
     {
         if (sizeof($collection) < 1) {
-            $this->line('No ' . $name . ' found. Skipping...');
+            $this->line('No '.$name.' found. Skipping...');
             $this->newLine();
+
             return false;
         }
 
-        $this->comment(($verb ?? 'Creating') . " $name...");
+        $this->comment(($verb ?? 'Creating')." $name...");
+
         return true;
     }
 

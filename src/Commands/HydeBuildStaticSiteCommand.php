@@ -13,8 +13,6 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\BuildService;
-use Hyde\Framework\Services\CollectionService;
-use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -91,8 +89,6 @@ class HydeBuildStaticSiteCommand extends Command
         return 0;
     }
 
-
-
     /** @internal */
     protected function printInitialInformation(): void
     {
@@ -109,14 +105,14 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
-        $this->info('All done! Finished in ' . number_format(
+        $this->info('All done! Finished in '.number_format(
             $execution_time,
             2
-        ) . ' seconds. (' . number_format(($execution_time * 1000), 2) . 'ms)');
+        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
-            'Your new homepage is stored here -> ' .
+            'Your new homepage is stored here -> '.
                 BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
         );
     }
@@ -138,6 +134,7 @@ class HydeBuildStaticSiteCommand extends Command
                 }
             }
         }
+
         return 0;
     }
 
@@ -145,6 +142,7 @@ class HydeBuildStaticSiteCommand extends Command
      * Clear the entire _site directory before running the build.
      *
      * @internal
+     *
      * @return void
      */
     public function purge()
@@ -189,21 +187,21 @@ class HydeBuildStaticSiteCommand extends Command
     /** @internal */
     protected function getModelPluralName(string $model): string
     {
-        return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)) . 's';
+        return preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($model)).'s';
     }
 
     /* @internal */
     private function runNodeCommand(string $command, string $message, ?string $actionMessage = null): void
     {
-        $this->info($message . ' This may take a second.');
+        $this->info($message.' This may take a second.');
 
         if (app()->environment() === 'testing') {
-            $command = 'echo ' . $command;
+            $command = 'echo '.$command;
         }
         $output = shell_exec($command);
 
         $this->line(
-            $output ?? '<fg=red>Could not ' . ($actionMessage ?? 'run script') . '! Is NPM installed?</>'
+            $output ?? '<fg=red>Could not '.($actionMessage ?? 'run script').'! Is NPM installed?</>'
         );
     }
 }

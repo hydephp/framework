@@ -28,7 +28,7 @@ class BuildService
         if (str_starts_with($filepath, '_docs')) {
             return DocumentationPage::class;
         }
-        
+
         if (str_starts_with($filepath, 'resources/views/pages')) {
             return BladePage::class;
         }
@@ -128,7 +128,7 @@ class BuildService
      */
     public static function createClickableFilepath(string $filepath): string
     {
-        return 'file://' . str_replace(
+        return 'file://'.str_replace(
             '\\',
             '/',
             realpath($filepath)

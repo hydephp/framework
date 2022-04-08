@@ -27,7 +27,7 @@ class HydeDebugCommand extends Command
     public function __construct()
     {
         parent::__construct();
-     
+
         if (config('app.env', 'production') !== 'development') {
             $this->setHidden(true);
         }
