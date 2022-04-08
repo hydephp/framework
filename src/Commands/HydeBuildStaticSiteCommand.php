@@ -197,9 +197,10 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $this->info($message . ' This may take a second.');
 
-        if (app()->environment() !== 'testing') {
-            $output = shell_exec($command);
+        if (app()->environment() === 'testing') {
+            $command = 'echo ' . $command;
         }
+        $output = shell_exec($command);
 
         $this->line(
             $output ?? '<fg=red>Could not ' . ($actionMessage ?? 'run script') . '! Is NPM installed?</>'
