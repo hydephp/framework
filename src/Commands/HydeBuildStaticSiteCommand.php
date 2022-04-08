@@ -13,6 +13,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Services\BuildService;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\Config;
@@ -161,11 +162,9 @@ class HydeBuildStaticSiteCommand extends Command
         ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
-        $this->line('Your new homepage is stored here -> file://'.str_replace(
-            '\\',
-            '/',
-            realpath(Hyde::path('_site/index.html'))
-        ));
+        $this->line('Your new homepage is stored here -> ' .
+            BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
+        );
 
         return 0;
     }

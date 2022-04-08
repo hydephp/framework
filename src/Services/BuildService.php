@@ -117,4 +117,20 @@ class BuildService
             throw new Exception('Invalid source path.', 400);
         }
     }
+
+
+    /**
+     * Create a filepath that can be opened in the browser from a terminal.
+     *
+     * @param  string  $filepath
+     * @return string
+     */
+    public static function createClickableFilepath(string $filepath): string
+    {
+        return 'file://'.str_replace(
+            '\\',
+            '/',
+            realpath($filepath)
+        );
+    }
 }
