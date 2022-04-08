@@ -69,10 +69,6 @@ class HydeBuildStaticSiteCommand extends Command
             $this->withProgressBar(
                 $collection,
                 function ($filepath) {
-                    if ($this->getOutput()->isVeryVerbose()) {
-                        $this->line(' > Copying media file '
-                            . basename($filepath) . ' to the output media directory');
-                    }
                     copy($filepath, Hyde::path('_site/media/' . basename($filepath)));
                 }
             );
@@ -159,7 +155,7 @@ class HydeBuildStaticSiteCommand extends Command
                 $this->purge();
             } else {
                 $this->warn('The --clean option will remove all files in the output directory before building.');
-                if ($this->confirm(' Are you sure?')) {
+                if ($this->confirm('Are you sure?')) {
                     $this->purge();
                 } else {
                     $this->warn('Aborting.');
