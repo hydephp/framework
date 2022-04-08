@@ -80,7 +80,7 @@ class StaticPageBuilder
     private function compilePost(): string
     {
         return view('hyde::layouts/post')->with([
-            'post' => $this->page, // @todo check if this is necessary
+            'post' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => 'posts/' . $this->page->slug,
@@ -95,7 +95,7 @@ class StaticPageBuilder
     private function compileDocs(): string
     {
         return view('hyde::layouts/docs')->with([
-            'docs' => $this->page, // @todo check if this is necessary
+            'docs' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/') . '/' . $this->page->slug,
