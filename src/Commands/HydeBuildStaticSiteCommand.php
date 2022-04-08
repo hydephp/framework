@@ -91,7 +91,7 @@ class HydeBuildStaticSiteCommand extends Command
         return 0;
     }
 
-    
+
 
     /** @internal */
     protected function printInitialInformation(): void
@@ -197,14 +197,11 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $this->info($message . ' This may take a second.');
 
-        try {
-            if (app()->environment() !== 'testing') {
-                $this->line(shell_exec($command));
-            }
-        } catch (Exception) {
-            $this->warn('Could not '.($actionMessage ?? 'run script').'! Is NPM installed?');
+        if (app()->environment() !== 'testing') {
+            $this->line(
+                shell_exec($command) ??
+                    '<fg=red>Could not ' . ($actionMessage ?? 'run script') . '! Is NPM installed?</>'
+            );
         }
     }
-
-
 }
