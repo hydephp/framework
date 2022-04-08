@@ -2,8 +2,7 @@
 
 namespace Hyde\Framework\Models;
 
-/** @inheritDoc */
 class MarkdownPost extends MarkdownDocument
 {
-    //
+    public static string $sourceDirectory = '_posts';
 }

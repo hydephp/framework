@@ -2,8 +2,7 @@
 
 namespace Hyde\Framework\Models;
 
-/** @inheritDoc */
 class DocumentationPage extends MarkdownDocument
 {
-    //
+    public static string $sourceDirectory = '_docs';
 }

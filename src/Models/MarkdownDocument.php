@@ -10,31 +10,12 @@ namespace Hyde\Framework\Models;
  */
 class MarkdownDocument
 {
-    /**
-     * The Front Matter Array.
-     *
-     * @var array
-     */
     public array $matter;
-
-    /**
-     * The Markdown Body String.
-     *
-     * @var string
-     */
     public string $body;
-
-    /**
-     * The HTML Page Title.
-     * @var string
-     */
     public string $title;
-
-    /**
-     * The Page Slug (Basename).
-     * @var string
-     */
     public string $slug;
+
+    public static string $fileExtension = '.md';
 
     /**
      * Construct the class.
