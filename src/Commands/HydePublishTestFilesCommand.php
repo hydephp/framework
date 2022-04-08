@@ -12,14 +12,14 @@ use LaravelZero\Framework\Commands\Command;
  *
  * @internal
  */
-class HydePublishStubsCommand extends Command
+class HydePublishTestFilesCommand extends Command
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'stubs:publish {--clean : Should all _directories be emptied first?} 
+    protected $signature = 'test:publish-stubs {--clean : Should all _directories be emptied first?} 
                 {--force : Should the command be allowed to run in production?}';
 
     /**
@@ -28,6 +28,8 @@ class HydePublishStubsCommand extends Command
      * @var string
      */
     protected $description = 'Publish the test stubs';
+
+    protected $hidden = true;
 
     /**
      * Execute the console command.

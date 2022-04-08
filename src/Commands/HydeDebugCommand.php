@@ -24,6 +24,15 @@ class HydeDebugCommand extends Command
      */
     protected $description = 'Print debug info';
 
+    public function __construct()
+    {
+        parent::__construct();
+     
+        if (config('app.env', 'production') !== 'development') {
+            $this->setHidden(true);
+        }
+    }
+
     /**
      * Execute the console command.
      *
