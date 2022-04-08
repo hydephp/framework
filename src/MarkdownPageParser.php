@@ -4,7 +4,6 @@ namespace Hyde\Framework;
 
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Services\MarkdownFileService;
-use Illuminate\Support\Str;
 
 /**
  * @todo Re-add support for YAML Front Matter.
@@ -27,7 +26,7 @@ class MarkdownPageParser extends AbstractPageParser
             $this->title = $document->matter['title'];
         } else {
             $this->title = $this->findTitleTag($document->body) ??
-                Str::title(str_replace('-', ' ', $this->slug));
+                Hyde::titleFromSlug($this->slug);
         }
 
         $this->body = $document->body;

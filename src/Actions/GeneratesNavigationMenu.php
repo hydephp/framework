@@ -149,7 +149,7 @@ class GeneratesNavigationMenu
             return 'Home';
         }
 
-        return Str::title(str_replace('-', ' ', $slug));
+        return Hyde::titleFromSlug($slug);
     }
 
     /**

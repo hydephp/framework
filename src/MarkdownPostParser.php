@@ -4,7 +4,6 @@ namespace Hyde\Framework;
 
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
-use Illuminate\Support\Str;
 
 class MarkdownPostParser extends AbstractPageParser
 {
@@ -28,7 +27,7 @@ class MarkdownPostParser extends AbstractPageParser
         if (isset($document->matter['title'])) {
             $this->title = $document->matter['title'];
         } else {
-            $this->title = Str::title(str_replace('-', ' ', $this->slug));
+            $this->title = Hyde::titleFromSlug($this->slug);
         }
 
         $this->body = $document->body;

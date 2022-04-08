@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Actions;
 
 use function config;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
@@ -41,7 +42,7 @@ class GeneratesDocumentationSidebar
 
             $array[] = [
                 'slug' => $slug,
-                'title' => Str::title(str_replace('-', ' ', $slug)),
+                'title' => Hyde::titleFromSlug($slug),
                 'active' => 'docs/'.$slug == $current,
                 'order' =>  $order,
             ];

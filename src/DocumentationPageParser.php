@@ -3,7 +3,6 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Models\DocumentationPage;
-use Illuminate\Support\Str;
 
 class DocumentationPageParser extends AbstractPageParser
 {
@@ -18,7 +17,7 @@ class DocumentationPageParser extends AbstractPageParser
         $stream = file_get_contents(Hyde::path("_docs/$this->slug.md"));
 
         $this->title = $this->findTitleTag($stream) ??
-            Str::title(str_replace('-', ' ', $this->slug));
+            Hyde::titleFromSlug($this->slug);
 
         $this->body = $stream;
     }
