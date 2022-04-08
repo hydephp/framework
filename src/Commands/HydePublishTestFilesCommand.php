@@ -10,7 +10,7 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Publish test file stubs.
  *
- * @internal
+ * @deprecated 0.9.0 - Please construct the test files in the tests for a more predictable state. Commands like these may be extracted into a package-dev-tools package.
  */
 class HydePublishTestFilesCommand extends Command
 {
