@@ -9,10 +9,10 @@ class DocumentationPage extends MarkdownDocument
     public string $body;
     public string $slug;
 
-    public function __construct(string $slug, string $title, string $body)
+    public function __construct(string $body, string $title, string $slug)
     {
+        parent::__construct([], $body);
         $this->slug = $slug;
         $this->title = $title;
-        $this->body = $body;
     }
 }

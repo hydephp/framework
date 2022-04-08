@@ -15,23 +15,11 @@ use JetBrains\PhpStorm\Pure;
  */
 class DocumentationPageParser
 {
-    /**
-     * @var string the full path to the Documentation file
-     */
+    /** @var string the full path to the Documentation file */
     private string $filepath;
 
-    /**
-     * The extracted Documentation body.
-     *
-     * @var string
-     */
     public string $body;
 
-    /**
-     * The page title.
-     *
-     * @var string
-     */
     public string $title;
 
     /**
@@ -91,6 +79,6 @@ class DocumentationPageParser
     #[Pure]
     public function get(): DocumentationPage
     {
-        return new DocumentationPage($this->slug, $this->title, $this->body);
+        return new DocumentationPage(body: $this->body, title: $this->title, slug: $this->slug);
     }
 }
