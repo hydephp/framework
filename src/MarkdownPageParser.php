@@ -11,6 +11,7 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Parses a Markdown file into an object with support for Front Matter.
+ * @todo Re-add support for YAML Front Matter.
  *
  * Note that it does not convert it to HTML.
  */
@@ -90,6 +91,6 @@ class MarkdownPageParser
     #[Pure]
     public function get(): MarkdownPage
     {
-        return new MarkdownPage([], $this->body, $this->slug, $this->title);
+        return new MarkdownPage(matter: [], body: $this->body, title: $this->title, slug: $this->slug);
     }
 }
