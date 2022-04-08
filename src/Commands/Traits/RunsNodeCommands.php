@@ -19,7 +19,9 @@ trait RunsNodeCommands
             return;
         }
         try {
-            $this->line(shell_exec($command));
+            if (app()->environment() !== 'testing') {
+                $this->line(shell_exec($command));
+            }
         } catch (Exception) {
             $this->warn('Could not '.($actionMessage ?? 'run script').'! Is NPM installed?');
         }
