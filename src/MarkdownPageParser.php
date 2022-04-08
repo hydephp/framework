@@ -10,52 +10,28 @@ use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 
 /**
- * Parses a Markdown file into an object with support for Front Matter.
  * @todo Re-add support for YAML Front Matter.
- *
- * Note that it does not convert it to HTML.
  */
-class MarkdownPageParser
+class MarkdownPageParser extends AbstractPageParser
 {
-    /**
-     * The page title.
-     *
-     * @var string
-     */
     public string $title;
-
-    /**
-     * The extracted page body.
-     *
-     * @var string
-     */
     public string $body;
 
-    /**
-     * @param  string  $slug  of the Markdown file (without extension)
-     *
-     * @throws Exception if the file cannot be found in _pages
-     *
-     * @example `new MarkdownPageParser('example-page')`
-     */
     public function __construct(protected string $slug)
     {
-        if (! file_exists(Hyde::path("_pages/$slug.md"))) {
+        if (!file_exists(Hyde::path("_pages/$slug.md"))) {
             throw new Exception("File _pages/$slug.md not found.", 404);
         }
 
         $this->execute();
     }
 
-    /**
-     * Handle the parsing job.
-     *
-     * @return void
-     */
-    #[NoReturn]
+
     public function execute(): void
     {
-        $document = (new MarkdownFileService(Hyde::path("_pages/$this->slug.md")))->get();
+        $document = (new MarkdownFileService(
+            Hyde::path("_pages/$this->slug.md")
+        ))->get();
 
         if (isset($document->matter['title'])) {
             $this->title = $document->matter['title'];
@@ -83,14 +59,13 @@ class MarkdownPageParser
         return false;
     }
 
-    /**
-     * Get the Markdown Page Object.
-     *
-     * @return MarkdownPage
-     */
-    #[Pure]
     public function get(): MarkdownPage
     {
-        return new MarkdownPage(matter: [], body: $this->body, title: $this->title, slug: $this->slug);
+        return new MarkdownPage(
+            matter: [],
+            body: $this->body,
+            title: $this->title,
+            slug: $this->slug
+        );
     }
 }
