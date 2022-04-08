@@ -3,11 +3,11 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\MarkdownConverter;
+use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\MarkdownDocument;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\MarkdownDocument;
 
 /**
  * Converts a Page Model into a static HTML page.
@@ -20,8 +20,8 @@ class StaticPageBuilder
     /**
      * Construct the class.
      *
-     * @param MarkdownDocument|BladePage $page the Page to compile into HTML
-     * @param bool $runAutomatically if set to true the class will invoke when constructed
+     * @param  MarkdownDocument|BladePage  $page  the Page to compile into HTML
+     * @param  bool  $runAutomatically  if set to true the class will invoke when constructed
      */
     public function __construct(protected MarkdownDocument|BladePage $page, bool $runAutomatically = false)
     {
@@ -38,7 +38,7 @@ class StaticPageBuilder
     public function __invoke()
     {
         if ($this->page instanceof MarkdownPost) {
-            return $this->save('posts/' . $this->page->slug, $this->compilePost());
+            return $this->save('posts/'.$this->page->slug, $this->compilePost());
         }
 
         if ($this->page instanceof MarkdownPage) {
@@ -50,11 +50,11 @@ class StaticPageBuilder
         }
 
         if ($this->page instanceof DocumentationPage) {
-            if (!file_exists(Hyde::path('_site/' . Hyde::docsDirectory()))) {
-                mkdir(Hyde::path('_site/' . Hyde::docsDirectory()), recursive: true);
+            if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
+                mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
             }
 
-            return $this->save(Hyde::docsDirectory() . '/' . $this->page->slug, $this->compileDocs());
+            return $this->save(Hyde::docsDirectory().'/'.$this->page->slug, $this->compileDocs());
         }
     }
 
@@ -83,7 +83,7 @@ class StaticPageBuilder
             'post' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
-            'currentPage' => 'posts/' . $this->page->slug,
+            'currentPage' => 'posts/'.$this->page->slug,
         ])->render();
     }
 
@@ -98,7 +98,7 @@ class StaticPageBuilder
             'docs' => $this->page,
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
-            'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/') . '/' . $this->page->slug,
+            'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/').'/'.$this->page->slug,
         ])->render();
     }
 
@@ -123,7 +123,7 @@ class StaticPageBuilder
      */
     private function compileView(): string
     {
-        return view('pages/' . $this->page->view, [
+        return view('pages/'.$this->page->view, [
             'currentPage' => $this->page->view,
         ])->render();
     }

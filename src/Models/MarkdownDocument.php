@@ -4,7 +4,7 @@ namespace Hyde\Framework\Models;
 
 /**
  * The base class for all Markdown-based Page Models.
- * 
+ *
  * It is, in itself an intermediate object model created by the MarkdownFileService
  * and contains the Front Matter and Markdown body found in a document processed by the service.
  */
@@ -20,10 +20,10 @@ class MarkdownDocument extends AbstractPage
     /**
      * Construct the class.
      *
-     * @param array $matter
-     * @param string $body
-     * @param string $title
-     * @param string $slug
+     * @param  array  $matter
+     * @param  string  $body
+     * @param  string  $title
+     * @param  string  $slug
      */
     public function __construct(array $matter, string $body, string $title = '', string $slug = '')
     {

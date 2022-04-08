@@ -2,9 +2,6 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\DocumentationPageParser;
-use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -23,11 +20,11 @@ class BuildService
     /**
      * Create and get a constructed instance of a Model's Parser class.
      *
-     * @param string $model Class constant of the Model to get the Parser for.
-     * @param string $slug The slug of the source file to parse.
-     * 
+     * @param  string  $model  Class constant of the Model to get the Parser for.
+     * @param  string  $slug  The slug of the source file to parse.
+     *
      * @example getParserForModel(MarkdownPost::class, 'hello-world')
-     * 
+     *
      * @return object The constructed Parser instance.
      */
     public static function getParserInstanceForModel(string $model, string $slug): object
@@ -53,7 +50,7 @@ class BuildService
 
     /**
      * Determine the Page Model to use for a given file path.
-     * 
+     *
      * @return string The model class constant, or false if none was found.
      */
     public static function findModelFromFilePath(string $filepath): string|false
@@ -85,7 +82,7 @@ class BuildService
      */
     public static function createClickableFilepath(string $filepath): string
     {
-        return 'file://' . str_replace(
+        return 'file://'.str_replace(
             '\\',
             '/',
             realpath($filepath)

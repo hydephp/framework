@@ -129,7 +129,7 @@ class Hyde
     /**
      * Create a title from a kebab-case slug.
      *
-     * @param string $slug
+     * @param  string  $slug
      * @return string $title
      */
     public static function titleFromSlug(string $slug): string
