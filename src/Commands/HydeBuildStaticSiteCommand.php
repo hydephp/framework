@@ -4,6 +4,7 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Hyde\Framework\Commands\Traits\RunsNodeCommands;
 use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
@@ -25,6 +26,8 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeBuildStaticSiteCommand extends Command
 {
+    use RunsNodeCommands;
+
     /**
      * The signature of the command.
      *
@@ -142,7 +145,7 @@ class HydeBuildStaticSiteCommand extends Command
     protected function printInitialInformation(): void
     {
         if ($this->option('no-api')) {
-            $this->info('Disabling external API calls, such as Torchlight');
+            $this->info('Disabling external API calls');
             $config = config('hyde.features');
             unset($config[array_search('torchlight', $config)]);
             Config::set(['hyde.features' => $config]);
@@ -209,36 +212,20 @@ class HydeBuildStaticSiteCommand extends Command
     /**
      * Run any post-build actions.
      *
-     * @internal
      * @return void
      */
     public function postBuildActions()
     {
         if ($this->option('pretty')) {
-            $this->info('Prettifying code! This may take a second.');
-            try {
-                $this->line(shell_exec('npx prettier _site/ --write --bracket-same-line'));
-            } catch (Exception) {
-                $this->warn('Could not prettify code! Is NPM installed?');
-            }
+            $this->runNodeCommand('pretty', 'Prettifying code!', 'prettify code');
         }
 
         if ($this->option('run-dev')) {
-            $this->info('Building frontend assets for development! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run dev'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
+            $this->runNodeCommand('dev', 'Building frontend assets for development!');
         }
 
         if ($this->option('run-prod')) {
-            $this->info('Building frontend assets for production! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run prod'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
+            $this->runNodeCommand('prod', 'Building frontend assets for production!');
         }
     }
 
