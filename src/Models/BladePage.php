@@ -5,7 +5,7 @@ namespace Hyde\Framework\Models;
 /**
  * A basic wrapper for the custom Blade View compiler.
  */
-class BladePage
+class BladePage extends AbstractPage
 {
     /**
      * The name of the Blade View to compile.
@@ -25,6 +25,9 @@ class BladePage
     {
         $this->view = $view;
     }
+
+    public static string $sourceDirectory = 'resources/views/pages';
+    public static string $fileExtension = '.blade.php';
 
     /**
      * Since this model also acts as a Blade View compiler,

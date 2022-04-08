@@ -8,7 +8,7 @@ namespace Hyde\Framework\Models;
  * It is, in itself an intermediate object model created by the MarkdownFileService
  * and contains the Front Matter and Markdown body found in a document processed by the service.
  */
-class MarkdownDocument
+class MarkdownDocument extends AbstractPage
 {
     public array $matter;
     public string $body;
