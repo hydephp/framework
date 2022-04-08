@@ -5,6 +5,7 @@ namespace Hyde\Framework;
 use Exception;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 
@@ -28,6 +29,13 @@ class MarkdownPostParser
      * @var string
      */
     public string $body;
+
+    /**
+     * The page title.
+     *
+     * @var string
+     */
+    public string $title;
 
     /**
      * @param  string  $slug  of the Markdown file (without extension)
@@ -57,8 +65,14 @@ class MarkdownPostParser
         $document = (new MarkdownFileService(Hyde::path("_posts/$this->slug.md")))->get();
 
         $this->matter = array_merge($document->matter, [
-            'slug' => $this->slug, // Make sure to use the filename as the slug and not any potential override
+            'slug' => $this->slug, // Makes sure the slug cannot be set from the front matter
         ]);
+
+        if (isset($document->matter['title'])) {
+            $this->title = $document->matter['title'];
+        } else {
+            $this->title = Str::title(str_replace('-', ' ', $this->slug));
+        }
 
         $this->body = $document->body;
     }
@@ -68,9 +82,8 @@ class MarkdownPostParser
      *
      * @return MarkdownPost
      */
-    #[Pure]
     public function get(): MarkdownPost
     {
-        return new MarkdownPost($this->matter, $this->body, $this->slug);
+        return new MarkdownPost(matter: $this->matter, body: $this->body, title: $this->title, slug: $this->slug);
     }
 }
