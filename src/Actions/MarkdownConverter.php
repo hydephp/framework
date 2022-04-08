@@ -2,10 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use Hyde\Framework\Features;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use Torchlight\Commonmark\V2\TorchlightExtension;
+use Hyde\Framework\Services\MarkdownConverterService;
 
 /**
  * Converts Markdown into HTML.
@@ -20,25 +17,6 @@ class MarkdownConverter
      */
     public static function parse(string $markdown): string
     {
-        $converter = new CommonMarkConverter();
-
-        $converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
-
-        if (Features::hasTorchlight()) {
-            $converter->getEnvironment()->addExtension(new TorchlightExtension());
-        }
-
-        $html = $converter->convert($markdown);
-
-        if (Features::hasTorchlight()
-            && config('torchlight.attribution.enabled', true)
-            && str_contains($html, 'Syntax highlighted by torchlight.dev')) {
-            $html .= $converter->convert(config(
-                'torchlight.attribution.markdown',
-                'Syntax highlighted by torchlight.dev'
-            ));
-        }
-
-        return $html;
+        return (new MarkdownConverterService($markdown))->parse();
     }
 }
