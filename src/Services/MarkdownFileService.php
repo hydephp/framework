@@ -28,7 +28,7 @@ class MarkdownFileService
 
     public function __construct(string $filepath)
     {
-        $object = YamlFrontMatter::parse(file_get_contents($filepath));
+        $object = YamlFrontMatter::markdownCompatibleParse(file_get_contents($filepath));
 
         if ($object->matter()) {
             $this->matter = $object->matter();
