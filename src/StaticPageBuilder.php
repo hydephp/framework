@@ -5,6 +5,7 @@ namespace Hyde\Framework;
 use Hyde\Framework\Actions\MarkdownConverter;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\MarkdownDocument;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 
@@ -19,13 +20,11 @@ class StaticPageBuilder
     /**
      * Construct the class.
      *
-     * @param  MarkdownPost|MarkdownPage|BladePage|DocumentationPage  $page  the Page to compile into HTML
+     * @param  MarkdownDocument|BladePage  $page  the Page to compile into HTML
      * @param  bool  $runAutomatically  if set to true the class will invoke when constructed
      */
-    public function __construct(
-        protected MarkdownPost|MarkdownPage|BladePage|DocumentationPage $page,
-        bool $runAutomatically = false
-    ) {
+    public function __construct(protected MarkdownDocument|BladePage $page, bool $runAutomatically = false)
+    {
         if ($runAutomatically) {
             $this->createdFileSize = $this->__invoke();
         }
@@ -82,7 +81,7 @@ class StaticPageBuilder
     {
         return view('hyde::layouts/post')->with([
             'post' => $this->page,
-            'title' => $this->page->matter['title'],
+            'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => 'posts/'.$this->page->slug,
         ])->render();
@@ -98,7 +97,7 @@ class StaticPageBuilder
         return view('hyde::layouts/docs')->with([
             'docs' => $this->page,
             'title' => $this->page->title,
-            'markdown' => MarkdownConverter::parse($this->page->content),
+            'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/').'/'.$this->page->slug,
         ])->render();
     }

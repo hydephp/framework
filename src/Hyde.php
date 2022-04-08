@@ -4,6 +4,7 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * General interface for Hyde services.
@@ -123,6 +124,17 @@ class Hyde
         }
 
         return copy($from, $to);
+    }
+
+    /**
+     * Create a title from a kebab-case slug.
+     *
+     * @param  string  $slug
+     * @return string $title
+     */
+    public static function titleFromSlug(string $slug): string
+    {
+        return Str::title(str_replace('-', ' ', ($slug)));
     }
 
     /**

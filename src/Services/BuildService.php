@@ -2,9 +2,6 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\DocumentationPageParser;
-use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -15,6 +12,47 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class BuildService
 {
+    public static function getParserClassForModel(string $model): string
+    {
+        return $model::$parserClass;
+    }
+
+    /**
+     * Create and get a constructed instance of a Model's Parser class.
+     *
+     * @param  string  $model  Class constant of the Model to get the Parser for.
+     * @param  string  $slug  The slug of the source file to parse.
+     *
+     * @example getParserForModel(MarkdownPost::class, 'hello-world')
+     *
+     * @return object The constructed Parser instance.
+     */
+    public static function getParserInstanceForModel(string $model, string $slug): object
+    {
+        return new $model::$parserClass($slug);
+    }
+
+    /**
+     * Get the file extension for a models source files.
+     */
+    public static function getFileExtensionForModelFiles(string $model): string
+    {
+        return $model::$fileExtension;
+    }
+
+    /**
+     * Get the source directory path of a model.
+     */
+    public static function getFilePathForModelClassFiles(string $model): string
+    {
+        return $model::$sourceDirectory;
+    }
+
+    /**
+     * Determine the Page Model to use for a given file path.
+     *
+     * @return string The model class constant, or false if none was found.
+     */
     public static function findModelFromFilePath(string $filepath): string|false
     {
         if (str_starts_with($filepath, '_posts')) {
@@ -31,90 +69,6 @@ class BuildService
 
         if (str_starts_with($filepath, 'resources/views/pages')) {
             return BladePage::class;
-        }
-
-        return false;
-    }
-
-    public static function getParserClassForModel(string $model): string|false
-    {
-        if ($model === MarkdownPost::class) {
-            return MarkdownPostParser::class;
-        }
-
-        if ($model === MarkdownPage::class) {
-            return MarkdownPageParser::class;
-        }
-
-        if ($model === DocumentationPage::class) {
-            return DocumentationPageParser::class;
-        }
-
-        if ($model === BladePage::class) {
-            return BladePage::class;
-        }
-
-        return false;
-    }
-
-    public static function getParserInstanceForModel(string $model, string $slug): object|false
-    {
-        if ($model === MarkdownPost::class) {
-            return new MarkdownPostParser($slug);
-        }
-
-        if ($model === MarkdownPage::class) {
-            return new MarkdownPageParser($slug);
-        }
-
-        if ($model === DocumentationPage::class) {
-            return new DocumentationPageParser($slug);
-        }
-
-        if ($model === BladePage::class) {
-            return new BladePage($slug);
-        }
-
-        return false;
-    }
-
-    public static function getFileExtensionForModelFiles(string $model): string|false
-    {
-        if ($model === MarkdownPost::class) {
-            return '.md';
-        }
-
-        if ($model === MarkdownPage::class) {
-            return '.md';
-        }
-
-        if ($model === DocumentationPage::class) {
-            return '.md';
-        }
-
-        if ($model === BladePage::class) {
-            return '.blade.php';
-        }
-
-        return false;
-    }
-
-    public static function getFilePathForModelClassFiles(string $model): string|false
-    {
-        if ($model === MarkdownPost::class) {
-            return '_posts';
-        }
-
-        if ($model === MarkdownPage::class) {
-            return '_pages';
-        }
-
-        if ($model === DocumentationPage::class) {
-            return '_docs';
-        }
-
-        if ($model === BladePage::class) {
-            return 'resources/views/pages';
         }
 
         return false;
