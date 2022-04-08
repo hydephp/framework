@@ -97,7 +97,7 @@ class StaticPageBuilder
         return view('hyde::layouts/docs')->with([
             'docs' => $this->page,
             'title' => $this->page->title,
-            'markdown' => MarkdownConverter::parse($this->page->content),
+            'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/') . '/' . $this->page->slug,
         ])->render();
     }

@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Models;
 
 /**
- * A simple class that contains the content of a Documentation Page.
+ * A simple class that contains the body of a Documentation Page.
  */
 class DocumentationPage extends PageModel
 {
@@ -15,11 +15,11 @@ class DocumentationPage extends PageModel
     public string $title;
 
     /**
-     * The Markdown Content.
+     * The Markdown body.
      *
      * @var string
      */
-    public string $content;
+    public string $body;
 
     /**
      * The Post Slug.
@@ -33,12 +33,12 @@ class DocumentationPage extends PageModel
      *
      * @param  string  $slug
      * @param  string  $title
-     * @param  string  $content
+     * @param  string  $body
      */
-    public function __construct(string $slug, string $title, string $content)
+    public function __construct(string $slug, string $title, string $body)
     {
         $this->slug = $slug;
         $this->title = $title;
-        $this->content = $content;
+        $this->body = $body;
     }
 }
