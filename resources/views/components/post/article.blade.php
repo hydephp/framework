@@ -1,4 +1,4 @@
-<article id="post-article" itemscope itemtype="https://schema.org/Article"
+<article id="{{ Hyde::uriPath() ?? '' }}posts/{{ $post->slug }}" class="post-article" itemscope itemtype="https://schema.org/Article"
     @class(['mx-auto prose', 'torchlight-enabled' => Hyde\Framework\Features::hasTorchlight()])>
     <meta itemprop="identifier" content="{{ $post->slug }}">
     @if(Hyde::uriPath())
