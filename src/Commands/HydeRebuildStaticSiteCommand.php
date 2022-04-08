@@ -5,6 +5,7 @@ namespace Hyde\Framework\Commands;
 use Exception;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\RebuildService;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -30,9 +31,9 @@ class HydeRebuildStaticSiteCommand extends Command
     /**
      * The Service Class.
      *
-     * @var BuildService
+     * @var RebuildService
      */
-    protected BuildService $service;
+    protected RebuildService $service;
 
     /**
      * The source path.
@@ -62,7 +63,7 @@ class HydeRebuildStaticSiteCommand extends Command
             return $this->handleException($exception);
         }
 
-        $this->service = new BuildService($this->path);
+        $this->service = new RebuildService($this->path);
 
         try {
             $this->service->execute();
