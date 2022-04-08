@@ -151,32 +151,7 @@ class HydeBuildStaticSiteCommand extends Command
             }
         }
 
-        if ($this->option('pretty')) {
-            $this->info('Prettifying code! This may take a second.');
-            try {
-                $this->line(shell_exec('npx prettier _site/ --write --bracket-same-line'));
-            } catch (Exception) {
-                $this->warn('Could not prettify code! Is NPM installed?');
-            }
-        }
-
-        if ($this->option('run-dev')) {
-            $this->info('Building frontend assets for development! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run dev'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
-        }
-
-        if ($this->option('run-prod')) {
-            $this->info('Building frontend assets for production! This may take a second.');
-            try {
-                $this->line(shell_exec('npm run prod'));
-            } catch (Exception) {
-                $this->warn('Could not run script! Is NPM installed?');
-            }
-        }
+        $this->postBuildActions();
 
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
@@ -213,6 +188,41 @@ class HydeBuildStaticSiteCommand extends Command
         (new CreatesDefaultDirectories)->__invoke();
 
         $this->line('</>');
+    }
+
+    /**
+     * Run any post-build actions.
+     *
+     * @return void
+     */
+    public function postBuildActions()
+    {
+        if ($this->option('pretty')) {
+            $this->info('Prettifying code! This may take a second.');
+            try {
+                $this->line(shell_exec('npx prettier _site/ --write --bracket-same-line'));
+            } catch (Exception) {
+                $this->warn('Could not prettify code! Is NPM installed?');
+            }
+        }
+
+        if ($this->option('run-dev')) {
+            $this->info('Building frontend assets for development! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run dev'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
+            }
+        }
+
+        if ($this->option('run-prod')) {
+            $this->info('Building frontend assets for production! This may take a second.');
+            try {
+                $this->line(shell_exec('npm run prod'));
+            } catch (Exception) {
+                $this->warn('Could not run script! Is NPM installed?');
+            }
+        }
     }
 
     protected function canRunBuildAction(array $collection, $name): bool
