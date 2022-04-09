@@ -2,11 +2,11 @@
 
 namespace Hyde\Framework\Commands;
 
-use Hyde\Framework\Services\FileCacheService;
 use Hyde\Framework\Actions\PublishesHomepageView;
 use Hyde\Framework\Hyde;
-use LaravelZero\Framework\Commands\Command;
+use Hyde\Framework\Services\FileCacheService;
 use Illuminate\Support\Facades\Artisan;
+use LaravelZero\Framework\Commands\Command;
 
 /**
  * Publish one of the default homepages.
@@ -30,16 +30,18 @@ class HydePublishHomepageCommand extends Command
         ))->execute();
 
         if ($returnValue === true) {
-            $this->info("Homepage published successfully!");
+            $this->info('Homepage published successfully!');
         } else {
             if (is_numeric($returnValue)) {
                 if ($returnValue == 404) {
-                    $this->error('Homepage ' . $this->selected . ' does not exist.');
+                    $this->error('Homepage '.$this->selected.' does not exist.');
+
                     return 404;
                 }
 
                 if ($returnValue == 409) {
                     $this->error('A homepage file already exists. Use --force to overwrite.');
+
                     return 409;
                 }
             }
@@ -72,6 +74,7 @@ class HydePublishHomepageCommand extends Command
         foreach (PublishesHomepageView::$homePages as $key => $value) {
             $keys[] = "<comment>$key</comment>: {$value['description']}";
         }
+
         return $keys;
     }
 
@@ -98,7 +101,7 @@ class HydePublishHomepageCommand extends Command
 
     protected function canExistingIndexFileBeOverwritten(): bool
     {
-        if (!file_exists(Hyde::path('resources/views/pages/index.blade.php')) || $this->option('force')) {
+        if (! file_exists(Hyde::path('resources/views/pages/index.blade.php')) || $this->option('force')) {
             return true;
         }
 
