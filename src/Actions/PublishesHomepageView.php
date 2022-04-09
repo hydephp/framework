@@ -35,6 +35,9 @@ class PublishesHomepageView implements ActionContract
 
     public function execute(): bool|int
     {
+        if (!array_key_exists($this->selected, self::$homePages)) {
+            return 404;
+        }
         return Hyde::copy(
             Hyde::vendorPath(static::$homePages[$this->selected]['path']),
             Hyde::path('resources/views/pages/index.blade.php'),
