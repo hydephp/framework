@@ -123,7 +123,7 @@ class StaticPageBuilder
      */
     private function compileView(): string
     {
-        return view('pages/'.$this->page->view, [
+        return view($this->page->view, [
             'currentPage' => $this->page->view,
         ])->render();
     }
