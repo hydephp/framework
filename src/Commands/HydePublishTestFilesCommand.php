@@ -63,7 +63,7 @@ class HydePublishTestFilesCommand extends Command
         );
 
         copy(
-            Hyde::path('vendor/hyde/framework/_pages/404.blade.php'),
+            Hyde::path('vendor/hyde/framework/resources/views/pages/404.blade.php'),
             Hyde::path('_pages/404.blade.php')
         );
 
