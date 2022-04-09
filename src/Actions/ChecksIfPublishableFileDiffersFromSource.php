@@ -4,6 +4,9 @@ namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Hyde;
 
+/**
+ * @deprecated use FileCacheService instead
+ */
 class ChecksIfPublishableFileDiffersFromSource implements ActionContract
 {
     protected string $filepath;
@@ -44,4 +47,5 @@ class ChecksIfPublishableFileDiffersFromSource implements ActionContract
     {
         return json_decode(file_get_contents(Hyde::vendorPath('resources/data/filecache.json')), true);
     }
+
 }
