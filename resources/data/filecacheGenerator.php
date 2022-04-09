@@ -24,7 +24,7 @@ file_put_contents('filecache.json', json_encode($filecache));
 
 $execution_time = (microtime(true) - $time_start);
 echo sprintf(
-    "Saved checksums for %s files in %s seconds (%sms)",
+    'Saved checksums for %s files in %s seconds (%sms)',
     sizeof($files),
     number_format(
         $execution_time,
