@@ -23,9 +23,14 @@ foreach ($files as $file) {
 file_put_contents('filecache.json', json_encode($filecache));
 
 $execution_time = (microtime(true) - $time_start);
-echo 'Saved checksums for '.sizeof($files).' files in '.number_format(
-    $execution_time,
-    8
-).' seconds ('.number_format(($execution_time * 1000), 2).'ms)';
+echo sprintf(
+    "Saved checksums for %s files in %s seconds (%sms)",
+    sizeof($files),
+    number_format(
+        $execution_time,
+        8
+    ),
+    number_format($execution_time * 1000, 2)
+);
 
 exit(0);
