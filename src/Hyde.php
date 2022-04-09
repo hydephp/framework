@@ -71,10 +71,11 @@ class Hyde
         return getcwd().DIRECTORY_SEPARATOR.$path;
     }
 
-     /**
+    /**
      * Works similarly to the path() function, but returns a file in the Framework package.
      *
      * @todo Write a test for this function.
+     *
      * @param  string  $path
      * @return string
      */
