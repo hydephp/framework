@@ -54,7 +54,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $filepath) {
+        foreach (glob(Hyde::path('_pages/*.blade.php')) as $filepath) {
             $array[] = basename($filepath, '.blade.php');
         }
 

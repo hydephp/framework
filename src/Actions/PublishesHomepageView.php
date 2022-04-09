@@ -41,7 +41,7 @@ class PublishesHomepageView implements ActionContract
 
         return Hyde::copy(
             Hyde::vendorPath(static::$homePages[$this->selected]['path']),
-            Hyde::path('resources/views/pages/index.blade.php'),
+            Hyde::path('_pages/index.blade.php'),
             $this->force
         );
     }

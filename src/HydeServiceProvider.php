@@ -70,7 +70,7 @@ class HydeServiceProvider extends ServiceProvider
         ], 'hyde-components');
 
         $this->publishes([
-            __DIR__.'/../resources/views/pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
+            __DIR__.'/../_pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
         ], 'hyde-page-404');
     }
 }

@@ -162,7 +162,7 @@ class GeneratesNavigationMenu
     {
         $array = [];
 
-        foreach (glob(Hyde::path('resources/views/pages/*.blade.php')) as $path) {
+        foreach (glob(Hyde::path('_pages/*.blade.php')) as $path) {
             $array[] = basename($path, '.blade.php');
         }
 

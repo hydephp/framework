@@ -113,7 +113,7 @@ class HydeRebuildStaticSiteCommand extends Command
         if (! (str_starts_with($this->path, '_docs') ||
             str_starts_with($this->path, '_posts') ||
             str_starts_with($this->path, '_pages') ||
-            str_starts_with($this->path, 'resources/views/pages')
+            str_starts_with($this->path, '_pages')
         )) {
             throw new Exception("Path [$this->path] is not in a valid source directory.", 400);
         }
