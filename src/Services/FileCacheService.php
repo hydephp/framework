@@ -14,20 +14,20 @@ class FileCacheService
         return json_decode(file_get_contents(Hyde::vendorPath('resources/data/filecache.json')), true);
     }
 
-	public static function getChecksums(): array
-	{
-		$cache = static::getFilecache();
+    public static function getChecksums(): array
+    {
+        $cache = static::getFilecache();
 
-		$checksums = [];
+        $checksums = [];
 
-		foreach ($cache as $file) {
-			$checksums[] = $file['md5sum'];
-		}
+        foreach ($cache as $file) {
+            $checksums[] = $file['md5sum'];
+        }
 
-		return $checksums;
-	}
+        return $checksums;
+    }
 
-	public static function checksumMatchesAny(string $checksum): bool
+    public static function checksumMatchesAny(string $checksum): bool
     {
         return in_array($checksum, static::getChecksums());
     }
