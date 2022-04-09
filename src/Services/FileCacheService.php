@@ -31,4 +31,21 @@ class FileCacheService
     {
         return in_array($checksum, static::getChecksums());
     }
+
+    /**
+     * A EOL agnostic wrapper for calculating MD5 checksums.
+     * @internal This function is not cryptographically secure.
+     * @see https://github.com/hydephp/framework/issues/85
+     */
+    public static function unixsum(string $string): string
+    {
+        $string = str_replace(["\r\n", "\r"], "\n", $string);
+        return md5($string);
+    }
+
+    /* Shorthand for @see static::unixsum() but loads a file */
+    public static function unixsumFile(string $file): string
+    {
+        return static::unixsum(file_get_contents($file));
+    }
 }

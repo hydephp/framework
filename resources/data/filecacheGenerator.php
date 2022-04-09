@@ -15,12 +15,19 @@ $files = array_merge($bladeFiles, $frontendFiles);
 
 foreach ($files as $file) {
     $filecache[str_replace(__DIR__.'/../../', '', $file)] = [
-        'md5sum' => md5_file($file),
+        'unixsum' => unixsum(file_get_contents($file)),
         'last_modified' => filemtime($file),
     ];
 }
 
-file_put_contents('filecache.json', json_encode($filecache));
+function unixsum(string $string): string
+{
+    // Replace all end of line characters with a unix line ending
+    $string = str_replace(["\r\n", "\r"], "\n", $string);
+    return md5($string);
+}
+
+file_put_contents('filecache.json', json_encode($filecache, JSON_PRETTY_PRINT));
 
 $execution_time = (microtime(true) - $time_start);
 echo sprintf(
