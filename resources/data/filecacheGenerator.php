@@ -24,6 +24,7 @@ function unixsum(string $string): string
 {
     // Replace all end of line characters with a unix line ending
     $string = str_replace(["\r\n", "\r"], "\n", $string);
+
     return md5($string);
 }
 
