@@ -108,7 +108,7 @@ class CreatesNewPageSourceFile
      */
     public function createBladeFile(): int|false
     {
-        $this->path = Hyde::path("resources/views/pages/$this->slug.blade.php");
+        $this->path = Hyde::path("_pages/$this->slug.blade.php");
 
         $this->canSaveFile($this->path);
 

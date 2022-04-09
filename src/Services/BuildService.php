@@ -67,7 +67,7 @@ class BuildService
             return DocumentationPage::class;
         }
 
-        if (str_starts_with($filepath, 'resources/views/pages')) {
+        if (str_starts_with($filepath, '_pages')) {
             return BladePage::class;
         }
 
