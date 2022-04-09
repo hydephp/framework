@@ -105,7 +105,7 @@ class HydePublishHomepageCommand extends Command
             return true;
         }
 
-        return FileCacheService::checksumMatchesAny(md5_file(
+        return FileCacheService::checksumMatchesAny(FileCacheService::unixsumFile(
             Hyde::path('resources/views/pages/index.blade.php')
         )) ?? $this->option('force');
     }
