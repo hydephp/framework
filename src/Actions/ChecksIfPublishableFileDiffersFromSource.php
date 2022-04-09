@@ -10,9 +10,9 @@ class ChecksIfPublishableFileDiffersFromSource implements ActionContract
     protected string $compareTo;
 
     /**
-     * @param string $filepath relative to Hyde installation to check.
-     * @param string|null $compareTo optionally specify the filepath to search for in the cache.
-     *                    Omit to search for a file with the same name as the supplied filepath.
+     * @param  string  $filepath  relative to Hyde installation to check.
+     * @param  string|null  $compareTo  optionally specify the filepath to search for in the cache.
+     *                                  Omit to search for a file with the same name as the supplied filepath.
      */
     public function __construct(string $filepath, ?string $compareTo = null)
     {
@@ -24,6 +24,7 @@ class ChecksIfPublishableFileDiffersFromSource implements ActionContract
      ** Check if a publishable file has been modified.
      *
      * Useful to determine if it is safe to overwrite a file.
+     *
      * @see https://github.com/hydephp/framework/issues/67
      *
      * @return bool|null true if file has been modified, false if not,
@@ -39,7 +40,7 @@ class ChecksIfPublishableFileDiffersFromSource implements ActionContract
 
         return null;
     }
-    
+
     public static function getFilecache(): array
     {
         return json_decode(file_get_contents(Hyde::vendorPath('resources/data/filecache.json')), true);
