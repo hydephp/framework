@@ -66,7 +66,7 @@ class BuildService
         if (str_starts_with($filepath, '_pages') && str_ends_with($filepath, '.md')) {
             return MarkdownPage::class;
         }
-        
+
         if (str_starts_with($filepath, '_pages') && str_ends_with($filepath, '.blade.php')) {
             return BladePage::class;
         }
