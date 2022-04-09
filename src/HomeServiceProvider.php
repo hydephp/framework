@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Registers the publishable Home (Index) Pages.
+ *
+ * @deprecated version 0.10.0
  */
 class HomeServiceProvider extends ServiceProvider
 {

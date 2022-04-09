@@ -50,7 +50,7 @@ class Hyde
     }
 
     /**
-     * Get an absolute path from a supplied relative path.
+     * Get an absolute file path from a supplied relative path.
      *
      * The function returns the fully qualified path to your site's root directory.
      *
@@ -72,7 +72,20 @@ class Hyde
     }
 
     /**
-     * Inject the proper number of `../` before the links.
+     * Works similarly to the path() function, but returns a file in the Framework package.
+     *
+     * @todo Write a test for this function.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    public static function vendorPath(string $path = ''): string
+    {
+        return static::path('vendor/hyde/framework/'.trim($path, '/\\'));
+    }
+
+    /**
+     * Inject the proper number of `../` before the links in Blade templates.
      *
      * @param  string  $destination  the route to format
      * @param  string  $current  the current route
