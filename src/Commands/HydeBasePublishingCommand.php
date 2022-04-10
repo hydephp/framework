@@ -17,6 +17,7 @@ use League\Flysystem\Visibility;
  * Base command to publish the Hyde assets.
  *
  *   @deprecated version 0.10.0, see PublishesDefaultFrontendResourceFiles and HydePublishFrontendResourcesCommand for suggested implementation.
+ *
  * @internal
  *
  * Based on Illuminate\Foundation\Console\VendorPublishCommand
