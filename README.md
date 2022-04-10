@@ -1,30 +1,36 @@
 # HydePHP - Static Blog Builder using Laravel Zero
 
-<p>
-    <a href="https://packagist.org/packages/hyde/framework"><img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/packagist/v/hyde/framework?include_prereleases" alt="Latest Version on Packagist"></a>
-    <a href="https://packagist.org/packages/hyde/framework"><img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/packagist/dt/hyde/framework" alt="Total Downloads"></a>
-    <a href="https://github.com/hydephp/hyde/blob/master/LICENSE.md"><img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/github/license/hydephp/hyde" alt="License"></a>
-    <img style="display: inline; margin: 4px 2px;" src="https://github.com/hydephp/hyde/actions/workflows/tests.yml/badge.svg" alt="GitHub Actions">
-    <img style="display: inline; margin: 4px 2px;" src="https://github.com/hydephp/hyde/actions/workflows/codeql-analysis.yml/badge.svg" alt="GitHub Actions">
-    <a href="https://github.styleci.io/repos/472503421?branch=master"><img style="display: inline; margin: 4px 2px;" src="https://github.styleci.io/repos/472503421/shield?branch=master" alt="StyleCI"></a>
+<p> 
+    <a href="https://packagist.org/packages/hyde/framework"><img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/packagist/v/hyde/framework?include_prereleases" alt="Latest Version on Packagist"></a> 
+    <a href="https://packagist.org/packages/hyde/framework"><img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/packagist/dt/hyde/framework" alt="Total Downloads on Packagist"></a> 
+    <a href="https://github.com/hydephp/hyde/blob/master/LICENSE.md"> <img style="display: inline; margin: 4px 2px;" src="https://img.shields.io/github/license/hydephp/hyde" alt="License MIT"> </a>
+    <img style="display: inline; margin: 4px 2px;" src="https://cdn.desilva.se/microservices/coverbadges/badges/9b8f6a9a7a48a2df54e6751790bad8bd910015301e379f334d6ec74c4c3806d1.svg" alt="Test Coverage" title="Average coverage between categories">
+    <img style="display: inline; margin: 4px 2px;" src="https://github.com/hydephp/hyde/actions/workflows/tests.yml/badge.svg" alt="GitHub Actions"> <img style="display: inline; margin: 4px 2px;" src="https://github.com/hydephp/hyde/actions/workflows/codeql-analysis.yml/badge.svg" alt="CodeQL Analysis"> 
+    <a href="https://github.styleci.io/repos/472503421?branch=master"> <img style="display: inline; margin: 4px 2px;" src="https://github.styleci.io/repos/472503421/shield?branch=master" alt="StyleCI Status"> </a>
 </p>
 
 ## ⚠ Beta Software Warning ⚠
 ### Heads up! HydePHP is still very new. As such there may be bugs (please report them) and breaking changes.
-#### Please wait until v1.0 for production use and remember to backup your source files before updating (use Git!).
+#### Please wait until v1.0 for production use and remember to back up your source files before updating (use Git!).
+
 ---
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
 
-HydePHP is a Static Site Builder focused on making Blog posts easy and fun. Under the hood, it is powered by Laravel Zero which is a stripped-down version of the robust Laravel Framework. Using Blade templates the site is intelligently compiled into static HTML. Content is created using Markdown, which supports YAML Front Matter, or optionally with pure Blade/HTML.
+HydePHP is a content-first Laravel-powered Static Site Builder that allows
+you to create static HTML pages, blog posts, and documentation sites using Markdown, optionally with YAML Front Matter.
+
+Need more control? You can also use Laravel Blade to get the full power of dynamic templating and absolute control over HTML.
+
+Hyde is modular, configurable, and hackable - allowing you to customize everything - but only if you want to.
+Hyde follows convention over configuration, allowing you to get an awesome blog or a smooth documentation site up and running in mere minutes.
+All the TailwindCSS and Blade templates you need for your site are already configured.
 
 See the documentation for Hyde at https://hydephp.github.io/docs/
 
-### Requirements 
-> These requirements are for your local development environment. The static HTML can be hosted virtually anywhere, including on GitHub Pages.
-
+### Local Development Requirements  
 Hyde uses Laravel 9 which requires PHP >= 8.0. You should also have Composer and NPM installed.
-
+The static HTML can be hosted virtually anywhere, including for free on GitHub Pages.
 
 ## Changelog
 
@@ -32,7 +38,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security
 
@@ -49,6 +55,7 @@ All vulnerabilities will be promptly addressed.
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 ## Attributions
-> Please see the respective authors' repositories for their license files
 
 - The Hyde core is built with [Laravel Zero](https://laravel-zero.com/) which is based on [Laravel](https://laravel.com/)
+
+> Please see the respective authors' repositories for their license files
