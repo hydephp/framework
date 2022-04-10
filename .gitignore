@@ -3,14 +3,7 @@
 /.vscode
 /.vagrant
 .phpunit.result.cache
-.env
-csout
-StormRunner.php
 
-docs
 .phpdoc
 phpDocumentor.phar
-phpdoc.dist.xml
 phpstan.phar
-psalm.phar
-psalm.xml
