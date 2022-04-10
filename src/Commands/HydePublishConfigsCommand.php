@@ -2,9 +2,9 @@
 
 namespace Hyde\Framework\Commands;
 
-use LaravelZero\Framework\Commands\Command;
-use Illuminate\Support\Facades\File;
 use Hyde\Framework\Hyde;
+use Illuminate\Support\Facades\File;
+use LaravelZero\Framework\Commands\Command;
 
 /**
  * Publish the Hyde Config Files.
@@ -20,7 +20,7 @@ class HydePublishConfigsCommand extends Command
     {
         File::copyDirectory(Hyde::vendorPath('config'), Hyde::path('config'));
 
-        $this->line('<info>Published config files to</info> <comment>' . Hyde::path('config') . '</comment>');
+        $this->line('<info>Published config files to</info> <comment>'.Hyde::path('config').'</comment>');
 
         return 0;
     }
