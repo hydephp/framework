@@ -14,18 +14,20 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class StaticPageBuilder
 {
+    /** @deprecated v0.10.0 as you can always know the file path from the generating action */
     public null|int|false $createdFileSize;
+    /** @deprecated v0.10.0 as you can always know the file path from the generating action */
     public null|string $createdFilePath;
 
     /**
      * Construct the class.
      *
      * @param  MarkdownDocument|BladePage  $page  the Page to compile into HTML
-     * @param  bool  $runAutomatically  if set to true the class will invoke when constructed
+     * @param  bool  $selfInvoke  if set to true the class will invoke when constructed
      */
-    public function __construct(protected MarkdownDocument|BladePage $page, bool $runAutomatically = false)
+    public function __construct(protected MarkdownDocument|BladePage $page, bool $selfInvoke = false)
     {
-        if ($runAutomatically) {
+        if ($selfInvoke) {
             $this->createdFileSize = $this->__invoke();
         }
     }
