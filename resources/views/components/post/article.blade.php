@@ -11,9 +11,9 @@
             @includeWhen($post->date, 'hyde::components.post.date')
 		    @includeWhen($author, 'hyde::components.post.author')
             @includeWhen($category, 'hyde::components.post.category')
-            @includeWhen($post->image, 'hyde::components.post.image')
         </div>
     </header>
+    @includeWhen(isset($post->image), 'hyde::components.post.image')
     <div itemprop="articleBody">
         {!! $markdown !!}
     </div>
