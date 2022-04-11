@@ -47,6 +47,7 @@ return [
     | Example: https://example.org/blog
     |
     */
+
     'site_url' => env('SITE_URL', null),
 
     /*
@@ -77,6 +78,7 @@ return [
     | for a list of tags and what what they are for.
     |
     */
+    
     'meta' => [
         // 'author' => 'Mr. Hyde',
         // 'description' => 'My Hyde Blog',
