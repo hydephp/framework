@@ -125,12 +125,13 @@ class StaticPageBuilder
     /**
      * Make sure the config defined directory for outputting the
      * documentation files exists by creating it if it doesn't.
+     *
      * @return void
      */
     protected function makeSureDocsDirectoryExists(): void
     {
-        if (!file_exists(Hyde::path('_site/' . Hyde::docsDirectory()))) {
-            mkdir(Hyde::path('_site/' . Hyde::docsDirectory()), recursive: true);
+        if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
+            mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
         }
     }
 }

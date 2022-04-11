@@ -18,27 +18,28 @@ class HydePublishViewsCommand extends Command
     {
         $this->selected = $this->argument('category') ?? $this->promptForCategory();
 
-		if ($this->selected === 'all' || $this->selected === '') {
-			foreach (PublishesHydeViews::$options as $key => $value) {
-				$this->publishOption($key);
-			}
-		} else {
-			$this->publishOption($this->selected);
-		}
-		
+        if ($this->selected === 'all' || $this->selected === '') {
+            foreach (PublishesHydeViews::$options as $key => $value) {
+                $this->publishOption($key);
+            }
+        } else {
+            $this->publishOption($this->selected);
+        }
+
         return 0;
     }
 
-	protected function publishOption($selected) {
-		(new PublishesHydeViews($selected))->execute();
+    protected function publishOption($selected)
+    {
+        (new PublishesHydeViews($selected))->execute();
 
-		$from = Hyde::vendorPath(PublishesHydeViews::$options[$selected]['path']);
-		$from = substr($from, strpos($from, 'vendor'));
+        $from = Hyde::vendorPath(PublishesHydeViews::$options[$selected]['path']);
+        $from = substr($from, strpos($from, 'vendor'));
 
-		$to = (PublishesHydeViews::$options[$selected]['destination']);
+        $to = (PublishesHydeViews::$options[$selected]['destination']);
 
-		$this->line('<info>Copied</info> [' . "<comment>$from</comment>" . '] <info>to</info> [' . "<comment>$to</comment>" . ']');
-	}
+        $this->line('<info>Copied</info> ['."<comment>$from</comment>".'] <info>to</info> ['."<comment>$to</comment>".']');
+    }
 
     protected function promptForCategory(): string
     {
@@ -50,7 +51,7 @@ class HydePublishViewsCommand extends Command
 
         $choice = $this->parseChoiceIntoKey($choice);
 
-        $this->line("<info>Selected category</info> [<comment>".(empty($choice) ? 'all' : $choice)."</comment>]");
+        $this->line('<info>Selected category</info> [<comment>'.(empty($choice) ? 'all' : $choice).'</comment>]');
         $this->newLine();
 
         return $choice;
@@ -59,8 +60,8 @@ class HydePublishViewsCommand extends Command
     protected function formatPublishableChoices(): array
     {
         $keys = [];
-		$keys[] = 'Publish all categories listed below';
-		foreach (PublishesHydeViews::$options as $key => $value) {
+        $keys[] = 'Publish all categories listed below';
+        foreach (PublishesHydeViews::$options as $key => $value) {
             $keys[] = "<comment>$key</comment>: {$value['description']}";
         }
 
@@ -71,5 +72,4 @@ class HydePublishViewsCommand extends Command
     {
         return strstr(str_replace(['<comment>', '</comment>'], '', $choice), ':', true);
     }
-
 }
