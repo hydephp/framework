@@ -1,19 +1,21 @@
-<article id="{{ Hyde::uriPath() ?? '' }}posts/{{ $post->slug }}" class="post-article" itemscope itemtype="https://schema.org/Article"
-    @class(['mx-auto prose', 'torchlight-enabled' => Hyde\Framework\Features::hasTorchlight()])>
+<article aria-label="Article" id="{{ Hyde::uriPath() ?? '' }}posts/{{ $post->slug }}" itemscope itemtype="https://schema.org/Article"
+    @class(['post-article mx-auto prose', 'torchlight-enabled' => Hyde\Framework\Features::hasTorchlight()])>
     <meta itemprop="identifier" content="{{ $post->slug }}">
     @if(Hyde::uriPath())
     <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $post->slug) }}">
     @endif
     
-    <header role="doc-pageheader">
+    <header aria-label="Header section" role="doc-pageheader">
         <h1 itemprop="headline" class="mb-4">{{ $title ?? 'Blog Post' }}</h1>
 		<div id="byline" aria-label="About the post" role="doc-introduction">
-            @includeWhen($date, 'hyde::components.post.datePublished')
+            @includeWhen($post->date, 'hyde::components.post.date')
 		    @includeWhen($author, 'hyde::components.post.author')
             @includeWhen($category, 'hyde::components.post.category')
         </div>
     </header>
-    <div itemprop="articleBody">
+    @includeWhen(isset($post->image), 'hyde::components.post.image')
+    <div aria-label="Article body" itemprop="articleBody">
         {!! $markdown !!}
     </div>
+    <span class="sr-only">End of article</span>
 </article>

@@ -21,7 +21,7 @@ class FileCacheService
         $checksums = [];
 
         foreach ($cache as $file) {
-            $checksums[] = $file['md5sum'];
+            $checksums[] = $file['unixsum'];
         }
 
         return $checksums;
