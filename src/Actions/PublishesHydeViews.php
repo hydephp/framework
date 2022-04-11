@@ -11,19 +11,19 @@ class PublishesHydeViews implements ActionContract
         'layouts' => [
             'name' => 'Blade Layouts',
             'path' => 'resources/views/layouts',
-			'destination' => 'resources/views/vendor/hyde/layouts',	
+            'destination' => 'resources/views/vendor/hyde/layouts',
             'description' => 'Shared layout views, such as the app layout, navigation menu, and Markdown page templates.',
         ],
         'components' => [
             'name' => 'Blade Components',
             'path' => 'resources/views/components',
-			'destination' => 'resources/views/vendor/hyde/components',	
+            'destination' => 'resources/views/vendor/hyde/components',
             'description' => 'More or less self contained components, extracted for customizability and DRY code.',
         ],
         '404' => [
             'name' => '404 Page',
             'path' => 'resources/views/pages/404.blade.php',
-			'destination' => '_pages/404.blade.php',	
+            'destination' => '_pages/404.blade.php',
             'description' => 'A beautiful 404 error page by the Laravel Collective.',
         ],
     ];
@@ -41,17 +41,16 @@ class PublishesHydeViews implements ActionContract
             return 404;
         }
 
-		if (is_dir(Hyde::vendorPath(static::$options[$this->selected]['path']))) {
-			return File::copyDirectory(
-				Hyde::vendorPath(static::$options[$this->selected]['path']),
-				Hyde::path(static::$options[$this->selected]['destination'])
-			);
-		}
+        if (is_dir(Hyde::vendorPath(static::$options[$this->selected]['path']))) {
+            return File::copyDirectory(
+                Hyde::vendorPath(static::$options[$this->selected]['path']),
+                Hyde::path(static::$options[$this->selected]['destination'])
+            );
+        }
 
-		return File::copy(
-			Hyde::vendorPath(static::$options[$this->selected]['path']),
-			Hyde::path(static::$options[$this->selected]['destination'])
-		);
-
-}
+        return File::copy(
+            Hyde::vendorPath(static::$options[$this->selected]['path']),
+            Hyde::path(static::$options[$this->selected]['destination'])
+        );
+    }
 }
