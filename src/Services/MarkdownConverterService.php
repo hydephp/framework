@@ -26,7 +26,6 @@ class MarkdownConverterService
         $this->converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
 
         $this->useTorchlight = $useTorchlight ?? $this->determineIfTorchlightShouldBeEnabled();
-        $this->torchlightAttribution = $torchlightAttribution ?? $this->determineIfTorchlightAttributionShouldBeInjected();
     }
 
     public function parse(): string
@@ -37,6 +36,8 @@ class MarkdownConverterService
 
         $this->html = $this->converter->convert($this->markdown);
 
+        $this->torchlightAttribution = $torchlightAttribution ?? $this->determineIfTorchlightAttributionShouldBeInjected();
+        
         if ($this->torchlightAttribution) {
             $this->html .= $this->injectTorchlightAttribution();
         }
