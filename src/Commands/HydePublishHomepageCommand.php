@@ -31,6 +31,7 @@ class HydePublishHomepageCommand extends Command
             $this->canExistingIndexFileBeOverwritten()
         ))->execute();
 
+		// @deprecated version 0.10.0, can be removed as it should not be possible to select a homepage that does not exist, and we can make a pre-check for 409 case.
         if ($returnValue === true) {
             $this->info('Homepage published successfully!');
         } else {
