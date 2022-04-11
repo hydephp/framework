@@ -45,62 +45,13 @@ class MarkdownPostParser extends AbstractPageParser
             slug: $this->slug
         );
 
-        $post->date = $this->getDateString();
         $post->image = $this->getImage();
-        $post->metadata = $this->getMetadata();
 
         return $post;
-    }
-
-    
-    protected function getDateString(): DateString|null
-    {
-        if (! isset($this->matter['date'])) {
-            return null;
-        }
-        return new DateString($this->matter['date']);
     }
 
     protected function getImage(): Image|null
     {
         return null;
-    }
-
-    protected function getMetadata(): Metadata
-    {
-        $metadata = new Metadata();
-
-        // Add description if it exists
-        if (isset($this->matter['description'])) {
-            $metadata->add('description', $this->matter['description']);
-        }
-        
-        // Add author if it exists
-        if (isset($this->matter['author'])) {
-            $metadata->add('author', $this->matter['author']);
-        }
-
-        // Add keywords if it exists
-        if (isset($this->matter['category'])) {
-            $metadata->add('keywords', $this->matter['category']);
-        }
-
-        $metadata->addProperty('og:type', 'article');
-        $metadata->addProperty('og:title', $this->title);
-
-        // If there is an image, add it to the metadata
-        // TODO: Add image to metadata
-
-        // Add date if it exists
-        if (isset($this->matter['date'])) {
-            $date = date('c', strtotime($this->matter['date']));
-            $metadata->addProperty('og:article:published_time', $date);
-        }
-
-        if (Hyde::uriPath()) {
-            $metadata->addProperty('og:url', Hyde::uriPath('posts/' . $this->slug));
-        }
-
-        return $metadata;
     }
 }
