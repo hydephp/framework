@@ -6,7 +6,10 @@ use Hyde\Framework\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
 {
+    use HasMetadata;
+
     public ?Image $image = null;
+    public ?Metadata $metadata = null;
 
     public static string $sourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
