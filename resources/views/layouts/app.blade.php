@@ -27,6 +27,7 @@
     @include('hyde::layouts.meta') 
 </head>
 <body id="app" class="flex flex-col min-h-screen overflow-x-hidden">
+    <a href="#content" id="skip-to-content">Skip to content</a>
     @includeUnless($withoutNavigation ?? false, 'hyde::layouts.navigation') 
 
     <section id="content">

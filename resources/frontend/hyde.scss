@@ -127,6 +127,39 @@
 	}
 }
 
+/**
+* Styles for Accessibility
+*/
+
+// Skip to main content button
+// Implementation based on https://accessibility.oit.ncsu.edu/it-accessibility-at-nc-state/developers/accessibility-handbook/mouse-and-keyboard-events/skip-to-main-content/
+// And complies with https://www.w3.org/TR/WCAG20-TECHS/G1.html
+#skip-to-content {
+	left:-999px;
+    position:absolute;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    z-index:-999;
+	&:focus, &:active {
+		color: #fff;
+		background-color:#000;
+		left: auto;
+		top: auto;
+		width: 30%;
+		height: auto;
+		overflow:auto;
+		margin: 10px 35%;
+		padding:5px;
+		border-radius: 15px;
+		border:4px solid yellow;
+		text-align:center;
+		font-size:1.2em;
+		z-index:999;
+	}
+}
+
 // Bump contrast of the primary Tailwind link color
 .text-indigo-500, .hover\:text-indigo-500:hover {
 	color: #5956eb;
