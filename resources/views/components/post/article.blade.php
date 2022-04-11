@@ -11,6 +11,7 @@
             @includeWhen($date, 'hyde::components.post.datePublished')
 		    @includeWhen($author, 'hyde::components.post.author')
             @includeWhen($category, 'hyde::components.post.category')
+            @includeWhen($post->image, 'hyde::components.post.image')
         </div>
     </header>
     <div itemprop="articleBody">
