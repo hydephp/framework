@@ -37,7 +37,7 @@ class MarkdownConverterService
         $this->html = $this->converter->convert($this->markdown);
 
         $this->torchlightAttribution = $torchlightAttribution ?? $this->determineIfTorchlightAttributionShouldBeInjected();
-        
+
         if ($this->torchlightAttribution) {
             $this->html .= $this->injectTorchlightAttribution();
         }
