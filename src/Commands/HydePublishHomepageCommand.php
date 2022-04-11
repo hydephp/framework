@@ -40,7 +40,7 @@ class HydePublishHomepageCommand extends Command
                 }
 
                 if ($returnValue == 409) {
-                    $this->error('A homepage file already exists. Use --force to overwrite.');
+                    $this->error('A modified index.blade.php file already exists. Use --force to overwrite.');
 
                     return 409;
                 }
