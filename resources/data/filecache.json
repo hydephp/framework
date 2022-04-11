@@ -1,7 +1,7 @@
 {
     "resources\/views\/components\/article-excerpt.blade.php": {
-        "unixsum": "95e927640b6b6ba13d7d6da882799266",
-        "last_modified": 1648887293
+        "unixsum": "8ba6886ec3ac7976af7a842c53cab02c",
+        "last_modified": 1649699300
     },
     "resources\/views\/homepages\/blank.blade.php": {
         "unixsum": "9a1305a8f0a85bf2776332082d359a99",
@@ -12,40 +12,40 @@
         "last_modified": 1648153885
     },
     "resources\/views\/homepages\/welcome.blade.php": {
-        "unixsum": "d0ff85e2a069555bff4f4eda7ac1ca43",
-        "last_modified": 1648477610
+        "unixsum": "5fdda0edeeea0d3605136f6d418e109a",
+        "last_modified": 1649708498
     },
     "resources\/views\/layouts\/app.blade.php": {
         "unixsum": "10885f64fa8e8d7a76062039e3eed6d3",
-        "last_modified": 1649680719
+        "last_modified": 1649699300
     },
     "resources\/views\/layouts\/docs.blade.php": {
         "unixsum": "980ce346dd24e5424a7af23a920bab29",
         "last_modified": 1649480222
     },
     "resources\/views\/layouts\/footer.blade.php": {
-        "unixsum": "6f7626940d72d4605e8e518572dff46c",
-        "last_modified": 1648153885
+        "unixsum": "260ccc3c57bd243a2947e71c6aeddc21",
+        "last_modified": 1649699300
     },
     "resources\/views\/layouts\/meta.blade.php": {
         "unixsum": "854fba51dfc472084fbf5ff90a52e663",
-        "last_modified": 1649680350
+        "last_modified": 1649699300
     },
     "resources\/views\/layouts\/navigation.blade.php": {
-        "unixsum": "201491144f2918e054cabbe3c19e091a",
-        "last_modified": 1648894753
+        "unixsum": "3ecd9e2a05774e681aaf2a6e333f2774",
+        "last_modified": 1649699300
     },
     "resources\/views\/layouts\/page.blade.php": {
         "unixsum": "e096a1fdd2f12e6dc4f9172bfd932a53",
         "last_modified": 1648153885
     },
     "resources\/views\/layouts\/post.blade.php": {
-        "unixsum": "ee555df5c68722da3921e79892251c91",
-        "last_modified": 1649682388
+        "unixsum": "f045eb926bdb4d51d434baf51417eac4",
+        "last_modified": 1649699300
     },
     "resources\/views\/layouts\/scripts.blade.php": {
         "unixsum": "dbbb6ac41e2c835e6f86955e3eb24671",
-        "last_modified": 1649680455
+        "last_modified": 1649699300
     },
     "resources\/views\/pages\/404.blade.php": {
         "unixsum": "0f241c641257c68e254ab290b3bc4cbf",
