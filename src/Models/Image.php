@@ -11,7 +11,7 @@ class Image
 
     /**
      * The image's path (if it is stored locally).
-     * Example: _media/image.jpg
+     * Example: _media/image.jpg.
      *
      * @var string|null
      */
@@ -19,7 +19,7 @@ class Image
 
     /**
      * The image's URI (if stored externally).
-     * Example: https://example.com/media/image.jpg
+     * Example: https://example.com/media/image.jpg.
      *
      * Will override the path property if both are set.
      *
@@ -30,7 +30,7 @@ class Image
     /**
      * The image's description. (Used for alt text for screen readers.)
      * You should always set this to provide accessibility.
-     * Example: "This is an image of a cat sitting in a basket."
+     * Example: "This is an image of a cat sitting in a basket.".
      *
      * @var string|null
      */
@@ -38,7 +38,7 @@ class Image
 
     /**
      * The image's title. (Shows a tooltip on hover.)
-     * Example: "My Cat Archer"
+     * Example: "My Cat Archer".
      *
      * @var string|null
      */
@@ -48,7 +48,7 @@ class Image
 
     /**
      * The image's copyright.
-     * Example: "Copyright (c) 2020 John Doe"
+     * Example: "Copyright (c) 2020 John Doe".
      *
      * @var string|null
      */
@@ -56,7 +56,7 @@ class Image
 
     /**
      * The image's license name.
-     * Example: "CC BY-NC-SA 4.0"
+     * Example: "CC BY-NC-SA 4.0".
      *
      * @var string|null
      */
@@ -64,7 +64,7 @@ class Image
 
     /**
      * The image's license URL.
-     * Example: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+     * Example: "https://creativecommons.org/licenses/by-nc-sa/4.0/".
      *
      * @var string|null
      */
@@ -72,7 +72,7 @@ class Image
 
     /**
      * The image's author.
-     * Example: "John Doe"
+     * Example: "John Doe".
      *
      * @var string|null
      */
@@ -80,7 +80,7 @@ class Image
 
     /**
      * The image's source (for attribution).
-     * Example: "https://unsplash.com/photos/example"
+     * Example: "https://unsplash.com/photos/example".
      *
      * @var string|null
      */
@@ -104,7 +104,7 @@ class Image
 
         $getImageAuthorAttributionString = $this->getImageAuthorAttributionString();
         if ($getImageAuthorAttributionString !== null) {
-            $attribution[] = 'Image by ' . $getImageAuthorAttributionString;
+            $attribution[] = 'Image by '.$getImageAuthorAttributionString;
         }
 
         $getCopyrightString = $this->getCopyrightString();
@@ -114,13 +114,12 @@ class Image
 
         $getLicenseString = $this->getLicenseString();
         if ($getLicenseString !== null) {
-            $attribution[] = 'License by ' . $getLicenseString;
+            $attribution[] = 'License by '.$getLicenseString;
         }
 
         return implode('. ', $attribution);
     }
 
-    
     public function getImageAuthorAttributionString(): ?string
     {
         if (isset($this->author)) {
@@ -134,11 +133,10 @@ class Image
         return null;
     }
 
-   
     public function getCopyrightString(): ?string
     {
         if (isset($this->copyright)) {
-            return '<span itemprop="copyrightNotice">' . e($this->copyright) . '</span>';
+            return '<span itemprop="copyrightNotice">'.e($this->copyright).'</span>';
         }
 
         return null;
@@ -148,15 +146,14 @@ class Image
     {
         if (isset($this->license) && isset($this->licenseUrl)) {
             return '<a href="'.e($this->licenseUrl).'" rel="license nofollow noopener" itemprop="license">'.e($this->license).'</a>';
-        } 
-        
+        }
+
         if (isset($this->license)) {
-            return '<span itemprop="license">' . e($this->license) . '</span>';
+            return '<span itemprop="license">'.e($this->license).'</span>';
         }
 
         return null;
     }
-
 
     public function getMetadataArray()
     {
@@ -169,7 +166,7 @@ class Image
         if (isset($this->title)) {
             $metadata['name'] = $this->title;
         }
-        
+
         return $metadata;
     }
 }
