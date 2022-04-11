@@ -27,11 +27,14 @@
 	</footer>
 	
 	<div>
-		<p class="leading-relaxed my-1">
-			@isset($post->matter['description'])
-			{{ $post->matter['description'] }}
-			@endisset
-		</p>
+		@isset($post->matter['description'])
+		<section role="doc-abstract" aria-label="Excerpt">
+			<p class="leading-relaxed my-1">
+				{{ $post->matter['description'] }}
+			</p>
+		</section>
+		@endisset
+			
 		<a href="posts/{{ $post->matter['slug'] }}.html" class="text-indigo-500 hover:underline font-medium">Read post</a>
 	</div>	
 </article>
