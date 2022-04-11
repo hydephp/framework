@@ -3,9 +3,9 @@
 namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Actions\PublishesHomepageView;
+use Hyde\Framework\Commands\Traits\AsksToRebuildSite;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\FileCacheService;
-use Illuminate\Support\Facades\Artisan;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -13,6 +13,8 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydePublishHomepageCommand extends Command
 {
+    use AsksToRebuildSite;
+
     protected $signature = 'publish:homepage {homepage? : The name of the page to publish}
                                 {--force : Overwrite any existing files}';
 
@@ -29,6 +31,7 @@ class HydePublishHomepageCommand extends Command
             $this->canExistingIndexFileBeOverwritten()
         ))->execute();
 
+        // @deprecated version 0.10.0, can be removed as it should not be possible to select a homepage that does not exist, and we can make a pre-check for 409 case.
         if ($returnValue === true) {
             $this->info('Homepage published successfully!');
         } else {
@@ -81,22 +84,6 @@ class HydePublishHomepageCommand extends Command
     protected function parseChoiceIntoKey(string $choice): string
     {
         return strstr(str_replace(['<comment>', '</comment>'], '', $choice), ':', true);
-    }
-
-    /** @deprecated v0.10.0 will be moved into shared trait.  */
-    protected function askToRebuildSite()
-    {
-        if ($this->option('no-interaction')) {
-            return;
-        }
-
-        if ($this->confirm('Would you like to rebuild the site?', 'Yes')) {
-            $this->line('Okay, building site!');
-            Artisan::call('build');
-            $this->info('Site is built!');
-        } else {
-            $this->line('Okay, you can always run the build later!');
-        }
     }
 
     protected function canExistingIndexFileBeOverwritten(): bool

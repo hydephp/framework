@@ -81,7 +81,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
         $this->info(sprintf(
             'Created %s in %s seconds. (%sms)',
-            BuildService::createClickableFilepath($this->service->builder->createdFilePath),
+            BuildService::createClickableFilepath($this->path),
             number_format(
                 $execution_time,
                 2
