@@ -25,12 +25,14 @@ class Metadata
     public function add(string $name, string $content): self
     {
         $this->metadata[$name] = $content;
+
         return $this;
     }
 
     public function addProperty(string $property, string $content): self
     {
         $this->properties[$property] = $content;
+
         return $this;
     }
 }

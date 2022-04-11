@@ -2,10 +2,8 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Models\DateString;
 use Hyde\Framework\Models\Image;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Models\Metadata;
 use Hyde\Framework\Services\MarkdownFileService;
 
 class MarkdownPostParser extends AbstractPageParser

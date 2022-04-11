@@ -16,20 +16,23 @@ trait HasMetadata
         $this->makeMetaProperties();
     }
 
-    #[ArrayShape(['name' => "\content"])] function getMetadata(): array
-    {
-        if (! isset($this->metadata)) {
-            return [];
-        }
-        return $this->metadata->metadata;
-    }
+    #[ArrayShape(['name' => "\content"])]
+ public function getMetadata(): array
+ {
+     if (! isset($this->metadata)) {
+         return [];
+     }
+
+     return $this->metadata->metadata;
+ }
 
     #[ArrayShape(['property' => "\content"])]
-    function getMetaProperties(): array
+    public function getMetaProperties(): array
     {
         if (! isset($this->metadata)) {
             return [];
         }
+
         return $this->metadata->properties;
     }
 
@@ -55,7 +58,7 @@ trait HasMetadata
         $this->metadata->addProperty('og:type', 'article');
 
         if (Hyde::uriPath()) {
-            $this->metadata->addProperty('og:url', Hyde::uriPath('posts/' . $this->slug));
+            $this->metadata->addProperty('og:url', Hyde::uriPath('posts/'.$this->slug));
         }
 
         // Add title if it exists
@@ -71,7 +74,5 @@ trait HasMetadata
 
         // If there is an image, add it to the metadata
         // TODO: Add image to metadata
-
     }
-
 }

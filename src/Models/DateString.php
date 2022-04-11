@@ -25,7 +25,8 @@ class DateString
     public string $short;
 
     /**
-     * @param string $string
+     * @param  string  $string
+     *
      * @throws \Exception
      */
     public function __construct(string $string)
