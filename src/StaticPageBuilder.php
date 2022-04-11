@@ -14,11 +14,6 @@ use Hyde\Framework\Models\MarkdownPost;
  */
 class StaticPageBuilder
 {
-    /** @deprecated v0.10.0 as you can always know the file path from the generating action */
-    public null|int|false $createdFileSize;
-    /** @deprecated v0.10.0 as you can always know the file path from the generating action */
-    public null|string $createdFilePath;
-
     /**
      * Construct the class.
      *
@@ -28,7 +23,7 @@ class StaticPageBuilder
     public function __construct(protected MarkdownDocument|BladePage $page, bool $selfInvoke = false)
     {
         if ($selfInvoke) {
-            $this->createdFileSize = $this->__invoke();
+            $this->__invoke();
         }
     }
 
@@ -52,9 +47,7 @@ class StaticPageBuilder
         }
 
         if ($this->page instanceof DocumentationPage) {
-            if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
-                mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
-            }
+            $this->makeSureDocsDirectoryExists();
 
             return $this->save(Hyde::docsDirectory().'/'.$this->page->slug, $this->compileDocs());
         }
@@ -69,7 +62,6 @@ class StaticPageBuilder
     private function save(string $location, string $contents): bool|int
     {
         $path = Hyde::path("_site/$location.html");
-        $this->createdFilePath = $path;
 
         return file_put_contents($path, $contents);
     }
@@ -128,5 +120,17 @@ class StaticPageBuilder
         return view($this->page->view, [
             'currentPage' => $this->page->view,
         ])->render();
+    }
+
+    /**
+     * Make sure the config defined directory for outputting the
+     * documentation files exists by creating it if it doesn't.
+     * @return void
+     */
+    protected function makeSureDocsDirectoryExists(): void
+    {
+        if (!file_exists(Hyde::path('_site/' . Hyde::docsDirectory()))) {
+            mkdir(Hyde::path('_site/' . Hyde::docsDirectory()), recursive: true);
+        }
     }
 }
