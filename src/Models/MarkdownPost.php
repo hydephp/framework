@@ -8,8 +8,7 @@ class MarkdownPost extends MarkdownDocument
 {
     use HasMetadata;
     use HasDateString;
-
-    public ?Image $image = null;
+    use HasFeaturedImage;
 
     public static string $sourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
@@ -20,5 +19,6 @@ class MarkdownPost extends MarkdownDocument
 
         $this->constructMetadata();
         $this->constructDateString();
+        $this->constructFeaturedImage();
     }
 }
