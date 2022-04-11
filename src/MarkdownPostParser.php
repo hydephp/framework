@@ -38,20 +38,11 @@ class MarkdownPostParser extends AbstractPageParser
 
     public function get(): MarkdownPost
     {
-        $post = new MarkdownPost(
+        return new MarkdownPost(
             matter: $this->matter,
             body: $this->body,
             title: $this->title,
             slug: $this->slug
         );
-
-        $post->image = $this->getImage();
-
-        return $post;
-    }
-
-    protected function getImage(): Image|null
-    {
-        return null;
     }
 }
