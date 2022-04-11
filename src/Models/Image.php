@@ -114,7 +114,7 @@ class Image
 
         $getLicenseString = $this->getLicenseString();
         if ($getLicenseString !== null) {
-            $attribution[] = 'License by ' . $getLicenseString;
+            $attribution[] = 'License ' . $getLicenseString;
         }
 
         return implode('. ', $attribution);
