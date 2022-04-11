@@ -37,5 +37,10 @@
 
     <!-- The core Hyde scripts -->
     <script defer src="{{ Hyde::relativePath('media/hyde.js', $currentPage) }}"></script>
+
+    @stack('scripts')
+
+    <!-- Include any extra scripts to include in before the closing <body> tag -->
+    @include('hyde::layouts.scripts') 
 </body>
 </html>
