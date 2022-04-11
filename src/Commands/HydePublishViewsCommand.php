@@ -2,112 +2,74 @@
 
 namespace Hyde\Framework\Commands;
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Illuminate\Support\ServiceProvider;
+use Hyde\Framework\Actions\PublishesHydeViews;
+use Hyde\Framework\Hyde;
+use LaravelZero\Framework\Commands\Command;
 
-/**
- * Publish the Hyde assets.
- *
- * Based on Illuminate\Foundation\Console\VendorPublishCommand
- *
- * @see https://github.com/laravel/framework/blob/9.x/src/Illuminate/Foundation/Console/VendorPublishCommand.php
- *
- * @license MIT
- */
-class HydePublishViewsCommand extends HydeBasePublishingCommand
+class HydePublishViewsCommand extends Command
 {
-    /**
-     * The signature of the command.
-     *
-     * @var string
-     */
-    protected $signature = 'publish:views {--force : Overwrite any existing files}
-                    {--all : Publish all views without prompt}';
+    protected $signature = 'publish:views {category? : The category to publish}';
 
-    /**
-     * The description of the command.
-     *
-     * @var string
-     */
-    protected $description = 'Publish the Hyde resource view files for customization';
+    protected $description = 'Publish the hyde components for customization. Note that existing files will be overwritten.';
 
-    /**
-     * Create a new command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
-     */
-    public function __construct(Filesystem $files)
+    protected string $selected;
+
+    public function handle(): int
     {
-        parent::__construct();
+        $this->selected = $this->argument('category') ?? $this->promptForCategory();
 
-        $this->files = $files;
+		if ($this->selected === 'all' || $this->selected === '') {
+			foreach (PublishesHydeViews::$options as $key => $value) {
+				$this->publishOption($key);
+			}
+		} else {
+			$this->publishOption($this->selected);
+		}
+		
+        return 0;
     }
 
-    /**
-     * Determine the provider or tag(s) to publish.
-     *
-     * @return void
-     */
-    protected function determineWhatShouldBePublished()
-    {
-        if ($this->option('all')) {
-            $this->tags = array_flip(array_filter(
-                array_flip(ServiceProvider::publishableGroups()),
-                fn ($key) => str_starts_with($key, 'hyde-'),
-                ARRAY_FILTER_USE_KEY
-            ));
+	protected function publishOption($selected) {
+		(new PublishesHydeViews($selected))->execute();
 
-            return;
-        }
+		$from = Hyde::vendorPath(PublishesHydeViews::$options[$selected]['path']);
+		$from = substr($from, strpos($from, 'vendor'));
 
-        if (! $this->tags) {
-            $this->promptForProviderOrTag();
-        }
-    }
+		$to = (PublishesHydeViews::$options[$selected]['destination']);
 
-    /**
-     * Prompt for which tag to publish.
-     *
-     * @return void
-     */
-    protected function promptForProviderOrTag()
+		$this->line('<info>Copied</info> [' . "<comment>$from</comment>" . '] <info>to</info> [' . "<comment>$to</comment>" . ']');
+	}
+
+    protected function promptForCategory(): string
     {
         $choice = $this->choice(
-            'Which view categories (tags) would you like to publish?',
-            $choices = $this->publishableChoices()
+            'Which category do you want to publish?',
+            $this->formatPublishableChoices(),
+            0
         );
 
-        if ($choice == $choices[0] || is_null($choice)) {
-            $this->tags = array_flip(array_filter(
-                array_flip(ServiceProvider::publishableGroups()),
-                fn ($key) => str_starts_with($key, 'hyde-'),
-                ARRAY_FILTER_USE_KEY
-            ));
+        $choice = $this->parseChoiceIntoKey($choice);
 
-            return;
+        $this->line("<info>Selected category</info> [<comment>".(empty($choice) ? 'all' : $choice)."</comment>]");
+        $this->newLine();
+
+        return $choice;
+    }
+
+    protected function formatPublishableChoices(): array
+    {
+        $keys = [];
+		$keys[] = 'Publish all categories listed below';
+		foreach (PublishesHydeViews::$options as $key => $value) {
+            $keys[] = "<comment>$key</comment>: {$value['description']}";
         }
 
-        $this->parseChoice($choice);
+        return $keys;
     }
 
-    /**
-     * The choices available via the prompt.
-     *
-     * @return array
-     */
-    protected function publishableChoices(): array
+    protected function parseChoiceIntoKey(string $choice): string
     {
-        return array_merge(
-            ['<comment>Publish files from all tags listed below</comment>'],
-            preg_filter('/^/', '<comment>Tag: </comment>', Arr::sort(
-                array_flip(array_filter(
-                    array_flip(ServiceProvider::publishableGroups()),
-                    fn ($key) => str_starts_with($key, 'hyde-'),
-                    ARRAY_FILTER_USE_KEY
-                ))
-            ))
-        );
+        return strstr(str_replace(['<comment>', '</comment>'], '', $choice), ':', true);
     }
+
 }
