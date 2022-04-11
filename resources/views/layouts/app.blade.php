@@ -13,13 +13,7 @@
     
     @include('hyde::layouts.meta') 
 
-    <title>
-        @if (isset($title))
-        {{ config('hyde.name', 'HydePHP') }} - {{ $title }}
-        @else
-        {{ config('hyde.name', 'HydePHP') }}
-        @endif
-    </title>
+    <title>{{ isset($title) ? config('hyde.name', 'HydePHP') . ' - ' . $title : config('hyde.name', 'HydePHP') }}</title>
 
     <!-- The compiled Tailwind styles -->
     <link rel="stylesheet" href="{{ Hyde::relativePath('media/app.css', $currentPage) }}">
