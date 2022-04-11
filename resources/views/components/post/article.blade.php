@@ -8,7 +8,7 @@
     <header role="doc-pageheader">
         <h1 itemprop="headline" class="mb-4">{{ $title ?? 'Blog Post' }}</h1>
 		<div id="byline" aria-label="About the post" role="doc-introduction">
-            @includeWhen($date, 'hyde::components.post.datePublished')
+            @includeWhen($post->date, 'hyde::components.post.date')
 		    @includeWhen($author, 'hyde::components.post.author')
             @includeWhen($category, 'hyde::components.post.category')
             @includeWhen($post->image, 'hyde::components.post.image')

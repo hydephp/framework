@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework;
 
+use Hyde\Framework\Models\DateString;
 use Hyde\Framework\Models\Image;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\Metadata;
@@ -44,10 +45,20 @@ class MarkdownPostParser extends AbstractPageParser
             slug: $this->slug
         );
 
+        $post->date = $this->getDateString();
         $post->image = $this->getImage();
         $post->metadata = $this->getMetadata();
 
         return $post;
+    }
+
+    
+    protected function getDateString(): DateString|null
+    {
+        if (! isset($this->matter['date'])) {
+            return null;
+        }
+        return new DateString($this->matter['date']);
     }
 
     protected function getImage(): Image|null
