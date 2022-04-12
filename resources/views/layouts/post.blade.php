@@ -19,7 +19,7 @@ $author = $post->matter['author'] ?? false;
 @endforeach
 @endpush
 
-<main class="mx-auto max-w-7xl py-16 px-8">
+<main id="content" class="mx-auto max-w-7xl py-16 px-8">
 	@include('hyde::components.post.article')
 </main>
 

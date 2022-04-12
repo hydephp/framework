@@ -3,19 +3,19 @@
         "unixsum": "0869dd5088ad3fd7182127a043c8d910"
     },
     "resources\/views\/homepages\/blank.blade.php": {
-        "unixsum": "9a1305a8f0a85bf2776332082d359a99"
+        "unixsum": "48b54c9a6a43fd8fd7f9a4520c26924a"
     },
     "resources\/views\/homepages\/post-feed.blade.php": {
-        "unixsum": "743a7f5ca8f0cad525e386e0e2a035a4"
+        "unixsum": "4d675d5745c1f58c7ae8aac255a53757"
     },
     "resources\/views\/homepages\/welcome.blade.php": {
         "unixsum": "5fdda0edeeea0d3605136f6d418e109a"
     },
     "resources\/views\/layouts\/app.blade.php": {
-        "unixsum": "44ab73c9f625cb7f1ffe3fd7ebcb8663"
+        "unixsum": "421b7a6a644aa4cb7d14450173d01752"
     },
     "resources\/views\/layouts\/docs.blade.php": {
-        "unixsum": "c260e08c75d4ff4e19c7efda03b6b99e"
+        "unixsum": "338d72605476326fa3ded85680fd6374"
     },
     "resources\/views\/layouts\/footer.blade.php": {
         "unixsum": "82399b4f05eee0bf5fd9f428fbc3d695"
@@ -27,10 +27,10 @@
         "unixsum": "ef7085fe7d0cae13f3fe3d64f7254bde"
     },
     "resources\/views\/layouts\/page.blade.php": {
-        "unixsum": "5130e77fbbe8fd1130c7e40e7ec5ef2d"
+        "unixsum": "c3247c476faa57c84f57923dd6ae09aa"
     },
     "resources\/views\/layouts\/post.blade.php": {
-        "unixsum": "f045eb926bdb4d51d434baf51417eac4"
+        "unixsum": "0334c691527803feaa502a96523ac7e1"
     },
     "resources\/views\/layouts\/scripts.blade.php": {
         "unixsum": "dbbb6ac41e2c835e6f86955e3eb24671"
@@ -48,7 +48,7 @@
         "unixsum": "3790a853f43258ba4fc05f8a4bed1cec"
     },
     "resources\/frontend\/hyde.js": {
-        "unixsum": "f9a8312fda7c4727bb2a36dd7afaac94"
+        "unixsum": "3f1c9ef527f2dbdcde54aad1d4c9d7b5"
     },
     "resources\/frontend\/hyde.min.js": {
         "unixsum": "d1781aa8b092765447e37f208bae2004"

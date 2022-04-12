@@ -10,6 +10,7 @@
 	@include('hyde::components.docs.sidebar')
 </aside>
 <main id="documentation-content" class="mx-auto max-w-7xl py-16 px-8 mt-8 md:mt-0 md:absolute md:left-72 xl:left-80">
+	<a name="content" id="content"></a>
 	@include('hyde::components.docs.content')
 </main>
 

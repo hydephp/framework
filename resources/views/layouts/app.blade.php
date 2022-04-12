@@ -39,7 +39,7 @@
     <a href="#content" id="skip-to-content">Skip to content</a>
     @includeUnless($withoutNavigation ?? false, 'hyde::layouts.navigation') 
 
-    <section id="content">
+    <section>
         @yield('content') 
     </section>
 
