@@ -31,7 +31,6 @@ class CreatesDefaultDirectories
         '_site/posts',
         '_site/media',
         '_site/docs',
-        '_pages',
     ];
 
     /**
