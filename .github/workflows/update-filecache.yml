@@ -24,6 +24,10 @@ jobs:
       id: verify-changed-files
       with:
         files: resources/data/filecache.json
+      
+    - name: Output the pending file state 
+      run: |           
+        echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
 
     - name: Create Pull Request with the new filecache
       if: steps.verify-changed-files.outputs.files_changed == 'true'
