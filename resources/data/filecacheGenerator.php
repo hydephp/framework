@@ -16,7 +16,6 @@ $files = array_merge($bladeFiles, $frontendFiles);
 foreach ($files as $file) {
     $filecache[str_replace(__DIR__.'/../../', '', $file)] = [
         'unixsum' => unixsum(file_get_contents($file)),
-        'last_modified' => filemtime($file),
     ];
 }
 
