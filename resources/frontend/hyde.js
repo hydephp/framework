@@ -44,7 +44,6 @@ function hideNavigation() {
 var sidebarOpen = screen.width >= 768;
 
 const sidebar = document.getElementById("documentation-sidebar");
-const main = document.getElementById("documentation-content");
 const backdrop = document.getElementById("sidebar-backdrop");
 
 const toggleButtons = document.querySelectorAll(".sidebar-button-wrapper");
