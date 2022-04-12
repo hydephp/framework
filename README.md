@@ -9,52 +9,51 @@
     <a href="https://github.styleci.io/repos/472503421?branch=master"> <img style="display: inline; margin: 4px 2px;" src="https://github.styleci.io/repos/472503421/shield?branch=master" alt="StyleCI Status"> </a>
 </p>
 
-## ⚠ Beta Software Warning ⚠
-### Heads up! HydePHP is still very new. As such there may be bugs (please report them) and breaking changes.
-#### Please wait until v1.0 for production use and remember to back up your source files before updating (use Git!).
+## About
 
----
+HydePHP is a content-first Laravel-powered Static Site Builder that allows you to create static HTML pages, blog posts, and documentation sites using Markdown, optionally with YAML Front Matter.
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
 
-HydePHP is a content-first Laravel-powered Static Site Builder that allows
-you to create static HTML pages, blog posts, and documentation sites using Markdown, optionally with YAML Front Matter.
+### Repositories
 
-Need more control? You can also use Laravel Blade to get the full power of dynamic templating and absolute control over HTML.
+- [HydePHP/Framework](https://github.com/hydephp/framework) - The core project containing the brains of Hyde. <i>Equivalent to Laravel/Framework</i>
+- [HydePHP/Hyde](https://github.com/hydephp/hyde) - The Hyde project repo. This is the repository you should start with if you want to build an application using Hyde. <i>Equivalent to Laravel/Laravel</i>
+- [HydePHP/Hydefront](https://github.com/hydephp/hydefront) - The Hyde frontend assets. Extracted from the HydePHP/Framework repo to improve testing and allow for easier deployment using a CDN.
 
-Hyde is modular, configurable, and hackable - allowing you to customize everything - but only if you want to.
-Hyde follows convention over configuration, allowing you to get an awesome blog or a smooth documentation site up and running in mere minutes.
-All the TailwindCSS and Blade templates you need for your site are already configured.
+Note that HydePHP/Framework simply extracts the core business logic from the HydePHP/Hyde repo and is not intended to be used as a standalone application. You should use the HydePHP/Hyde repo as a template to build your own application, which is what the composer installer does.
 
-See the documentation for Hyde at https://hydephp.github.io/docs/
+## ⚠ Beta Software Warning 
+Heads up! HydePHP is very new and currently in beta. Please report any bugs and issues in the appropriate issue tracker. Versions in the 0.x series are not stable and may change at any time. No backwards compatibility guarantees are made and there will be breaking changes without notice.
 
-### Local Development Requirements  
-Hyde uses Laravel 9 which requires PHP >= 8.0. You should also have Composer and NPM installed.
-The static HTML can be hosted virtually anywhere, including for free on GitHub Pages.
+Please wait until v1.0 for production use and remember to back up your source files before updating (use Git!).
+See https://hydephp.github.io/docs/master/update-hyde.html for the upgrade guide.
 
-## Changelog
+## Resources
+
+### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
+### Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-## Security
+### Security
 
 If you discover any security-related issues, please email caen@desilva.se instead of using the issue tracker.
 All vulnerabilities will be promptly addressed.
 
-## Credits
+### Credits
 
 -   [Caen De Silva](https://github.com/caendesilva)
 -   [All Contributors](../../contributors)
 
-## License
+### License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-## Attributions
+### Attributions
 
 - The Hyde core is built with [Laravel Zero](https://laravel-zero.com/) which is based on [Laravel](https://laravel.com/)
 
