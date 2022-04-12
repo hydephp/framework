@@ -81,7 +81,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
         $this->info(sprintf(
             'Created %s in %s seconds. (%sms)',
-            BuildService::createClickableFilepath($this->path),
+            BuildService::createClickableFilepath($this->getOutputPath($this->path)),
             number_format(
                 $execution_time,
                 2
@@ -135,5 +135,31 @@ class HydeRebuildStaticSiteCommand extends Command
         $this->warn($exception->getMessage());
 
         return $exception->getCode();
+    }
+
+    /**
+     * Get the output path for the given path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    public function getOutputPath(string $path): string
+    {
+        $path = str_replace(Hyde::path(), '', $path);
+
+        if (str_starts_with($path, '_posts')) {
+            return Hyde::path(str_replace('_posts', '_site/posts', rtrim($path, '.md') . '.html'));
+        }
+
+        if (str_starts_with($path, '_docs')) {
+            return Hyde::path(str_replace('_docs', '_site/docs', rtrim($path, '.md') . '.html'));
+        }
+
+        if (str_starts_with($path, '_pages')) {
+            $path = str_replace('.blade.php', '.md', $path);
+            return Hyde::path(str_replace('_pages', '_site/', rtrim($path, '.md') . '.html'));
+        }
+
+        return $path;
     }
 }
