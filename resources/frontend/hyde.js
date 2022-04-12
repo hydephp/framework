@@ -8,7 +8,6 @@
 
 // Handle the main navigation menu
 
-const mainNavigation = document.getElementById("main-navigation");
 const mainNavigationLinks = document.getElementById("main-navigation-links");
 const openMainNavigationMenuIcon = document.getElementById("open-main-navigation-menu-icon");
 const closeMainNavigationMenuIcon = document.getElementById("close-main-navigation-menu-icon");
