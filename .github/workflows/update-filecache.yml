@@ -18,3 +18,19 @@ jobs:
 
     - name: Compile the checksums and save the filecache
       run: cd resources/data && php filecacheGenerator.php
+
+    - name: Check if any changes were made
+      uses: tj-actions/verify-changed-files@v9
+      id: verify-changed-files
+      with:
+        files: resources/data/filecache.json
+
+    - name: Create Pull Request with the new filecache
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
+      uses: peter-evans/create-pull-request@v4
+      with:
+        commit-message: Automatic Filecache Update
+        title: Update Filecache
+        body: Updated the filecache.json with new resource file checksums.
+        branch: update-checksums
+        base: master
