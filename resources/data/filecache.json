@@ -1,43 +1,43 @@
 {
     "resources\/views\/components\/article-excerpt.blade.php": {
-        "unixsum": "8ba6886ec3ac7976af7a842c53cab02c",
-        "last_modified": 1649699300
+        "unixsum": "0869dd5088ad3fd7182127a043c8d910",
+        "last_modified": 1649774589
     },
     "resources\/views\/homepages\/blank.blade.php": {
         "unixsum": "9a1305a8f0a85bf2776332082d359a99",
         "last_modified": 1648153885
     },
     "resources\/views\/homepages\/post-feed.blade.php": {
-        "unixsum": "37924ffc7670a7b334f8d949b5f69247",
-        "last_modified": 1648153885
+        "unixsum": "743a7f5ca8f0cad525e386e0e2a035a4",
+        "last_modified": 1649774589
     },
     "resources\/views\/homepages\/welcome.blade.php": {
         "unixsum": "5fdda0edeeea0d3605136f6d418e109a",
-        "last_modified": 1649708498
+        "last_modified": 1649708791
     },
     "resources\/views\/layouts\/app.blade.php": {
-        "unixsum": "10885f64fa8e8d7a76062039e3eed6d3",
-        "last_modified": 1649699300
+        "unixsum": "44ab73c9f625cb7f1ffe3fd7ebcb8663",
+        "last_modified": 1649774589
     },
     "resources\/views\/layouts\/docs.blade.php": {
-        "unixsum": "980ce346dd24e5424a7af23a920bab29",
-        "last_modified": 1649480222
+        "unixsum": "c260e08c75d4ff4e19c7efda03b6b99e",
+        "last_modified": 1649774589
     },
     "resources\/views\/layouts\/footer.blade.php": {
-        "unixsum": "260ccc3c57bd243a2947e71c6aeddc21",
-        "last_modified": 1649699300
+        "unixsum": "82399b4f05eee0bf5fd9f428fbc3d695",
+        "last_modified": 1649774589
     },
     "resources\/views\/layouts\/meta.blade.php": {
         "unixsum": "854fba51dfc472084fbf5ff90a52e663",
         "last_modified": 1649699300
     },
     "resources\/views\/layouts\/navigation.blade.php": {
-        "unixsum": "3ecd9e2a05774e681aaf2a6e333f2774",
-        "last_modified": 1649699300
+        "unixsum": "ef7085fe7d0cae13f3fe3d64f7254bde",
+        "last_modified": 1649774589
     },
     "resources\/views\/layouts\/page.blade.php": {
-        "unixsum": "e096a1fdd2f12e6dc4f9172bfd932a53",
-        "last_modified": 1648153885
+        "unixsum": "5130e77fbbe8fd1130c7e40e7ec5ef2d",
+        "last_modified": 1649774589
     },
     "resources\/views\/layouts\/post.blade.php": {
         "unixsum": "f045eb926bdb4d51d434baf51417eac4",
@@ -56,15 +56,19 @@
         "last_modified": 1649350535
     },
     "resources\/frontend\/hyde.css": {
-        "unixsum": "2e4d0ee06558fa39407e16c15e2ed7bd",
-        "last_modified": 1649453514
+        "unixsum": "cabdb6f8d2dfd104c82d4fa0a6279f3c",
+        "last_modified": 1649774589
     },
     "resources\/frontend\/hyde.scss": {
-        "unixsum": "f46c77bc128c74376fb49cf5a4d51a5c",
-        "last_modified": 1649453509
+        "unixsum": "3790a853f43258ba4fc05f8a4bed1cec",
+        "last_modified": 1649774589
     },
     "resources\/frontend\/hyde.js": {
-        "unixsum": "21be3ae994b6f3c20a58a036446a8484",
-        "last_modified": 1649350535
+        "unixsum": "f9a8312fda7c4727bb2a36dd7afaac94",
+        "last_modified": 1649774589
+    },
+    "resources\/frontend\/hyde.min.js": {
+        "unixsum": "d1781aa8b092765447e37f208bae2004",
+        "last_modified": 1649774589
     }
 }
