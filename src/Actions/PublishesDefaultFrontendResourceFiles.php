@@ -11,7 +11,10 @@ use Hyde\Framework\Hyde;
  *
  * @see \Hyde\Framework\HydeServiceProvider
  *
- * @todo Create option to disable this behaviour.
+ * @todo Create option to disable the automatic behaviour.
+ * @todo Create option to speficy usage of minified files.
+ * @todo Create option here, or in the Hyde facade,
+ *       to choose if resources should be loaded locally or from the CDN.
  */
 class PublishesDefaultFrontendResourceFiles
 {
