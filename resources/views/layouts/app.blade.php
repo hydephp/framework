@@ -35,7 +35,7 @@
         }
     </script>
 </head>
-<body id="app" class="flex flex-col min-h-screen overflow-x-hidden">
+<body id="app" class="flex flex-col min-h-screen overflow-x-hidden dark:bg-gray-900 dark:text-white">
     <a href="#content" id="skip-to-content">Skip to content</a>
     @includeUnless($withoutNavigation ?? false, 'hyde::layouts.navigation') 
 
