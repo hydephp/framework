@@ -148,16 +148,17 @@ class HydeRebuildStaticSiteCommand extends Command
         $path = str_replace(Hyde::path(), '', $path);
 
         if (str_starts_with($path, '_posts')) {
-            return Hyde::path(str_replace('_posts', '_site/posts', rtrim($path, '.md') . '.html'));
+            return Hyde::path(str_replace('_posts', '_site/posts', rtrim($path, '.md').'.html'));
         }
 
         if (str_starts_with($path, '_docs')) {
-            return Hyde::path(str_replace('_docs', '_site/docs', rtrim($path, '.md') . '.html'));
+            return Hyde::path(str_replace('_docs', '_site/docs', rtrim($path, '.md').'.html'));
         }
 
         if (str_starts_with($path, '_pages')) {
             $path = str_replace('.blade.php', '.md', $path);
-            return Hyde::path(str_replace('_pages', '_site/', rtrim($path, '.md') . '.html'));
+
+            return Hyde::path(str_replace('_pages', '_site/', rtrim($path, '.md').'.html'));
         }
 
         return $path;
