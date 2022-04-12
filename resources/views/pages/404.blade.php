@@ -464,6 +464,8 @@
     </style>
 </head>
 
+<!-- Error page and illustration by LaravelCollective: https://github.com/LaravelCollective/errors (License MIT) --->
+
 <body class="antialiased font-sans">
     <div class="md:flex min-h-screen">
         <div class="w-full md:w-1/2 bg-white flex items-center justify-center">
@@ -493,13 +495,6 @@
                 class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
             </div>
         </div>
-
-        <footer>
-            <small>
-                Error page and illustration by <a href="https://github.com/LaravelCollective/errors">LaravelCollective</a> (License MIT)
-            </small>
-        </footer>
     </div>
 </body>
-
 </html>
