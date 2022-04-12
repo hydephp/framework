@@ -2,7 +2,7 @@
  * Core Stylesheet for the HydePHP Frontend
  * 
  * @package     HydePHP - HydeFront
- * @version     0.3.0 (HydeFront)
+ * @version     0.4.0 (HydeFront)
  * @author      Caen De Silva
  *
  * @see app.css where TailwindCSS is included,
@@ -10,8 +10,6 @@
  */
 
 /* Base styles for compatibility */
- 
-.hidden { display: none; }
 
 .post-article {
 	max-width: 960px;
@@ -39,6 +37,12 @@
 			padding-bottom: 0.25rem;
 			color: #5956eb;
 		}
+	}
+}
+
+.dark {
+	#sidebar-navigation li.list-item-active a {
+		color: #fff;
 	}
 }
 

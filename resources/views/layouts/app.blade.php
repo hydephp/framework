@@ -25,8 +25,17 @@
   
     <!-- Include any extra tags to include in the <head> section -->
     @include('hyde::layouts.meta') 
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC. Component by Flowbite (MIT)
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
-<body id="app" class="flex flex-col min-h-screen overflow-x-hidden">
+<body id="app" class="flex flex-col min-h-screen overflow-x-hidden dark:bg-gray-900 dark:text-white">
     <a href="#content" id="skip-to-content">Skip to content</a>
     @includeUnless($withoutNavigation ?? false, 'hyde::layouts.navigation') 
 
