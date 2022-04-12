@@ -1,0 +1,20 @@
+name: Update Filecache
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-filecache:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Compile the checksums and save the filecache
+      run: cd resources/data && php filecacheGenerator.php
