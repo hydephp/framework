@@ -1,0 +1,65 @@
+<?php
+
+namespace Hyde\Framework\Commands;
+
+use Hyde\Framework\Hyde;
+use LaravelZero\Framework\Commands\Command;
+
+/**
+ * Start the realtime compiler server.
+ */
+class HydeServeCommand extends Command
+{
+    /**
+     * The signature of the command.
+     *
+     * @var string
+     */
+    protected $signature = 'serve';
+
+    /**
+     * The description of the command.
+     *
+     * @var string
+     */
+    protected $description = 'Start the experimental realtime compiler.';
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle(): int
+    {
+        if (! $this->canRunServer()) {
+			$this->error('Could not start the server.');
+
+			return 1;
+		}
+
+		$this->line('<info>Starting the server...</info> Press Ctrl+C to stop');
+
+		$this->warn('This feature is experimental. Please report any issues on GitHub.');
+
+		passthru('php -S localhost:80 ' . Hyde::path('vendor/hyde/realtime-compiler/server.php'));
+
+        return 0;
+    }
+
+	/**
+	 * Check if the server can be started.
+	 *
+	 * @return bool
+	 */
+	protected function canRunServer(): bool
+	{
+
+		if (! file_exists(Hyde::path('vendor/hyde/realtime-compiler/server.php'))) {
+			$this->warn('The realtime compiler extension is not installed.');
+
+			return false;
+		}
+
+		return true;
+	}
+}

@@ -41,6 +41,7 @@ class HydeServiceProvider extends ServiceProvider
             Commands\HydeMakePageCommand::class,
             Commands\HydeValidateCommand::class,
             Commands\HydeDebugCommand::class,
+            Commands\HydeServeCommand::class,
         ]);
     }
 
