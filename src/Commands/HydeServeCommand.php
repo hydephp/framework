@@ -15,7 +15,7 @@ class HydeServeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'serve';
+    protected $signature = 'serve {--port=8080} {--host=localhost}';
 
     /**
      * The description of the command.
@@ -41,7 +41,9 @@ class HydeServeCommand extends Command
 
 		$this->warn('This feature is experimental. Please report any issues on GitHub.');
 
-		passthru('php -S localhost:80 ' . Hyde::path('vendor/hyde/realtime-compiler/server.php'));
+		$port = $this->option('port');
+		$host = $this->option('host');
+		passthru("php -S $host:$port " . Hyde::path('vendor/hyde/realtime-compiler/server.php'));
 
         return 0;
     }
