@@ -5,9 +5,6 @@ namespace Hyde\Framework;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Services\MarkdownFileService;
 
-/**
- * @todo Re-add support for YAML Front Matter.
- */
 class MarkdownPageParser extends AbstractPageParser
 {
     protected string $pageModel = MarkdownPage::class;

@@ -10,9 +10,9 @@ class MarkdownPostParser extends AbstractPageParser
     protected string $pageModel = MarkdownPost::class;
     protected string $slug;
 
-    public array $matter;
-    public string $body;
     public string $title;
+    public string $body;
+    public array $matter;
 
     public function execute(): void
     {
