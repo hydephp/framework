@@ -3,23 +3,30 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Services\MarkdownFileService;
 
 class DocumentationPageParser extends AbstractPageParser
 {
     protected string $pageModel = DocumentationPage::class;
     protected string $slug;
 
-    public string $body;
     public string $title;
+    public string $body;
 
     public function execute(): void
     {
-        $stream = file_get_contents(Hyde::path("_docs/$this->slug.md"));
+        $document = (new MarkdownFileService(
+            Hyde::path("_docs/$this->slug.md")
+        ))->get();
 
-        $this->title = $this->findTitleTag($stream) ??
-            Hyde::titleFromSlug($this->slug);
+        if (isset($document->matter['title'])) {
+            $this->title = $document->matter['title'];
+        } else {
+            $this->title = $this->findTitleTag($document->body) ??
+                Hyde::titleFromSlug($this->slug);
+        }
 
-        $this->body = $stream;
+        $this->body = $document->body;
     }
 
     /**
