@@ -11,17 +11,21 @@
 
 ## About
 
-HydePHP is a content-first Laravel-powered Static Site Builder that allows you to create static HTML pages, blog posts, and documentation sites using Markdown, optionally with YAML Front Matter.
+HydePHP is a content-first Laravel-powered Static Site Builder that allows you to create static HTML pages, blog posts, and documentation sites using Markdown.
+Hyde is all about letting you get started quickly, while giving you the power and freedom of doing things the way you want to.
+
+Markdown purist? That's all you need. Blade artisan? Go for it.
+Hyde comes with hand-crafted frontend templates so you can focus on your content.
+You don't _need_ to customize anything. But you _can_ customize everything.
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
 
 ### Repositories
 
-- [HydePHP/Framework](https://github.com/hydephp/framework) - The core project containing the brains of Hyde. <i>Equivalent to Laravel/Framework</i>
-- [HydePHP/Hyde](https://github.com/hydephp/hyde) - The Hyde project repo. This is the repository you should start with if you want to build an application using Hyde. <i>Equivalent to Laravel/Laravel</i>
+- [HydePHP/Framework](https://github.com/hydephp/framework) - The core project containing the brains of Hyde and is not intended to be used as a standalone. Use together with Hyde/Hyde. <i>Equivalent to Laravel/Framework</i>
+- [HydePHP/Hyde](https://github.com/hydephp/hyde) - The Hyde project repo. This is the repository you should start with if you want to build an application using Hyde. This repo is what the installer uses. <i>Equivalent to Laravel/Laravel</i>
 - [HydePHP/Hydefront](https://github.com/hydephp/hydefront) - The Hyde frontend assets. Extracted from the HydePHP/Framework repo to improve testing and allow for easier deployment using a CDN.
 
-Note that HydePHP/Framework simply extracts the core business logic from the HydePHP/Hyde repo and is not intended to be used as a standalone application. You should use the HydePHP/Hyde repo as a template to build your own application, which is what the composer installer does.
 
 ## ⚠ Beta Software Warning 
 Heads up! HydePHP is very new and currently in beta. Please report any bugs and issues in the appropriate issue tracker. Versions in the 0.x series are not stable and may change at any time. No backwards compatibility guarantees are made and there will be breaking changes without notice.
