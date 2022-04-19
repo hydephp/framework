@@ -2,13 +2,6 @@
 @extends('hyde::layouts.app')
 @section('content')
 
-@php
-$title = $post->matter['title'] ?? false;
-$description = $post->matter['description'] ?? false;
-$category = $post->matter['category'] ?? false;
-$author = $post->matter['author'] ?? false;
-@endphp
-
 @push('meta')
 <!-- Blog Post Meta Tags -->
 @foreach ($post->getMetadata() as $name => $content)
