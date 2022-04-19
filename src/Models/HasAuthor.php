@@ -5,7 +5,7 @@ namespace Hyde\Framework\Models;
 use Hyde\Framework\Services\AuthorService;
 
 /**
- * Trait HasAuthor
+ * Trait HasAuthor.
  *
  * @see \Tests\Unit\HasAuthorTest
  */
@@ -33,6 +33,7 @@ trait HasAuthor
     protected function createAuthor(array $data): Author
     {
         $username = $data['username'] ?? $data['name'] ?? 'Guest';
+
         return new Author($username, $data);
     }
 }
