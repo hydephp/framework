@@ -44,7 +44,7 @@ trait HasMetadata
 
         // Add author if it exists
         if (isset($this->matter['author'])) {
-            $this->metadata->add('author', $this->matter['author']);
+            $this->metadata->add('author', $this->getAuthor($this->matter['author']));
         }
 
         // Add keywords if it exists
@@ -74,5 +74,14 @@ trait HasMetadata
 
         // If there is an image, add it to the metadata
         // TODO: Add image to metadata
+    }
+
+    protected function getAuthor(string|array $author): string
+    {
+        if (is_string($author)) {
+            return $author;
+        }
+
+        return $author['username'] ?? $author['name'] ?? 'Guest';
     }
 }
