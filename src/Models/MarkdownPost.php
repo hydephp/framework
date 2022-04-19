@@ -6,6 +6,7 @@ use Hyde\Framework\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
 {
+    use HasAuthor;
     use HasMetadata;
     use HasDateString;
     use HasFeaturedImage;
@@ -17,6 +18,7 @@ class MarkdownPost extends MarkdownDocument
     {
         parent::__construct($matter, $body, $title, $slug);
 
+        $this->constructAuthor();
         $this->constructMetadata();
         $this->constructDateString();
         $this->constructFeaturedImage();
