@@ -48,6 +48,7 @@ class GeneratesTableOfContents implements ActionContract
         $converter = new MarkdownConverter($environment);
         $html = $converter->convert("[[END_TOC]]\n" . $this->markdown)->getContent();
 
-        return substr($html, 0, strpos($html, '[[END_TOC]]') - 9);
+        // Return everything before the [[END_TOC]] marker.
+        return substr($html, 0, strpos($html, '<p>[[END_TOC]]'));
     }
 }
