@@ -3,7 +3,7 @@ by author
 	@if($post->author->website)
 	<a href="{{ $post->author->website }}" rel="author" itemprop="url" aria-label="The author's website">
 	@endif
-	<span itemprop="name" aria-label="The author's name" {{ $post->author->username ? 'title=@'.$post->author->username.'' : '' }}>{{ $post->author->name ?? $post->author->username }}</span> 
+	<span itemprop="name" aria-label="The author's name" {{ ($post->author->username &&  ($post->author->username !== $post->author->name)) ? 'title=@'. urlencode($post->author->username) .'' : '' }}>{{ $post->author->name ?? $post->author->username }}</span> 
 	@if($post->author->website)
 	</a>
 	@endif
