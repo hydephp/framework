@@ -28,14 +28,21 @@ class MarkdownFileService
 
     public function __construct(string $filepath)
     {
-        $object = YamlFrontMatter::markdownCompatibleParse(file_get_contents($filepath));
+        $stream = file_get_contents($filepath);
 
-        if ($object->matter()) {
-            $this->matter = $object->matter();
-        }
+        // Check if the file has Front Matter.
+        if (str_starts_with($stream, '---')) {
+            $object = YamlFrontMatter::markdownCompatibleParse($stream);
 
-        if ($object->body()) {
-            $this->body = $object->body();
+            if ($object->matter()) {
+                $this->matter = $object->matter();
+            }
+
+            if ($object->body()) {
+                $this->body = $object->body();
+            }
+        } else {
+            $this->body = $stream;
         }
     }
 
