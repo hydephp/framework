@@ -5,6 +5,7 @@ namespace Hyde\Framework\Services;
 use Hyde\Framework\Features;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
 
 class MarkdownConverterService
@@ -22,8 +23,19 @@ class MarkdownConverterService
     {
         $this->markdown = $markdown;
 
-        $this->converter = new CommonMarkConverter();
+        $config = [
+            'heading_permalink' => [
+                'id_prefix' => '',
+                'fragment_prefix' => '',
+                'symbol' => '',
+            ],
+        ];
+
+        $this->converter = new CommonMarkConverter($config);
         $this->converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
+
+        // If TOC is enabled, add heading permalinks
+        $this->converter->getEnvironment()->addExtension(new HeadingPermalinkExtension());
 
         $this->useTorchlight = $useTorchlight ?? $this->determineIfTorchlightShouldBeEnabled();
     }
