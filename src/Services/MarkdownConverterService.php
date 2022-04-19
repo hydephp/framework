@@ -23,19 +23,23 @@ class MarkdownConverterService
     {
         $this->markdown = $markdown;
 
-        $config = [
-            'heading_permalink' => [
-                'id_prefix' => '',
-                'fragment_prefix' => '',
-                'symbol' => '',
-            ],
-        ];
+        $config = [];
+        if (config('hyde.documentationPageTableOfContents.enabled', true)) {
+            $config = array_merge([
+                'heading_permalink' =>[
+                    'id_prefix' => '',
+                    'fragment_prefix' => '',
+                    'symbol' => ''
+                ],
+            ], $config);
+        }
 
         $this->converter = new CommonMarkConverter($config);
         $this->converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
 
-        // If TOC is enabled, add heading permalinks
-        $this->converter->getEnvironment()->addExtension(new HeadingPermalinkExtension());
+        if (config('hyde.documentationPageTableOfContents.enabled', true)) {
+            $this->converter->getEnvironment()->addExtension(new HeadingPermalinkExtension());
+        }
 
         $this->useTorchlight = $useTorchlight ?? $this->determineIfTorchlightShouldBeEnabled();
     }

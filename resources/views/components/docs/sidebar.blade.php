@@ -10,7 +10,7 @@
 				@if($item['active'])
 					<a href="{{ $item['slug'] }}.html" aria-current="true" class="link-active text-indigo-500">{{ $item['title'] }}</a>
 					
-					@if($docs->tableOfContents)
+					@if(isset($docs->tableOfContents))
 						{!! ($docs->tableOfContents) !!}
 					@endif
 				@else

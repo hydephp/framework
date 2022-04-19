@@ -21,9 +21,6 @@ class GeneratesTableOfContents implements ActionContract
         $this->markdown = $markdown;
     }
 
-    public static int $minHeadingLevel = 2;
-    public static int $maxHeadingLevel = 4;
-
     public function execute(): string
     {
         $config = [
@@ -31,8 +28,8 @@ class GeneratesTableOfContents implements ActionContract
                 'html_class' => 'table-of-contents',
                 'position' => 'top',
                 'style' => 'bullet',
-                'min_heading_level' => static::$minHeadingLevel,
-                'max_heading_level' => static::$maxHeadingLevel,
+                'min_heading_level' => config('hyde.documentationPageTableOfContents.minHeadingLevel', 2),
+                'max_heading_level' => config('hyde.documentationPageTableOfContents.maxHeadingLevel', 4),
                 'normalize' => 'relative',
             ],
             'heading_permalink' => [
