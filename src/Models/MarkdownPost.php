@@ -6,9 +6,12 @@ use Hyde\Framework\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
 {
+    use HasAuthor;
     use HasMetadata;
     use HasDateString;
     use HasFeaturedImage;
+
+    public string $category;
 
     public static string $sourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
@@ -17,8 +20,11 @@ class MarkdownPost extends MarkdownDocument
     {
         parent::__construct($matter, $body, $title, $slug);
 
+        $this->constructAuthor();
         $this->constructMetadata();
         $this->constructDateString();
         $this->constructFeaturedImage();
+
+        $this->category = $this->matter['category'] ?? '';
     }
 }

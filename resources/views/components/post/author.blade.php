@@ -1,13 +1,10 @@
-@php
-	$authorObject = Hyde\Framework\Services\AuthorService::find($author);
-@endphp
 by author
 <address itemprop="author" itemscope itemtype="https://schema.org/Person" aria-label="The post author" style="display: inline;"> 
-	@if($authorObject && $authorObject->website)
-	<a href="{{ $authorObject->website }}" rel="author" itemprop="url" aria-label="The author's website">
+	@if($post->author->website)
+	<a href="{{ $post->author->website }}" rel="author" itemprop="url" aria-label="The author's website">
 	@endif
-	<span itemprop="name" aria-label="The author's name" {{ $authorObject && $authorObject->username ? 'title=@'.$authorObject->username.'' : '' }}>{{ $authorObject->name ?? $author }}</span> 
-	@if($authorObject && $authorObject->website)
+	<span itemprop="name" aria-label="The author's name" {{ ($post->author->username &&  ($post->author->username !== $post->author->name)) ? 'title=@'. urlencode($post->author->username) .'' : '' }}>{{ $post->author->name ?? $post->author->username }}</span> 
+	@if($post->author->website)
 	</a>
 	@endif
 </address> 
