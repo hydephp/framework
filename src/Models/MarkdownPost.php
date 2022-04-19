@@ -11,6 +11,8 @@ class MarkdownPost extends MarkdownDocument
     use HasDateString;
     use HasFeaturedImage;
 
+    public string $category;
+
     public static string $sourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
 
@@ -22,5 +24,7 @@ class MarkdownPost extends MarkdownDocument
         $this->constructMetadata();
         $this->constructDateString();
         $this->constructFeaturedImage();
+
+        $this->category = $this->matter['category'] ?? '';
     }
 }
