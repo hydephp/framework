@@ -53,7 +53,7 @@ class MarkdownConverterService
 
     public function addExtension(string $extensionClassName): void
     {
-        if (!in_array($extensionClassName, $this->extensions)) {
+        if (! in_array($extensionClassName, $this->extensions)) {
             $this->extensions[] = $extensionClassName;
         }
     }
