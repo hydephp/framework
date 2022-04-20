@@ -42,7 +42,10 @@
         "unixsum": "c040ed42da55bbd3300ce3fb11cfc458"
     },
     "resources\/frontend\/hyde.css": {
-        "unixsum": "53045b8cac2202115d36d1c10712f402"
+        "unixsum": "cabdb6f8d2dfd104c82d4fa0a6279f3c"
+    },
+    "resources\/frontend\/tailwind.min.css": {
+        "unixsum": "ac3b09144b020247aefdb1b755c596b2"
     },
     "resources\/frontend\/hyde.scss": {
         "unixsum": "fb0d3b62c5c3b8b97a23f1ec4d6c4b7b"
