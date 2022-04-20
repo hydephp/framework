@@ -37,7 +37,7 @@ jobs:
     
     - name: Check if there are changes
       id: check-for-changes
-      run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront && git diff --name-only --cached)"
+      run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront &&  git diff master..framework-merge)"
     
     - name: Output check result
       run: echo "Result ${{ steps.check-for-changes.HAS_CHANGES }}, Check ${{ steps.check-for-changes.HAS_CHANGES != '' }}"
