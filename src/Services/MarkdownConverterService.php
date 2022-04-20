@@ -29,7 +29,7 @@ class MarkdownConverterService
                 'heading_permalink' =>[
                     'id_prefix' => '',
                     'fragment_prefix' => '',
-                    'symbol' => ''
+                    'symbol' => '',
                 ],
             ], $config);
         }
