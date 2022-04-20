@@ -32,8 +32,6 @@ class MarkdownConverterService
     {
         $this->sourceModel = $sourceModel;
         $this->markdown = $markdown;
-
-        // Add any default configuration options
     }
 
     public function parse(): string
@@ -83,6 +81,9 @@ class MarkdownConverterService
         foreach (config('markdown.extensions', []) as $extensionClassName) {
             $this->addExtension($extensionClassName);
         }
+
+        // Merge any custom configuration options
+        $this->config = array_merge(config('markdown.config', []), $this->config);
 
         $this->converter = new CommonMarkConverter($this->config);
 

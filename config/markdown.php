@@ -31,6 +31,23 @@ return [
 	'extensions' => [
 		\League\CommonMark\Extension\GithubFlavoredMarkdownExtension::class,
 		\League\CommonMark\Extension\Attributes\AttributesExtension::class,
-	]
+	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Configuration Options
+	|--------------------------------------------------------------------------
+	|
+	| Define any options that should be passed to the CommonMark converter.
+	|
+	| Hyde handles many of the options automatically, but you may want to
+	| override some of them and/or add your own. Any custom options
+	| will be merged with the Hyde defaults during runtime.
+	|
+	*/
+
+	'config' => [
+		//
+	],
 
 ];
