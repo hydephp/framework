@@ -15,4 +15,7 @@
 </main>
 
 <div id="sidebar-backdrop" title="Click to close sidebar" onClick="hideSidebar()" style="display: none;"></div>
+@if(config('hyde.documentationPageTableOfContents.smoothPageScrolling', true))
+<style> html { scroll-behavior: smooth; } </style>
+@endif
 @endsection
