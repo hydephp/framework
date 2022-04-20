@@ -2,18 +2,21 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\Features;
+use Hyde\Framework\Actions\ServiceActions\HasTorchlightIntegration;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
 
+/**
+ * Interface for the CommonMarkConverter,
+ * allowing for easy configuration of extensions.
+ */
 class MarkdownConverterService
 {
-    public string $markdown;
+    use HasTorchlightIntegration;
 
-    protected bool $useTorchlight;
-    protected bool $torchlightAttribution;
+    public string $markdown;
 
     protected CommonMarkConverter $converter;
 
@@ -59,24 +62,5 @@ class MarkdownConverterService
         }
 
         return $this->html;
-    }
-
-    protected function determineIfTorchlightShouldBeEnabled(): bool
-    {
-        return Features::hasTorchlight();
-    }
-
-    protected function determineIfTorchlightAttributionShouldBeInjected(): bool
-    {
-        return $this->useTorchlight && config('torchlight.attribution.enabled', true)
-            && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
-    }
-
-    protected function injectTorchlightAttribution(): string
-    {
-        return $this->converter->convert(config(
-            'torchlight.attribution.markdown',
-            'Syntax highlighted by torchlight.dev'
-        ));
     }
 }
