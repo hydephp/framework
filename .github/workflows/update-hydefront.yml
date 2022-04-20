@@ -30,7 +30,6 @@ jobs:
       run: |
         cd resources/frontend && cp -r ./* ~/hydefront/
 
-
     - name: Add test file
       run: echo "test" > ~/hydefront/test.txt
 
@@ -45,13 +44,13 @@ jobs:
       run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront && git diff --name-only --cached)"
     
     - name: Commit the changes
-      #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
+      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git commit -m "Update Hydefront files from HydePHP/Framework"
 
     - name: Set the remote origin
+      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git remote set-url origin https://hydephp:${{secrets.PAT}}@github.com/hydephp/hydefront.git
 
     - name: Push the changes to Hydefront
-      #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
+      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git push origin framework-merge
-
