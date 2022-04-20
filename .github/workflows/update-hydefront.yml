@@ -20,12 +20,12 @@ jobs:
     - name: Create Pull Request in HydePHP/HydeFront
       uses: paygoc6/action-pull-request-another-repo@v1.0.1
       env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        API_TOKEN_GITHUB: ${{ secrets.ACTIONS_PAT_GITHUB }}
       with:
         source_folder: 'resources/frontend'
         destination_repo: 'hydephp/hydefront'
         destination_folder: 'folder-name'
         destination_base_branch: 'master'
         destination_head_branch: 'framework-merge'
-        user_email: 'caen@desilva.se'
-        user_name: 'caendesilva'
+        user_email: '${{ secrets.ACTION_USER_EMAIL }}'
+        user_name: '${{ secrets.ACTION_USER_NAME }}'
