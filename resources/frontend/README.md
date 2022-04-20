@@ -1,8 +1,9 @@
 # HydePHP Frontend Assets
+![jsDelivr hits (GitHub)](https://img.shields.io/jsdelivr/gh/hm/hydephp/hydefront)
 
 ## About this repository
 
-Files in this repository are the source of truth for the Hyde frontend resources.
+Contains the frontend assets for HydePHP stored in hydephp/framework under resources/frontend.
 
 ### Source files
 - hyde.scss
@@ -11,7 +12,6 @@ Files in this repository are the source of truth for the Hyde frontend resources
 ### Compiled files
 - hyde.css
 - hyde.min.js
-
 
 ### About the files
 
@@ -31,6 +31,9 @@ sass hyde.scss hyde.css --style=compressed --no-source-map
 
 #### Hyde.js
 This file contains basic scripts to make the navigation menu and sidebars interactive.
+
+#### Tailwind.css
+A compiled and minified file containing the styles for a base Hyde installation.
 
 ## Usage
 
