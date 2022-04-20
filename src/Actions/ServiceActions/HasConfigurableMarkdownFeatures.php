@@ -24,6 +24,15 @@ trait HasConfigurableMarkdownFeatures
         return $this;
     }
 
+    public function removeFeature(string $feature): self
+    {
+        if (in_array($feature, $this->features)) {
+            $this->features = array_diff($this->features, [$feature]);
+        }
+
+        return $this;
+    }
+
     public function hasFeature(string $feature): bool
     {
         return in_array($feature, $this->features);
