@@ -5,7 +5,6 @@ namespace Hyde\Framework\Services;
 use Hyde\Framework\Actions\ServiceActions\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Actions\ServiceActions\HasTorchlightIntegration;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
 
@@ -33,9 +32,6 @@ class MarkdownConverterService
     {
         $this->sourceModel = $sourceModel;
         $this->markdown = $markdown;
-
-        // Add the default extensions
-        $this->addExtension(GithubFlavoredMarkdownExtension::class);
 
         // Add any default configuration options
     }
@@ -81,6 +77,11 @@ class MarkdownConverterService
 
         if ($this->canEnableTorchlight()) {
             $this->addExtension(TorchlightExtension::class);
+        }
+
+        // Add any custom extensions defined in config
+        foreach (config('markdown.extensions', []) as $extensionClassName) {
+            $this->addExtension($extensionClassName);
         }
 
         $this->converter = new CommonMarkConverter($this->config);
