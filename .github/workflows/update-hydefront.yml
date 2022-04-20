@@ -48,6 +48,9 @@ jobs:
       #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git commit -m "Update Hydefront files from HydePHP/Framework"
 
+    - name: Set the remote origin
+      run: cd ~/hydefront && git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hydephp/hydefront.git
+
     - name: Push the changes to Hydefront
       #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git push origin framework-merge
