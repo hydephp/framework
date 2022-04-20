@@ -2,81 +2,101 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\Features;
+use Hyde\Framework\Actions\ServiceActions\HasConfigurableMarkdownFeatures;
+use Hyde\Framework\Actions\ServiceActions\HasTorchlightIntegration;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
 
+/**
+ * Interface for the CommonMarkConverter,
+ * allowing for easy configuration of extensions.
+ *
+ * @see \Tests\Feature\MarkdownConverterServiceTest
+ */
 class MarkdownConverterService
 {
+    use HasConfigurableMarkdownFeatures;
+    use HasTorchlightIntegration;
+
     public string $markdown;
+    public ?string $sourceModel = null;
 
-    protected bool $useTorchlight;
-    protected bool $torchlightAttribution;
-
+    protected array $config = [];
+    protected array $extensions = [];
     protected CommonMarkConverter $converter;
 
     protected string $html;
 
-    public function __construct(string $markdown, ?bool $useTorchlight = null, ?bool $torchlightAttribution = null)
+    public function __construct(string $markdown, ?string $sourceModel = null)
     {
+        $this->sourceModel = $sourceModel;
         $this->markdown = $markdown;
+    }
 
-        $config = [];
-        if (config('hyde.documentationPageTableOfContents.enabled', true)) {
-            $config = array_merge([
+    public function parse(): string
+    {
+        $this->setupConverter();
+
+        $this->html = $this->converter->convert($this->markdown);
+
+        $this->runPostProcessing();
+
+        return $this->html;
+    }
+
+    public function addExtension(string $extensionClassName): void
+    {
+        if (! in_array($extensionClassName, $this->extensions)) {
+            $this->extensions[] = $extensionClassName;
+        }
+    }
+
+    public function initializeExtension(string $extensionClassName): void
+    {
+        $this->converter->getEnvironment()->addExtension(new $extensionClassName());
+    }
+
+    protected function setupConverter(): void
+    {
+        // Determine what dynamic extensions to enable
+
+        if ($this->canEnablePermalinks()) {
+            $this->addExtension(HeadingPermalinkExtension::class);
+
+            $this->config = array_merge([
                 'heading_permalink' =>[
                     'id_prefix' => '',
                     'fragment_prefix' => '',
                     'symbol' => '',
                 ],
-            ], $config);
+            ], $this->config);
         }
 
-        $this->converter = new CommonMarkConverter($config);
-        $this->converter->getEnvironment()->addExtension(new GithubFlavoredMarkdownExtension());
-
-        if (config('hyde.documentationPageTableOfContents.enabled', true)) {
-            $this->converter->getEnvironment()->addExtension(new HeadingPermalinkExtension());
+        if ($this->canEnableTorchlight()) {
+            $this->addExtension(TorchlightExtension::class);
         }
 
-        $this->useTorchlight = $useTorchlight ?? $this->determineIfTorchlightShouldBeEnabled();
+        // Add any custom extensions defined in config
+        foreach (config('markdown.extensions', []) as $extensionClassName) {
+            $this->addExtension($extensionClassName);
+        }
+
+        // Merge any custom configuration options
+        $this->config = array_merge(config('markdown.config', []), $this->config);
+
+        $this->converter = new CommonMarkConverter($this->config);
+
+        foreach ($this->extensions as $extension) {
+            $this->initializeExtension($extension);
+        }
     }
 
-    public function parse(): string
+    protected function runPostProcessing(): void
     {
-        if ($this->useTorchlight) {
-            $this->converter->getEnvironment()->addExtension(new TorchlightExtension());
-        }
-
-        $this->html = $this->converter->convert($this->markdown);
-
-        $this->torchlightAttribution = $torchlightAttribution ?? $this->determineIfTorchlightAttributionShouldBeInjected();
-
-        if ($this->torchlightAttribution) {
+        // Run any post-processing actions
+        if ($this->determineIfTorchlightAttributionShouldBeInjected()) {
             $this->html .= $this->injectTorchlightAttribution();
         }
-
-        return $this->html;
-    }
-
-    protected function determineIfTorchlightShouldBeEnabled(): bool
-    {
-        return Features::hasTorchlight();
-    }
-
-    protected function determineIfTorchlightAttributionShouldBeInjected(): bool
-    {
-        return $this->useTorchlight && config('torchlight.attribution.enabled', true)
-            && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
-    }
-
-    protected function injectTorchlightAttribution(): string
-    {
-        return $this->converter->convert(config(
-            'torchlight.attribution.markdown',
-            'Syntax highlighted by torchlight.dev'
-        ));
     }
 }
