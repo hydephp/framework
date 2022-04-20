@@ -27,5 +27,5 @@ jobs:
         destination_folder: 'folder-name'
         destination_base_branch: 'master'
         destination_head_branch: 'framework-merge'
-        user_email: '${{ secrets.ACTION_USER_EMAIL }}'
+        user_email: 'git@github.com'
         user_name: 'hydephp'
