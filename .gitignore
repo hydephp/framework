@@ -7,3 +7,5 @@
 .phpdoc
 phpDocumentor.phar
 phpstan.phar
+
+resources/frontend/.github/
