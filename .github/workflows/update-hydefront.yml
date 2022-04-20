@@ -28,4 +28,4 @@ jobs:
         destination_base_branch: 'master'
         destination_head_branch: 'framework-merge'
         user_email: '${{ secrets.ACTION_USER_EMAIL }}'
-        user_name: '${{ secrets.ACTION_USER_NAME }}'
+        user_name: 'hydephp'
