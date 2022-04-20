@@ -21,8 +21,9 @@ jobs:
       run: cd resources/frontend
 
     - name: Setup Git config
-      run: git config --global user.email "actions@github.com"
-      run: git config --global user.name "GitHub Actions"
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
 
     - name: Checkout to a new branch
       run: git checkout -b framework-merge
@@ -35,3 +36,7 @@ jobs:
 
     - name: Push the changes to Hydefront
       run: git push origin framework-merge
+
+
+
+
