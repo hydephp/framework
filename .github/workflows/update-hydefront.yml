@@ -16,33 +16,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Setup Git config
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
+    - name: Create pull request
+      uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.PAT }}
+      with:
+        source_folder: 'resources/frontend'
+        destination_repo: 'hydephp/hydefront'
+        destination_folder: '/'
+        destination_base_branch: 'master'
+        destination_head_branch: 'framework-merge'
+        user_email: 'hydephp@github.com'
+        user_name: 'hydephp'
+        pull_request_reviewers: 'reviewers'
 
-    - name: Clone Hydefront
-      run: |
-        cd ~ && git clone https://github.com/hydephp/hydefront/
-
-    - name: Copy Hydefront files
-      run: |
-        cd resources/frontend && cp -r ./* ~/hydefront/
-
-    - name: Checkout to a new branch
-      run: cd ~/hydefront && git checkout -b framework-merge
-
-    - name: Add test file
-      run: echo "test" > ~/hydefront/test.txt
-
-    - name: Stage the Hydefront files
-      run: cd ~/hydefront && git add .
-
-    - name: Commit the changes
-      run: cd ~/hydefront && git commit -m "Update Hydefront files from HydePHP/Framework"
-
-    - name: Set the remote origin
-      run: cd ~/hydefront && git remote set-url origin https://hydephp:${{secrets.PAT}}@github.com/hydephp/hydefront.git
-
-    - name: Push the changes to Hydefront
-      run: cd ~/hydefront && git push origin framework-merge
