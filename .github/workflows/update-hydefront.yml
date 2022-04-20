@@ -32,6 +32,9 @@ jobs:
     - name: Checkout to a new branch
       run: cd ~/hydefront && git checkout -b framework-merge
 
+    - name: Add test file
+      run: echo "test" > ~/hydefront/test.txt
+
     - name: Stage the Hydefront files
       run: cd ~/hydefront && git add .
     
