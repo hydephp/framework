@@ -22,30 +22,35 @@ jobs:
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
 
-    - name: Checkout to a new branch
-      working-directory: ./resources/frontend
-      run: git checkout -b framework-merge
+    - name: Clone Hydefront
+      run: |
+        cd ~ && git clone https://github.com/hydephp/hydefront/
+
+    - name: Copy Hydefront files
+      run: |
+        cd resources/frontend && cp -r ./* ~/hydefront/
+
+    - name: Enter the resources/frontend directory
+      run: cd resources/frontend
 
     - name: Add test file
-      working-directory: ./resources/frontend
-      run: echo "test" > test.txt
+      run: echo "test" > ~/hydefront/test.txt
+
+    - name: Checkout to a new branch
+      run: git checkout -b framework-merge
 
     - name: Stage the Hydefront files
-      working-directory: ./resources/frontend
       run: git add .
     
     - name: Check if there are changes
-      working-directory: ./resources/frontend
       id: check-for-changes
       run: echo "::set-output name=HAS_CHANGES::$(git diff --name-only --cached)"
     
     - name: Commit the changes
-      working-directory: ./resources/frontend
       #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: git commit -m "Update Hydefront files from HydePHP/Framework"
 
     - name: Push the changes to Hydefront
-      working-directory: ./resources/frontend
       #if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: git push origin framework-merge
 
