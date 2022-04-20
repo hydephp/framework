@@ -29,6 +29,13 @@ jobs:
       run: |
         cd resources/frontend && cp -r ./* ~/hydefront/
 
+    - name: Check if there are changes
+      id: check-for-changes
+      run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront &&  git diff --name-only --cached)"
+
+    - name: Output check result
+      run: echo "Result ${{ steps.check-for-changes.HAS_CHANGES }}, Check ${{ steps.check-for-changes.HAS_CHANGES != '' }}"
+
     - name: Checkout to a new branch
       run: cd ~/hydefront && git checkout -b framework-merge
 
@@ -37,13 +44,6 @@ jobs:
 
     - name: Stage the Hydefront files
       run: cd ~/hydefront && git add .
-    
-    - name: Check if there are changes
-      id: check-for-changes
-      run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront &&  git diff master..framework-merge)"
-    
-    - name: Output check result
-      run: echo "Result ${{ steps.check-for-changes.HAS_CHANGES }}, Check ${{ steps.check-for-changes.HAS_CHANGES != '' }}"
 
     - name: Commit the changes
       if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
