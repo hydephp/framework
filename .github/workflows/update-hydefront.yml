@@ -1,32 +1,38 @@
-name: Update Hydefront
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
 
 on:
   push:
     branches: [ master ]
-
-  workflow_dispatch:
-
-permissions:
-  contents: write
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  propagate-hydefront:
+  build-assets:
+
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Create pull request
-      uses: paygoc6/action-pull-request-another-repo@v1.0.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.PAT }}
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        source_folder: 'resources/frontend'
-        destination_repo: 'hydephp/hydefront'
-        destination_folder: '/'
-        destination_base_branch: 'master'
-        destination_head_branch: 'framework-merge'
-        user_email: 'hydephp@github.com'
-        user_name: 'hydephp'
-        pull_request_reviewers: 'reviewers'
+        cache: 'npm'
 
+    - name: Install Node.js dependencies
+    - run: npm ci
+
+    - name: Build assets for development
+    - run: npm run dev
+
+    - name: Build assets for production
+    - run: npm run prod
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: 'assets'
+        path: 'dist'
