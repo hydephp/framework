@@ -29,31 +29,17 @@ jobs:
       run: |
         cd resources/frontend && cp -r ./* ~/hydefront/
 
-    - name: Check if there are changes
-      id: check-for-changes
-      run: echo "::set-output name=HAS_CHANGES::$(cd ~/hydefront &&  git diff --name-only --cached)"
-
-    - name: Output check result
-      run: echo "Result ${{ steps.check-for-changes.HAS_CHANGES }}, Check ${{ steps.check-for-changes.HAS_CHANGES != '' }}"
-
     - name: Checkout to a new branch
       run: cd ~/hydefront && git checkout -b framework-merge
-
-    - name: Add test file
-      run: echo "test" > ~/hydefront/test.txt
 
     - name: Stage the Hydefront files
       run: cd ~/hydefront && git add .
 
     - name: Commit the changes
-      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git commit -m "Update Hydefront files from HydePHP/Framework"
 
     - name: Set the remote origin
-      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git remote set-url origin https://hydephp:${{secrets.PAT}}@github.com/hydephp/hydefront.git
 
     - name: Push the changes to Hydefront
-      if: ${{ steps.check-for-changes.HAS_CHANGES != '' }}
       run: cd ~/hydefront && git push origin framework-merge
-
