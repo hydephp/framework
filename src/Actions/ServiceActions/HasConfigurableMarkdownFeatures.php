@@ -8,6 +8,7 @@ use Hyde\Framework\Models\DocumentationPage;
 
 /**
  * Allow the Markdown service to have configurable features.
+ *
  * @see HasMarkdownFeatures for global feature management.
  */
 trait HasConfigurableMarkdownFeatures
@@ -16,7 +17,7 @@ trait HasConfigurableMarkdownFeatures
 
     public function addFeature(string $feature): self
     {
-        if (!in_array($feature, $this->features)) {
+        if (! in_array($feature, $this->features)) {
             $this->features[] = $feature;
         }
 
@@ -52,6 +53,5 @@ trait HasConfigurableMarkdownFeatures
     {
         return $this->hasFeature('torchlight') ||
                     Features::hasTorchlight();
-;
     }
 }

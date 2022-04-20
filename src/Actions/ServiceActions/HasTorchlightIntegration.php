@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Actions\ServiceActions;
 
-use Hyde\Framework\Features;
-
 trait HasTorchlightIntegration
 {
     protected bool $useTorchlight;

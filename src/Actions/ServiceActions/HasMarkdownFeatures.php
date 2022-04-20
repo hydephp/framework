@@ -3,7 +3,8 @@
 namespace Hyde\Framework\Actions\ServiceActions;
 
 /**
- * Global Markdown Feature Handler
+ * Global Markdown Feature Handler.
+ *
  * @see HasConfigurableMarkdownFeatures for per-object configuration
  */
 trait HasMarkdownFeatures
