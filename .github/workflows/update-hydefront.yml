@@ -17,15 +17,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Create Pull Request in HydePHP/HydeFront
-      uses: paygoc6/action-pull-request-another-repo@v1.0.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.ACTIONS_PAT_GITHUB }}
-      with:
-        source_folder: 'resources/frontend'
-        destination_repo: 'hydephp/hydefront'
-        destination_folder: 'folder-name'
-        destination_base_branch: 'master'
-        destination_head_branch: 'framework-merge'
-        user_email: 'git@github.com'
-        user_name: 'hydephp'
+    - name: Enter the resources/frontend directory
+      run: cd resources/frontend
+
+    - name: Checkout to a new branch
+      run: git checkout -b framework-merge
+
+    - name: Stage the Hydefront files
+      run: git add .
+    
+    - name: Commit the changes
+      run: git commit -m "Update Hydefront files from HydePHP/Framework"
+
+    - name: Push the changes to Hydefront
+      run: git push origin framework-merge
