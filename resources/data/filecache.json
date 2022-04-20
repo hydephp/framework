@@ -15,7 +15,7 @@
         "unixsum": "9e1906a2ed581dcd09e4cbf7d60b5ad7"
     },
     "resources\/views\/layouts\/docs.blade.php": {
-        "unixsum": "338d72605476326fa3ded85680fd6374"
+        "unixsum": "26ea6aff24f8118ef354ffcc51edf34a"
     },
     "resources\/views\/layouts\/footer.blade.php": {
         "unixsum": "82399b4f05eee0bf5fd9f428fbc3d695"
@@ -42,10 +42,10 @@
         "unixsum": "c040ed42da55bbd3300ce3fb11cfc458"
     },
     "resources\/frontend\/hyde.css": {
-        "unixsum": "cabdb6f8d2dfd104c82d4fa0a6279f3c"
+        "unixsum": "53045b8cac2202115d36d1c10712f402"
     },
     "resources\/frontend\/hyde.scss": {
-        "unixsum": "3790a853f43258ba4fc05f8a4bed1cec"
+        "unixsum": "fb0d3b62c5c3b8b97a23f1ec4d6c4b7b"
     },
     "resources\/frontend\/hyde.js": {
         "unixsum": "3f1c9ef527f2dbdcde54aad1d4c9d7b5"
