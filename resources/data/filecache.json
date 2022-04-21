@@ -37,17 +37,5 @@
     },
     "resources\/views\/pages\/404.blade.php": {
         "unixsum": "e548c77fb247e918b61b448dd1d91971"
-    },
-    "resources\/frontend\/app.css": {
-        "unixsum": "f80589bab86061a433d26558b3046e64"
-    },
-    "resources\/frontend\/tailwind.min.css": {
-        "unixsum": "ac3b09144b020247aefdb1b755c596b2"
-    },
-    "resources\/frontend\/hyde.scss": {
-        "unixsum": "3790a853f43258ba4fc05f8a4bed1cec"
-    },
-    "resources\/frontend\/hyde.js": {
-        "unixsum": "3f1c9ef527f2dbdcde54aad1d4c9d7b5"
     }
 }
