@@ -119,8 +119,8 @@ class CollectionService
     public static function getMediaAssetFiles(): array
     {
         return array_merge(glob(Hyde::path('_media/*.{png,svg,jpg,jpeg,gif,ico,css,js}'), GLOB_BRACE), [
-            Hyde::path('resources/frontend/hyde.css'),
-            Hyde::path('resources/frontend/hyde.js'),
+            Hyde::path('resources/assets/hyde.css'),
+            Hyde::path('resources/assets/hyde.js'),
         ]);
     }
 }
