@@ -6,37 +6,35 @@
 Contains the frontend assets for HydePHP stored in hydephp/framework under resources/frontend.
 
 ### Source files
-- hyde.scss
-- hyde.js
+Source files are stored in the root of the repository. These can be published to your Hyde installation, or used to compile into the dist/ directory.
 
 ### Compiled files
-- hyde.css
-- hyde.min.js
+Compiled files are stored in the dist/ directory and can be loaded through a CDN. They are included in the Hyde/Framework package, and can be re-published using the hyde command `php hyde update:resources`.
 
 ### About the files
 
-#### App.css
-This file is mostly blank and only contains the TailwindCSS imports and is the suggested location for users to place their own custom CSS.
+- **App.css**:
+This file is mostly blank and only contains the TailwindCSS imports and is the suggested location for users to place their own custom CSS unless they add a custom.css file which in that case should be loaded after all the others.
 
-#### Hyde.css/Hyde.scss
-The Hyde stylesheet contains the base styles and should be loaded after App.css as it contains some Tailwind tweaks.
+- **Hyde.scss**:
+The Hyde stylesheet contains the custom base styles and should be loaded after App.css as it contains some Tailwind tweaks.
 
-The hyde.css file is the compiled and minified version of the hyde.scss file.
-
-Compile it using the following command: (Assuming Dart Sass)
-
-```bash
-sass hyde.scss hyde.css --style=compressed --no-source-map
-```
-
-#### Hyde.js
+- **Hyde.js**:
 This file contains basic scripts to make the navigation menu and sidebars interactive.
 
-#### Tailwind.css
+- **Tailwind.css**:
 A compiled and minified file containing the styles for a base Hyde installation.
 
 ## Usage
 
+### Using CDN
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.2.0/dist/hyde.min.css">
+
+<script defer src="https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.2.0/dist/hyde.min.js"></script>
+```
+
+### Updating Framework assets
 The frontend files are stored in the Hydephp/Framework repo in the `resources/frontend` directory and are by default loaded into Hyde installations and can be republished using the following command:
 
 ```bash

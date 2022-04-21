@@ -29,45 +29,20 @@
 
 #sidebar-navigation {
 	li.list-item-active {
-		a.link-active {
+		a {
 			border-left: 4px solid #5956eb;
 			padding-left: calc(1rem - 4px);
 			margin-left: -1rem;
 			padding-top: 0.25rem;
 			padding-bottom: 0.25rem;
 			color: #5956eb;
-			font-weight: 500;
-			background: rgba(0, 0, 0, 0.1);
-			display: inline-block;
-			width: 100%;
-		}
-	}
-
-	.table-of-contents {
-		margin-top: 0.25rem;
-		font-size: 90%;
-		ul {
-			margin-top: 0.25rem;
-			margin-bottom: 0.25rem;
-		}
-		li {
-			margin-top: 0.25rem;
-			margin-bottom: 0.25rem;
-			margin-left: 1.5ch;
-			a {
-				opacity: 0.9;
-				&:hover {
-					opacity: 1;
-				}
-			}
 		}
 	}
 }
 
 .dark {
-	#sidebar-navigation li.list-item-active a.link-active {
+	#sidebar-navigation li.list-item-active a {
 		color: #fff;
-		font-weight: 400;
 	}
 }
 
