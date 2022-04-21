@@ -45,7 +45,7 @@ class HydeServeCommand extends Command
         $host = $this->option('host');
         $command = "php -S $host:$port ".Hyde::path('vendor/hyde/realtime-compiler/server.php');
         if (app()->environment('testing')) {
-            $command = 'echo ' . $command;
+            $command = 'echo '.$command;
         }
         passthru($command);
 
