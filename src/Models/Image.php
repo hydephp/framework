@@ -95,29 +95,7 @@ class Image
 
     public function getSource(): ?string
     {
-        return $this->uri ?? $this->path;
-    }
-
-    public function getFluentAttribution(): string
-    {
-        $attribution = [];
-
-        $getImageAuthorAttributionString = $this->getImageAuthorAttributionString();
-        if ($getImageAuthorAttributionString !== null) {
-            $attribution[] = 'Image by '.$getImageAuthorAttributionString;
-        }
-
-        $getCopyrightString = $this->getCopyrightString();
-        if ($getCopyrightString !== null) {
-            $attribution[] = $getCopyrightString;
-        }
-
-        $getLicenseString = $this->getLicenseString();
-        if ($getLicenseString !== null) {
-            $attribution[] = 'License '.$getLicenseString;
-        }
-
-        return implode('. ', $attribution);
+        return $this->uri ?? $this->path ?? null;
     }
 
     public function getImageAuthorAttributionString(): ?string
@@ -155,7 +133,33 @@ class Image
         return null;
     }
 
-    public function getMetadataArray()
+    public function getFluentAttribution(): string
+    {
+        $attribution = [];
+
+        $getImageAuthorAttributionString = $this->getImageAuthorAttributionString();
+        if ($getImageAuthorAttributionString !== null) {
+            $attribution[] = 'Image by '.$getImageAuthorAttributionString;
+        }
+
+        $getCopyrightString = $this->getCopyrightString();
+        if ($getCopyrightString !== null) {
+            $attribution[] = $getCopyrightString;
+        }
+
+        $getLicenseString = $this->getLicenseString();
+        if ($getLicenseString !== null) {
+            $attribution[] = 'License '.$getLicenseString;
+        }
+
+        return implode('. ', $attribution);
+    }
+
+    /**
+     * Used in resources\views\components\post\image.blade.php to add meta tags with itemprop attributes.
+     * @return array
+     */
+    public function getMetadataArray(): array
     {
         $metadata = [];
 
