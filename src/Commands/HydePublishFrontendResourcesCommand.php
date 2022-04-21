@@ -37,7 +37,7 @@ class HydePublishFrontendResourcesCommand extends Command
             $this->newLine();
             $this->warn('Please note that the following files will be overwritten:');
             foreach (PublishesDefaultFrontendResourceFiles::$files as $file) {
-                $this->line('  - resources/assets/'.$file);
+                $this->line('  - resources/assets/'.basename($file));
             }
 
             $this->warn('You should make sure you have a backup of these files before proceeding. Tip: Use Git!');
