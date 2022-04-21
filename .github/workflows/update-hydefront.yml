@@ -21,8 +21,8 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.PAT }}
       with:
-        source_folder: 'resources/frontend/'
-        destination_folder: '../'
+        source_folder: 'resources/frontend/.'
+        destination_folder: '/'
         destination_repo: 'hydephp/hydefront'
         destination_base_branch: 'master'
         destination_head_branch: 'framework-merge'
