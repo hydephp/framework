@@ -157,6 +157,7 @@ class Image
 
     /**
      * Used in resources\views\components\post\image.blade.php to add meta tags with itemprop attributes.
+     *
      * @return array
      */
     public function getMetadataArray(): array
