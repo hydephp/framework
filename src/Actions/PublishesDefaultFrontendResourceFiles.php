@@ -20,8 +20,8 @@ class PublishesDefaultFrontendResourceFiles
 {
     public static array $files = [
         'app.css',
-        'hyde.css',
-        'hyde.js',
+        'dist/hyde.css',
+        'dist/hyde.js',
     ];
 
     public function __construct(protected ?bool $force = false)
@@ -44,7 +44,7 @@ class PublishesDefaultFrontendResourceFiles
     {
         Hyde::copy(
             Hyde::path('vendor/hyde/framework/resources/frontend/'.$file),
-            Hyde::path('resources/frontend/'.$file),
+            Hyde::path('resources/frontend/'.basename($file)),
             $this->force
         );
     }
