@@ -23,7 +23,6 @@ jobs:
       with:
         source_folder: 'resources/frontend/'
         destination_repo: 'hydephp/hydefront'
-        destination_folder: '/'
         destination_base_branch: 'master'
         destination_head_branch: 'framework-merge'
         user_email: 'hydephp@github.com'
