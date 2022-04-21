@@ -66,7 +66,6 @@ class StaticPageBuilder
         return file_put_contents($path, $contents);
     }
 
-
     /**
      * Compile a custom Blade View into HTML.
      *
@@ -78,7 +77,6 @@ class StaticPageBuilder
             'currentPage' => $this->page->view,
         ])->render();
     }
-
 
     /**
      * Compile a Post into HTML using the Blade View.
@@ -109,7 +107,6 @@ class StaticPageBuilder
         ])->render();
     }
 
-
     /**
      * Compile a Documentation page into HTML using the Blade View.
      *
@@ -124,7 +121,6 @@ class StaticPageBuilder
             'currentPage' => Hyde::docsDirectory().'/'.$this->page->slug,
         ])->render();
     }
-
 
     /**
      * Make sure the config defined directory for outputting the
