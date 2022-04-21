@@ -33,11 +33,6 @@ trait HasConfigurableMarkdownFeatures
         return $this;
     }
 
-    public function hasFeature(string $feature): bool
-    {
-        return in_array($feature, $this->features);
-    }
-
     public function withTableOfContents(): self
     {
         $this->addFeature('table-of-contents');
@@ -52,10 +47,23 @@ trait HasConfigurableMarkdownFeatures
         return $this;
     }
 
+    public function hasFeature(string $feature): bool
+    {
+        return in_array($feature, $this->features);
+    }
+
     public function canEnablePermalinks(): bool
     {
-        return $this->hasFeature('permalinks')
-            || $this->sourceModel === DocumentationPage::class && Markdown::hasTableOfContents();
+        if ($this->hasFeature('permalinks')) {
+            return true;
+        }
+
+        if (isset($this->sourceModel) &&
+            ($this->sourceModel === DocumentationPage::class && Markdown::hasTableOfContents())) {
+            return true;
+        }
+
+        return false;
     }
 
     public function canEnableTorchlight(): bool
