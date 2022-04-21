@@ -9,7 +9,7 @@ $time_start = microtime(true);
 $filecache = [];
 
 $bladeFiles = glob(__DIR__.'/../../resources/views/**/*.blade.php');
-$frontendFiles = glob(__DIR__.'/../../resources/frontend/*.{css,scss,js}', GLOB_BRACE);
+$frontendFiles = glob(__DIR__.'/../../resources/assets/*.{css,scss,js}', GLOB_BRACE);
 
 $files = array_merge($bladeFiles, $frontendFiles);
 

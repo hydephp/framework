@@ -31,8 +31,8 @@ class PublishesDefaultFrontendResourceFiles
 
     public function __invoke(): void
     {
-        if (! is_dir(Hyde::path('resources/frontend'))) {
-            mkdir(Hyde::path('resources/frontend'), 0755, true);
+        if (! is_dir(Hyde::path('resources/assets'))) {
+            mkdir(Hyde::path('resources/assets'), 0755, true);
         }
 
         foreach (static::$files as $file) {
@@ -43,8 +43,8 @@ class PublishesDefaultFrontendResourceFiles
     protected function handleFile(string $file): void
     {
         Hyde::copy(
-            Hyde::path('vendor/hyde/framework/resources/frontend/'.$file),
-            Hyde::path('resources/frontend/'.basename($file)),
+            Hyde::path('vendor/hyde/framework/resources/assets/'.$file),
+            Hyde::path('resources/assets/'.basename($file)),
             $this->force
         );
     }
