@@ -16,7 +16,7 @@ use Hyde\Framework\Models\AbstractPage;
  * To ensure that all page parsing jobs are handled consistently,
  * all page parsers should extend this class.
  */
-abstract class AbstractPageParser
+abstract class AbstractPageParser implements PageParserContract
 {
     use ValidatesExistence;
 
@@ -41,18 +41,4 @@ abstract class AbstractPageParser
         $this->validateExistence($this->pageModel, $slug);
         $this->execute();
     }
-
-    /**
-     * Handle the parsing job.
-     *
-     * @return void
-     */
-    abstract public function execute(): void;
-
-    /**
-     * Get the parsed page object.
-     *
-     * @return AbstractPage
-     */
-    abstract public function get(): AbstractPage;
 }
