@@ -16,7 +16,7 @@ class HydePublishFrontendResourcesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'update:resources {--force : Overwrite existing files without asking.}';
+    protected $signature = 'update:assets {--force : Overwrite existing files without asking.}';
 
     /**
      * The description of the command.
