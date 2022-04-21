@@ -34,16 +34,16 @@ class StaticPageBuilder
      */
     public function __invoke()
     {
+        if ($this->page instanceof BladePage) {
+            return $this->save($this->page->view, $this->compileView());
+        }
+
         if ($this->page instanceof MarkdownPost) {
             return $this->save('posts/'.$this->page->slug, $this->compilePost());
         }
 
         if ($this->page instanceof MarkdownPage) {
             return $this->save($this->page->slug, $this->compilePage());
-        }
-
-        if ($this->page instanceof BladePage) {
-            return $this->save($this->page->view, $this->compileView());
         }
 
         if ($this->page instanceof DocumentationPage) {
@@ -66,6 +66,20 @@ class StaticPageBuilder
         return file_put_contents($path, $contents);
     }
 
+
+    /**
+     * Compile a custom Blade View into HTML.
+     *
+     * @return string
+     */
+    private function compileView(): string
+    {
+        return view($this->page->view, [
+            'currentPage' => $this->page->view,
+        ])->render();
+    }
+
+
     /**
      * Compile a Post into HTML using the Blade View.
      *
@@ -78,21 +92,6 @@ class StaticPageBuilder
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
             'currentPage' => 'posts/'.$this->page->slug,
-        ])->render();
-    }
-
-    /**
-     * Compile a Documentation page into HTML using the Blade View.
-     *
-     * @return string
-     */
-    private function compileDocs(): string
-    {
-        return view('hyde::layouts/docs')->with([
-            'docs' => $this->page,
-            'title' => $this->page->title,
-            'markdown' => MarkdownConverter::parse($this->page->body),
-            'currentPage' => trim(config('hyde.docsDirectory', 'docs'), '\\/').'/'.$this->page->slug,
         ])->render();
     }
 
@@ -110,17 +109,22 @@ class StaticPageBuilder
         ])->render();
     }
 
+
     /**
-     * Compile a custom Blade View into HTML.
+     * Compile a Documentation page into HTML using the Blade View.
      *
      * @return string
      */
-    private function compileView(): string
+    private function compileDocs(): string
     {
-        return view($this->page->view, [
-            'currentPage' => $this->page->view,
+        return view('hyde::layouts/docs')->with([
+            'docs' => $this->page,
+            'title' => $this->page->title,
+            'markdown' => MarkdownConverter::parse($this->page->body),
+            'currentPage' => Hyde::docsDirectory().'/'.$this->page->slug,
         ])->render();
     }
+
 
     /**
      * Make sure the config defined directory for outputting the
