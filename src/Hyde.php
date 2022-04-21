@@ -22,7 +22,7 @@ class Hyde
     }
 
     /**
-     * Get the subdirectory documentation files are stored in.
+     * Get the subdirectory compiled documentation files are stored in.
      *
      * @return string
      */
