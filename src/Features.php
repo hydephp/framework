@@ -70,15 +70,10 @@ class Features
      *
      * It is disabled when running tests.
      *
-     * @param  bool  $bypassAutomaticCheck  if set to true the function will not check if a token is set.
      * @return bool
      */
-    public static function hasTorchlight(bool $bypassAutomaticCheck = false): bool
+    public static function hasTorchlight(): bool
     {
-        if ($bypassAutomaticCheck) {
-            return static::enabled(static::torchlight());
-        }
-
         return static::enabled(static::torchlight())
             && (config('torchlight.token') !== null)
             && (app('env') !== 'testing');
