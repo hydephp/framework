@@ -19,30 +19,9 @@ class DocumentationPageParser extends AbstractPageParser
             Hyde::path("_docs/$this->slug.md")
         ))->get();
 
-        if (isset($document->matter['title'])) {
-            $this->title = $document->matter['title'];
-        } else {
-            $this->title = $this->findTitleTag($document->body) ??
-                Hyde::titleFromSlug($this->slug);
-        }
+        $this->title = $document->findTitleForDocument();
 
         $this->body = $document->body;
-    }
-
-    /**
-     * Attempt to find the title based on the first H1 tag.
-     */
-    public function findTitleTag(string $stream): string|false
-    {
-        $lines = explode("\n", $stream);
-
-        foreach ($lines as $line) {
-            if (str_starts_with($line, '# ')) {
-                return trim(substr($line, 2), ' ');
-            }
-        }
-
-        return false;
     }
 
     public function get(): DocumentationPage

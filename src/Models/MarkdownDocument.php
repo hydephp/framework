@@ -10,6 +10,8 @@ namespace Hyde\Framework\Models;
  */
 class MarkdownDocument extends AbstractPage
 {
+    use HasDynamicTitle;
+
     public array $matter;
     public string $body;
     public string $title;

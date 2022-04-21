@@ -24,11 +24,7 @@ class MarkdownPostParser extends AbstractPageParser
             'slug' => $this->slug,
         ]);
 
-        if (isset($document->matter['title'])) {
-            $this->title = $document->matter['title'];
-        } else {
-            $this->title = Hyde::titleFromSlug($this->slug);
-        }
+        $this->title = $document->findTitleForDocument();
 
         $this->body = $document->body;
     }
