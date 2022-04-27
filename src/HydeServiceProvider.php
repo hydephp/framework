@@ -4,7 +4,6 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Hyde\Framework\Actions\PublishesDefaultFrontendResourceFiles;
 use Illuminate\Support\ServiceProvider;
 
 class HydeServiceProvider extends ServiceProvider
@@ -34,7 +33,6 @@ class HydeServiceProvider extends ServiceProvider
             Commands\HydePublishHomepageCommand::class,
             Commands\HydePublishConfigsCommand::class,
             Commands\HydePublishViewsCommand::class,
-            Commands\HydePublishFrontendResourcesCommand::class,
             Commands\HydeRebuildStaticSiteCommand::class,
             Commands\HydeBuildStaticSiteCommand::class,
             Commands\HydeMakePostCommand::class,
@@ -53,7 +51,6 @@ class HydeServiceProvider extends ServiceProvider
     public function boot()
     {
         (new CreatesDefaultDirectories)->__invoke();
-        (new PublishesDefaultFrontendResourceFiles())->__invoke();
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
