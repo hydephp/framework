@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Concerns;
 
-use Hyde\Framework\Actions\GeneratesTableOfContents;
 use function config;
+use Hyde\Framework\Actions\GeneratesTableOfContents;
 
 /**
  * Trait HasTableOfContents.
