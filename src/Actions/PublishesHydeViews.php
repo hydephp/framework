@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
+use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\File;
 

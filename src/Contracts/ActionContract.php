@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Actions;
+namespace Hyde\Framework\Contracts;
 
 /**
  * Interface ActionContract.
