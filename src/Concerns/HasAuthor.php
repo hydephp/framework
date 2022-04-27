@@ -1,7 +1,8 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Concerns;
 
+use Hyde\Framework\Models\Author;
 use Hyde\Framework\Services\AuthorService;
 
 /**

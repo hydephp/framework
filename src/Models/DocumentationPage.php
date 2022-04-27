@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Models;
 
+use Hyde\Framework\Concerns\HasTableOfContents;
 use Hyde\Framework\DocumentationPageParser;
 
 class DocumentationPage extends MarkdownDocument

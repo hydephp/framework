@@ -1,6 +1,8 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Concerns;
+
+use Hyde\Framework\Models\Image;
 
 trait HasFeaturedImage
 {

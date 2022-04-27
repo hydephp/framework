@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Actions\ServiceActions\HasMarkdownFeatures;
+use Hyde\Framework\Concerns\Markdown\HasMarkdownFeatures;
 
 /**
  * General interface for Markdown services.

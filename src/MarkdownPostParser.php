@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework;
 
+use Hyde\Framework\Contracts\AbstractPageParser;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
 

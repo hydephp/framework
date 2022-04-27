@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Actions\ServiceActions;
+namespace Hyde\Framework\Concerns\Markdown;
 
 use Hyde\Framework\Features;
 use Hyde\Framework\Markdown;

@@ -3,186 +3,35 @@
 namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
+use Hyde\Framework\Concerns\Internal\AssetManager;
+use Hyde\Framework\Concerns\Internal\FileHelpers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
  * General interface for Hyde services.
+ *
+ * @author  Caen De Silva <caen@desilva.se>
+ * @copyright 2022 Caen De Silva
+ * @license MIT License
+ *
+ * @link https://hydephp.github.io/
  */
 class Hyde
 {
-    /**
-     * Return the Composer Package Version.
-     *
-     * @return string
-     */
+    use FileHelpers;
+    use AssetManager;
+
     public static function version(): string
     {
         return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
     }
 
-    /**
-     * Return the Tailwind CDN if enabled.
-     */
-    public static function tailwind(): string|false
-    {
-        return config('hyde.loadTailwindFromCDN')
-            ? 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/app.css'
-            : false;
-    }
-
-    /**
-     * Return the Hyde stylesheet.
-     */
-    public static function styles(): string
-    {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/hyde.css';
-    }
-
-    /**
-     * Return the Hyde scripts.
-     */
-    public static function scripts(): string
-    {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/hyde.js';
-    }
-
-    /**
-     * Get the subdirectory compiled documentation files are stored in.
-     *
-     * @return string
-     */
-    public static function docsDirectory(): string
-    {
-        return trim(config('hyde.docsDirectory', 'docs'), '/\\');
-    }
-
-    /**
-     * Get the path to the frontpage for the documentation.
-     *
-     * @return string|false returns false if no frontpage is found
-     */
-    public static function docsIndexPath(): string|false
-    {
-        if (file_exists(Hyde::path('_docs/index.md'))) {
-            return Hyde::docsDirectory().'/index.html';
-        }
-
-        if (file_exists(Hyde::path('_docs/readme.md'))) {
-            return Hyde::docsDirectory().'/readme.html';
-        }
-
-        return false;
-    }
-
-    /**
-     * Get an absolute file path from a supplied relative path.
-     *
-     * The function returns the fully qualified path to your site's root directory.
-     *
-     * You may also use the function to generate a fully qualified path to a given file
-     * relative to the project root directory when supplying the path argument.
-     *
-     * @param  string  $path
-     * @return string
-     */
-    public static function path(string $path = ''): string
-    {
-        if (empty($path)) {
-            return getcwd();
-        }
-
-        $path = trim($path, '/\\');
-
-        return getcwd().DIRECTORY_SEPARATOR.$path;
-    }
-
-    /**
-     * Works similarly to the path() function, but returns a file in the Framework package.
-     *
-     * @param  string  $path
-     * @return string
-     */
-    public static function vendorPath(string $path = ''): string
-    {
-        return static::path('vendor/hyde/framework/'.trim($path, '/\\'));
-    }
-
-    /**
-     * Inject the proper number of `../` before the links in Blade templates.
-     *
-     * @param  string  $destination  the route to format
-     * @param  string  $current  the current route
-     * @return string
-     */
-    public static function relativePath(string $destination, string $current = ''): string
-    {
-        $nestCount = substr_count($current, '/');
-        $route = '';
-        if ($nestCount > 0) {
-            $route .= str_repeat('../', $nestCount);
-        }
-        $route .= $destination;
-
-        return $route;
-    }
-
-    /**
-     * Return a qualified URI path, if SITE_URL is set in .env, else return false.
-     *
-     * @param  string|null  $path  optional relative path suffix. Omit to return base url.
-     * @return string|false
-     */
-    public static function uriPath(?string $path = ''): string|false
-    {
-        if (config('hyde.site_url', false)) {
-            return rtrim(config('hyde.site_url'), '/').'/'.(trim($path, '/') ?? '');
-        }
-
-        return false;
-    }
-
-    /**
-     * Wrapper for the copy function, but allows choosing if files may be overwritten.
-     *
-     * @param  string  $from  The source file path.
-     * @param  string  $to  The destination file path.
-     * @param  bool  $force  If true, existing files will be overwritten.
-     * @return bool|int Returns true|false on copy() success|failure, or an error code on failure
-     */
-    public static function copy(string $from, string $to, bool $force = false): bool|int
-    {
-        if (! file_exists($from)) {
-            return 404;
-        }
-
-        if (file_exists($to) && ! $force) {
-            return 409;
-        }
-
-        return copy($from, $to);
-    }
-
-    /**
-     * Create a title from a kebab-case slug.
-     *
-     * @param  string  $slug
-     * @return string $title
-     */
     public static function titleFromSlug(string $slug): string
     {
         return Str::title(str_replace('-', ' ', ($slug)));
     }
 
-    /**
-     * Get a Laravel Collection of all Posts as MarkdownPost objects.
-     *
-     * Serves as a static shorthand for \Hyde\Framework\Models\MarkdownPost::getCollection()
-     *
-     * @return \Illuminate\Support\Collection
-     *
-     * @throws \Exception
-     */
     public static function getLatestPosts(): Collection
     {
         $collection = new Collection();

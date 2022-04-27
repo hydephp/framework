@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
+use Hyde\Framework\Contracts\ActionContract;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
