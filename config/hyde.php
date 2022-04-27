@@ -106,6 +106,23 @@ return [
         Features::torchlight(),
     ],
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Asset Locations
+    |--------------------------------------------------------------------------
+    |
+    | Since v0.15.0, the default Hyde styles are no longer included as
+    | publishable resources. This is to make updating easier, and to
+    | reduce complexity. Instead, the assets are loaded through the
+    | jsDelivr CDN. You can also load Tailwind from the CDN by
+    | changing the config setting below. If you set it to
+    | false, Hyde will load the media/app.css, which 
+    | you compile using NPM.
+    */
+
+    'loadTailwindFromCDN' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Footer Text

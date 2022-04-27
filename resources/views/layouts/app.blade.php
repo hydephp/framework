@@ -18,10 +18,10 @@
     @stack('meta')
   
     {{-- The compiled Tailwind styles --}}
-    <link rel="stylesheet" href="{{ Hyde::relativePath('media/app.css', $currentPage) }}">
+    <link rel="stylesheet" href="{{ Hyde::tailwind() ?: Hyde::relativePath('media/app.css', $currentPage) }}">
     
     {{-- The core Hyde stylesheet --}}
-    <link rel="stylesheet" href="{{ Hyde::relativePath('media/hyde.css', $currentPage) }}">
+    <link rel="stylesheet" href="{{ Hyde::styles() }}">
   
     {{-- Include any extra tags to include in the <head> section --}}
     @include('hyde::layouts.meta') 
@@ -39,11 +39,12 @@
     @includeUnless(config('hyde.footer.enabled', true) && ($withoutNavigation ?? false), 'hyde::layouts.footer') 
 
     {{-- The core Hyde scripts --}}
-    <script defer src="{{ Hyde::relativePath('media/hyde.js', $currentPage) }}"></script>
+    <script defer src="{{ Hyde::scripts() }}"></script>
 
+    {{-- Include any extra scripts --}}
     @stack('scripts')
 
-    <!-- Include any extra scripts to include in before the closing <body> tag -->
+    {{-- Include any extra scripts to include in before the closing <body> tag --}}
     @include('hyde::layouts.scripts') 
 </body>
 </html>
