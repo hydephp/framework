@@ -10,20 +10,20 @@
     <link rel="shortcut icon" href="{{ Hyde::relativePath('media/favicon.ico', $currentPage) }}" type="image/x-icon">
     @endif
 
-    <!-- Config Defined Tags -->
+    {{-- Config Defined Tags --}}
     @foreach (config('hyde.meta', []) as $name => $content) 
     <meta name="{{ $name }}" content="{{ $content }}">
     @endforeach
 
     @stack('meta')
   
-    <!-- The compiled Tailwind styles -->
+    {{-- The compiled Tailwind styles --}}
     <link rel="stylesheet" href="{{ Hyde::relativePath('media/app.css', $currentPage) }}">
     
-    <!-- The core Hyde stylesheet -->
+    {{-- The core Hyde stylesheet --}}
     <link rel="stylesheet" href="{{ Hyde::relativePath('media/hyde.css', $currentPage) }}">
   
-    <!-- Include any extra tags to include in the <head> section -->
+    {{-- Include any extra tags to include in the <head> section --}}
     @include('hyde::layouts.meta') 
 
     <script> /** Check the local storage for theme preference to avoid FOUC. */ if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark') } </script>
@@ -38,7 +38,7 @@
 
     @includeUnless(config('hyde.footer.enabled', true) && ($withoutNavigation ?? false), 'hyde::layouts.footer') 
 
-    <!-- The core Hyde scripts -->
+    {{-- The core Hyde scripts --}}
     <script defer src="{{ Hyde::relativePath('media/hyde.js', $currentPage) }}"></script>
 
     @stack('scripts')
