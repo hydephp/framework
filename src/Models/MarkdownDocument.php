@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Models;
 
+use Hyde\Framework\Concerns\HasDynamicTitle;
+
 /**
  * The base class for all Markdown-based Page Models.
  *
