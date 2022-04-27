@@ -10,7 +10,6 @@
     </header>
 
     <div class="max-w-3xl mx-auto">
-        {{-- @todo Extract into reusable component --}}
         @foreach(Hyde::getLatestPosts() as $post)
         @include('hyde::components.article-excerpt')
         @endforeach
