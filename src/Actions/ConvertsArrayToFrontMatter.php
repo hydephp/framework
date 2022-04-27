@@ -10,8 +10,6 @@ class ConvertsArrayToFrontMatter
     /**
      * Execute the action.
      *
-     * @todo add support for nested arrays
-     *
      * @param  array  $array
      * @return string $yaml front matter
      */
