@@ -1,6 +1,8 @@
 <?php
 
-namespace Hyde\Framework\Services\Internal;
+namespace Hyde\Framework\Concerns\Internal;
+
+use function config;
 
 /**
  * AssetManager for the Hyde Facade.

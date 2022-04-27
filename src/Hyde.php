@@ -3,8 +3,8 @@
 namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
-use Hyde\Framework\Services\Internal\AssetManager;
-use Hyde\Framework\Services\Internal\FileHelpers;
+use Hyde\Framework\Concerns\Internal\AssetManager;
+use Hyde\Framework\Concerns\Internal\FileHelpers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace Hyde\Framework\Services\Internal;
+namespace Hyde\Framework\Concerns\Internal;
+
+use function config;
 
 /**
  * General file helpers intended to be used through the Hyde Facade.
