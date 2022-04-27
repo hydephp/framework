@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\Actions\ServiceActions\HasConfigurableMarkdownFeatures;
-use Hyde\Framework\Actions\ServiceActions\HasTorchlightIntegration;
+use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
+use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;

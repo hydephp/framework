@@ -1,6 +1,8 @@
 <?php
 
-namespace Hyde\Framework\Actions\ServiceActions;
+namespace Hyde\Framework\Concerns\Markdown;
+
+use function config;
 
 /**
  * Global Markdown Feature Handler.
