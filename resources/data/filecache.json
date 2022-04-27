@@ -6,13 +6,13 @@
         "unixsum": "48b54c9a6a43fd8fd7f9a4520c26924a"
     },
     "resources\/views\/homepages\/post-feed.blade.php": {
-        "unixsum": "4d675d5745c1f58c7ae8aac255a53757"
+        "unixsum": "3c31b8b10138078198b031f892f0748a"
     },
     "resources\/views\/homepages\/welcome.blade.php": {
         "unixsum": "5fdda0edeeea0d3605136f6d418e109a"
     },
     "resources\/views\/layouts\/app.blade.php": {
-        "unixsum": "9e1906a2ed581dcd09e4cbf7d60b5ad7"
+        "unixsum": "1bbf52cdcdce2c13d572f28404760433"
     },
     "resources\/views\/layouts\/docs.blade.php": {
         "unixsum": "26ea6aff24f8118ef354ffcc51edf34a"
@@ -37,12 +37,6 @@
     },
     "resources\/views\/pages\/404.blade.php": {
         "unixsum": "e548c77fb247e918b61b448dd1d91971"
-    },
-    "resources\/assets\/app.css": {
-        "unixsum": "f80589bab86061a433d26558b3046e64"
-    },
-    "resources\/assets\/tailwind.min.css": {
-        "unixsum": "ac3b09144b020247aefdb1b755c596b2"
     },
     "resources\/assets\/hyde.scss": {
         "unixsum": "25c7aebf54dc55f40c63fb02e8261a96"
