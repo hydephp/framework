@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Contracts;
 
 /**
  * To ensure compatability with the Hyde Framework,

@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Models;
 
+use Hyde\Framework\Contracts\AbstractPage;
+
 /**
  * A basic wrapper for the custom Blade View compiler.
  */

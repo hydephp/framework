@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework;
 
-use Hyde\Framework\Models\AbstractPage;
+use Hyde\Framework\Contracts\AbstractPage;
 
 interface PageParserContract
 {

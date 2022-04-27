@@ -3,7 +3,7 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\ValidatesExistence;
-use Hyde\Framework\Models\AbstractPage;
+use Hyde\Framework\Contracts\AbstractPage;
 
 /**
  * Abstract base class for all page parsers.
