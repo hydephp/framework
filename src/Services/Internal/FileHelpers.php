@@ -7,7 +7,6 @@ namespace Hyde\Framework\Services\Internal;
  */
 trait FileHelpers
 {
-
     /**
      * Get the subdirectory compiled documentation files are stored in.
      *
