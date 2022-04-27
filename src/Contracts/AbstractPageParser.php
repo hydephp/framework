@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Contracts;
 
-use Hyde\Framework\Actions\ValidatesExistence;
+use Hyde\Framework\Concerns\ValidatesExistence;
 
 /**
  * Abstract base class for all page parsers.
