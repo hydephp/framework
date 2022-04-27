@@ -76,7 +76,7 @@ trait HasMetadata
             if (is_string($this->matter['image'])) {
                 $this->metadata->addProperty('og:image', $this->matter['image']);
             } else {
-                if(isset($this->matter['image']['path'])) {
+                if (isset($this->matter['image']['path'])) {
                     $this->metadata->addProperty('og:image', $this->matter['image']['path']);
                 }
                 if (isset($this->matter['image']['uri'])) {
