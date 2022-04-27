@@ -1,6 +1,9 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Concerns;
+
+use Hyde\Framework\Models\Image;
+use function Hyde\Framework\Models\str_starts_with;
 
 trait HasFeaturedImage
 {

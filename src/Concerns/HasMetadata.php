@@ -1,8 +1,9 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\Metadata;
 use JetBrains\PhpStorm\ArrayShape;
 
 trait HasMetadata

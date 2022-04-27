@@ -1,8 +1,9 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Actions\GeneratesTableOfContents;
+use function config;
 
 /**
  * Trait HasTableOfContents.
