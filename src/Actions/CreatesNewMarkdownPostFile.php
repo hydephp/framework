@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 /**
  * Offloads logic for the make:post command.
  *
- * @todo Create a unit test.
- *
  * This class is executed when creating a new Markdown Post
  * using the Hyde command, and converts and formats the
  * data input by the user, and then saves the file.
