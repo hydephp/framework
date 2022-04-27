@@ -26,7 +26,7 @@ class Hyde
      */
     public static function tailwind(): string|false
     {
-        return config('hyde.loadTailwindFromCDN') 
+        return config('hyde.loadTailwindFromCDN')
             ? 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/app.css'
             : false;
     }
@@ -42,7 +42,7 @@ class Hyde
     /**
      * Return the Hyde scripts.
      */
-    public static function scripts(): string 
+    public static function scripts(): string
     {
         return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/hyde.js';
     }

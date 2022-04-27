@@ -106,7 +106,6 @@ return [
         Features::torchlight(),
     ],
 
-    
     /*
     |--------------------------------------------------------------------------
     | Asset Locations
@@ -117,7 +116,7 @@ return [
     | reduce complexity. Instead, the assets are loaded through the
     | jsDelivr CDN. You can also load Tailwind from the CDN by
     | changing the config setting below. If you set it to
-    | false, Hyde will load the media/app.css, which 
+    | false, Hyde will load the media/app.css, which
     | you compile using NPM.
     */
 
