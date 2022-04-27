@@ -1,8 +1,6 @@
 <?php
 
-namespace Hyde\Framework;
-
-use Hyde\Framework\Contracts\AbstractPage;
+namespace Hyde\Framework\Contracts;
 
 interface PageParserContract
 {
