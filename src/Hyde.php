@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 /**
  * General interface for Hyde services.
  *
- * @package Hyde\Framework
  * @author  Caen De Silva <caen@desilva.se>
  * @copyright 2022 Caen De Silva
  * @license MIT License
+ *
  * @link https://hydephp.github.io/
  */
 class Hyde
@@ -47,6 +47,7 @@ class Hyde
      * Get a Laravel Collection of all Posts as MarkdownPost objects.
      *
      * @return \Illuminate\Support\Collection
+     *
      * @throws \Exception if the posts' directory does not exist
      */
     public static function getLatestPosts(): Collection
