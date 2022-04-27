@@ -3,7 +3,6 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
-use function Hyde\Framework\Models\str_starts_with;
 
 /**
  * Find and return the title to use for a Markdown Document.
