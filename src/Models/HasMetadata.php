@@ -72,8 +72,18 @@ trait HasMetadata
             $this->metadata->addProperty('og:article:published_time', $date);
         }
 
-        // If there is an image, add it to the metadata
-        // TODO: Add image to metadata
+        if (isset($this->matter['image'])) {
+            if (is_string($this->matter['image'])) {
+                $this->metadata->addProperty('og:image', $this->matter['image']);
+            } else {
+                if(isset($this->matter['image']['path'])) {
+                    $this->metadata->addProperty('og:image', $this->matter['image']['path']);
+                }
+                if (isset($this->matter['image']['uri'])) {
+                    $this->metadata->addProperty('og:image', $this->matter['image']['uri']);
+                }
+            }
+        }
     }
 
     protected function getAuthor(string|array $author): string
