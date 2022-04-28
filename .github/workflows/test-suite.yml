@@ -30,6 +30,16 @@ jobs:
       env: 
         ENV: testing
 
+    - name: Run tests and save coverage to file
+      run: vendor/bin/pest --coverage-text=report.txt
+      env: 
+        ENV: testing
+
+    - name: Upload the report as an artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: 'report.txt'
+        path: 'report.txt'
 
   hyde-tests:
     needs: coverage
@@ -57,9 +67,6 @@ jobs:
       env: 
         ENV: testing
 
-  # todo run the coverage test in the first test and upload artifact there, and download it here
-  # so the only responsability of this job is to parse and upload the badge to the server
-  # todo 2 download the badge as an artifact 
   # todo 3 this test should only run on the master branch and not on pull requests
   update-coverage-badge:
     
@@ -70,27 +77,14 @@ jobs:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
-        coverage: xdebug
         extensions: fileinfo
-    - name: Install Hyde
-      run: git clone https://github.com/hydephp/hyde.git $(pwd)
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-master
-      run: composer require hyde/framework:dev-master
-    - name: Set environment to testing
-      run: echo "ENV=testing" > .env
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-      run: vendor/bin/pest --coverage-text=report.txt
-      env: 
-        ENV: testing
-
-    - name: Upload the report as an artifact
-      uses: actions/upload-artifact@v1
+    
+    - name: Download report
+      uses: actions/download-artifact@v3
       with:
-        name: 'report.txt'
-        path: 'report.txt'
-   
+        name: report.txt
+        path: report.txt
+
     - name: Download Coverage Parser
       run: 'wget https://gist.githubusercontent.com/caendesilva/75a5ff8dd4e23921b75f503149655924/raw/456bd4bae423eda2a3ff2ba2ce8f8246f366d46f/parser.php'
     - name: Run the parser
@@ -100,4 +94,13 @@ jobs:
       run: echo Result ${{ steps.run-coverage-parser.outputs.average_coverage }}     
     - name: Post the result to server
       run: 'curl -X POST https://cdn.desilva.se/microservices/coverbadges/api.php -H "Content-Type: application/x-www-form-urlencoded" -d "repo=https://github.com/hydephp/hyde&value=${{ steps.run-coverage-parser.outputs.average_coverage }}&token=${{ secrets.COVERBADGES_SECRET }}"'
-  
+
+    - name: Download the SVG badge
+      run: 'wget https://cdn.desilva.se/microservices/coverbadges/badges/9b8f6a9a7a48a2df54e6751790bad8bd910015301e379f334d6ec74c4c3806d1.svg'
+      
+    - name: Upload the SVG badge as an artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: '9b8f6a9a7a48a2df54e6751790bad8bd910015301e379f334d6ec74c4c3806d1.svg'
+        path: 'badge.svg'
+      
