@@ -1,12 +1,22 @@
 <?php
 
-test('validate command can run', function () {
-    $this->artisan('validate')->assertExitCode(0);
-});
+namespace Tests\Feature\Commands;
 
-it('prints debug information', function () {
-    $this->artisan('validate')
-        ->expectsOutput('Running validation tests!')
-        ->expectsOutput('All done!')
-        ->assertExitCode(0);
-});
+use Tests\TestCase;
+
+class ValidateCommandTest extends TestCase
+{
+
+    public function test_validate_command_can_run()
+    {
+        $this->artisan('validate')->assertExitCode(0);
+    }
+
+    public function test_it_prints_debug_information()
+    {
+        $this->artisan('validate')
+            ->expectsOutput('Running validation tests!')
+            ->expectsOutput('All done!')
+            ->assertExitCode(0);
+    }
+}
