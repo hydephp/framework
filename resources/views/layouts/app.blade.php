@@ -16,12 +16,12 @@
     @endforeach
 
     @stack('meta')
-  
-    {{-- The compiled Tailwind styles --}}
-    <link rel="stylesheet" href="{{ Hyde::tailwind() ?: Hyde::relativePath('media/app.css', $currentPage) }}">
-    
+
     {{-- The core Hyde stylesheet --}}
     <link rel="stylesheet" href="{{ Hyde::styles() }}">
+
+    {{-- The compiled Tailwind styles --}}
+    <link rel="stylesheet" href="{{ Hyde::tailwind() ?: Hyde::relativePath('media/app.css', $currentPage) }}">
   
     {{-- Include any extra tags to include in the <head> section --}}
     @include('hyde::layouts.meta') 
