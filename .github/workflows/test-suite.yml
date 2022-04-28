@@ -59,6 +59,7 @@ jobs:
 
   # todo run the coverage test in the first test and upload artifact there, and download it here
   # so the only responsability of this job is to parse and upload the badge to the server
+  # todo 2 download the badge as an artifact 
   update-coverage-badge:
     
     runs-on: ubuntu-latest
