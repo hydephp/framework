@@ -8,6 +8,7 @@ class AssetService implements AssetServiceContract
 {
     /**
      * The HydeFront version to load.
+     *
      * @property string $version
      */
     public string $version = 'v1.3.1';
@@ -36,6 +37,6 @@ class AssetService implements AssetServiceContract
 
     public function cdnPathConstructor(string $file): string
     {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@' . $this->version() . '/dist/' . $file;
+        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@'.$this->version().'/dist/'.$file;
     }
 }

@@ -14,12 +14,10 @@ interface AssetServiceContract
      */
     public function tailwindPath(): string|false;
 
-
     /**
      * Return the main Hyde stylesheet location/path.
      */
     public function stylePath(): string;
-
 
     /**
      * Return the main Hyde script location/path.
