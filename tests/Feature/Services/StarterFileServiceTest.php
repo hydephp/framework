@@ -20,7 +20,7 @@ class StarterFileServiceTest extends TestCase
         }
     }
 
-    public function testPublish()
+    public function testServicePublishesStarterFiles()
     {
         StarterFileService::publish();
 
