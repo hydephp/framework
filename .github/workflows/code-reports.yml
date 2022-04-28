@@ -87,7 +87,7 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@v1.4.2
 
         env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{ secrets.PAT }}
         with:
           source-directory: "."
           destination-github-username: "hydephp"
