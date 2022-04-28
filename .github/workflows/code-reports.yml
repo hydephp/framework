@@ -2,39 +2,38 @@ name: Create Code Reports
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
   workflow_dispatch:
 
 jobs:
   create-coverage-report:
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.0'
-        coverage: xdebug
-        extensions: fileinfo
-    - name: Install Hyde
-      run: git clone https://github.com/hydephp/hyde.git $(pwd)
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-master
-      run: composer require hyde/framework:dev-master
-    - name: Set environment to testing
-      run: echo "ENV=testing" > .env
-    - name: Run tests with HTML coverage reporting
-      run: vendor/bin/pest --coverage-html covrep
-      env: 
-        ENV: testing
 
-    - name: Upload the report as an artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: 'coverage-report'
-        path: 'covrep'
-  
+    steps:
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: "8.0"
+          coverage: xdebug
+          extensions: fileinfo
+      - name: Install Hyde
+        run: git clone https://github.com/hydephp/hyde.git $(pwd)
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Set Framework version to dev-master
+        run: composer require hyde/framework:dev-master
+      - name: Set environment to testing
+        run: echo "ENV=testing" > .env
+      - name: Run tests with HTML coverage reporting
+        run: vendor/bin/pest --coverage-html covrep
+        env:
+          ENV: testing
+
+      - name: Upload the report as an artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: "coverage-report"
+          path: "covrep"
 
   build-php-docs:
     runs-on: ubuntu-latest
@@ -53,10 +52,9 @@ jobs:
       - name: Upload the documentation as an artifact
         uses: actions/upload-artifact@v1
         with:
-          name: 'api-docs'
-          path: 'api-docs'
-        
-  
+          name: "api-docs"
+          path: "api-docs"
+
   upload-html-files:
     needs: [create-coverage-report, build-php-docs]
     runs-on: ubuntu-latest

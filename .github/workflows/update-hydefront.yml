@@ -2,7 +2,7 @@ name: Update Hydefront
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
   workflow_dispatch:
 
@@ -14,19 +14,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Create pull request
-      uses: paygoc6/action-pull-request-another-repo@v1.0.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.PAT }}
-      with:
-        source_folder: 'resources/assets/.'
-        destination_folder: '/'
-        destination_repo: 'hydephp/hydefront'
-        destination_base_branch: 'master'
-        destination_head_branch: 'framework-merge'
-        user_email: 'hydephp@github.com'
-        user_name: 'hydephp'
-        pull_request_reviewers: 'reviewers'
-
+      - name: Create pull request
+        uses: paygoc6/action-pull-request-another-repo@v1.0.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAT }}
+        with:
+          source_folder: "resources/assets/."
+          destination_folder: "/"
+          destination_repo: "hydephp/hydefront"
+          destination_base_branch: "master"
+          destination_head_branch: "framework-merge"
+          user_email: "hydephp@github.com"
+          user_name: "hydephp"
+          pull_request_reviewers: "reviewers"
