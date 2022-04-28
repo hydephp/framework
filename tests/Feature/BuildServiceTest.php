@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Hyde\Framework\DocumentationPageParser;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\MarkdownPageParser;
 use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
@@ -10,7 +11,6 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\BuildService;
-use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
 class BuildServiceTest extends TestCase
