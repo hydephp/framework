@@ -20,7 +20,7 @@ jobs:
       run: git clone https://github.com/hydephp/hyde.git $(pwd)
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-${{ GITHUB_REF_NAME  }}
+    - name: Set Framework version to dev-GITHUB_REF_NAME 
       run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
@@ -59,7 +59,7 @@ jobs:
       run: git clone https://github.com/hydephp/hyde.git $(pwd)
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-${{ GITHUB_REF_NAME  }}
+    - name: Set Framework version to dev-GITHUB_REF_NAME 
       run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
