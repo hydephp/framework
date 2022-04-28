@@ -1,5 +1,4 @@
 name: Test Suite (Matrix)
-# @todo download the actual branch from the PR that triggered it instead of requring hyde/framework:dev-master
 on:
   push:
     branches: [ master ]
@@ -21,8 +20,8 @@ jobs:
       run: git clone https://github.com/hydephp/hyde.git $(pwd)
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-master
-      run: composer require hyde/framework:dev-master
+    - name: Set Framework version to dev-${{ GITHUB_REF_NAME  }}
+      run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
     - name: Output debug information
@@ -60,8 +59,8 @@ jobs:
       run: git clone https://github.com/hydephp/hyde.git $(pwd)
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Set Framework version to dev-master
-      run: composer require hyde/framework:dev-master
+    - name: Set Framework version to dev-${{ GITHUB_REF_NAME  }}
+      run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
