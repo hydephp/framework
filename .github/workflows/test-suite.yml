@@ -25,6 +25,8 @@ jobs:
       run: composer require hyde/framework:dev-master
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
+    - name: Output debug information
+      run: php hyde debug
     - name: Run tests with output coverage reporting
       run: vendor/bin/pest --coverage
       env: 
@@ -62,8 +64,6 @@ jobs:
       run: composer require hyde/framework:dev-master
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
-    - name: Output debug information
-      run: php hyde debug
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       run: vendor/bin/pest
       env: 
