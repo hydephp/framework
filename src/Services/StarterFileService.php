@@ -11,7 +11,7 @@ class StarterFileService
 {
     /**
      * Mapping of the source file to the destination file.
-     * ['vendorPath' => 'hydePath']
+     * ['vendorPath' => 'hydePath'].
      */
     public static array $files = [
         'resources\views\homepages\welcome.blade.php' => '_pages\index.blade.php',
@@ -22,7 +22,7 @@ class StarterFileService
     /**
      * Publish all the starter files.
      */
-    public static function publish() : void
+    public static function publish(): void
     {
         $files = static::$files;
         foreach ($files as $source => $file) {
@@ -33,9 +33,8 @@ class StarterFileService
     /**
      * Publish a single starter file.
      */
-    protected static function publishFile(string $from, string $to) : void
+    protected static function publishFile(string $from, string $to): void
     {
         Hyde::copy(Hyde::vendorPath($from), Hyde::path($to));
     }
-
 }
