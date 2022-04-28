@@ -14,9 +14,9 @@ class StarterFileService
      * ['vendorPath' => 'hydePath'].
      */
     public static array $files = [
-        'resources\views\homepages\welcome.blade.php' => '_pages\index.blade.php',
-        'resources\views\pages\404.blade.php' => '_pages\404.blade.php',
-        'resources\assets\dist\app.css' => '_site\media\app.css',
+        'resources/views/homepages/welcome.blade.php' => '_pages/index.blade.php',
+        'resources/views/pages/404.blade.php' => '_pages/404.blade.php',
+        'resources/assets/dist/app.css' => '_site/media/app.css',
     ];
 
     /**
