@@ -94,7 +94,7 @@ class HydePublishHomepageCommandTest extends TestCase
             $this->artisan('publish:homepage welcome --no-interaction')
                 ->assertExitCode(0);
         } catch (\PHPUnit\Framework\ExpectationFailedException $exception) {
-            $this->addWarning($exception->getMessage() . ' Has the filecache been updated?');
+            $this->addWarning($exception->getMessage().' Has the filecache been updated?');
         }
     }
 }
