@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-use function config;
+use Hyde\Framework\Services\AssetService;
 
 /**
  * AssetManager for the Hyde Facade.
@@ -14,9 +14,7 @@ trait AssetManager
      */
     public static function tailwind(): string|false
     {
-        return config('hyde.loadTailwindFromCDN')
-            ? 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/app.css'
-            : false;
+        return (new AssetService)->tailwindPath();
     }
 
     /**
@@ -24,7 +22,7 @@ trait AssetManager
      */
     public static function styles(): string
     {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/hyde.css';
+        return (new AssetService)->stylePath();
     }
 
     /**
@@ -32,6 +30,6 @@ trait AssetManager
      */
     public static function scripts(): string
     {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@v1.3.1/dist/hyde.js';
+        return (new AssetService)->scriptPath();
     }
 }
