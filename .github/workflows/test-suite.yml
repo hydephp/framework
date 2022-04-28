@@ -62,6 +62,8 @@ jobs:
       run: composer require hyde/framework:dev-master
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
+    - name: Output debug information
+      run: php hyde debug
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       run: vendor/bin/pest
       env: 
@@ -70,7 +72,7 @@ jobs:
   update-coverage-badge:
     runs-on: ubuntu-latest
     needs: coverage
-    if: github.event_name === 'push'
+    if: github.event_name == 'push'
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
