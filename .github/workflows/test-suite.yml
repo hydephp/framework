@@ -1,0 +1,31 @@
+name: Test Suite (Matrix)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  # First run tests with coverage. If this fails, we don't need to run the matrix.
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+        coverage: xdebug
+        extensions: fileinfo
+    - name: Install Hyde
+      run: git clone https://github.com/hydephp/hyde.git $(pwd)
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Set Framework version to dev-master
+      run: composer require hyde/framework:dev-master # @todo download the actual branch from the PR that triggered it
+    - name: Set environment to testing
+      run: echo "ENV=testing" > .env
+    - name: Run tests with output coverage reporting
+      run: vendor/bin/pest --coverage
+      env: 
+        ENV: testing
