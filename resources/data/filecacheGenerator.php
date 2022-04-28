@@ -9,6 +9,10 @@ $time_start = microtime(true);
 $filecache = [];
 
 $bladeFiles = glob(__DIR__.'/../../resources/views/**/*.blade.php');
+
+/**
+ * @deprecated as default files are served through the CDN
+ */
 $frontendFiles = glob(__DIR__.'/../../resources/assets/*.{css,scss,js}', GLOB_BRACE);
 
 $files = array_merge($bladeFiles, $frontendFiles);
