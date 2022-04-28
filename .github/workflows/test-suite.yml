@@ -60,6 +60,7 @@ jobs:
   # todo run the coverage test in the first test and upload artifact there, and download it here
   # so the only responsability of this job is to parse and upload the badge to the server
   # todo 2 download the badge as an artifact 
+  # todo 3 this test should only run on the master branch and not on pull requests
   update-coverage-badge:
     
     runs-on: ubuntu-latest
