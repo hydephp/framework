@@ -10,12 +10,26 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\BuildService;
-use Tests\Setup\MockContentSourceFiles;
+use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
 class BuildServiceTest extends TestCase
 {
-    use MockContentSourceFiles;
+    public function createContentSourceTestFiles()
+    {
+        touch(Hyde::path(BuildService::getFilePathForModelClassFiles(MarkdownPost::class).'/test.md'));
+        touch(Hyde::path(BuildService::getFilePathForModelClassFiles(MarkdownPage::class).'/test.md'));
+        touch(Hyde::path(BuildService::getFilePathForModelClassFiles(DocumentationPage::class).'/test.md'));
+        touch(Hyde::path(BuildService::getFilePathForModelClassFiles(BladePage::class).'/test.blade.php'));
+    }
+
+    public function deleteContentSourceTestFiles()
+    {
+        unlink(Hyde::path(BuildService::getFilePathForModelClassFiles(MarkdownPost::class).'/test.md'));
+        unlink(Hyde::path(BuildService::getFilePathForModelClassFiles(MarkdownPage::class).'/test.md'));
+        unlink(Hyde::path(BuildService::getFilePathForModelClassFiles(DocumentationPage::class).'/test.md'));
+        unlink(Hyde::path(BuildService::getFilePathForModelClassFiles(BladePage::class).'/test.blade.php'));
+    }
 
     public function test_find_model_from_file_path()
     {
