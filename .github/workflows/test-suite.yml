@@ -21,7 +21,7 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Set Framework version to dev-GITHUB_REF_NAME 
-      run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
+      run: "composer require hyde/framework:dev-${{ GITHUB_REF_NAME }}"
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
     - name: Output debug information
@@ -60,7 +60,7 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Set Framework version to dev-GITHUB_REF_NAME 
-      run: composer require hyde/framework:dev-${{ GITHUB_REF_NAME  }}
+      run: "composer require hyde/framework:dev-${{ GITHUB_REF_NAME }}"
     - name: Set environment to testing
       run: echo "ENV=testing" > .env
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
