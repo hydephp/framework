@@ -6,7 +6,6 @@ use Tests\TestCase;
 
 class DebugCommandTest extends TestCase
 {
-
     public function test_debug_command_can_run()
     {
         $this->artisan('debug')->assertExitCode(0);
