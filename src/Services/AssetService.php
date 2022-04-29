@@ -37,6 +37,6 @@ class AssetService implements AssetServiceContract
 
     public function cdnPathConstructor(string $file): string
     {
-        return 'https://cdn.jsdelivr.net/gh/hydephp/hydefront@'.$this->version().'/dist/'.$file;
+        return 'https://cdn.jsdelivr.net/npm/hydefront@'.$this->version().'/dist/'.$file;
     }
 }
