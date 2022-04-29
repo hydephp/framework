@@ -11,7 +11,7 @@ class AssetService implements AssetServiceContract
      *
      * @property string $version HydeFront SemVer Tag
      */
-    public string $version = 'v1.3';
+    public string $version = 'v1.4';
 
     public function version(): string
     {
