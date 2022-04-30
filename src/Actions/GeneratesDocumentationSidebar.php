@@ -29,22 +29,20 @@ class GeneratesDocumentationSidebar
         $array = [];
 
         foreach (CollectionService::getSourceFileListForModel(DocumentationPage::class) as $slug) {
-            if ($slug == 'index') {
-                continue;
+            if ($slug !== 'index') {
+                $order = array_search($slug, $orderArray);
+
+                if ($order === false) {
+                    $order = 999;
+                }
+
+                $array[] = [
+                    'slug' => $slug,
+                    'title' => Hyde::titleFromSlug($slug),
+                    'active' => 'docs/'.$slug == $current,
+                    'order' =>  $order,
+                ];
             }
-
-            $order = array_search($slug, $orderArray);
-
-            if ($order === false) {
-                $order = 999;
-            }
-
-            $array[] = [
-                'slug' => $slug,
-                'title' => Hyde::titleFromSlug($slug),
-                'active' => 'docs/'.$slug == $current,
-                'order' =>  $order,
-            ];
         }
 
         krsort($array);
