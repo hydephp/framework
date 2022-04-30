@@ -12,16 +12,30 @@ use Tests\TestCase;
  */
 class AuthorServiceTest extends TestCase
 {
-    public function test_setup()
+   protected function setUp(): void
     {
+        parent::setUp();
         // If an authors.yml file exists, back it up and remove it
         $service = new AuthorService();
         $path = $service->filepath;
 
         backup($path);
         unlinkIfExists($path);
+    }
 
-        $this->assertTrue(true);
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Clean up any test files
+        $service = new AuthorService();
+        $path = $service->filepath;
+        unlinkIfExists($path);
+
+        // Restore the original authors.yml file
+
+        restore($path);
+
     }
 
     public function test_publish_file_creates_file()
@@ -39,8 +53,8 @@ class AuthorServiceTest extends TestCase
 
     public function test_get_authors_returns_author_collection()
     {
+        (new AuthorService)->publishFile();
         $service = new AuthorService();
-        $service->publishFile();
 
         $collection = $service->authors;
 
@@ -95,17 +109,4 @@ class AuthorServiceTest extends TestCase
     }
 
 
-    public function test_teardown()
-    {
-        // Clean up any test files
-        $service = new AuthorService();
-        $path = $service->filepath;
-        unlinkIfExists($path);
-
-        // Restore the original authors.yml file
-
-        restore($path);
-
-        $this->assertTrue(true);
-    }
 }
