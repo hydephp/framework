@@ -7,7 +7,7 @@ use Hyde\Framework\Contracts\AssetServiceContract;
 class AssetService implements AssetServiceContract
 {
     /**
-     * The HydeFront version to load.
+     * The default HydeFront version to load.
      *
      * @property string $version HydeFront SemVer Tag
      */
