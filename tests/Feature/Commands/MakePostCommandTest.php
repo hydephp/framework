@@ -24,7 +24,7 @@ class MakePostCommandTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unlink($this->getPath());
+        unlinkIfExists($this->getPath());
 
         parent::tearDown();
     }
@@ -94,4 +94,17 @@ class MakePostCommandTest extends TestCase
             file_get_contents($this->getPath())
         );
     }
+
+    public function test_that_title_can_be_specified_in_command_signature()
+    {
+        $this->artisan('make:post "Test Post"')
+            ->expectsOutputToContain('Selected title: Test Post')
+            ->expectsQuestion('Write a short post excerpt/description', 'A short description')
+            ->expectsQuestion('What is your (the author\'s) name?', 'PHPUnit')
+            ->expectsQuestion('What is the primary category of the post?', 'general')
+            ->expectsConfirmation('Do you wish to continue?', 'yes')
+
+            ->assertExitCode(0);
+    }
+
 }
