@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use function config;
+
 use Illuminate\Support\Str;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Concerns\Markdown;
 
-use function config;
+
 
 trait HasTorchlightIntegration
 {

@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use function config;
+
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
