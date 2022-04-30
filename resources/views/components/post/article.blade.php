@@ -8,9 +8,9 @@
     <header aria-label="Header section" role="doc-pageheader">
         <h1 itemprop="headline" class="mb-4">{{ $title ?? 'Blog Post' }}</h1>
 		<div id="byline" aria-label="About the post" role="doc-introduction">
-            @includeWhen($post->date, 'hyde::components.post.date')
-		    @includeWhen($post->author, 'hyde::components.post.author')
-            @includeWhen($post->category, 'hyde::components.post.category')
+            @includeWhen(isset($post->date), 'hyde::components.post.date')
+		    @includeWhen(isset($post->author), 'hyde::components.post.author')
+            @includeWhen(isset($post->category), 'hyde::components.post.category')
         </div>
     </header>
     @includeWhen(isset($post->image), 'hyde::components.post.image')

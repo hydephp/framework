@@ -72,8 +72,7 @@ class HydeRebuildStaticSiteCommandTest extends TestCase
 
     public function test_rebuild_blog_post()
     {
-        // @todo replace with touch once https://github.com/hydephp/framework/issues/211 is fixed
-        file_put_contents(Hyde::path('_posts/foo.md'), "---\nauthor: 'foo'\n---\nfoo");
+        touch(Hyde::path('_posts/foo.md'));
 
         $this->artisan('rebuild _posts/foo.md')
             ->assertExitCode(0);
