@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Services;
+namespace Tests\Feature\Services;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Actions;
+namespace Tests\Feature\Actions;
 
 use Hyde\Framework\Actions\GeneratesTableOfContents;
 use Tests\TestCase;
