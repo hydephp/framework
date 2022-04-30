@@ -125,7 +125,7 @@ class HydeRebuildStaticSiteCommand extends Command
     }
 
     /**
-     * Get the output path for the given path.
+     * Get the output path for the given source file path.
      *
      * @param  string  $path
      * @return string
