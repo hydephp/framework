@@ -6,8 +6,9 @@ use Hyde\Framework\Models\Author;
 use Hyde\Framework\Services\AuthorService;
 
 /**
- * Trait HasAuthor.
+ * Handle logic for Page models that have an Author.
  *
+ * @see \Hyde\Framework\Models\Author
  * @see \Tests\Unit\HasAuthorTest
  */
 trait HasAuthor

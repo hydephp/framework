@@ -6,6 +6,13 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Metadata;
 use JetBrains\PhpStorm\ArrayShape;
 
+
+/**
+ * Handle logic for Page models that have Metadata.
+ * Metadata is used to create meta SEO tags.
+ *
+ * @see \Hyde\Framework\Models\Metadata
+ */
 trait HasMetadata
 {
     public ?Metadata $metadata = null;
