@@ -6,6 +6,9 @@ use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Register and bootstrap Hyde application services.
+ */
 class HydeServiceProvider extends ServiceProvider
 {
     /**
