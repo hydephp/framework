@@ -7,6 +7,9 @@ use Hyde\Framework\Services\AuthorService;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Services\AuthorService
+ */
 class AuthorServiceTest extends TestCase
 {
     public function test_setup()
@@ -85,6 +88,12 @@ class AuthorServiceTest extends TestCase
             ],
         ], $array);
     }
+
+    public function test_find_method_returns_false_if_no_author_is_found()
+    {
+        $this->assertFalse(AuthorService::find('undefined_author'));
+    }
+
 
     public function test_teardown()
     {
