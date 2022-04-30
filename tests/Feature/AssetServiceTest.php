@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature;
+namespace Tests\Feature;
 
 use Hyde\Framework\Services\AssetService;
 use Illuminate\Support\Facades\Config;
