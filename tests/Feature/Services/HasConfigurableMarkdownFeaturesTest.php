@@ -1,6 +1,6 @@
 <?php
 
-namespace Services;
+namespace  Tests\Feature\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Models\DocumentationPage;
