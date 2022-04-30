@@ -6,7 +6,7 @@ use Hyde\Framework\Models\Image;
 
 /**
  * Handle logic for Page models that have a Featured Image.
- * 
+ *
  * @see \Hyde\Framework\Models\Image
  */
 trait HasFeaturedImage

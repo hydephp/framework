@@ -6,7 +6,7 @@ use Hyde\Framework\Hyde;
 
 /**
  * Find and get the title to use for a Markdown Document.
- * 
+ *
  * First check the front matter for a title. If one is not found,
  * it searches the Markdown for a level one heading. Falls back to
  * generating a title from the slug if no other title could be found.
