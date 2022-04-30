@@ -34,6 +34,22 @@ class MarkdownConverterServiceTest extends TestCase
         );
     }
 
+    public function test_torchlight_extension_is_not_enabled_by_default()
+    {
+        $markdown = '# Hello World!';
+        $service = new MarkdownConverterService($markdown);
+        $service->parse();
+        $this->assertNotContains('Torchlight\Commonmark\V2\TorchlightExtension', $service->getExtensions());
+    }
+
+    public function test_torchlight_extension_is_enabled_automatically_when_has_torchlight_feature()
+    {
+        $markdown = '# Hello World!';
+        $service = new MarkdownConverterService($markdown);
+        $service->addFeature('torchlight')->parse();
+        $this->assertContains('Torchlight\Commonmark\V2\TorchlightExtension', $service->getExtensions());
+    }
+
     public function test_torchlight_integration_injects_attribution()
     {
         $markdown = '# Hello World! <!-- Syntax highlighted by torchlight.dev -->';
