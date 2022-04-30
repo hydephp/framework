@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 
 /*
 * Publish one or more of the Hyde Blade views.
+* 
+* @see \Tests\Feature\Actions\PublishesHomepageViewTest
 */
 class PublishesHydeViews implements ActionContract
 {
@@ -39,7 +41,7 @@ class PublishesHydeViews implements ActionContract
         $this->selected = $selected;
     }
 
-    public function execute()
+    public function execute(): bool|int
     {
         if (! array_key_exists($this->selected, self::$options)) {
             return 404;
