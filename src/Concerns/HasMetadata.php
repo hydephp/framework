@@ -11,6 +11,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * Metadata is used to create meta SEO tags.
  *
  * @see \Hyde\Framework\Models\Metadata
+ * @see \Tests\Feature\Concerns\HasMetadataTest
  */
 trait HasMetadata
 {
@@ -33,7 +34,7 @@ trait HasMetadata
      return $this->metadata->metadata;
  }
 
-    #[ArrayShape(['property' => "\content"])]
+    #[ArrayShape(['property' => "content"])]
     public function getMetaProperties(): array
     {
         if (! isset($this->metadata)) {
@@ -43,23 +44,28 @@ trait HasMetadata
         return $this->metadata->properties;
     }
 
+    /**
+     * Generate metadata from the front matter that can be used in standard <meta> tags.
+     */
     protected function makeMetadata(): void
     {
         if (isset($this->matter['description'])) {
             $this->metadata->add('description', $this->matter['description']);
         }
 
-        // Add author if it exists
         if (isset($this->matter['author'])) {
             $this->metadata->add('author', $this->getAuthor($this->matter['author']));
         }
 
-        // Add keywords if it exists
         if (isset($this->matter['category'])) {
             $this->metadata->add('keywords', $this->matter['category']);
         }
     }
 
+    /**
+     * Generate metadata from the front matter that can be used for og:type <meta> tags.
+     * Note that this currently assumes that the object using it is a Blog Post.
+     */
     protected function makeMetaProperties(): void
     {
         $this->metadata->addProperty('og:type', 'article');
@@ -68,12 +74,10 @@ trait HasMetadata
             $this->metadata->addProperty('og:url', Hyde::uriPath('posts/'.$this->slug));
         }
 
-        // Add title if it exists
         if (isset($this->matter['title'])) {
             $this->metadata->addProperty('og:title', $this->matter['title']);
         }
 
-        // Add date if it exists
         if (isset($this->matter['date'])) {
             $date = date('c', strtotime($this->matter['date']));
             $this->metadata->addProperty('og:article:published_time', $date);
@@ -93,6 +97,12 @@ trait HasMetadata
         }
     }
 
+    /**
+     * Parse the author string from the front matter with support for both flat and array notation.
+     *
+     * @param string|array $author
+     * @return string
+     */
     protected function getAuthor(string|array $author): string
     {
         if (is_string($author)) {
