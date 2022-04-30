@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Commands;
+namespace Feature\Commands;
 
 use Exception;
 use Hyde\Framework\Hyde;

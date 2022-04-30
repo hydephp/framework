@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Commands;
+namespace Feature\Commands;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
