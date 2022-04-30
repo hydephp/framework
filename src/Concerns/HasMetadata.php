@@ -34,7 +34,7 @@ trait HasMetadata
      return $this->metadata->metadata;
  }
 
-    #[ArrayShape(['property' => "content"])]
+    #[ArrayShape(['property' => 'content'])]
     public function getMetaProperties(): array
     {
         if (! isset($this->metadata)) {
@@ -100,7 +100,7 @@ trait HasMetadata
     /**
      * Parse the author string from the front matter with support for both flat and array notation.
      *
-     * @param string|array $author
+     * @param  string|array  $author
      * @return string
      */
     protected function getAuthor(string|array $author): string

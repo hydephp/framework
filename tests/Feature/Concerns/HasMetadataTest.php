@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Concerns\HasMetadata
+ *
  * @see \Hyde\Framework\Models\Metadata
  */
 class HasMetadataTest extends TestCase
@@ -74,40 +75,40 @@ class HasMetadataTest extends TestCase
 
         $this->assertEquals([
             'og:type' => 'article',
-            'og:url' => 'https://example.com/foo/posts/bar'
+            'og:url' => 'https://example.com/foo/posts/bar',
         ], $this->getMetaProperties());
     }
 
     public function test_get_meta_properties_contains_og_title_when_title_set()
     {
         $this->matter = [
-            'title' => 'foo'
+            'title' => 'foo',
         ];
         $this->constructMetadata();
 
         $this->assertEquals([
             'og:type' => 'article',
-            'og:title' => 'foo'
+            'og:title' => 'foo',
         ], $this->getMetaProperties());
     }
 
     public function test_get_meta_properties_contains_og_article_date_published_when_date_set()
     {
         $this->matter = [
-            'date' => '2022-01-01 12:00'
+            'date' => '2022-01-01 12:00',
         ];
         $this->constructMetadata();
 
         $this->assertEquals([
             'og:type' => 'article',
-            'og:article:published_time' => '2022-01-01T12:00:00+00:00'
+            'og:article:published_time' => '2022-01-01T12:00:00+00:00',
         ], $this->getMetaProperties());
     }
 
     public function test_get_meta_properties_contains_image_metadata_when_featured_image_set_to_string()
     {
         $this->matter = [
-            'image' => 'foo.jpg'
+            'image' => 'foo.jpg',
         ];
         $this->constructMetadata();
 
@@ -121,8 +122,8 @@ class HasMetadataTest extends TestCase
     {
         $this->matter = [
             'image' => [
-                'path' => 'foo.jpg'
-            ]
+                'path' => 'foo.jpg',
+            ],
         ];
         $this->constructMetadata();
 
@@ -136,8 +137,8 @@ class HasMetadataTest extends TestCase
     {
         $this->matter = [
             'image' => [
-                'uri' => 'foo.jpg'
-            ]
+                'uri' => 'foo.jpg',
+            ],
         ];
         $this->constructMetadata();
 
@@ -152,7 +153,7 @@ class HasMetadataTest extends TestCase
         $this->matter = [
             'author' => [
                 'username' => 'foo',
-            ]
+            ],
         ];
         $this->constructMetadata();
 
@@ -166,7 +167,7 @@ class HasMetadataTest extends TestCase
         $this->matter = [
             'author' => [
                 'name' => 'foo',
-            ]
+            ],
         ];
         $this->constructMetadata();
 
@@ -178,7 +179,7 @@ class HasMetadataTest extends TestCase
     public function test_get_author_returns_guest_when_author_set_to_array_without_name_or_username()
     {
         $this->matter = [
-            'author' => []
+            'author' => [],
         ];
         $this->constructMetadata();
 
