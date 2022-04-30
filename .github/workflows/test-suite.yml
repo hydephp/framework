@@ -91,7 +91,6 @@ jobs:
         run: | 
           ls -Ria
           stat report.txt
-          cat report.txt
           ls report.txt -Ria
       
       - name: Run the parser
