@@ -44,7 +44,6 @@ class AssetServiceTest extends TestCase
         $this->assertFalse($service->tailwindPath());
     }
 
-
     public function test_tailwind_path_method_returns_false_if_disabled_in_config()
     {
         $service = new AssetService();
@@ -87,5 +86,4 @@ class AssetServiceTest extends TestCase
         Config::set('hyde.cdnHydeFrontVersionOverride', '1.2.3');
         $this->assertStringContainsString('@1.2.3', $service->cdnPathConstructor('styles.css'));
     }
-
 }
