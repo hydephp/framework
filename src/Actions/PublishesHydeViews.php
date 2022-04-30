@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 /*
 * Publish one or more of the Hyde Blade views.
-* 
+*
 * @see \Tests\Feature\Actions\PublishesHomepageViewTest
 */
 class PublishesHydeViews implements ActionContract
