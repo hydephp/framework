@@ -108,5 +108,18 @@ class AuthorServiceTest extends TestCase
         $this->assertFalse(AuthorService::find('undefined_author'));
     }
 
+    public function test_get_yaml_method_returns_empty_array_if_file_does_not_exist()
+    {
+        $service = new AuthorService();
+        $this->assertFileDoesNotExist($service->filepath);
+        $this->assertEquals([], $service->getYaml());
+    }
 
+    public function test_get_yaml_method_returns_empty_array_if_file_does_not_contain_valid_yaml()
+    {
+        $service = new AuthorService();
+        file_put_contents($service->filepath, 'invalid yaml');
+
+        $this->assertEquals([], $service->getYaml());
+    }
 }
