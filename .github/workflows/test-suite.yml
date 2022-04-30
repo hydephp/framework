@@ -88,7 +88,12 @@ jobs:
       - name: Download Coverage Parser
         run: "wget https://gist.githubusercontent.com/caendesilva/75a5ff8dd4e23921b75f503149655924/raw/456bd4bae423eda2a3ff2ba2ce8f8246f366d46f/parser.php"
       - name: (Debug) run ls
-      	run: ls -R
+        run: | 
+          ls -Ria
+          stat report.txt
+          cat report.txt
+          ls report.txt -Ria
+      
       - name: Run the parser
         id: run-coverage-parser
         run: echo ::set-output name=average_coverage::$(php parser.php)
