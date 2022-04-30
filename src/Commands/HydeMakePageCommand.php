@@ -10,6 +10,7 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to scaffold a new Markdown or Blade page file.
+ * @todo Ask for title if it was not specified.
  */
 class HydeMakePageCommand extends Command
 {
