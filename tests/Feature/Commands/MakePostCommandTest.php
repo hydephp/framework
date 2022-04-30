@@ -107,4 +107,17 @@ class MakePostCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
+    public function test_that_command_can_be_canceled()
+    {
+        $this->artisan('make:post "Test Post"')
+        ->expectsOutputToContain('Selected title: Test Post')
+        ->expectsQuestion('Write a short post excerpt/description', 'A short description')
+        ->expectsQuestion('What is your (the author\'s) name?', 'PHPUnit')
+        ->expectsQuestion('What is the primary category of the post?', 'general')
+        ->expectsConfirmation('Do you wish to continue?')
+        ->expectsOutput('Aborting.')
+        ->assertExitCode(130);
+
+        $this->assertFileDoesNotExist($this->getPath());
+    }    
 }
