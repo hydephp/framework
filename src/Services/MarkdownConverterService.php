@@ -99,4 +99,10 @@ class MarkdownConverterService
             $this->html .= $this->injectTorchlightAttribution();
         }
     }
+
+    // Helper to inspect the currently enabled extensions
+    public function getExtensions(): array
+    {
+        return $this->extensions;
+    }
 }
