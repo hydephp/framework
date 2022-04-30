@@ -6,6 +6,9 @@ use Hyde\Framework\Actions\GeneratesDocumentationSidebar;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Actions\GeneratesDocumentationSidebar
+ */
 class GeneratesDocumentationSidebarTest extends TestCase
 {
     /**
