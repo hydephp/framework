@@ -69,12 +69,7 @@ class HydeRebuildStaticSiteCommand extends Command
         }
 
         $this->service = new RebuildService($this->path);
-
-        try {
-            $this->service->execute();
-        } catch (Exception $exception) {
-            return $this->handleException($exception);
-        }
+        $this->service->execute();
 
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
