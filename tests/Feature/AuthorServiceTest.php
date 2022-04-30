@@ -12,7 +12,7 @@ use Tests\TestCase;
  */
 class AuthorServiceTest extends TestCase
 {
-   protected function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // If an authors.yml file exists, back it up and remove it
@@ -35,7 +35,6 @@ class AuthorServiceTest extends TestCase
         // Restore the original authors.yml file
 
         restore($path);
-
     }
 
     public function test_publish_file_creates_file()
