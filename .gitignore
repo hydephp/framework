@@ -6,6 +6,9 @@
 
 .phpdoc
 phpDocumentor.phar
+phpdoc.dist.xml
+api-docs
+
 phpstan.phar
 
 resources/assets/.github/
