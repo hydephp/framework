@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Concerns;
+namespace Hyde\Framework\Concerns\Commands;
 
 use Illuminate\Support\Facades\Artisan;
 

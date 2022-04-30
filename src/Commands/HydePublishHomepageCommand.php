@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Actions\PublishesHomepageView;
-use Hyde\Framework\Concerns\AsksToRebuildSite;
+use Hyde\Framework\Concerns\Commands\AsksToRebuildSite;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\FileCacheService;
 use LaravelZero\Framework\Commands\Command;
