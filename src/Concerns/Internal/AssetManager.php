@@ -6,6 +6,7 @@ use Hyde\Framework\Services\AssetService;
 
 /**
  * Offloads asset related methods for the Hyde Facade.
+ *
  * @see \Hyde\Framework\Hyde
  */
 trait AssetManager

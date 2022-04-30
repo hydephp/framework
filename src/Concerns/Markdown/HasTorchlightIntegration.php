@@ -4,7 +4,7 @@ namespace Hyde\Framework\Concerns\Markdown;
 
 /**
  * Helper methods for the Torchlight integration.
- * 
+ *
  * @see \Hyde\Framework\Services\MarkdownConverterService
  */
 trait HasTorchlightIntegration

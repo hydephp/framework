@@ -4,7 +4,7 @@ namespace Hyde\Framework\Concerns\Internal;
 
 /**
  * Offloads file helper methods for the Hyde Facade.
- * 
+ *
  * @see \Hyde\Framework\Hyde
  */
 trait FileHelpers
