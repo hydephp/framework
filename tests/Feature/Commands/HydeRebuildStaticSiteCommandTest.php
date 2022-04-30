@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Commands;
 
+use Hyde\Framework\Commands\HydeRebuildStaticSiteCommand;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
@@ -54,5 +55,39 @@ class HydeRebuildStaticSiteCommandTest extends TestCase
         $this->artisan('rebuild _pages/foo.md')
             ->expectsOutput('File [_pages/foo.md] not found.')
             ->assertExitCode(404);
+    }
+
+    public function test_rebuild_documentation_page()
+    {
+        touch(Hyde::path('_docs/foo.md'));
+
+        $this->artisan('rebuild _docs/foo.md')
+            ->assertExitCode(0);
+
+        $this->assertFileExists(Hyde::path('_site/docs/foo.html'));
+
+        unlink(Hyde::path('_docs/foo.md'));
+        unlink(Hyde::path('_site/docs/foo.html'));
+    }
+
+
+    public function test_rebuild_blog_post()
+    {
+        // @todo replace with touch once https://github.com/hydephp/framework/issues/211 is fixed
+        file_put_contents(Hyde::path('_posts/foo.md'), "---\nauthor: 'foo'\n---\nfoo");
+
+        $this->artisan('rebuild _posts/foo.md')
+            ->assertExitCode(0);
+
+        $this->assertFileExists(Hyde::path('_site/posts/foo.html'));
+
+        unlink(Hyde::path('_posts/foo.md'));
+        unlink(Hyde::path('_site/posts/foo.html'));
+    }
+
+    public function test_get_output_path_returns_same_input_for_out_of_bounds_page()
+    {
+        $this->assertEquals('test-page.html',
+            (new HydeRebuildStaticSiteCommand)->getOutputPath(('test-page.html')));
     }
 }
