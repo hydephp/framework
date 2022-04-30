@@ -6,6 +6,9 @@ use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\File;
 
+/*
+* Publish one or more of the Hyde Blade views.
+*/
 class PublishesHydeViews implements ActionContract
 {
     public static array $options = [

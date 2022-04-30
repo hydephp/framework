@@ -5,6 +5,9 @@ namespace Hyde\Framework\Actions;
 use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Hyde;
 
+/**
+ * Publish one of the Hyde homepages.
+ */
 class PublishesHomepageView implements ActionContract
 {
     public static array $homePages = [
