@@ -6,7 +6,7 @@ use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
-class HydePublishConfigsCommandTest extends TestCase
+class HydeUpdateConfigsCommandTest extends TestCase
 {
     /** Setup */
     public function setUp(): void

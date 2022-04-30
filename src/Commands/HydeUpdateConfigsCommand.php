@@ -11,7 +11,7 @@ use LaravelZero\Framework\Commands\Command;
  *
  * @uses HydeBasePublishingCommand
  */
-class HydePublishConfigsCommand extends Command
+class HydeUpdateConfigsCommand extends Command
 {
     protected $signature = 'update:configs';
     protected $description = 'Publish the default configuration files';

@@ -34,7 +34,7 @@ class HydeServiceProvider extends ServiceProvider
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
-            Commands\HydePublishConfigsCommand::class,
+            Commands\HydeUpdateConfigsCommand::class,
             Commands\HydePublishViewsCommand::class,
             Commands\HydeRebuildStaticSiteCommand::class,
             Commands\HydeBuildStaticSiteCommand::class,
