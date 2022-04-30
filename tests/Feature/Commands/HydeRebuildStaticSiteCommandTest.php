@@ -5,6 +5,9 @@ namespace Tests\Feature\Commands;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Commands\HydeRebuildStaticSiteCommand
+ */
 class HydeRebuildStaticSiteCommandTest extends TestCase
 {
     public function test_handle_is_successful_with_valid_path()
