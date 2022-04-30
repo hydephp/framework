@@ -119,5 +119,5 @@ class MakePostCommandTest extends TestCase
         ->assertExitCode(130);
 
         $this->assertFileDoesNotExist($this->getPath());
-    }    
+    }
 }

@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Concerns\Markdown;
 
-
-
 trait HasTorchlightIntegration
 {
     protected bool $useTorchlight;

@@ -38,7 +38,7 @@ class HydeMakePostCommand extends Command
 
         $this->line(
             $this->argument('title')
-                ? '<info>Selected title: ' . $this->argument('title') . "</info>\n"
+                ? '<info>Selected title: '.$this->argument('title')."</info>\n"
                 : 'Please enter the title of the post, it will be used to generate the slug.'
         );
 
@@ -66,7 +66,7 @@ class HydeMakePostCommand extends Command
         $this->line("Date: $creator->date");
         $this->line("Slug: $creator->slug");
 
-        if (!$this->confirm('Do you wish to continue?', true)) {
+        if (! $this->confirm('Do you wish to continue?', true)) {
             $this->info('Aborting.');
 
             return 130;
