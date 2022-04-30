@@ -49,6 +49,4 @@ class HydePublishViewsCommandTest extends TestCase
 
         $this->assertFileExists(Hyde::path('_pages/404.blade.php'));
     }
-
-
 }
