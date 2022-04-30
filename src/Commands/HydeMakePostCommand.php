@@ -17,6 +17,7 @@ class HydeMakePostCommand extends Command
      * @var string
      */
     protected $signature = 'make:post
+                            {title? : The title for the Post. Will be used to generate the slug}
                             {--force : Should the generated file overwrite existing posts with the same slug?}';
 
     /**
@@ -35,8 +36,14 @@ class HydeMakePostCommand extends Command
     {
         $this->title('Creating a new post!');
 
-        $this->line('Please enter the title of the post, it will be used to generate the slug.');
-        $title = $this->ask('What is the title of the post?') ?? 'My New Post';
+        $this->line(
+            $this->argument('title')
+                ? '<info>Selected title: ' . $this->argument('title') . "</info>\n"
+                : 'Please enter the title of the post, it will be used to generate the slug.');
+
+        $title = $this->argument('title')
+            ?? $this->ask('What is the title of the post?')
+            ?? 'My New Post';
 
         $this->line('Tip: You can just hit return to use the defaults.');
         $description = $this->ask('Write a short post excerpt/description');
