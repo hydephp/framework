@@ -11,33 +11,33 @@ use Tests\TestCase;
  */
 class AssetServiceTest extends TestCase
 {
-    public function testHasVersionString()
+    public function test_has_version_string()
     {
         $service = new AssetService();
         $this->assertIsString($service->version);
     }
 
-    public function testCanChangeVersion()
+    public function test_can_change_version()
     {
         $service = new AssetService();
         $service->version = '1.0.0';
         $this->assertEquals('1.0.0', $service->version);
     }
 
-    public function testVersionMethodReturnsVersionPropertyWhenConfigOverrideIsNotSet()
+    public function test_version_method_returns_version_property_when_config_override_is_not_set()
     {
         $service = new AssetService();
         $this->assertEquals($service->version, $service->version());
     }
 
-    public function testCanChangeVersionInConfig()
+    public function test_can_change_version_in_config()
     {
         $service = new AssetService();
         Config::set('hyde.cdnHydeFrontVersionOverride', '2.0.0');
         $this->assertEquals('2.0.0', $service->version());
     }
 
-    public function testTailwindPathMethodReturnsFalseIfNullInConfig()
+    public function test_tailwind_path_method_returns_false_if_null_in_config()
     {
         $service = new AssetService();
         Config::set('hyde.loadTailwindFromCDN');
@@ -45,14 +45,14 @@ class AssetServiceTest extends TestCase
     }
 
 
-    public function testTailwindPathMethodReturnsFalseIfDisabledInConfig()
+    public function test_tailwind_path_method_returns_false_if_disabled_in_config()
     {
         $service = new AssetService();
         Config::set('hyde.loadTailwindFromCDN', false);
         $this->assertFalse($service->tailwindPath());
     }
 
-    public function testTailwindPathMethodReturnsCDNPathIfEnabledInConfig()
+    public function test_tailwind_path_method_returns_cdn_path_if_enabled_in_config()
     {
         $service = new AssetService();
         Config::set('hyde.loadTailwindFromCDN', true);
@@ -60,28 +60,28 @@ class AssetServiceTest extends TestCase
         $this->assertStringContainsString('app.css', $service->tailwindPath());
     }
 
-    public function testStylePathMethodReturnsCDNPath()
+    public function test_style_path_method_returns_cdn_path()
     {
         $service = new AssetService();
         $this->assertIsString($service->stylePath());
         $this->assertStringContainsString('hyde.css', $service->stylePath());
     }
 
-    public function testScriptPathMethodReturnsCDNPath()
+    public function test_script_path_method_returns_cdn_path()
     {
         $service = new AssetService();
         $this->assertIsString($service->scriptPath());
         $this->assertStringContainsString('hyde.js', $service->scriptPath());
     }
 
-    public function testCDNPathConstructorReturnsCDNURI()
+    public function test_cdn_path_constructor_returns_cdn_uri()
     {
         $service = new AssetService();
         $this->assertIsString($path = $service->cdnPathConstructor('styles.css'));
         $this->assertStringContainsString('styles.css', $path);
     }
 
-    public function testCDNPathConstructorUsesSelectedVersion()
+    public function test_cdn_path_constructor_uses_selected_version()
     {
         $service = new AssetService();
         Config::set('hyde.cdnHydeFrontVersionOverride', '1.2.3');
