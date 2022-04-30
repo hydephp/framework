@@ -68,7 +68,7 @@ class HydeMakePostCommand extends Command
         if (! $this->confirm('Do you wish to continue?', true)) {
             $this->info('Aborting.');
 
-            return 0;
+            return 130;
         }
 
         try {
