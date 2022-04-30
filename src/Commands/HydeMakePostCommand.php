@@ -39,7 +39,8 @@ class HydeMakePostCommand extends Command
         $this->line(
             $this->argument('title')
                 ? '<info>Selected title: ' . $this->argument('title') . "</info>\n"
-                : 'Please enter the title of the post, it will be used to generate the slug.');
+                : 'Please enter the title of the post, it will be used to generate the slug.'
+        );
 
         $title = $this->argument('title')
             ?? $this->ask('What is the title of the post?')
@@ -65,32 +66,25 @@ class HydeMakePostCommand extends Command
         $this->line("Date: $creator->date");
         $this->line("Slug: $creator->slug");
 
-        if (! $this->confirm('Do you wish to continue?', true)) {
+        if (!$this->confirm('Do you wish to continue?', true)) {
             $this->info('Aborting.');
 
             return 130;
         }
 
         try {
-            if ($path = $creator->save($this->option('force'))) {
-                $this->info("Post created! File is saved to $path");
+            $path = $creator->save($this->option('force'));
+            $this->info("Post created! File is saved to $path");
 
-                return 0;
-            } else {
-                $this->error('Something went wrong when trying to save the file!');
-
-                return 1;
-            }
+            return 0;
         } catch (Exception $exception) {
             $this->error('Something went wrong when trying to save the file!');
             $this->warn($exception->getMessage());
             if ($exception->getCode() === 409) {
                 $this->comment('If you want to overwrite the file supply the --force flag.');
-
-                return 409;
             }
 
-            return 1;
+            return $exception->getCode();
         }
     }
 }
