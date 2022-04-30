@@ -19,12 +19,12 @@ class PublishesHydeViewsTest extends TestCase
         deleteDirectory(Hyde::path('resources/views/vendor/hyde'));
     }
 
-	protected function tearDown(): void
-	{
-		restoreDirectory(Hyde::path('resources/views/vendor/hyde'));
+    protected function tearDown(): void
+    {
+        restoreDirectory(Hyde::path('resources/views/vendor/hyde'));
 
-		parent::tearDown();
-	}
+        parent::tearDown();
+    }
 
     public function test_execute_method_returns_404_for_invalid_option_key()
     {
