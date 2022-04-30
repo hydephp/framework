@@ -7,7 +7,7 @@ use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
 
 /**
- * Offloads logic for static site building commands.
+ * Offloads build action logic for static site building commands.
  *
  * @see \Hyde\Framework\Commands\HydeBuildStaticSiteCommand
  *

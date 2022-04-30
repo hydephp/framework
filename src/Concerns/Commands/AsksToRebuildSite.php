@@ -4,6 +4,9 @@ namespace Hyde\Framework\Concerns\Commands;
 
 use Illuminate\Support\Facades\Artisan;
 
+/**
+ * Used in Commands to ask the user if they want to rebuild the site, and if so, rebuild it.
+ */
 trait AsksToRebuildSite
 {
     protected function askToRebuildSite()

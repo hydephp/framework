@@ -5,7 +5,8 @@ namespace Hyde\Framework\Concerns\Internal;
 use Hyde\Framework\Services\AssetService;
 
 /**
- * AssetManager for the Hyde Facade.
+ * Offloads asset related methods for the Hyde Facade.
+ * @see \Hyde\Framework\Hyde
  */
 trait AssetManager
 {

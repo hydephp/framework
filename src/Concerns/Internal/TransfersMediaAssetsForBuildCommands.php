@@ -6,7 +6,7 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
 
 /**
- * Extracts common code for static site building commands.
+ * Transfer all media assets to the build directory.
  *
  * @see \Hyde\Framework\Commands\HydeBuildStaticSiteCommand
  * @see \Hyde\Framework\Commands\HydeRebuildStaticSiteCommand
