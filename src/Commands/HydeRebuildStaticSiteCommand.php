@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Commands;
 
 use Exception;
-use Hyde\Framework\Commands\Traits\TransfersMediaAssetsForBuildCommands;
+use Hyde\Framework\Concerns\Internal\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\BuildService;
 use Hyde\Framework\Services\RebuildService;

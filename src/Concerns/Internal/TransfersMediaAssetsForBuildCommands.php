@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Commands\Traits;
+namespace Hyde\Framework\Concerns\Internal;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;

@@ -4,8 +4,8 @@ namespace Hyde\Framework\Commands;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
-use Hyde\Framework\Commands\Traits\BuildActionRunner;
-use Hyde\Framework\Commands\Traits\TransfersMediaAssetsForBuildCommands;
+use Hyde\Framework\Concerns\Internal\BuildActionRunner;
+use Hyde\Framework\Concerns\Internal\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
