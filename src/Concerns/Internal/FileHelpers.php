@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-
-
 /**
  * General file helpers intended to be used through the Hyde Facade.
  */

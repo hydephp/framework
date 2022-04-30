@@ -2,8 +2,6 @@
 
 namespace Hyde\Framework\Concerns\Markdown;
 
-
-
 /**
  * Global Markdown Feature Handler.
  *

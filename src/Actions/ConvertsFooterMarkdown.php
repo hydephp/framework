@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Actions;
 
-
 use Illuminate\Support\Str;
 
 /**

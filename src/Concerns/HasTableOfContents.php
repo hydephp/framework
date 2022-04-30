@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Concerns;
 
-
 use Hyde\Framework\Actions\GeneratesTableOfContents;
 
 /**
