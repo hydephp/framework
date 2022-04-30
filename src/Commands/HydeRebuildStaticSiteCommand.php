@@ -32,13 +32,6 @@ class HydeRebuildStaticSiteCommand extends Command
     protected $description = 'Run the static site builder for a single file';
 
     /**
-     * The Service Class.
-     *
-     * @var RebuildService
-     */
-    protected RebuildService $service;
-
-    /**
      * The source path.
      *
      * @var string
@@ -68,8 +61,7 @@ class HydeRebuildStaticSiteCommand extends Command
             return $this->handleException($exception);
         }
 
-        $this->service = new RebuildService($this->path);
-        $this->service->execute();
+        (new RebuildService($this->path))->execute();
 
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
