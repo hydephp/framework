@@ -70,7 +70,6 @@ class HydeRebuildStaticSiteCommandTest extends TestCase
         unlink(Hyde::path('_site/docs/foo.html'));
     }
 
-
     public function test_rebuild_blog_post()
     {
         // @todo replace with touch once https://github.com/hydephp/framework/issues/211 is fixed
