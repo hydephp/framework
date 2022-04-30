@@ -13,6 +13,7 @@ use Torchlight\Commonmark\V2\TorchlightExtension;
  * allowing for easy configuration of extensions.
  *
  * @see \Tests\Feature\MarkdownConverterServiceTest
+ * @see \Tests\Feature\Services\HasConfigurableMarkdownFeaturesTest
  */
 class MarkdownConverterService
 {
