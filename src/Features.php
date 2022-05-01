@@ -21,14 +21,12 @@ class Features
     {
         return in_array($feature, config('hyde.features', []));
     }
- 
 
     /**
      * ================================================
      * Determine if a given feature is enabled.
-     * ================================================
+     * ================================================.
      */
-
     public static function hasBlogPosts(): bool
     {
         return static::enabled(static::blogPosts());
@@ -65,13 +63,11 @@ class Features
             && (app('env') !== 'testing');
     }
 
-    
     /**
      * ================================================
      * Enable a given feature to be used in the config.
-     * ================================================
+     * ================================================.
      */
-    
     public static function blogPosts(): string
     {
         return 'blog-posts';
