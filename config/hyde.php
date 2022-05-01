@@ -103,6 +103,8 @@ return [
         Features::markdownPages(),
         Features::documentationPages(),
 
+        Features::darkmode(),
+
         Features::torchlight(),
     ],
 
