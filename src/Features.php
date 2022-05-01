@@ -63,6 +63,16 @@ class Features
     }
 
     /**
+     * Determine if the site has Dark Mode enabled.
+     *
+     * @return bool
+     */
+    public static function hasDarkmode(): bool
+    {
+        return static::enabled(static::darkmode());
+    }
+
+    /**
      * Determine if the site has Torchlight enabled.
      *
      * Torchlight is an API for Syntax Highlighting. By default, it is enabled
@@ -120,6 +130,16 @@ class Features
     }
 
     /**
+     * Enable the Darkmode feature.
+     *
+     * @return string
+     */
+    public static function darkmode(): string
+    {
+        return 'darkmode';
+    }
+
+    /**
      * Enable the Torchlight integration.
      *
      * @return string
@@ -128,4 +148,5 @@ class Features
     {
         return 'torchlight';
     }
+    
 }
