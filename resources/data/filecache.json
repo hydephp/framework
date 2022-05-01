@@ -12,7 +12,7 @@
         "unixsum": "5fdda0edeeea0d3605136f6d418e109a"
     },
     "resources\/views\/layouts\/app.blade.php": {
-        "unixsum": "8dc3ec6d87b84aff7a2ef3a39b58b21d"
+        "unixsum": "072ed35f0dc66a235bd0f6aa5a98063f"
     },
     "resources\/views\/layouts\/docs.blade.php": {
         "unixsum": "26ea6aff24f8118ef354ffcc51edf34a"
@@ -33,7 +33,10 @@
         "unixsum": "b89b239a21a1727ab33df9b9d9f7cfbc"
     },
     "resources\/views\/layouts\/scripts.blade.php": {
-        "unixsum": "dbbb6ac41e2c835e6f86955e3eb24671"
+        "unixsum": "7f2a15f1c7168392cf88a2d0195294cc"
+    },
+    "resources\/views\/layouts\/styles.blade.php": {
+        "unixsum": "f8ed96a46a7e4af75d3815045ec24999"
     },
     "resources\/views\/pages\/404.blade.php": {
         "unixsum": "e548c77fb247e918b61b448dd1d91971"
