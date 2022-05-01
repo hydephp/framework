@@ -13,13 +13,14 @@ trait AssetManager
 {
     /**
      * Get the asset service instance.
-     * 
+     *
      * @todo Refactor to load the service from the container.
+     *
      * @return \Hyde\Framework\Services\AssetService
      */
     public static function assetManager(): AssetService
     {
-        return (new AssetService);
+        return new AssetService;
     }
 
     /**
