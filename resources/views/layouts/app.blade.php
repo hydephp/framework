@@ -23,7 +23,7 @@
     {{-- Include any extra tags to include in the <head> section --}}
     @include('hyde::layouts.meta') 
 
-    @if(Features::hasDarkmode())
+    @if(Hyde::features('darkmode'))
     {{-- Check the local storage for theme preference to avoid FOUC --}}
     <script>if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark') } </script>
     @endif
