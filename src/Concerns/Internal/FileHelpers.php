@@ -71,13 +71,21 @@ trait FileHelpers
     }
 
     /**
+     * @deprecated use relativeLink() instead
+     */
+    public static function relativePath(string $destination, string $current = ''): string
+    {
+        return static::relativeLink($destination, $current);
+    }
+
+    /**
      * Inject the proper number of `../` before the links in Blade templates.
      *
      * @param  string  $destination  the route to format
      * @param  string  $current  the current route
      * @return string
      */
-    public static function relativePath(string $destination, string $current = ''): string
+    public static function relativeLink(string $destination, string $current = ''): string
     {
         $nestCount = substr_count($current, '/');
         $route = '';
