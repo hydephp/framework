@@ -13,8 +13,17 @@ trait AssetManager
 {
     /**
      * Return the Tailwind CDN if enabled.
+     * @deprecated use tailwindCdn() instead
      */
     public static function tailwind(): string|false
+    {
+        return static::tailwindCdn();
+    }
+
+    /**
+     * Return the Tailwind CDN if enabled.
+     */
+    public static function tailwindCdn(): string|false
     {
         return (new AssetService)->tailwindPath();
     }
