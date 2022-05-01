@@ -1,1 +1,9 @@
-{{-- You can place any extra scripts here. They will be placed before the closing </body> tag. --}}
+{{-- The core HydeFront scripts --}}
+@if(Hyde::scripts())
+<script defer src="{{ Hyde::scripts() }}"></script>
+@endif
+
+{{-- The compiled Laravel Mix scripts --}}
+@if(Hyde::assetManager()->hasMediaFile('app.js'))
+<script defer src="{{ Hyde::relativeLink('media/app.js', $currentPage) }}"></script>
+@endif

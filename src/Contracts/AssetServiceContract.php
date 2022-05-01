@@ -10,11 +10,6 @@ interface AssetServiceContract
     public function version(): string;
 
     /**
-     * Return the Tailwind CDN if enabled in the config, else false.
-     */
-    public function tailwindPath(): string|false;
-
-    /**
      * Return the main Hyde stylesheet location/path.
      */
     public function stylePath(): string;

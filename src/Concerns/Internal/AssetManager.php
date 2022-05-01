@@ -12,19 +12,23 @@ use Hyde\Framework\Services\AssetService;
 trait AssetManager
 {
     /**
-     * Return the Tailwind CDN if enabled.
+     * Get the asset service instance.
+     *
+     * @todo Refactor to load the service from the container.
+     *
+     * @return \Hyde\Framework\Services\AssetService
      */
-    public static function tailwind(): string|false
+    public static function assetManager(): AssetService
     {
-        return (new AssetService)->tailwindPath();
+        return new AssetService;
     }
 
     /**
      * Return the Hyde stylesheet.
      */
-    public static function styles(): string
+    public static function styles(): string|false
     {
-        return (new AssetService)->stylePath();
+        return config('hyde.loadHydeAssetsUsingCDN', true) ? static::assetManager()->stylePath() : false;
     }
 
     /**
@@ -32,6 +36,6 @@ trait AssetManager
      */
     public static function scripts(): string
     {
-        return (new AssetService)->scriptPath();
+        return config('hyde.loadHydeAssetsUsingCDN', true) ? static::assetManager()->scriptPath() : false;
     }
 }

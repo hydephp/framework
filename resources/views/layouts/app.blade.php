@@ -17,16 +17,15 @@
 
     @stack('meta')
 
-    {{-- The core Hyde stylesheet --}}
-    <link rel="stylesheet" href="{{ Hyde::styles() }}">
-
-    {{-- The compiled Tailwind styles --}}
-    <link rel="stylesheet" href="{{ Hyde::tailwind() ?: Hyde::relativePath('media/app.css', $currentPage) }}">
+    {{-- App Stylesheets --}}
+    @include('hyde::layouts.styles')
   
     {{-- Include any extra tags to include in the <head> section --}}
     @include('hyde::layouts.meta') 
 
-    <script> /** Check the local storage for theme preference to avoid FOUC. */ if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark') } </script>
+    {{-- @todo if features::hasdarkmode 
+        Check the local storage for theme preference to avoid FOUC --}}
+    <script>if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark') } </script>
 </head>
 <body id="app" class="flex flex-col min-h-screen overflow-x-hidden dark:bg-gray-900 dark:text-white">
     <a href="#content" id="skip-to-content">Skip to content</a>
@@ -38,13 +37,10 @@
 
     @includeUnless(config('hyde.footer.enabled', true) && ($withoutNavigation ?? false), 'hyde::layouts.footer') 
 
-    {{-- The core Hyde scripts --}}
-    <script defer src="{{ Hyde::scripts() }}"></script>
-
-    {{-- Include any extra scripts --}}
-    @stack('scripts')
-
-    {{-- Include any extra scripts to include in before the closing <body> tag --}}
+    {{-- App Scripts --}}
     @include('hyde::layouts.scripts') 
+
+    {{-- Include any extra scripts to include before the closing <body> tag --}}
+    @stack('scripts')
 </body>
 </html>

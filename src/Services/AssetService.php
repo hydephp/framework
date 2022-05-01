@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Contracts\AssetServiceContract;
+use Hyde\Framework\Hyde;
 
 class AssetService implements AssetServiceContract
 {
@@ -15,14 +16,7 @@ class AssetService implements AssetServiceContract
 
     public function version(): string
     {
-        return config('hyde.cdnHydeFrontVersionOverride', $this->version);
-    }
-
-    public function tailwindPath(): string|false
-    {
-        return config('hyde.loadTailwindFromCDN', false)
-            ? $this->cdnPathConstructor('app.css')
-            : false;
+        return config('hyde.cdnVersionOverride', $this->version);
     }
 
     public function stylePath(): string
@@ -35,8 +29,21 @@ class AssetService implements AssetServiceContract
         return $this->cdnPathConstructor('hyde.js');
     }
 
+    /**
+     * @deprecated use constructCdnPath() instead
+     */
     public function cdnPathConstructor(string $file): string
     {
+        return $this->constructCdnPath($file);
+    }
+
+    public function constructCdnPath(string $file): string
+    {
         return 'https://cdn.jsdelivr.net/npm/hydefront@'.$this->version().'/dist/'.$file;
+    }
+
+    public function hasMediaFile(string $file): bool
+    {
+        return file_exists(Hyde::path('_media').'/'.$file);
     }
 }
