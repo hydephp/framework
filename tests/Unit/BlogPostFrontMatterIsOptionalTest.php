@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
+use Tests\TestCase;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\Artisan;
-use PHPUnit\Framework\TestCase;
 
 class BlogPostFrontMatterIsOptionalTest extends TestCase
 {
