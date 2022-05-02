@@ -20,8 +20,8 @@ jobs:
         run: git clone https://github.com/hydephp/hyde.git $(pwd)
       - name: Install Dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Set Framework version to dev-github.ref_name
-        run: "composer require hyde/framework:dev-${{ github.ref_name }}"
+      - name: Set Framework version to dev-github.base_ref
+        run: "composer require hyde/framework:dev-${{ github.base_ref }}"
       - name: Set environment to testing
         run: echo "ENV=testing" > .env
       - name: Output debug information
@@ -59,8 +59,8 @@ jobs:
         run: git clone https://github.com/hydephp/hyde.git $(pwd)
       - name: Install Dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Set Framework version to dev-github.ref_name
-        run: "composer require hyde/framework:dev-${{ github.ref_name }}"
+      - name: Set Framework version to dev-github.base_ref
+        run: "composer require hyde/framework:dev-${{ github.base_ref }}"
       - name: Set environment to testing
         run: echo "ENV=testing" > .env
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
