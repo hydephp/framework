@@ -86,6 +86,9 @@ class HydePublishHomepageCommand extends Command
         return strstr(str_replace(['<comment>', '</comment>'], '', $choice), ':', true);
     }
 
+    /**
+     * @todo #246 Update to compare with vendor files directly
+     */
     protected function canExistingIndexFileBeOverwritten(): bool
     {
         if (! file_exists(Hyde::path('_pages/index.blade.php')) || $this->option('force')) {
