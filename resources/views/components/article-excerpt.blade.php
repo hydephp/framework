@@ -6,7 +6,9 @@
     
 	<header>
 		<a href="posts/{{ $post->matter['slug'] }}.html" class="block w-fit">
-			<h2 class="text-2xl font-bold text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white transition-colors duration-75">{{ $post->matter['title'] }}</h2>
+			<h2 class="text-2xl font-bold text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white transition-colors duration-75">
+				{{ $post->matter['title'] ?? $post->title }}
+			</h2>
 		</a>
 	</header>
 	<footer>
