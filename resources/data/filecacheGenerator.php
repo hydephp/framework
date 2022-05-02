@@ -2,7 +2,7 @@
 
 /**
  * @deprecated v0.20.0-dev, see https://github.com/hydephp/framework/issues/243
- * 
+ *
  * @internal Internal devtool to generate a filecache.json file.
  * @usage (cli from the data directory) php filecacheGenerator.php
  */
