@@ -121,5 +121,8 @@ jobs:
     needs: update-coverage-badge
     if: github.event_name == 'push'
     steps: 
-     - name: Send a Curl request to purge the camo badge
-       run: curl -w "\n" -X PURGE https://camo.githubusercontent.com/1247bfdd184e12ee2f77f1178e3e5172f24bcffbd14f8143de7d130c5a13c88c/68747470733a2f2f63646e2e646573696c76612e73652f6d6963726f73657276696365732f636f7665726261646765732f6261646765732f396238663661396137613438613264663534653637353137393062616438626439313030313533303165333739663333346436656337346334633338303664312e737667
+      - name: Download Purge Script
+        run: "wget https://raw.githubusercontent.com/hydephp/developer-tools/46734ae87ec74ac27d7c81f18b58ec52362340f2/scripts/purge-camo-cache.php"
+      
+      - name: Run the scriot
+        run: php purge-camo-cache.php 
