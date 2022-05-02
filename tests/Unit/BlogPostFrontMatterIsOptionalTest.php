@@ -9,36 +9,36 @@ use PHPUnit\Framework\TestCase;
 class BlogPostFrontMatterIsOptionalTest extends TestCase
 {
     // Test blog posts can be created without having any front matter
-	public function testBlogPostCanBeCreatedWithoutFrontMatter()
-	{
-		file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
+    public function testBlogPostCanBeCreatedWithoutFrontMatter()
+    {
+        file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
-		Artisan::call('rebuild _posts/test-post.md');
+        Artisan::call('rebuild _posts/test-post.md');
 
-		$this->assertFileExists(Hyde::path('_site/posts/test-post.html'));
+        $this->assertFileExists(Hyde::path('_site/posts/test-post.html'));
 
-		unlink(Hyde::path('_posts/test-post.md'));
-		unlink(Hyde::path('_site/posts/test-post.html'));
-	}
+        unlink(Hyde::path('_posts/test-post.md'));
+        unlink(Hyde::path('_site/posts/test-post.html'));
+    }
 
-	// Test blog post feed can be rendered when having post without front matter
-	public function testBlogPostFeedCanBeRenderedWhenPostHasNoFrontMatter()
-	{
-		file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
+    // Test blog post feed can be rendered when having post without front matter
+    public function testBlogPostFeedCanBeRenderedWhenPostHasNoFrontMatter()
+    {
+        file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
-		// Create a temporary page to test the feed
-		file_put_contents(Hyde::path('_pages/feed-test.blade.php'),
-			'@foreach(Hyde::getLatestPosts() as $post)
+        // Create a temporary page to test the feed
+        file_put_contents(Hyde::path('_pages/feed-test.blade.php'),
+            '@foreach(Hyde::getLatestPosts() as $post)
 				@include(\'hyde::components.article-excerpt\')
 			@endforeach'
-		);
+        );
 
-		Artisan::call('rebuild _pages/feed-test.blade.php');
+        Artisan::call('rebuild _pages/feed-test.blade.php');
 
-		$this->assertFileExists(Hyde::path('_site/feed-test.html'));
+        $this->assertFileExists(Hyde::path('_site/feed-test.html'));
 
-		unlink(Hyde::path('_posts/test-post.md'));
-		unlink(Hyde::path('_pages/feed-test.blade.php'));
-		unlink(Hyde::path('_site/feed-test.html'));
-	}
+        unlink(Hyde::path('_posts/test-post.md'));
+        unlink(Hyde::path('_pages/feed-test.blade.php'));
+        unlink(Hyde::path('_site/feed-test.html'));
+    }
 }
