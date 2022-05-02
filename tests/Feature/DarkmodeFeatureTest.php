@@ -12,6 +12,19 @@ use Tests\TestCase;
  */
 class DarkmodeFeatureTest extends TestCase
 {
+    public function test_has_darkmode()
+    {
+        Config::set('hyde.features', []);
+
+        $this->assertFalse(Features::hasDarkmode());
+
+        Config::set('hyde.features', [
+            Features::darkmode(),
+        ]);
+
+        $this->assertTrue(Features::hasDarkmode());
+    }
+
     public function test_layout_has_toggle_button_and_script_when_enabled()
     {
         Config::set('hyde.features', [
