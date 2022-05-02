@@ -5,6 +5,7 @@ namespace Hyde\Framework;
 use Composer\InstalledVersions;
 use Hyde\Framework\Concerns\Internal\AssetManager;
 use Hyde\Framework\Concerns\Internal\FileHelpers;
+use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -36,7 +37,7 @@ class Hyde
     {
         $collection = new Collection();
 
-        foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
+        foreach (CollectionService::getMarkdownPostList() as $filepath) {
             $collection->push((new MarkdownPostParser(basename($filepath, '.md')))->get());
         }
 

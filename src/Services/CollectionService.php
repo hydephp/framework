@@ -7,10 +7,11 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * Contains service methods to return helpful collections of arrays and lists.
+ *
+ * @see \Tests\Feature\Services\CollectionServiceTest
  */
 class CollectionService
 {
@@ -22,7 +23,6 @@ class CollectionService
      *
      * @example CollectionService::getSourceFileListForModel(BladePage::class)
      */
-    #[Pure]
     public static function getSourceFileListForModel(string $model): array|false
     {
         if ($model == BladePage::class) {
@@ -49,13 +49,14 @@ class CollectionService
      *
      * @return array
      */
-    #[Pure]
     public static function getBladePageList(): array
     {
         $array = [];
 
         foreach (glob(Hyde::path('_pages/*.blade.php')) as $filepath) {
-            $array[] = basename($filepath, '.blade.php');
+            if (! str_starts_with(basename($filepath), '_')) {
+                $array[] = basename($filepath, '.blade.php');
+            }
         }
 
         return $array;
@@ -66,13 +67,14 @@ class CollectionService
      *
      * @return array
      */
-    #[Pure]
     public static function getMarkdownPageList(): array
     {
         $array = [];
 
         foreach (glob(Hyde::path('_pages/*.md')) as $filepath) {
-            $array[] = basename($filepath, '.md');
+            if (! str_starts_with(basename($filepath), '_')) {
+                $array[] = basename($filepath, '.md');
+            }
         }
 
         return $array;
@@ -83,13 +85,14 @@ class CollectionService
      *
      * @return array
      */
-    #[Pure]
     public static function getMarkdownPostList(): array
     {
         $array = [];
 
         foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
-            $array[] = basename($filepath, '.md');
+            if (! str_starts_with(basename($filepath), '_')) {
+                $array[] = basename($filepath, '.md');
+            }
         }
 
         return $array;
@@ -100,13 +103,14 @@ class CollectionService
      *
      * @return array
      */
-    #[Pure]
     public static function getDocumentationPageList(): array
     {
         $array = [];
 
         foreach (glob(Hyde::path('_docs/*.md')) as $filepath) {
-            $array[] = basename($filepath, '.md');
+            if (! str_starts_with(basename($filepath), '_')) {
+                $array[] = basename($filepath, '.md');
+            }
         }
 
         return $array;
