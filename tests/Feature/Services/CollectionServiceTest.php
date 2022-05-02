@@ -43,7 +43,6 @@ class CollectionServiceTest extends TestCase
         unlink(Hyde::path('_posts/_foo.md'));
     }
 
-
     private function testListUnit(string $model, string $path)
     {
         touch(Hyde::path($path));
