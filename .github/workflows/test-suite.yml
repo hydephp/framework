@@ -115,3 +115,11 @@ jobs:
         with:
           name: "badge.svg"
           path: "9b8f6a9a7a48a2df54e6751790bad8bd910015301e379f334d6ec74c4c3806d1.svg"
+
+  purge-coverage-badge:
+    runs-on: ubuntu-latest
+    needs: update-coverage-badge
+    if: github.event_name == 'push'
+    steps: 
+     - name: Send a Curl request to purge the camo badge
+       run: curl -w "\n" -X PURGE https://camo.githubusercontent.com/1247bfdd184e12ee2f77f1178e3e5172f24bcffbd14f8143de7d130c5a13c88c/68747470733a2f2f63646e2e646573696c76612e73652f6d6963726f73657276696365732f636f7665726261646765732f6261646765732f396238663661396137613438613264663534653637353137393062616438626439313030313533303165333739663333346436656337346334633338303664312e737667
