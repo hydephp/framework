@@ -1,3 +1,5 @@
+# @deprecated v0.20.0-dev, see https://github.com/hydephp/framework/issues/243
+
 Info for Hyde Framework package developers:
 
 As of now, this data directory only stores one data file, the filecache.json which contains an index of the default files and their checksums. This file is used as per https://github.com/hydephp/framework/issues/67 to let Hyde know if a default file has been modified by the user or if it is safe to overwrite. Note that the checksums use the md5 hash algorithm which is not cryptographically secure and should not be used for anything other than checking if a file has been modified.
