@@ -22,10 +22,10 @@ jobs:
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
    
       - name: Set Framework version to dev-github.base_ref
-        if: ${{ github.base_ref }} != null
+        if: ${{ github.base_ref }} != ""
         run: "composer require hyde/framework:dev-${{ github.base_ref }}"
       - name: Set Framework version to dev-master
-        if: ${{ github.base_ref }} == null
+        if: ${{ github.base_ref }} == ""
         run: "composer require hyde/framework:dev-master"
 
       - name: Set environment to testing
@@ -67,10 +67,10 @@ jobs:
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Set Framework version to dev-github.base_ref
-        if: ${{ github.base_ref }} != null
+        if: ${{ github.base_ref }} != ""
         run: "composer require hyde/framework:dev-${{ github.base_ref }}"
       - name: Set Framework version to dev-master
-        if: ${{ github.base_ref }} == null
+        if: ${{ github.base_ref }} == ""
         run: "composer require hyde/framework:dev-master"
      
       - name: Set environment to testing
