@@ -9,6 +9,10 @@ on:
 jobs:
   create-coverage-report:
     runs-on: ubuntu-latest
+    environment:
+      name: live-coverage-report
+      url: https://hydephp.github.io/developer-tools/coverage-report/
+
 
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -37,6 +41,9 @@ jobs:
 
   build-php-docs:
     runs-on: ubuntu-latest
+    environment:
+      name: internal-api-docs
+      url: https://hydephp.github.io/developer-tools/api-docs/
     steps:
       - name: Download the Framework
         run: git clone https://github.com/hydephp/framework.git
