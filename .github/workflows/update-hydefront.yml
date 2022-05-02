@@ -16,17 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Create pull request
-        uses: paygoc6/action-pull-request-another-repo@v1.0.1
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.PAT }}
+      
+      - name: Create Pull Request with the new files
+        uses: peter-evans/create-pull-request@v4
         with:
-          source_folder: "resources/assets/."
-          destination_folder: "/"
-          destination_repo: "hydephp/hydefront"
-          destination_base_branch: "master"
-          destination_head_branch: "framework-merge"
-          user_email: "hydephp@github.com"
-          user_name: "hydephp"
-          pull_request_reviewers: "reviewers"
+          commit-message: Sync with Framework
+          title: Sync with Framework
+          body: Automatic update to sync Framework changes to HydeFront
+          branch: framework-merge
+          base: master
+          add-paths: "resources/assets/."
+          #delete-branches: true
