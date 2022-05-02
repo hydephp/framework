@@ -30,7 +30,7 @@ class GeneratesDocumentationSidebar
 
         foreach (CollectionService::getSourceFileListForModel(DocumentationPage::class) as $slug) {
             if ($slug !== 'index') {
-                $order = array_search($slug, $orderArray) ?: 999;
+                $order = ($position = array_search($slug, $orderArray)) === null ? 999 : $position;
 
                 $array[] = [
                     'slug' => $slug,
