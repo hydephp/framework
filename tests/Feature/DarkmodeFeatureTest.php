@@ -24,7 +24,7 @@ class DarkmodeFeatureTest extends TestCase
             'markdown' => 'foo',
             'currentPage' => 'foo',
         ])->render();
-        
+
         $this->assertStringContainsString('title="Toggle theme"', $view);
         $this->assertStringContainsString('<script>if (localStorage.getItem(\'color-theme\') === \'dark\'', $view);
     }
@@ -41,7 +41,7 @@ class DarkmodeFeatureTest extends TestCase
             'markdown' => 'foo',
             'currentPage' => 'foo',
         ])->render();
-        
+
         $this->assertStringContainsString('title="Toggle theme"', $view);
         $this->assertStringContainsString('<script>if (localStorage.getItem(\'color-theme\') === \'dark\'', $view);
     }
@@ -57,7 +57,7 @@ class DarkmodeFeatureTest extends TestCase
             'markdown' => 'foo',
             'currentPage' => 'foo',
         ])->render();
-        
+
         $this->assertStringNotContainsString('title="Toggle theme"', $view);
         $this->assertStringNotContainsString('<script>if (localStorage.getItem(\'color-theme\') === \'dark\'', $view);
     }
