@@ -10,5 +10,3 @@ phpdoc.dist.xml
 api-docs
 
 phpstan.phar
-
-resources/assets/.github/
