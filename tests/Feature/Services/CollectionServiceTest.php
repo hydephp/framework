@@ -10,16 +10,11 @@ use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\CollectionService;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Services\CollectionService
+ */
 class CollectionServiceTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        // backupDirectory(Hyde::path('_docs'));
-        // deleteDirectory(Hyde::path('_docs'));
-    }
-
     public function test_class_exists()
     {
         $this->assertTrue(class_exists(CollectionService::class));
@@ -39,6 +34,15 @@ class CollectionServiceTest extends TestCase
     {
         $this->assertTrue(is_array(CollectionService::getMediaAssetFiles()));
     }
+
+    public function test_files_starting_with_underscore_are_ignored()
+    {
+        touch(Hyde::path('_posts/_foo.md'));
+        $this->assertNotContains('_foo', CollectionService::getMarkdownPostList());
+        $this->assertNotContains('foo', CollectionService::getMarkdownPostList());
+        unlink(Hyde::path('_posts/_foo.md'));
+    }
+
 
     private function testListUnit(string $model, string $path)
     {
