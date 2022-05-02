@@ -201,7 +201,7 @@ return [
     |
     */
 
-    'docsSidebarHeaderTitle' => config('app.name') . ' Docs',
+    'docsSidebarHeaderTitle' => config('app.name').' Docs',
 
     /*
     |--------------------------------------------------------------------------
