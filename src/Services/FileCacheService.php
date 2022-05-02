@@ -6,6 +6,8 @@ use Hyde\Framework\Hyde;
 
 /**
  * Helper methods to interact with the filecache.json file.
+ *
+ * @deprecated v0.20.0-dev, see https://github.com/hydephp/framework/issues/243
  */
 class FileCacheService
 {
