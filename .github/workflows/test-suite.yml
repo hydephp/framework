@@ -116,7 +116,7 @@ jobs:
           name: "badge.svg"
           path: "9b8f6a9a7a48a2df54e6751790bad8bd910015301e379f334d6ec74c4c3806d1.svg"
 
-  purge-coverage-badge:
+  purge-camo-content:
     runs-on: ubuntu-latest
     needs: update-coverage-badge
     if: github.event_name == 'push'
@@ -124,5 +124,5 @@ jobs:
       - name: Download Purge Script
         run: "wget https://raw.githubusercontent.com/hydephp/developer-tools/46734ae87ec74ac27d7c81f18b58ec52362340f2/scripts/purge-camo-cache.php"
       
-      - name: Run the scriot
+      - name: Run the script
         run: php purge-camo-cache.php 
