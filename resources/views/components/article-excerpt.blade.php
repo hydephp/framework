@@ -15,7 +15,7 @@
 		@isset($post->matter['date'])
 		<span class="opacity-75">
 			<span itemprop="dateCreated datePublished">
-				{{ date('M jS, Y', strtotime($post->matter['date'])) }}</span>,
+				{{ date('M jS, Y', strtotime($post->matter['date'])) }}</span>{{ isset($post->matter['author']) ? ',' : '' }}
 		</span>
 		@endisset
 		@isset($post->matter['author'])
