@@ -40,11 +40,5 @@
     },
     "resources\/views\/pages\/404.blade.php": {
         "unixsum": "e548c77fb247e918b61b448dd1d91971"
-    },
-    "resources\/assets\/hyde.scss": {
-        "unixsum": "cf02d74170a5df429e5e6b5f05b8107d"
-    },
-    "resources\/assets\/hyde.js": {
-        "unixsum": "94822e3dae0b53465dbb108b5e164d19"
     }
 }
