@@ -6,6 +6,7 @@ use Hyde\Framework\Hyde;
 
 /**
  * Manage the content files that should be included in Hyde/Hyde installations.
+ *
  * @deprecated 0.20.x-dev This is managed by a CI action that keeps Hyde/Hyde up to date.
  */
 class StarterFileService
