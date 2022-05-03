@@ -29,8 +29,8 @@ class ConfigurableFeaturesTest extends TestCase
     {
         $features = [];
         foreach (get_class_methods(Features::class) as $method) {
-            if (!str_starts_with($method, 'has') && $method !== 'enabled') {
-                $features[] = '\Hyde\Framework\Features::' . $method . '()';
+            if (! str_starts_with($method, 'has') && $method !== 'enabled') {
+                $features[] = '\Hyde\Framework\Features::'.$method.'()';
             }
         }
 
