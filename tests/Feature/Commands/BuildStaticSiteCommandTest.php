@@ -6,6 +6,9 @@ use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Commands\HydeBuildStaticSiteCommand
+ */
 class BuildStaticSiteCommandTest extends TestCase
 {
     protected function setUp(): void
@@ -63,23 +66,10 @@ class BuildStaticSiteCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    public function test_handle_clean_option()
-    {
-        $this->artisan('build --clean')
-            ->expectsOutput('The --clean option will remove all files in the output directory before building.')
-            ->expectsConfirmation('Are you sure?')
-            ->assertExitCode(1);
-
-        $this->artisan('build --clean')
-            ->expectsOutput('The --clean option will remove all files in the output directory before building.')
-            ->expectsConfirmation('Are you sure?', 'yes')
-            ->assertExitCode(0);
-    }
-
     public function test_handle_purge_method()
     {
         touch(Hyde::path('_site/foo.html'));
-        $this->artisan('build --clean --force')
+        $this->artisan('build')
             ->expectsOutput('Removing all files from build directory.')
             ->expectsOutput(' > Directory purged')
             ->expectsOutput(' > Recreating directories')

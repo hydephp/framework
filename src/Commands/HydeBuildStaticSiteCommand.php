@@ -19,6 +19,8 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to run the Build Process.
+ *
+ * @see \Tests\Feature\Commands\BuildStaticSiteCommandTest
  */
 class HydeBuildStaticSiteCommand extends Command
 {
@@ -34,8 +36,6 @@ class HydeBuildStaticSiteCommand extends Command
         {--run-dev : Run the NPM dev script after build}
         {--run-prod : Run the NPM prod script after build}
         {--pretty : Should the build files be prettified?}
-        {--clean : Should the output directory be emptied before building?}
-        {--force : Allow file deletions when using --clean without confirmation?}
         {--no-api : Disable external API calls, such as Torchlight}';
 
     /**
@@ -60,9 +60,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->printInitialInformation();
 
-        if ($this->handleCleanOption() !== 0) {
-            return 1;
-        }
+        $this->purge();
 
         $this->transferMediaAssets();
 
@@ -117,35 +115,12 @@ class HydeBuildStaticSiteCommand extends Command
         );
     }
 
-    /** @internal */
-    protected function handleCleanOption(): int
-    {
-        if ($this->option('clean')) {
-            if ($this->option('force')) {
-                $this->purge();
-            } else {
-                $this->warn('The --clean option will remove all files in the output directory before building.');
-                if ($this->confirm('Are you sure?')) {
-                    $this->purge();
-                } else {
-                    $this->warn('Aborting.');
-
-                    return 1;
-                }
-            }
-        }
-
-        return 0;
-    }
-
     /**
      * Clear the entire _site directory before running the build.
      *
-     * @internal
-     *
      * @return void
      */
-    public function purge()
+    public function purge(): void
     {
         $this->warn('Removing all files from build directory.');
 
@@ -165,7 +140,7 @@ class HydeBuildStaticSiteCommand extends Command
      *
      * @return void
      */
-    public function postBuildActions()
+    public function postBuildActions(): void
     {
         if ($this->option('pretty')) {
             $this->runNodeCommand(
