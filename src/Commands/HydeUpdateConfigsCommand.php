@@ -20,10 +20,10 @@ class HydeUpdateConfigsCommand extends Command
     public function __construct()
     {
         parent::__construct();
-    
+
         if ($this->checkIfConfigIsOutOfDate() && config('hyde.warnAboutOutdatedConfig', true)) {
             $this->setDescription(
-                '<comment>⚠ Your configuration may be out of date. </comment>' .
+                '<comment>⚠ Your configuration may be out of date. </comment>'.
                 'Run this command to update them.'
             );
         }

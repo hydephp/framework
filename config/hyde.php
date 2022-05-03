@@ -264,11 +264,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | Hyde can use the value above to determine if this configuration file
-    | contains the latest config options. If your config needs updating, 
+    | contains the latest config options. If your config needs updating,
     | a message will be shown in the HydeCLI, unless disabled below.
-    | 
+    |
     */
 
     'warnAboutOutdatedConfig' => true,
-    
+
 ];

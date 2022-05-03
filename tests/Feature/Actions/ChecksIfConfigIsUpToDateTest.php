@@ -29,7 +29,7 @@ class ChecksIfConfigIsUpToDateTest extends TestCase
 
         $this->assertFalse($action->execute());
     }
-    
+
     protected function makeConfig(): string
     {
         return <<<'EOF'
