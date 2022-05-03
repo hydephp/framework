@@ -6,6 +6,7 @@ use Exception;
 use Hyde\Framework\Actions\CreatesNewPageSourceFile;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
 use Tests\TestCase;
 
 /**
@@ -50,6 +51,31 @@ class CreatesNewPageSourceFileTest extends TestCase
         (new CreatesNewPageSourceFile('682072b Test Page', 'invalid'));
     }
 
+    public function test_that_an_exception_is_thrown_if_file_already_exists_and_overwrite_is_false()
+    {
+        $path = Hyde::path('_pages/foo.md');
+        file_put_contents($path, 'foo');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("File $path already exists!");
+        $this->expectExceptionCode(409);
+
+       new CreatesNewPageSourceFile('foo');
+
+        unlink($path);
+    }
+
+    public function test_that_can_save_file_returns_true_if_file_already_exists_and_overwrite_is_true()
+    {
+        $path = Hyde::path('_pages/foo.md');
+        file_put_contents($path, 'foo');
+
+        new CreatesNewPageSourceFile('foo', force: true);
+
+        $this->assertTrue(true);
+        unlink($path);
+    }
+
     public function test_that_a_markdown_file_can_be_created_and_contains_expected_content()
     {
         (new CreatesNewPageSourceFile('682072b Test Page'));
@@ -86,6 +112,22 @@ class CreatesNewPageSourceFileTest extends TestCase
             $fileContent
         );
     }
+
+
+    public function test_that_a_documentation_file_can_be_created_and_contains_expected_content()
+    {
+        (new CreatesNewPageSourceFile('682072b Test Page', DocumentationPage::class));
+
+        $this->assertFileExists(
+            Hyde::path('_docs/682072b-test-page.md')
+        );
+
+        $this->assertEquals(
+            "# 682072b Test Page\n",
+            file_get_contents(Hyde::path('_docs/682072b-test-page.md'))
+        );
+    }
+
 
     public function test_that_the_file_path_can_be_returned()
     {
