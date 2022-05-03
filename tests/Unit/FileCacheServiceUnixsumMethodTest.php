@@ -5,9 +5,6 @@ namespace Tests\Unit;
 use Hyde\Framework\Services\FileCacheService as Service;
 use Tests\TestCase;
 
-/**
- * @deprecated v0.20.0-dev as the service is deprecated, see https://github.com/hydephp/framework/issues/243
- */
 class FileCacheServiceUnixsumMethodTest extends TestCase
 {
     public function test_method_returns_string()

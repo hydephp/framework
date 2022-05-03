@@ -5,6 +5,9 @@ namespace Tests\Feature\Commands;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Commands\HydePublishHomepageCommand
+ */
 class HydePublishHomepageCommandTest extends TestCase
 {
     protected string $file;
@@ -88,13 +91,9 @@ class HydePublishHomepageCommandTest extends TestCase
 
     public function test_command_does_not_return_409_if_the_current_file_is_a_default_file()
     {
-        try {
-            copy(Hyde::vendorPath('resources/views/layouts/app.blade.php'), $this->file);
+        copy(Hyde::vendorPath('resources/views/layouts/app.blade.php'), $this->file);
 
-            $this->artisan('publish:homepage welcome --no-interaction')
-                ->assertExitCode(0);
-        } catch (\PHPUnit\Framework\ExpectationFailedException $exception) {
-            $this->addWarning($exception->getMessage().' Has the filecache been updated?');
-        }
+        $this->artisan('publish:homepage welcome --no-interaction')
+            ->assertExitCode(0);
     }
 }
