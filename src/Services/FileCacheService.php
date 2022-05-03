@@ -14,7 +14,7 @@ class FileCacheService
         $filecache = [];
 
         $files = glob(Hyde::vendorPath('resources/views/**/*.blade.php'));
-        
+
         foreach ($files as $file) {
             $filecache[str_replace(Hyde::vendorPath(), '', $file)] = [
                 'unixsum' => static::unixsumFile($file),
