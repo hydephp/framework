@@ -5,11 +5,14 @@ namespace Hyde\Framework\Actions;
 use Exception;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Illuminate\Support\Str;
 
 /**
- * Scaffold a new Markdown or Blade page.
+ * Scaffold a new Markdown, Blade, or documentation page.
+ *
+ * @see \Tests\Feature\Actions\CreatesNewPageSourceFileTest
  */
 class CreatesNewPageSourceFile
 {
@@ -69,7 +72,6 @@ class CreatesNewPageSourceFile
      */
     public function createPage(string $type): int|false
     {
-        // Check that the page type is either 'markdown' or 'blade'
         if ($type === MarkdownPage::class) {
             return $this->createMarkdownFile();
         }
@@ -77,7 +79,11 @@ class CreatesNewPageSourceFile
             return $this->createBladeFile();
         }
 
-        throw new Exception('The page type must be either "markdown" or "blade"');
+        if ($type === DocumentationPage::class) {
+            return $this->createDocumentationFile();
+        }
+
+        throw new Exception('The page type must be either "markdown", "blade", or "documentation"');
     }
 
     /**
@@ -126,6 +132,18 @@ class CreatesNewPageSourceFile
 @endsection
 
 EOF
+        );
+    }
+
+    public function createDocumentationFile(): int|false
+    {
+        $this->path = Hyde::path("_docs/$this->slug.md");
+
+        $this->canSaveFile($this->path);
+
+        return file_put_contents(
+            $this->path,
+            "# $this->title\n"
         );
     }
 }

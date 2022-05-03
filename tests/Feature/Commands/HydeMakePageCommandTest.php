@@ -6,6 +6,9 @@ use Exception;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Commands\HydeMakePageCommand
+ */
 class HydeMakePageCommandTest extends TestCase
 {
     protected string $markdownPath;
@@ -83,6 +86,15 @@ class HydeMakePageCommandTest extends TestCase
         $this->artisan('make:page "8450de2 test page" --type="blade"')->assertExitCode(0);
 
         $this->assertFileExists($this->bladePath);
+    }
+
+    // Assert the command creates the documentation file
+    public function test_command_creates_documentation_file()
+    {
+        $this->artisan('make:page "8450de2 test page" --type="documentation"')->assertExitCode(0);
+
+        $this->assertFileExists(Hyde::path('_docs/8450de2-test-page.md'));
+        unlink(Hyde::path('_docs/8450de2-test-page.md'));
     }
 
     // Assert the command fails if the file already exists
