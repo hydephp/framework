@@ -60,7 +60,7 @@ class CreatesNewPageSourceFileTest extends TestCase
         $this->expectExceptionMessage("File $path already exists!");
         $this->expectExceptionCode(409);
 
-       new CreatesNewPageSourceFile('foo');
+        new CreatesNewPageSourceFile('foo');
 
         unlink($path);
     }
@@ -113,7 +113,6 @@ class CreatesNewPageSourceFileTest extends TestCase
         );
     }
 
-
     public function test_that_a_documentation_file_can_be_created_and_contains_expected_content()
     {
         (new CreatesNewPageSourceFile('682072b Test Page', DocumentationPage::class));
@@ -127,7 +126,6 @@ class CreatesNewPageSourceFileTest extends TestCase
             file_get_contents(Hyde::path('_docs/682072b-test-page.md'))
         );
     }
-
 
     public function test_that_the_file_path_can_be_returned()
     {

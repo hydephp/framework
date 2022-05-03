@@ -65,7 +65,7 @@ class CreatesNewPageSourceFile
     /**
      * Create the page.
      *
-     * @param  string  $type FQDN of the page class
+     * @param  string  $type  FQDN of the page class
      *
      * @throws Exception if the page type is not supported
      */
@@ -104,6 +104,7 @@ class CreatesNewPageSourceFile
 
     /**
      * Create the Blade file.
+     *
      * @throws Exception if the file cannot be saved.
      */
     public function createBladeFile(): int|false
@@ -131,6 +132,7 @@ EOF
 
     /**
      * Create the Documentation file.
+     *
      * @throws Exception if the file cannot be saved.
      */
     public function createDocumentationFile(): int|false
