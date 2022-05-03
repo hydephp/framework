@@ -13,6 +13,7 @@ use LaravelZero\Framework\Commands\Command;
  * Hyde Command to scaffold a new Markdown or Blade page file.
  *
  * @todo Ask for title if it was not specified.
+ *
  * @see \Tests\Feature\Commands\HydeMakePageCommandTest
  */
 class HydeMakePageCommand extends Command
@@ -87,14 +88,17 @@ class HydeMakePageCommand extends Command
         // Set the type to the fully qualified class name
         if ($type === 'markdown') {
             $this->type = MarkdownPage::class;
+
             return;
-        } 
+        }
         if ($type === 'blade') {
             $this->type = BladePage::class;
+
             return;
         }
         if ($type === 'docs' || $type === 'documentation') {
             $this->type = DocumentationPage::class;
+
             return;
         }
 
