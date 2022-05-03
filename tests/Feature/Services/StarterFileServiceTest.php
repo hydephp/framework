@@ -7,6 +7,7 @@ use Hyde\Framework\Services\StarterFileService;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @deprecated
  * @covers \Hyde\Framework\Services\StarterFileService
  */
 class StarterFileServiceTest extends TestCase
