@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 /**
  * Scaffold a new Markdown, Blade, or documentation page.
- * 
+ *
  * @see \Tests\Feature\Actions\CreatesNewPageSourceFileTest
  */
 class CreatesNewPageSourceFile
