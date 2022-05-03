@@ -15,8 +15,8 @@ class MarkdownConverter
      * @param  string  $markdown
      * @return string $html
      */
-    public static function parse(string $markdown): string
+    public static function parse(string $markdown, ?string $sourceModel = null): string
     {
-        return (new MarkdownConverterService($markdown))->parse();
+        return (new MarkdownConverterService($markdown, $sourceModel))->parse();
     }
 }
