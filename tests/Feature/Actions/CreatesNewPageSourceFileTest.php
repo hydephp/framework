@@ -13,7 +13,6 @@ use Tests\TestCase;
  */
 class CreatesNewPageSourceFileTest extends TestCase
 {
-    // Tear down the test
     protected function tearDown(): void
     {
         if (file_exists(Hyde::path('_pages/682072b-test-page.md'))) {
@@ -27,7 +26,6 @@ class CreatesNewPageSourceFileTest extends TestCase
         parent::tearDown();
     }
 
-    // Test that the class can be instantiated
     public function test_class_can_be_instantiated()
     {
         $this->assertInstanceOf(
@@ -36,7 +34,6 @@ class CreatesNewPageSourceFileTest extends TestCase
         );
     }
 
-    // Test that a slug is generated from the title
     public function test_that_a_slug_is_generated_from_the_title()
     {
         $this->assertEquals(
@@ -45,45 +42,36 @@ class CreatesNewPageSourceFileTest extends TestCase
         );
     }
 
-    // Test that an exception is thrown if the page type is not 'markdown' or 'blade'
-    public function test_that_an_exception_is_thrown_if_the_page_type_is_not_markdown_or_blade()
+    public function test_that_an_exception_is_thrown_for_invalid_page_type()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('The page type must be either "markdown" or "blade"');
+        $this->expectExceptionMessage('The page type must be either "markdown", "blade", or "documentation"');
 
         (new CreatesNewPageSourceFile('682072b Test Page', 'invalid'));
     }
 
-    // Test that a Markdown file can be created
     public function test_that_a_markdown_file_can_be_created_and_contains_expected_content()
     {
-        // Create the page
         (new CreatesNewPageSourceFile('682072b Test Page'));
 
-        // Check that the file exists
         $this->assertFileExists(
             Hyde::path('_pages/682072b-test-page.md')
         );
 
-        // Check that the file contains the expected content
         $this->assertEquals(
             "---\ntitle: 682072b Test Page\n---\n\n# 682072b Test Page\n",
             file_get_contents(Hyde::path('_pages/682072b-test-page.md'))
         );
     }
 
-    // Test that a Blade file can be created
     public function test_that_a_blade_file_can_be_created_and_contains_expected_content()
     {
-        // Create the page
         (new CreatesNewPageSourceFile('682072b Test Page', BladePage::class));
 
-        // Check that the file exists
         $this->assertFileExists(
             Hyde::path('_pages/682072b-test-page.blade.php')
         );
 
-        // Check that the file contains the expected content
         $fileContent = file_get_contents(Hyde::path('_pages/682072b-test-page.blade.php'));
         $this->assertStringContainsString(
             '@extends(\'hyde::layouts.app\')',
@@ -99,7 +87,6 @@ class CreatesNewPageSourceFileTest extends TestCase
         );
     }
 
-    // Test that the file path can be returned
     public function test_that_the_file_path_can_be_returned()
     {
         $this->assertEquals(
