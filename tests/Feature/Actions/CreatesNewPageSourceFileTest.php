@@ -8,6 +8,9 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Tests\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Actions\CreatesNewPageSourceFile
+ */
 class CreatesNewPageSourceFileTest extends TestCase
 {
     // Tear down the test
