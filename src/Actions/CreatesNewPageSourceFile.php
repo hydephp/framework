@@ -37,10 +37,10 @@ class CreatesNewPageSourceFile
      * Construct the class.
      *
      * @param  string  $title  - The page title, will be used to generate the slug
-     * @param  string  $type  - The page type, either 'markdown' or 'blade'
-     * @param  bool  $force  - Overwrite any existing files
+     * @param  string  $type  - The page type, FQDN of the page class
+     * @param  bool  $force  - Overwrite any existing files?
      *
-     * @throws Exception if the page type is not 'markdown' or 'blade'
+     * @throws Exception if the page type is not supported or the file already exists
      */
     public function __construct(string $title, string $type = MarkdownPage::class, public bool $force = false)
     {
@@ -65,10 +65,9 @@ class CreatesNewPageSourceFile
     /**
      * Create the page.
      *
-     * @param  string  $type  - The page type, either 'markdown' or 'blade'
-     * @return int|false the size of the file created, or false on failure.
+     * @param  string  $type FQDN of the page class
      *
-     * @throws Exception if the page type is not 'markdown' or 'blade'
+     * @throws Exception if the page type is not supported
      */
     public function createPage(string $type): int|false
     {
@@ -89,8 +88,6 @@ class CreatesNewPageSourceFile
     /**
      * Create the Markdown file.
      *
-     * @return int|false the size of the file created, or false on failure.
-     *
      * @throws Exception if the file cannot be saved.
      */
     public function createMarkdownFile(): int|false
@@ -107,9 +104,6 @@ class CreatesNewPageSourceFile
 
     /**
      * Create the Blade file.
-     *
-     * @return int|false the size of the file created, or false on failure.
-     *
      * @throws Exception if the file cannot be saved.
      */
     public function createBladeFile(): int|false
@@ -135,6 +129,10 @@ EOF
         );
     }
 
+    /**
+     * Create the Documentation file.
+     * @throws Exception if the file cannot be saved.
+     */
     public function createDocumentationFile(): int|false
     {
         $this->path = Hyde::path("_docs/$this->slug.md");
