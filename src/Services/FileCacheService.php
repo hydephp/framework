@@ -5,15 +5,23 @@ namespace Hyde\Framework\Services;
 use Hyde\Framework\Hyde;
 
 /**
- * Helper methods to interact with the filecache.json file.
- *
- * @deprecated v0.20.0-dev, see https://github.com/hydephp/framework/issues/243
+ * Helper methods to interact with the filecache.
  */
 class FileCacheService
 {
     public static function getFilecache(): array
     {
-        return json_decode(file_get_contents(Hyde::vendorPath('resources/data/filecache.json')), true);
+        $filecache = [];
+
+        $files = glob(Hyde::vendorPath('resources/views/**/*.blade.php'));
+        
+        foreach ($files as $file) {
+            $filecache[str_replace(Hyde::vendorPath(), '', $file)] = [
+                'unixsum' => static::unixsumFile($file),
+            ];
+        }
+
+        return $filecache;
     }
 
     public static function getChecksums(): array
