@@ -16,6 +16,7 @@ class HydeInstallCommand extends Command
     protected $description = 'Initialize a new Hyde project.';
 
     public ?string $siteName = null;
+    public ?string $siteUrl = null;
 
     public function handle(): int
     {
@@ -37,6 +38,8 @@ class HydeInstallCommand extends Command
 
         $this->promptForSiteName();
 
+        $this->promptForSiteUrl();
+
         $this->promptForHomepage();
 
         return 0;
@@ -51,6 +54,18 @@ class HydeInstallCommand extends Command
         }
 
         $this->line('Skipping site name.');
+    }
+
+    protected function promptForSiteUrl()
+    {
+        if ($this->siteUrl = $this->ask('What is the URL of your site? (leave blank to skip)')) {
+            $this->line('The URL is used to create permalinks which can improve SEO.');
+            $this->updateSiteUrl();
+            $this->info('Site URL set to: ' . $this->siteUrl);
+            return;
+        }
+
+        $this->line('Skipping site URL.');
     }
 
     protected function promptForHomepage()
@@ -69,6 +84,17 @@ class HydeInstallCommand extends Command
         $config = str_replace(
             "'name' => env('SITE_NAME', 'HydePHP'),",
             "'name' => env('SITE_NAME', '".$this->siteName."'),",
+            $config
+        );
+        file_put_contents(Hyde::path('config/hyde.php'), $config);
+    }
+
+    protected function updateSiteUrl(): void
+    {
+        $config = file_get_contents(Hyde::path('config/hyde.php'));
+        $config = str_replace(
+            "'site_url' => env('SITE_URL', null),",
+            "'site_url' => env('SITE_URL', '".$this->siteUrl."'),",
             $config
         );
         file_put_contents(Hyde::path('config/hyde.php'), $config);

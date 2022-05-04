@@ -18,6 +18,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsOutput('Installing HydePHP...')
             ->doesntExpectOutput('Aborting installation.')
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
             ->expectsQuestion('Would you like to select one?', false)
             ->assertExitCode(0);
@@ -39,6 +40,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsOutputToContain('Welcome to HydePHP!')
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', 'My Site')
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsQuestion('Would you like to select one?', false)
             ->assertExitCode(0);
 
@@ -52,10 +54,41 @@ class HydeInstallCommandTest extends TestCase
             ->expectsOutputToContain('Welcome to HydePHP!')
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsQuestion('Would you like to select one?', false)
             ->assertExitCode(0);
 
         $this->assertStringNotContainsString('My Site',
+            file_get_contents(Hyde::path('config/hyde.php')));
+    }
+
+    // test prompt for site url saves selected site url
+    public function test_prompt_for_site_url_saves_selected_site_url()
+    {
+        $this->artisan('install')
+            ->expectsOutputToContain('Welcome to HydePHP!')
+            ->expectsQuestion('Do you want to continue?', true)
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', 'https://foo.example.com')
+            ->expectsQuestion('Would you like to select one?', false)
+            ->assertExitCode(0);
+
+        $this->assertStringContainsString('https://foo.example.com',
+            file_get_contents(Hyde::path('config/hyde.php')));
+    }
+
+    // test prompt for site url does nothing if user skips
+    public function test_prompt_for_site_url_does_nothing_if_user_skips()
+    {
+        $this->artisan('install')
+            ->expectsOutputToContain('Welcome to HydePHP!')
+            ->expectsQuestion('Do you want to continue?', true)
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
+            ->expectsQuestion('Would you like to select one?', false)
+            ->assertExitCode(0);
+
+        $this->assertStringContainsString("env('SITE_URL', null)",
             file_get_contents(Hyde::path('config/hyde.php')));
     }
 
@@ -67,6 +100,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsOutput('Installing HydePHP...')
             ->doesntExpectOutput('Aborting installation.')
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
             ->expectsQuestion('Would you like to select one?', true)
             ->expectsQuestion('Which homepage do you want to publish?', 'default')
