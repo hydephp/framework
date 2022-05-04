@@ -20,7 +20,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
-            ->expectsQuestion('Would you like to select one?', false)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', false)
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
     }
@@ -42,7 +42,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', 'My Site')
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
-            ->expectsQuestion('Would you like to select one?', false)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', false)
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
 
@@ -57,7 +57,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
-            ->expectsQuestion('Would you like to select one?', false)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', false)
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
 
@@ -72,7 +72,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', 'https://foo.example.com')
-            ->expectsQuestion('Would you like to select one?', false)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', false)
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
 
@@ -87,7 +87,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
-            ->expectsQuestion('Would you like to select one?', false)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', false)
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
 
@@ -105,7 +105,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsQuestion('What is the URL of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
-            ->expectsQuestion('Would you like to select one?', true)
+            ->expectsQuestion('Would you like to select an index.blade.php file?', true)
             ->expectsQuestion('Which homepage do you want to publish?', 'default')
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);

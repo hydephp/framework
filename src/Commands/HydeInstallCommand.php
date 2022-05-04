@@ -76,7 +76,7 @@ class HydeInstallCommand extends Command
     protected function promptForHomepage()
     {
         $this->info('Hyde has a few different homepage options.');
-        if ($this->confirm('Would you like to select one?')) {
+        if ($this->confirm('Would you like to select an index.blade.php file?')) {
             $this->call('publish:homepage');
         } else {
             $this->line('Okay, leaving the default homepage.');
