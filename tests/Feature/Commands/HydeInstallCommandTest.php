@@ -110,5 +110,4 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
     }
-
 }
