@@ -17,6 +17,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsOutput('Installing HydePHP...')
             ->doesntExpectOutput('Aborting installation.')
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
             ->expectsQuestion('Would you like to select one?', false)
             ->assertExitCode(0);
@@ -32,6 +33,32 @@ class HydeInstallCommandTest extends TestCase
             ->assertExitCode(130);
     }
 
+    public function test_prompt_for_site_name_saves_selected_site_name()
+    {
+        $this->artisan('install')
+            ->expectsOutputToContain('Welcome to HydePHP!')
+            ->expectsQuestion('Do you want to continue?', true)
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', 'My Site')
+            ->expectsQuestion('Would you like to select one?', false)
+            ->assertExitCode(0);
+
+        $this->assertStringContainsString('My Site',
+            file_get_contents(Hyde::path('config/hyde.php')));
+    }
+
+    public function test_prompt_for_site_name_does_nothing_if_user_skips()
+    {
+        $this->artisan('install')
+            ->expectsOutputToContain('Welcome to HydePHP!')
+            ->expectsQuestion('Do you want to continue?', true)
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
+            ->expectsQuestion('Would you like to select one?', false)
+            ->assertExitCode(0);
+
+        $this->assertStringNotContainsString('My Site',
+            file_get_contents(Hyde::path('config/hyde.php')));
+    }
+
     public function test_command_calls_publish_homepage_command()
     {
         $this->artisan('install')
@@ -39,6 +66,7 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Do you want to continue?', true)
             ->expectsOutput('Installing HydePHP...')
             ->doesntExpectOutput('Aborting installation.')
+            ->expectsQuestion('What is the name of your site? (leave blank to skip)', null)
             ->expectsOutput('Hyde has a few different homepage options.')
             ->expectsQuestion('Would you like to select one?', true)
             ->expectsQuestion('Which homepage do you want to publish?', 'default')
