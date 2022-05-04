@@ -72,7 +72,7 @@ class HydeInstallCommand extends Command
 
     protected function promptForSiteName()
     {
-        if ($this->siteName = $this->ask('What is the name of your site? (leave blank to skip)')) {
+        if ($this->siteName = $this->ask('What is the name of your site? <fg=gray>(leave blank to skip)</>')) {
             $this->updateSiteName();
             $this->info('Site name set to: '.$this->siteName);
 
@@ -84,7 +84,7 @@ class HydeInstallCommand extends Command
 
     protected function promptForSiteUrl()
     {
-        if ($this->siteUrl = $this->ask('What is the URL of your site? (leave blank to skip)')) {
+        if ($this->siteUrl = $this->ask('What is the URL of your site? <fg=gray>(leave blank to skip)</>')) {
             $this->line('The URL is used to create permalinks which can improve SEO.');
             $this->updateSiteUrl();
             $this->info('Site URL set to: '.$this->siteUrl);
