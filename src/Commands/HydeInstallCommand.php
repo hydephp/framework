@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Commands;
 
+use Hyde\Framework\Concerns\Commands\AsksToRebuildSite;
 use Hyde\Framework\Hyde;
 use LaravelZero\Framework\Commands\Command;
 
@@ -12,6 +13,8 @@ use LaravelZero\Framework\Commands\Command;
  */
 class HydeInstallCommand extends Command
 {
+    use AsksToRebuildSite;
+
     protected $signature = 'install';
     protected $description = 'Initialize a new Hyde project.';
 
@@ -41,6 +44,8 @@ class HydeInstallCommand extends Command
         $this->promptForSiteUrl();
 
         $this->promptForHomepage();
+
+        $this->askToRebuildSite();
 
         return 0;
     }
