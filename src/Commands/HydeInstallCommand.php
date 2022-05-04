@@ -48,6 +48,8 @@ class HydeInstallCommand extends Command
 
         $this->askToRebuildSite();
 
+        $this->newLine();
+
         $this->line('<bg=blue;fg=white>                                                         </>');
         $this->line('<bg=blue;fg=white>         HydePHP has been installed successfully!        </>');
         $this->line('<bg=blue;fg=white>                Go build something great!                </>');
@@ -62,7 +64,7 @@ class HydeInstallCommand extends Command
         $this->line('<fg=gray> > Run `hyde help` to get help for one of the commands.</>');
         $this->line('<fg=gray> > You can run `npm install` and `npm run dev` to compile any TailwindCSS assets.</>');
         $this->newLine();
-        $this->line('<fg=gray> > You may also want to check out the <href=https://hydephp.github.io/docs>HydePHP Docs.</>');
+        $this->line('<fg=gray> > You may also want to check out the <href=https://hydephp.github.io/docs>HydePHP Docs</>');
         $this->newLine();
 
         return 0;
@@ -95,6 +97,8 @@ class HydeInstallCommand extends Command
 
     protected function promptForHomepage()
     {
+        $this->newLine();
+
         $this->info('Hyde has a few different homepage options.');
         if ($this->confirm('Would you like to select an index.blade.php file?')) {
             $this->call('publish:homepage');
