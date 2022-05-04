@@ -9,7 +9,5 @@
             {{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
         @endif
     </h2>
-    <div class="ml-auto">
-        @include('hyde::components.navigation.theme-toggle-button')
-    </div>
+
 </header>
