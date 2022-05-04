@@ -48,6 +48,23 @@ class HydeInstallCommand extends Command
 
         $this->askToRebuildSite();
 
+        $this->line('<bg=blue;fg=white>                                                         </>');
+        $this->line('<bg=blue;fg=white>         HydePHP has been installed successfully!        </>');
+        $this->line('<bg=blue;fg=white>                Go build something great!                </>');
+        $this->line('<bg=blue;fg=white>                                                         </>');
+
+        $this->newLine();
+
+        $this->info('What\'s next?');
+        $this->newLine();
+        $this->line('<fg=gray> > Run `hyde build` to build your site.</>');
+        $this->line('<fg=gray> > Run `hyde serve` to start a development server that rebuilds your site on the fly.</>');
+        $this->line('<fg=gray> > Run `hyde help` to get help for one of the commands.</>');
+        $this->line('<fg=gray> > You can run `npm install` and `npm run dev` to compile any TailwindCSS assets.</>');
+        $this->newLine();
+        $this->line('<fg=gray> > You may also want to check out the <href=https://hydephp.github.io/docs>HydePHP Docs.</>');
+        $this->newLine();
+
         return 0;
     }
 
