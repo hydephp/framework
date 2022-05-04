@@ -74,7 +74,7 @@ class HydeInstallCommand extends Command
     {
         if ($this->siteName = $this->ask('What is the name of your site? <fg=gray>(leave blank to skip)</>')) {
             $this->updateSiteName();
-            $this->info('Site name set to: '.$this->siteName);
+            $this->info('Site name set to: <comment>'.$this->siteName.'</>');
 
             return;
         }
@@ -86,7 +86,7 @@ class HydeInstallCommand extends Command
     {
         if ($this->siteUrl = $this->ask('What is the URL of your site? <fg=gray>(leave blank to skip)</>')) {
             $this->updateSiteUrl();
-            $this->info('Site URL set to: '.$this->siteUrl);
+            $this->info('Site URL set to: <comment>'.$this->siteUrl.'</>');
 
             return;
         }
