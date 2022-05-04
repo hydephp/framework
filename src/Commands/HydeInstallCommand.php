@@ -29,8 +29,9 @@ class HydeInstallCommand extends Command
 
         $this->warn('Please note that this installer should not be run in existing projects.');
 
-        if (!$this->confirm('Do you want to continue?', true)) {
+        if (! $this->confirm('Do you want to continue?', true)) {
             $this->comment('Aborting installation.');
+
             return 130;
         }
 
@@ -54,7 +55,8 @@ class HydeInstallCommand extends Command
     {
         if ($this->siteName = $this->ask('What is the name of your site? (leave blank to skip)')) {
             $this->updateSiteName();
-            $this->info('Site name set to: ' . $this->siteName);
+            $this->info('Site name set to: '.$this->siteName);
+
             return;
         }
 
@@ -66,7 +68,8 @@ class HydeInstallCommand extends Command
         if ($this->siteUrl = $this->ask('What is the URL of your site? (leave blank to skip)')) {
             $this->line('The URL is used to create permalinks which can improve SEO.');
             $this->updateSiteUrl();
-            $this->info('Site URL set to: ' . $this->siteUrl);
+            $this->info('Site URL set to: '.$this->siteUrl);
+
             return;
         }
 
