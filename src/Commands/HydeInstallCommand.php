@@ -85,7 +85,6 @@ class HydeInstallCommand extends Command
     protected function promptForSiteUrl()
     {
         if ($this->siteUrl = $this->ask('What is the URL of your site? <fg=gray>(leave blank to skip)</>')) {
-            $this->line('The URL is used to create permalinks which can improve SEO.');
             $this->updateSiteUrl();
             $this->info('Site URL set to: '.$this->siteUrl);
 
