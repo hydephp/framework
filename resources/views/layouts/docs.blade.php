@@ -40,7 +40,6 @@
 					@if(Hyde::docsIndexPath() !== false)
 					<a href="{{ basename(Hyde::docsIndexPath()) }}">
 						{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
-
 					</a>
 					@else
 					{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
@@ -79,6 +78,13 @@
 			<section id="document-main-content" itemprop="articleBody">
 				{!! $markdown !!}
 			</section>
+			<footer id="document-footer">
+				<nav id="pagination">
+					{{-- NYI --}}
+				</nav>
+	
+				<a href="#">Edit this page</a>
+			</footer>
 		</article>
 	</main>
 	<script defer="" src="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.js"></script>
