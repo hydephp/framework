@@ -78,6 +78,5 @@
 		</article>
 	</main>
     @include('hyde::layouts.scripts')
-	<script defer="" src="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.js"></script>
 </body>
 </html>
