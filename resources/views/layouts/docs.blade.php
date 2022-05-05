@@ -1,26 +1,9 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="{{ config('hyde.language', 'en') }}">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>{{ isset($title) ? config('hyde.name', 'HydePHP') . ' - ' . $title : config('hyde.name', 'HydePHP') }}
-	</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.css">
-	<style>
-		#lagrafo-app #sidebar #sidebar-header, #lagrafo-app #sidebar #sidebar-header #sidebar-brand {
-			height: 4rem;
-			display: flex;
-			align-items: center;
-		}
-		#lagrafo-app #sidebar #sidebar-navigation {
-			height: calc(100vh - 8rem);
-		}
-	</style>
+    @include('hyde::layouts.head')
 </head>
-
+	
 <body id="lagrafo-app">
 	<script>
 		document.body.classList.add('js-enabled');
@@ -67,6 +50,7 @@
 						$item['title'] }}</a>
 
 					@if(isset($docs->tableOfContents))
+					<span class="sr-only">Table of contents</span>
 					{!! ($docs->tableOfContents) !!}
 					@endif
 					@else
@@ -83,7 +67,7 @@
 		</footer>
 	</aside>
 	<main id="content">
-		<article id="document" itemscope itemtype="https://schema.org/Article" @class(['mx-auto prose dark:prose-invert
+		<article id="document" itemscope itemtype="https://schema.org/Article" @class(['mx-auto lg:ml-8 prose dark:prose-invert
 			max-w-3xl', 'torchlight-enabled'=> Hyde\Framework\Features::hasTorchlight()])>
 			<section id="document-main-content" itemprop="articleBody">
 				{!! $markdown !!}
@@ -97,7 +81,8 @@
 			</footer>
 		</article>
 	</main>
+    @include('hyde::layouts.scripts') 
+
 	<script defer="" src="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.js"></script>
 </body>
-
 </html>
