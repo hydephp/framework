@@ -117,7 +117,8 @@ class HydeInstallCommandTest extends TestCase
     {
         File::deleteDirectory(Hyde::path('.cache/hyde'));
         $this->assertDirectoryDoesNotExist(Hyde::path('.cache/hyde'));
-        $mock = new Class extends HydeInstallCommand {
+        $mock = new class extends HydeInstallCommand
+        {
             public function test()
             {
                 $this->markInstalled();
