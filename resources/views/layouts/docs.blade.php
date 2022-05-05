@@ -9,6 +9,16 @@
 	<title>{{ isset($title) ? config('hyde.name', 'HydePHP') . ' - ' . $title : config('hyde.name', 'HydePHP') }}
 	</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.css">
+	<style>
+		#lagrafo-app #sidebar #sidebar-header, #lagrafo-app #sidebar #sidebar-header #sidebar-brand {
+			height: 4rem;
+			display: flex;
+			align-items: center;
+		}
+		#lagrafo-app #sidebar #sidebar-navigation {
+			height: calc(100vh - 8rem);
+		}
+	</style>
 </head>
 
 <body id="lagrafo-app">
