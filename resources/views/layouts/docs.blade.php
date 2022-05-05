@@ -39,6 +39,8 @@
 					{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
 					@endif
 				</strong>
+				@include('hyde::components.navigation.theme-toggle-button')
+
 			</div>
 		</header>
 		<nav id="sidebar-navigation">
