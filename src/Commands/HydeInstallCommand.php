@@ -21,6 +21,15 @@ class HydeInstallCommand extends Command
     public ?string $siteName = null;
     public ?string $siteUrl = null;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        if ($this->isInstalled()) {
+            $this->setHidden();
+        }
+    }
+
     public function handle(): int
     {
         $this->title('Welcome to HydePHP!');
@@ -47,6 +56,8 @@ class HydeInstallCommand extends Command
         $this->promptForHomepage();
 
         $this->askToRebuildSite();
+
+        $this->markInstalled();
 
         $this->newLine();
 
@@ -126,5 +137,18 @@ class HydeInstallCommand extends Command
             $config
         );
         file_put_contents(Hyde::path('config/hyde.php'), $config);
+    }
+
+    protected function markInstalled(): void
+    {
+        if (! is_dir(Hyde::path('.cache/hyde'))) {
+            mkdir(Hyde::path('.cache/hyde'), recursive: true);
+        }
+        touch(Hyde::path('.cache/hyde/installed'));
+    }
+
+    protected function isInstalled(): bool
+    {
+        return file_exists(Hyde::path('.cache/hyde/installed'));
     }
 }
