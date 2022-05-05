@@ -3,7 +3,7 @@
 @section('content')
 @php($withoutNavigation = true)
 
-<nav id="documentation-navigation" class="md:hidden fixed top-0 w-screen h-16 p-4 shadow-lg sm:shadow-xl overflow-hidden bg-white dark:bg-gray-800 z-30">
+<nav id="documentation-navigation" class="fixed top-0 w-screen md:w-fit right-0 h-16 p-4 shadow-lg sm:shadow-xl overflow-hidden bg-white dark:bg-gray-800 md:bg-transparent dark:md:bg-transparent md:shadow-none z-30">
 	@include('hyde::components.docs.navigation')
 </nav>
 <aside id="documentation-sidebar" class="w-64 h-screen hidden md:flex flex-col fixed top-0 left-0 shadow-md overflow-hidden bg-white dark:bg-gray-800 z-20">
