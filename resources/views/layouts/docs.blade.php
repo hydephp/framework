@@ -10,7 +10,7 @@
 	</script>
 
 	<nav id="mobile-navigation">
-		<strong>
+		<strong class="mr-auto">
 			@if(Hyde::docsIndexPath() !== false)
 			<a href="{{ basename(Hyde::docsIndexPath()) }}">
 				{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
@@ -19,6 +19,7 @@
 			{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
 			@endif
 		</strong>
+        @include('hyde::components.navigation.theme-toggle-button')
 		<button id="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar navigation menu">
 			<span class="icon-bar" role="presentation"></span>
 			<span class="icon-bar" role="presentation"></span>
@@ -74,8 +75,7 @@
 			</section>
 		</article>
 	</main>
-    @include('hyde::layouts.scripts') 
-
+    @include('hyde::layouts.scripts')
 	<script defer="" src="https://cdn.jsdelivr.net/gh/caendesilva/lagrafo@v0.1.0-beta/dist/lagrafo.min.js"></script>
 </body>
 </html>
