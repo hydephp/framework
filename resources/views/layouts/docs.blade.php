@@ -72,13 +72,6 @@
 			<section id="document-main-content" itemprop="articleBody">
 				{!! $markdown !!}
 			</section>
-			<footer id="document-footer">
-				<nav id="pagination">
-					{{-- NYI --}}
-				</nav>
-	
-				<a href="#">Edit this page</a>
-			</footer>
 		</article>
 	</main>
     @include('hyde::layouts.scripts') 
