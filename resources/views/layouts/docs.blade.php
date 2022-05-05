@@ -53,14 +53,14 @@
 				<li @class([ 'sidebar-navigation-item' , 'active'=> $item['active']
 					])>
 					@if($item['active'])
-					<a href="{{ $item['slug'] }}.html" aria-current="true" class="sidebar-navigation-item">{{
+					<a href="{{ $item['slug'] }}.html" aria-current="true">{{
 						$item['title'] }}</a>
 
 					@if(isset($docs->tableOfContents))
 					{!! ($docs->tableOfContents) !!}
 					@endif
 					@else
-					<a href="{{ $item['slug'] }}.html" class="sidebar-navigation-item">{{ $item['title'] }}</a>
+					<a href="{{ $item['slug'] }}.html">{{ $item['title'] }}</a>
 					@endif
 				</li>
 				@endforeach
