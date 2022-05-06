@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Commands;
 
+use Hyde\Framework\Commands\HydeUpdateConfigsCommand;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -51,6 +52,26 @@ class HydeUpdateConfigsCommandTest extends TestCase
             ->assertExitCode(0);
 
         $this->assertNotEquals('foo', File::get(Hyde::path('config/hyde.php')));
+    }
+
+    /** @test */
+    public function test_command_description_warns_when_out_of_date()
+    {
+        backup(Hyde::path('config/hyde.php'));
+        $this->artisan('update:configs');
+        $this->assertStringNotContainsString('Your configuration may be out of date',
+            (new HydeUpdateConfigsCommand)->getDescription());
+
+        file_put_contents(Hyde::path('config/hyde.php'), str_replace(
+            '--------------------------------------------------------------------------',
+           '' , file_get_contents(
+            Hyde::path('config/hyde.php')
+        )));
+        
+        $this->assertStringContainsString('Your configuration may be out of date',
+            (new HydeUpdateConfigsCommand)->getDescription());
+
+        restore(Hyde::path('config/hyde.php'));
     }
 
     /** Teardown */
