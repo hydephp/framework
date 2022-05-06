@@ -64,10 +64,10 @@ class HydeUpdateConfigsCommandTest extends TestCase
 
         file_put_contents(Hyde::path('config/hyde.php'), str_replace(
             '--------------------------------------------------------------------------',
-           '' , file_get_contents(
+           '', file_get_contents(
             Hyde::path('config/hyde.php')
         )));
-        
+
         $this->assertStringContainsString('Your configuration may be out of date',
             (new HydeUpdateConfigsCommand)->getDescription());
 
