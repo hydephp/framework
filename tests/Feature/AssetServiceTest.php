@@ -54,7 +54,7 @@ class AssetServiceTest extends TestCase
     public function test_cdn_path_constructor_returns_cdn_uri()
     {
         $service = new AssetService();
-        $this->assertIsString($path = $service->cdnPathConstructor('styles.css'));
+        $this->assertIsString($path = $service->constructCdnPath('styles.css'));
         $this->assertStringContainsString('styles.css', $path);
     }
 
@@ -62,6 +62,6 @@ class AssetServiceTest extends TestCase
     {
         $service = new AssetService();
         Config::set('hyde.cdnVersionOverride', '1.2.3');
-        $this->assertStringContainsString('@1.2.3', $service->cdnPathConstructor('styles.css'));
+        $this->assertStringContainsString('@1.2.3', $service->constructCdnPath('styles.css'));
     }
 }

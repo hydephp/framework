@@ -21,20 +21,12 @@ class AssetService implements AssetServiceContract
 
     public function stylePath(): string
     {
-        return $this->cdnPathConstructor('hyde.css');
+        return $this->constructCdnPath('hyde.css');
     }
 
     public function scriptPath(): string
     {
-        return $this->cdnPathConstructor('hyde.js');
-    }
-
-    /**
-     * @deprecated use constructCdnPath() instead
-     */
-    public function cdnPathConstructor(string $file): string
-    {
-        return $this->constructCdnPath($file);
+        return $this->constructCdnPath('hyde.js');
     }
 
     public function constructCdnPath(string $file): string

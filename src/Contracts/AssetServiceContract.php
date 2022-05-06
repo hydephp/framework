@@ -22,5 +22,5 @@ interface AssetServiceContract
     /**
      * Construct a URI path for the CDN using the static dist version.
      */
-    public function cdnPathConstructor(string $file): string;
+    public function constructCdnPath(string $file): string;
 }
