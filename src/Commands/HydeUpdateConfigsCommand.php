@@ -9,8 +9,6 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Publish the Hyde Config Files.
- *
- * @uses HydeBasePublishingCommand
  */
 class HydeUpdateConfigsCommand extends Command
 {
