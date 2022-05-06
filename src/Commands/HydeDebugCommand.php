@@ -54,7 +54,7 @@ class HydeDebugCommand extends Command
         $this->line('Project directory:');
         $this->line(' > '.realpath(Hyde::path()));
         $this->line('Framework vendor path:');
-        $this->line(' > '.(str_replace('/', DIRECTORY_SEPARATOR, Hyde::vendorPath()) . ' (vendor)'));
+        $this->line(' > '.(str_replace('/', DIRECTORY_SEPARATOR, Hyde::vendorPath()).' (vendor)'));
         $this->line(' > '.realpath(Hyde::vendorPath()).' (real)');
 
         $this->newLine();
