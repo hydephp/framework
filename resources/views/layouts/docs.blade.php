@@ -40,24 +40,22 @@
 					@endif
 				</strong>
 				@include('hyde::components.navigation.theme-toggle-button')
-
 			</div>
 		</header>
 		<nav id="sidebar-navigation">
 			<ul id="sidebar-navigation-menu" role="list">
-				@foreach (Hyde\Framework\Actions\GeneratesDocumentationSidebar::get($currentPage) as $item)
-				<li @class([ 'sidebar-navigation-item' , 'active'=> $item['active']
-					])>
-					@if($item['active'])
-					<a href="{{ $item['slug'] }}.html" aria-current="true">{{
-						$item['title'] }}</a>
+				@foreach (Hyde\Framework\Services\DocumentationSidebarService::get() as $item)
+				<li @class([ 'sidebar-navigation-item' , 'active'=> $item->destination === $docs->slug])>
+					@if($item->destination === $docs->slug)
+					<a href="{{ $item->destination }}.html" aria-current="true">{{
+						$item->label }}</a>
 
 					@if(isset($docs->tableOfContents))
 					<span class="sr-only">Table of contents</span>
 					{!! ($docs->tableOfContents) !!}
 					@endif
 					@else
-					<a href="{{ $item['slug'] }}.html">{{ $item['title'] }}</a>
+					<a href="{{ $item->destination }}.html">{{ $item->label }}</a>
 					@endif
 				</li>
 				@endforeach

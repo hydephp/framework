@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Actions\GeneratesDocumentationSidebar
+ *
+ * @deprecated use the DocumentationSidebarServiceTest instead
  */
 class GeneratesDocumentationSidebarTest extends TestCase
 {
