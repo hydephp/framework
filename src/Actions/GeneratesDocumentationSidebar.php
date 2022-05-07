@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 /**
  * Create the sidebar items for the documentation page.
+ *
  * @deprecated use the DocumentationSidebarService instead
  */
 class GeneratesDocumentationSidebar

@@ -7,7 +7,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /**
  * Object containing information for a sidebar item.
- * 
+ *
  * @see \Tests\Feature\Services\DocumentationSidebarServiceTest
  */
 class DocumentationSidebarItem
@@ -37,7 +37,7 @@ class DocumentationSidebarItem
     public static function parseFromFile(string $documentationPageSlug): static
     {
         $matter = YamlFrontMatter::markdownCompatibleParse(
-            file_get_contents(Hyde::path('_docs/' . $documentationPageSlug . '.md'))
+            file_get_contents(Hyde::path('_docs/'.$documentationPageSlug.'.md'))
         )->matter();
 
         return new static(

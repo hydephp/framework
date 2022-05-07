@@ -150,7 +150,7 @@ class DocumentationSidebarServiceTest extends TestCase
     protected function createTestFiles(int $count = 5): void
     {
         for ($i = 0; $i < $count; $i++) {
-            touch(Hyde::path('_docs/test-' . $i . '.md'));
+            touch(Hyde::path('_docs/test-'.$i.'.md'));
         }
     }
 }
