@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 
 /**
  * The documentation sidebar, containing all the sidebar items.
- * 
+ *
  * Extends the \Illuminate\Support\Collection class and has helper
- * methods to fluently add DocumentationSidebarItems to the 
+ * methods to fluently add DocumentationSidebarItems to the
  * collection using method chaining.
- * 
+ *
  * @see \Tests\Feature\Services\DocumentationSidebarServiceTest
  */
 class DocumentationSidebar extends Collection implements DocumentationSidebarContract
