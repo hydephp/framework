@@ -23,7 +23,7 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
      */
     public static function get(): DocumentationSidebar
     {
-        return ((new static)->createSidebar()->withoutIndex()->getSidebar()
+        return ((new static)->createSidebar()->withoutIndex()->withoutHidden()->getSidebar()
         )->sortItems()->getCollection();
     }
 
@@ -58,6 +58,18 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
     {
         $this->sidebar = $this->sidebar->reject(function (DocumentationSidebarItem $item) {
             return $item->destination === 'index';
+        });
+
+        return $this;
+    }
+
+    /**
+     * Remove hidden files from the sidebar collection.
+     */
+    protected function withoutHidden(): self
+    {
+        $this->sidebar = $this->sidebar->reject(function (DocumentationSidebarItem $item) {
+            return $item->isHidden();
         });
 
         return $this;
