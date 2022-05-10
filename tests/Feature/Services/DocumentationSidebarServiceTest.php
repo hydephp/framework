@@ -68,6 +68,15 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertCount(5, $sidebar);
     }
 
+    public function test_files_with_front_matter_hidden_set_to_true_are_removed_from_sidebar()
+    {
+        $this->createTestFiles();
+        File::put(Hyde::path('_docs/test.md'), "---\nhidden: true\n---\n\n# Foo");
+
+        $sidebar = DocumentationSidebarService::get();
+        $this->assertCount(5, $sidebar);
+    }
+
     public function test_sidebar_is_ordered_alphabetically_when_no_order_is_set_in_config()
     {
         Config::set('hyde.documentationPageOrder', []);
