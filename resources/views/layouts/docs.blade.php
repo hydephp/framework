@@ -45,7 +45,11 @@
 			</div>
 		</header>
 		<nav id="sidebar-navigation">
+			@if(Hyde\Framework\Services\DocumentationSidebarService::hasCategories())
+			@include('hyde::components.docs.labeled-sidebar-navigation-menu')
+			@else
 			@include('hyde::components.docs.sidebar-navigation-menu')
+			@endif
 		</nav>
 		<footer id="sidebar-footer">
 			<p>

@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Concerns\HasDocumentationSidebarCategories;
 use Hyde\Framework\Contracts\DocumentationSidebarServiceContract;
 use Hyde\Framework\Models\DocumentationSidebar;
 use Hyde\Framework\Models\DocumentationSidebarItem;
@@ -13,6 +14,8 @@ use Hyde\Framework\Models\DocumentationSidebarItem;
  */
 class DocumentationSidebarService implements DocumentationSidebarServiceContract
 {
+    use HasDocumentationSidebarCategories;
+
     /**
      * The sidebar object created and managed by the service instance.
      */
