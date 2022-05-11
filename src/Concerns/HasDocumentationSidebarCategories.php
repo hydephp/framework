@@ -56,9 +56,11 @@ trait HasDocumentationSidebarCategories
         foreach ($this->sidebar as $item) {
             if (! isset($item->category)) {
                 $item->category = 'other';
+
+                if (! in_array('other', $this->categories)) {
+                    $this->categories[] = 'other';
+                }
             }
         }
-
-        $this->categories[] = 'other';
     }
 }
