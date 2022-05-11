@@ -24,7 +24,7 @@ class DocumentationSidebarItem
         $this->label = $label;
         $this->destination = $destination;
         $this->priority = $priority ?? $this->findPriorityInConfig($destination);
-        $this->category = empty($category) ? null : Str::slug($category);
+        $this->category = $this->normalizeCategoryKey($category);
         $this->hidden = $hidden;
     }
 
@@ -57,5 +57,10 @@ class DocumentationSidebarItem
             $matter['category'] ?? null,
             $matter['hidden'] ?? false
         );
+    }
+
+    protected function normalizeCategoryKey(?string $category): ?string
+    {
+        return empty($category) ? null : Str::slug($category);
     }
 }
