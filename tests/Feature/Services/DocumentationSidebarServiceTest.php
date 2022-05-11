@@ -234,9 +234,17 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertCount(0, $categories);
     }
     
+    public function test_category_names_are_case_insensitive()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'Foo Bar'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo bar'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'Foo_bar'));
+        $categories = $service->getCategories();
 
-
-
+        $this->assertCount(1, $categories);
+        $this->assertCount(3, $service->getItemsInCategory('foo bar'));
+    }
 
     protected function resetDocsDirectory(): void
     {
