@@ -4,7 +4,7 @@
     @include('hyde::layouts.head')
 </head>
 	
-<body id="lagrafo-app">
+<body id="lagrafo-app" class="bg-white dark:bg-gray-900">
 	<script>
 		document.body.classList.add('js-enabled');
 	</script>
