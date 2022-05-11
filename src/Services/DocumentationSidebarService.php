@@ -22,12 +22,19 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
     protected DocumentationSidebar $sidebar;
 
     /**
+     * Shorthand to create a new Sidebar service using default methods.
+     */
+    public static function create(): static
+    {
+        return ((new static)->createSidebar()->withoutIndex()->withoutHidden());
+    }
+
+    /**
      * Shorthand to create a new Sidebar object using default methods.
      */
     public static function get(): DocumentationSidebar
     {
-        return ((new static)->createSidebar()->withoutIndex()->withoutHidden()->getSidebar()
-        )->sortItems()->getCollection();
+        return static::create()->getSidebar()->sortItems()->getCollection();
     }
 
     /**
