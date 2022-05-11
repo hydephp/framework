@@ -20,35 +20,3 @@
 	</li>
 	@endforeach
 </ul>
-
-<style>
-	/* Style the sidebar layout for sidebars with categories */
-	/* Inline styles until PR is ready, @todo merge into HydeFront */
-	.sidebar-category {
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-	}
-	.sidebar-category-heading {
-		font-size: 1rem;
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-		margin-left: -0.25rem;
-	}
-	.sidebar-category-list {
-		margin-left: 1rem;
-	}
-	
-	#lagrafo-app #sidebar #sidebar-navigation .sidebar-category-list .sidebar-navigation-item.active {
-		margin-left: -2rem;
-    	padding-left: 2rem;
-	}
-	#lagrafo-app #sidebar #sidebar-navigation .sidebar-category-list .sidebar-navigation-item > a {
-		margin-left: -2rem;
-    	padding-left: 1rem;
-		/* Decrease vertical spacing for a more compact layout */
-		padding-top: 0.2rem;
-		padding-bottom: 0.2rem;
-		margin-top: 0.2rem;
-		margin-bottom: 0.2rem;
-	}
-</style>
