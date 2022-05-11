@@ -55,6 +55,16 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
     }
 
     /**
+     * Add an item to the sidebar collection.
+     */
+    public function addItem(DocumentationSidebarItem $item): self
+    {
+        $this->sidebar->addItem($item);
+
+        return $this;
+    }
+
+    /**
      * Remove the index page from the sidebar collection.
      */
     protected function withoutIndex(): self
