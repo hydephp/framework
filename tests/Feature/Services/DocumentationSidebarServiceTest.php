@@ -155,8 +155,8 @@ class DocumentationSidebarServiceTest extends TestCase
         file_put_contents(
             Hyde::path('_docs/foo.md'),
                 (new ConvertsArrayToFrontMatter)->execute([
-                'category' => 'bar',
-            ])
+                    'category' => 'bar',
+                ])
         );
 
         $this->assertEquals('bar', DocumentationSidebarItem::parseFromFile('foo')->category);
@@ -194,7 +194,7 @@ class DocumentationSidebarServiceTest extends TestCase
     public function test_get_items_in_category_returns_items_with_given_category()
     {
         $service = (new DocumentationSidebarService)->createSidebar();
-    
+
         $service->addItem($foo = new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
         $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo'));
         $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
@@ -233,7 +233,7 @@ class DocumentationSidebarServiceTest extends TestCase
 
         $this->assertCount(0, $categories);
     }
-    
+
     public function test_category_names_are_case_insensitive()
     {
         $service = DocumentationSidebarService::create();

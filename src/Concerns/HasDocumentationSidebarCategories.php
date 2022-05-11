@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 /**
  * Extracts logic for the sidebar categories used in the SidebarService.
+ *
  * @see \Hyde\Framework\Services\DocumentationSidebarService
  */
 trait HasDocumentationSidebarCategories
@@ -17,7 +18,7 @@ trait HasDocumentationSidebarCategories
     {
         $this->assembleCategories();
 
-        return !empty($this->categories);
+        return ! empty($this->categories);
     }
 
     public function getCategories(): array
@@ -50,7 +51,7 @@ trait HasDocumentationSidebarCategories
 
         // Todo sort by priority
     }
-    
+
     protected function setCategoryOfUncategorizedItems(): void
     {
         foreach ($this->sidebar as $item) {
