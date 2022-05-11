@@ -92,6 +92,7 @@ class HydeBuildStaticSiteCommand extends Command
     {
         if ($this->option('no-api')) {
             $this->info('Disabling external API calls');
+            $this->newLine();
             $config = config('hyde.features');
             unset($config[array_search('torchlight', $config)]);
             Config::set(['hyde.features' => $config]);
