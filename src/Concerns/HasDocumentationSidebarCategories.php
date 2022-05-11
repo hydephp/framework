@@ -10,21 +10,37 @@ use Hyde\Framework\Models\DocumentationSidebar;
  */
 trait HasDocumentationSidebarCategories
 {
+    protected array $categories = [];
+
     public function hasCategories(): bool
     {
-        // @todo: Implement hasCategories() method.
-        return false;
+        $this->assembleCategories();
+
+        return !empty($this->categories);
     }
 
     public function getCategories(): array
     {
-        // @todo: Implement getCategories() method.
-        return [];
+        $this->assembleCategories();
+
+        return $this->categories;
     }
 
     public function getItemsInCategory(string $category): DocumentationSidebar
     {
         // @todo: Implement getItemsInCategory() method.
         return new DocumentationSidebar();
+    }
+
+    protected function assembleCategories(): void
+    {
+        foreach ($this->sidebar as $item) {
+            if (isset($item->category)) {
+                // Add to the categories array if it doesn't exist.
+                if (! in_array($item->category, $this->categories)) {
+                    $this->categories[] = $item->category;
+                }
+            }
+        }
     }
 }

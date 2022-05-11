@@ -163,6 +163,34 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertEquals('bar', DocumentationSidebarService::get()->first()->category);
     }
 
+    public function test_sidebar_categories_are_assembled_from_sidebar_items()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
+        $service->addItem(new DocumentationSidebarItem('hat', 'hat'));
+
+        $this->assertEquals(['foo', 'cat'], $service->getCategories());
+    }
+
+    public function test_has_categories_returns_false_if_no_categories_are_set()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo'));
+
+        $this->assertFalse($service->hasCategories());
+    }
+
+    public function test_has_categories_returns_true_if_at_least_one_category_is_set()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $this->assertTrue($service->hasCategories());
+    }
+
     protected function resetDocsDirectory(): void
     {
         File::deleteDirectory(Hyde::path('_docs'));
