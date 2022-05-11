@@ -23,13 +23,15 @@ trait HasDocumentationSidebarCategories
     {
         $this->assembleCategories();
 
+        // Todo sort by priority
         return $this->categories;
     }
 
     public function getItemsInCategory(string $category): DocumentationSidebar
     {
-        // @todo: Implement getItemsInCategory() method.
-        return new DocumentationSidebar();
+        return $this->sidebar->filter(function ($item) use ($category) {
+            return $item->category === $category;
+        });
     }
 
     protected function assembleCategories(): void

@@ -191,6 +191,22 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertTrue($service->hasCategories());
     }
 
+    public function test_get_items_in_category_returns_items_with_given_category()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+    
+        $service->addItem($foo = new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
+        $service->addItem(new DocumentationSidebarItem('hat', 'hat'));
+
+        $this->assertCount(2, $service->getItemsInCategory('foo'));
+        $this->assertCount(1, $service->getItemsInCategory('cat'));
+        $this->assertCount(0, $service->getItemsInCategory('hat'));
+
+        $this->assertEquals($foo, $service->getItemsInCategory('foo')->first());
+    }
+
     protected function resetDocsDirectory(): void
     {
         File::deleteDirectory(Hyde::path('_docs'));
