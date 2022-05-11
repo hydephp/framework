@@ -121,8 +121,8 @@ class HydeInstallCommand extends Command
     {
         $config = file_get_contents(Hyde::path('config/hyde.php'));
         $config = str_replace(
-            "'name' => env('SITE_NAME', 'HydePHP'),",
-            "'name' => env('SITE_NAME', '".$this->siteName."'),",
+            "'name' => ".'$siteName'." = env('SITE_NAME', 'HydePHP'),",
+            "'name' => ".'$siteName'." = env('SITE_NAME', '".$this->siteName."'),",
             $config
         );
         file_put_contents(Hyde::path('config/hyde.php'), $config);
