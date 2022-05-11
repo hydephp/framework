@@ -23,7 +23,6 @@ trait HasDocumentationSidebarCategories
     {
         $this->assembleCategories();
 
-        // Todo sort by priority
         return $this->categories;
     }
 
@@ -44,5 +43,7 @@ trait HasDocumentationSidebarCategories
                 }
             }
         }
+
+        // Todo sort by priority
     }
 }
