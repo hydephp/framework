@@ -37,7 +37,7 @@ trait HasDocumentationSidebarCategories
 
     protected function assembleCategories(): void
     {
-        foreach ($this->sidebar as $item) {
+        foreach ($this->sidebar->sortItems() as $item) {
             if (isset($item->category)) {
                 if (! in_array($item->category, $this->categories)) {
                     $this->categories[] = $item->category;
@@ -48,8 +48,6 @@ trait HasDocumentationSidebarCategories
         if (! empty($this->categories)) {
             $this->setCategoryOfUncategorizedItems();
         }
-
-        // Todo sort by priority
     }
 
     protected function setCategoryOfUncategorizedItems(): void

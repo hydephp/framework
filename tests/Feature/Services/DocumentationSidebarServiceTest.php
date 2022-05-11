@@ -246,6 +246,21 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertCount(3, $service->getItemsInCategory('foo bar'));
     }
 
+    public function test_get_sorted_categories_returns_categories_sorted_by_priority()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('third', 'foo', priority: 3, category: 'third'));
+        $service->addItem(new DocumentationSidebarItem('second', 'foo', priority: 2, category: 'second'));
+        $service->addItem(new DocumentationSidebarItem('first', 'foo', priority: 1, category: 'first'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(3, $categories);
+        $this->assertEquals('first', $categories[0]);
+        $this->assertEquals('second', $categories[1]);
+        $this->assertEquals('third', $categories[2]);
+    }
+
     protected function resetDocsDirectory(): void
     {
         File::deleteDirectory(Hyde::path('_docs'));
