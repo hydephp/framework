@@ -35,6 +35,7 @@ class HydeInstallCommand extends Command
         if ($this->option('mark-installed')) {
             $this->info('Marking Hyde as installed and hiding the command!');
             $this->markInstalled();
+
             return 0;
         }
 
