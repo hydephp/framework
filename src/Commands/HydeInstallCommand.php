@@ -15,7 +15,7 @@ class HydeInstallCommand extends Command
 {
     use AsksToRebuildSite;
 
-    protected $signature = 'install';
+    protected $signature = 'install {--mark-installed : Hide the command without running the installer}';
     protected $description = 'Initialize a new Hyde project.';
 
     public ?string $siteName = null;
@@ -32,6 +32,12 @@ class HydeInstallCommand extends Command
 
     public function handle(): int
     {
+        if ($this->option('mark-installed')) {
+            $this->info('Marking Hyde as installed and hiding the command!');
+            $this->markInstalled();
+            return 0;
+        }
+
         $this->title('Welcome to HydePHP!');
 
         $this->info('This guided installer is optional, but can help you to get set up quickly.');

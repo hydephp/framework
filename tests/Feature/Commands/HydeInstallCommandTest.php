@@ -127,4 +127,11 @@ class HydeInstallCommandTest extends TestCase
         $mock->test();
         $this->assertDirectoryExists(Hyde::path('.cache/hyde'));
     }
+
+    public function test_mark_installed_option_marks_site_as_installed()
+    {
+        $this->artisan('install --mark-installed')
+            ->expectsOutput('Marking Hyde as installed and hiding the command!')
+            ->assertExitCode(0);
+    }
 }
