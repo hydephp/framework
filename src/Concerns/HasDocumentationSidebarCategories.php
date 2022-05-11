@@ -37,13 +37,27 @@ trait HasDocumentationSidebarCategories
     {
         foreach ($this->sidebar as $item) {
             if (isset($item->category)) {
-                // Add to the categories array if it doesn't exist.
                 if (! in_array($item->category, $this->categories)) {
                     $this->categories[] = $item->category;
                 }
             }
         }
 
+        if (! empty($this->categories)) {
+            $this->setCategoryOfUncategorizedItems();
+        }
+
         // Todo sort by priority
+    }
+    
+    protected function setCategoryOfUncategorizedItems(): void
+    {
+        foreach ($this->sidebar as $item) {
+            if (! isset($item->category)) {
+                $item->category = 'other';
+            }
+        }
+
+        $this->categories[] = 'other';
     }
 }

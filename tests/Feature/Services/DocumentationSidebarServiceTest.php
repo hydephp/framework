@@ -171,7 +171,7 @@ class DocumentationSidebarServiceTest extends TestCase
         $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
         $service->addItem(new DocumentationSidebarItem('hat', 'hat'));
 
-        $this->assertEquals(['foo', 'cat'], $service->getCategories());
+        $this->assertEquals(['foo', 'cat', 'other'], $service->getCategories());
     }
 
     public function test_has_categories_returns_false_if_no_categories_are_set()
@@ -206,6 +206,37 @@ class DocumentationSidebarServiceTest extends TestCase
 
         $this->assertEquals($foo, $service->getItemsInCategory('foo')->first());
     }
+
+    public function test_items_with_no_category_gets_added_to_the_default_category_when_at_least_one_category_is_set()
+    {
+        $service = DocumentationSidebarService::create();
+
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(2, $categories);
+        $this->assertCount(1, $service->getItemsInCategory('foo'));
+        $this->assertCount(1, $service->getItemsInCategory('other'));
+        $this->assertEquals('foo', $service->getItemsInCategory('foo')->first()->category);
+        $this->assertEquals('other', $service->getItemsInCategory('other')->first()->category);
+    }
+
+    public function test_items_with_no_category_gets_added_to_the_default_category_when_no_categories_are_set()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(0, $categories);
+    }
+    
+
+
+
 
     protected function resetDocsDirectory(): void
     {
