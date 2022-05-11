@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Models\DocumentationSidebar;
+use Illuminate\Support\Str;
 
 /**
  * Extracts logic for the sidebar categories used in the SidebarService.
@@ -29,7 +30,7 @@ trait HasDocumentationSidebarCategories
     public function getItemsInCategory(string $category): DocumentationSidebar
     {
         return $this->sidebar->filter(function ($item) use ($category) {
-            return $item->category === $category;
+            return $item->category === Str::slug($category);
         });
     }
 
