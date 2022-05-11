@@ -150,6 +150,19 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertEquals('third', $sidebar[2]->destination);
     }
 
+    public function test_category_can_be_set_in_front_matter()
+    {
+        file_put_contents(
+            Hyde::path('_docs/foo.md'),
+                (new ConvertsArrayToFrontMatter)->execute([
+                'category' => 'bar',
+            ])
+        );
+
+        $this->assertEquals('bar', DocumentationSidebarItem::parseFromFile('foo')->category);
+        $this->assertEquals('bar', DocumentationSidebarService::get()->first()->category);
+    }
+
     protected function resetDocsDirectory(): void
     {
         File::deleteDirectory(Hyde::path('_docs'));

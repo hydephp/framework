@@ -16,12 +16,14 @@ class DocumentationSidebarItem
     public string $destination;
     public int $priority;
     public bool $hidden = false;
+    public ?string $category = null;
 
-    public function __construct(string $label, string $destination, ?int $priority = null, bool $hidden = false)
+    public function __construct(string $label, string $destination, ?int $priority = null, ?string $category = null, bool $hidden = false)
     {
         $this->label = $label;
         $this->destination = $destination;
         $this->priority = $priority ?? $this->findPriorityInConfig($destination);
+        $this->category = $category;
         $this->hidden = $hidden;
     }
 
@@ -51,6 +53,7 @@ class DocumentationSidebarItem
             $matter['label'] ?? Hyde::titleFromSlug($documentationPageSlug),
             $documentationPageSlug,
             $matter['priority'] ?? null,
+            $matter['category'] ?? null,
             $matter['hidden'] ?? false
         );
     }
