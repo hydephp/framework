@@ -150,6 +150,117 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertEquals('third', $sidebar[2]->destination);
     }
 
+    public function test_category_can_be_set_in_front_matter()
+    {
+        file_put_contents(
+            Hyde::path('_docs/foo.md'),
+                (new ConvertsArrayToFrontMatter)->execute([
+                    'category' => 'bar',
+                ])
+        );
+
+        $this->assertEquals('bar', DocumentationSidebarItem::parseFromFile('foo')->category);
+        $this->assertEquals('bar', DocumentationSidebarService::get()->first()->category);
+    }
+
+    public function test_sidebar_categories_are_assembled_from_sidebar_items()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
+        $service->addItem(new DocumentationSidebarItem('hat', 'hat'));
+
+        $this->assertEquals(['foo', 'cat', 'other'], $service->getCategories());
+    }
+
+    public function test_has_categories_returns_false_if_no_categories_are_set()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo'));
+
+        $this->assertFalse($service->hasCategories());
+    }
+
+    public function test_has_categories_returns_true_if_at_least_one_category_is_set()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $this->assertTrue($service->hasCategories());
+    }
+
+    public function test_get_items_in_category_returns_items_with_given_category()
+    {
+        $service = (new DocumentationSidebarService)->createSidebar();
+
+        $service->addItem($foo = new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'cat'));
+        $service->addItem(new DocumentationSidebarItem('hat', 'hat'));
+
+        $this->assertCount(2, $service->getItemsInCategory('foo'));
+        $this->assertCount(1, $service->getItemsInCategory('cat'));
+        $this->assertCount(0, $service->getItemsInCategory('hat'));
+
+        $this->assertEquals($foo, $service->getItemsInCategory('foo')->first());
+    }
+
+    public function test_items_with_no_category_gets_added_to_the_default_category_when_at_least_one_category_is_set()
+    {
+        $service = DocumentationSidebarService::create();
+
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(2, $categories);
+        $this->assertCount(1, $service->getItemsInCategory('foo'));
+        $this->assertCount(1, $service->getItemsInCategory('other'));
+        $this->assertEquals('foo', $service->getItemsInCategory('foo')->first()->category);
+        $this->assertEquals('other', $service->getItemsInCategory('other')->first()->category);
+    }
+
+    public function test_items_with_no_category_gets_added_to_the_default_category_when_no_categories_are_set()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(0, $categories);
+    }
+
+    public function test_category_names_are_case_insensitive()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('foo', 'foo', category: 'Foo Bar'));
+        $service->addItem(new DocumentationSidebarItem('bar', 'bar', category: 'foo bar'));
+        $service->addItem(new DocumentationSidebarItem('cat', 'cat', category: 'Foo_bar'));
+        $categories = $service->getCategories();
+
+        $this->assertCount(1, $categories);
+        $this->assertCount(3, $service->getItemsInCategory('foo bar'));
+    }
+
+    public function test_get_sorted_categories_returns_categories_sorted_by_priority()
+    {
+        $service = DocumentationSidebarService::create();
+        $service->addItem(new DocumentationSidebarItem('third', 'foo', priority: 3, category: 'third'));
+        $service->addItem(new DocumentationSidebarItem('second', 'foo', priority: 2, category: 'second'));
+        $service->addItem(new DocumentationSidebarItem('first', 'foo', priority: 1, category: 'first'));
+
+        $categories = $service->getCategories();
+
+        $this->assertCount(3, $categories);
+        $this->assertEquals('first', $categories[0]);
+        $this->assertEquals('second', $categories[1]);
+        $this->assertEquals('third', $categories[2]);
+    }
+
     protected function resetDocsDirectory(): void
     {
         File::deleteDirectory(Hyde::path('_docs'));

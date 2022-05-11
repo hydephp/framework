@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Concerns\HasDocumentationSidebarCategories;
 use Hyde\Framework\Contracts\DocumentationSidebarServiceContract;
 use Hyde\Framework\Models\DocumentationSidebar;
 use Hyde\Framework\Models\DocumentationSidebarItem;
@@ -13,18 +14,27 @@ use Hyde\Framework\Models\DocumentationSidebarItem;
  */
 class DocumentationSidebarService implements DocumentationSidebarServiceContract
 {
+    use HasDocumentationSidebarCategories;
+
     /**
      * The sidebar object created and managed by the service instance.
      */
     protected DocumentationSidebar $sidebar;
 
     /**
+     * Shorthand to create a new Sidebar service using default methods.
+     */
+    public static function create(): static
+    {
+        return (new static)->createSidebar()->withoutIndex()->withoutHidden();
+    }
+
+    /**
      * Shorthand to create a new Sidebar object using default methods.
      */
     public static function get(): DocumentationSidebar
     {
-        return ((new static)->createSidebar()->withoutIndex()->withoutHidden()->getSidebar()
-        )->sortItems()->getCollection();
+        return static::create()->getSidebar()->sortItems()->getCollection();
     }
 
     /**
@@ -49,6 +59,16 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
     public function getSidebar(): DocumentationSidebar
     {
         return $this->sidebar;
+    }
+
+    /**
+     * Add an item to the sidebar collection.
+     */
+    public function addItem(DocumentationSidebarItem $item): self
+    {
+        $this->sidebar->addItem($item);
+
+        return $this;
     }
 
     /**
