@@ -19,11 +19,11 @@ class ArticleExcerptViewTest extends TestCase
         ), ['post' => $post]);
     }
 
-	public function test_component_can_be_rendered()
-	{
+    public function test_component_can_be_rendered()
+    {
         $view = $this->renderTestView(new MarkdownPost([], ''));
         $this->assertStringContainsString('https://schema.org/Article', $view);
-	}
+    }
 
     public function test_component_renders_post_data()
     {
@@ -53,23 +53,23 @@ class ArticleExcerptViewTest extends TestCase
         $this->assertStringContainsString('John Doe', $view);
     }
 
-	public function test_there_is_no_comma_after_date_string_when_there_is_no_author()
-	{
+    public function test_there_is_no_comma_after_date_string_when_there_is_no_author()
+    {
         $view = $this->renderTestView(new MarkdownPost([
-			'date' => '2022-01-01',
-		], ''));
+            'date' => '2022-01-01',
+        ], ''));
 
-		$this->assertStringContainsString('Jan 1st, 2022</span>', $view);
-		$this->assertStringNotContainsString('Jan 1st, 2022</span>,', $view);
-	}
+        $this->assertStringContainsString('Jan 1st, 2022</span>', $view);
+        $this->assertStringNotContainsString('Jan 1st, 2022</span>,', $view);
+    }
 
-	public function test_there_is_a_comma_after_date_string_when_there_is_a_author()
-	{
-		 $view = $this->renderTestView(new MarkdownPost([
-			'date' => '2022-01-01',
-			'author' => 'John Doe',
-		], ''));
+    public function test_there_is_a_comma_after_date_string_when_there_is_a_author()
+    {
+        $view = $this->renderTestView(new MarkdownPost([
+            'date' => '2022-01-01',
+            'author' => 'John Doe',
+        ], ''));
 
         $this->assertStringContainsString('Jan 1st, 2022</span>,', $view);
-	}
+    }
 }
