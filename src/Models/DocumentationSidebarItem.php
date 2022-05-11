@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Hyde;
+use Illuminate\Support\Str;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /**
@@ -23,7 +24,7 @@ class DocumentationSidebarItem
         $this->label = $label;
         $this->destination = $destination;
         $this->priority = $priority ?? $this->findPriorityInConfig($destination);
-        $this->category = $category;
+        $this->category = empty($category) ? null : Str::slug($category);
         $this->hidden = $hidden;
     }
 
