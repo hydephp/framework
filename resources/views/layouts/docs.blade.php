@@ -5,6 +5,8 @@
 </head>
 	
 <body id="lagrafo-app" class="bg-white dark:bg-gray-900">
+	<a href="#content" id="skip-to-content">Skip to content</a>
+	
 	<script>
 		document.body.classList.add('js-enabled');
 	</script>
