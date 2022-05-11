@@ -26,7 +26,7 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
      */
     public static function create(): static
     {
-        return ((new static)->createSidebar()->withoutIndex()->withoutHidden());
+        return (new static)->createSidebar()->withoutIndex()->withoutHidden();
     }
 
     /**
