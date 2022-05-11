@@ -17,10 +17,10 @@
 	</header>
 
 	<footer>
-@isset($post->matter['date'])
+@isset($post->date)
 		<span class="opacity-75">
 			<span itemprop="dateCreated datePublished">
-				{{ date('M jS, Y', strtotime($post->matter['date'])) }}</span>{{ isset($post->matter['author']) ? ',' : '' }}
+				{{ $post->date->short }}</span>{{ isset($post->author) ? ',' : '' }}
 		</span>
 @endisset
 @isset($post->author)
