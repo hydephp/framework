@@ -52,4 +52,24 @@ class ArticleExcerptViewTest extends TestCase
 
         $this->assertStringContainsString('John Doe', $view);
     }
+
+	public function test_there_is_no_comma_after_date_string_when_there_is_no_author()
+	{
+        $view = $this->renderTestView(new MarkdownPost([
+			'date' => '2022-01-01',
+		], ''));
+
+		$this->assertStringContainsString('Jan 1st, 2022</span>', $view);
+		$this->assertStringNotContainsString('Jan 1st, 2022</span>,', $view);
+	}
+
+	public function test_there_is_a_comma_after_date_string_when_there_is_a_author()
+	{
+		 $view = $this->renderTestView(new MarkdownPost([
+			'date' => '2022-01-01',
+			'author' => 'John Doe',
+		], ''));
+
+        $this->assertStringContainsString('Jan 1st, 2022</span>,', $view);
+	}
 }
