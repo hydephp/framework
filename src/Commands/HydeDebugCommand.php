@@ -51,11 +51,15 @@ class HydeDebugCommand extends Command
         $this->comment('App Env: '.app('env'));
 
         $this->newLine();
-        $this->line('Project directory:');
-        $this->line(' > '.realpath(Hyde::path()));
-        $this->line('Framework vendor path:');
-        $this->line(' > '.(str_replace('/', DIRECTORY_SEPARATOR, Hyde::vendorPath()).' (vendor)'));
-        $this->line(' > '.realpath(Hyde::vendorPath()).' (real)');
+        if ($this->getOutput()->isVerbose()) {
+            $this->line('Project directory:');
+            $this->line(' > '.realpath(Hyde::path()));
+            $this->line('Framework vendor path:');
+            $this->line(' > '.(str_replace('/', DIRECTORY_SEPARATOR, Hyde::vendorPath()).' (vendor)'));
+            $this->line(' > '.realpath(Hyde::vendorPath()).' (real)');
+        } else {
+            $this->comment('Project directory: '.Hyde::path());
+        }
 
         $this->newLine();
 

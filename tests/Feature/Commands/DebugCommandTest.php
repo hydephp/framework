@@ -23,4 +23,15 @@ class DebugCommandTest extends TestCase
             ->expectsOutputToContain('Enabled features:')
             ->assertExitCode(0);
     }
+
+    public function test_it_prints_verbose_debug_information()
+    {
+        $this->artisan('debug --verbose')
+            ->expectsOutput('HydePHP Debug Screen')
+            ->expectsOutput('Project directory:')
+            ->expectsOutput('Framework vendor path:')
+            ->expectsOutputToContain('(vendor)')
+            ->expectsOutputToContain('(real)')
+            ->assertExitCode(0);
+    }
 }
