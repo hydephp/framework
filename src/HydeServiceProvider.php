@@ -4,6 +4,8 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Hyde\Framework\Core\HydeManager;
+use Hyde\Framework\Core\HydeManagerContract;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -31,6 +33,10 @@ class HydeServiceProvider extends ServiceProvider
                 return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
             }
         );
+
+        $this->app->singleton(HydeManagerContract::class, function ($app) {
+            return new HydeManager();
+        });
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
