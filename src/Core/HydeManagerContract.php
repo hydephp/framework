@@ -28,17 +28,16 @@ interface HydeManagerContract
      * Default return syntax: \Hyde\Framework\Core\ServiceManager::class
      * =========================================================================
      */
-
     public function getHydeSystemManager(): string;
-    public function getSourceLocationManager(): string;
 
+    public function getSourceLocationManager(): string;
 
     /**
      * =========================================================================
      * Get the manager implementation instantiated in the bootstrap process.
-     * =========================================================================
+     * =========================================================================.
      */
-
     public function hydeSystemManager(): HydeSystemManager;
+
     public function sourceLocationManager(): SourceLocationManager;
 }

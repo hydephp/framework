@@ -13,24 +13,28 @@ interface SourceLocationManager
 {
     /**
      * Return the directory BladePages are stored in.
+     *
      * @see \Hyde\Framework\Models\BladePage
      */
     public function findBladePagesIn(): string;
 
     /**
      * Return the directory MarkdownPages are stored in.
+     *
      * @see \Hyde\Framework\Models\MarkdownPage
      */
     public function findMarkdownPagesIn(): string;
 
     /**
      * Return the directory MarkdownPosts are stored in.
+     *
      * @see \Hyde\Framework\Models\MarkdownPost
      */
     public function findMarkdownPostsIn(): string;
 
     /**
      * Return the directory DocumentationPages are stored in.
+     *
      * @see \Hyde\Framework\Models\DocumentationPage
      */
     public function findDocumentationPagesIn(): string;

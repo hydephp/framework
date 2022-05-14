@@ -4,7 +4,6 @@ namespace Hyde\Framework\Core;
 
 class SourceLocationProvider implements SourceLocationManager
 {
-
     /**
      * @inheritDoc
      */
