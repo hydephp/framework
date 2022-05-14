@@ -6,10 +6,7 @@ use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Core\HydeManager;
 use Hyde\Framework\Core\HydeManagerContract;
-use Hyde\Framework\Core\HydeSystemManager;
 use Illuminate\Support\ServiceProvider;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Register and bootstrap Hyde application services.
@@ -82,7 +79,7 @@ class HydeServiceProvider extends ServiceProvider
         if (config('hyde.create_default_directories', true)) {
             (new CreatesDefaultDirectories)->__invoke();
         }
-        
+
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
         $this->publishes([
