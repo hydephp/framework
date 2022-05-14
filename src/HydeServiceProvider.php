@@ -20,6 +20,9 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /**
+         * @deprecated
+         */
         $this->app->bind(
             'hyde.version',
             function () {
@@ -27,6 +30,9 @@ class HydeServiceProvider extends ServiceProvider
             }
         );
 
+        /**
+         * @deprecated
+         */
         $this->app->bind(
             'framework.version',
             function () {
