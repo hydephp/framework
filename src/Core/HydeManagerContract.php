@@ -16,5 +16,9 @@ namespace Hyde\Framework\Core;
  */
 interface HydeManagerContract
 {
-    //
+    /**
+     * Get the fully qualified class name of the SourceLocationManager implementation.
+     * @see \Hyde\Framework\Core\SourceLocationManager
+     */
+    public function getSourceLocationManager(): string;
 }
