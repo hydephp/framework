@@ -10,6 +10,8 @@ namespace Hyde\Framework\Core;
  * @note that changing these will cause the realtime compiler to fail.
  *
  * @todo Please note that these methods are not yet used, but will be.
+ * 
+ * @deprecated 
  */
 interface SourceLocationManager
 {

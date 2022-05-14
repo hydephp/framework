@@ -2,6 +2,9 @@
 
 namespace Hyde\Framework\Core;
 
+/**
+ * @deprecated 
+ */
 class SourceLocationProvider implements SourceLocationManager
 {
     /**
