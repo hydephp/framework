@@ -38,7 +38,6 @@ class HydeServiceProvider extends ServiceProvider
             }
         );
 
-
         $this->app->bind(
             'project-path',
             function () {
