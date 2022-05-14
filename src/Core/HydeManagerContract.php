@@ -22,6 +22,17 @@ interface HydeManagerContract
     public function bootstrap(): void;
 
     /**
+     * Get the fully qualified class name of the HydeSystemManager implementation.
+     * @see \Hyde\Framework\Core\HydeSystemManager
+     */
+    public function getHydeSystemManager(): string;
+
+    /**
+     * Get the instantiated HydeSystemManager implementation.
+     */
+    public function hydeSystemManager(): HydeSystemManager;
+
+    /**
      * Get the fully qualified class name of the SourceLocationManager implementation.
      * @see \Hyde\Framework\Core\SourceLocationManager
      */

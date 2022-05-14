@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
+use Hyde\Framework\Core\HydeManagerContract;
+
 /**
  * Offloads file helper methods for the Hyde Facade.
  *
@@ -51,12 +53,28 @@ trait FileHelpers
     public static function path(string $path = ''): string
     {
         if (empty($path)) {
-            return getcwd();
+            return static::getProjectRoot();
         }
 
         $path = trim($path, '/\\');
 
-        return getcwd().DIRECTORY_SEPARATOR.$path;
+        return static::getProjectRoot().DIRECTORY_SEPARATOR.$path;
+    }
+
+    /**
+     * Get the path to the Hyde root directory.
+     * Catches binding resolution errors allowing the function to
+     * be used in PHPUnit tests before the application is booted.
+     *
+     * @return string
+     */
+    public static function getProjectRoot(): string
+    {
+        try {
+            return app(HydeManagerContract::class)->hydeSystemManager()->getProjectRoot();
+        } catch (\Illuminate\Contracts\Container\BindingResolutionException) {
+            return getcwd();
+        }
     }
 
     /**
