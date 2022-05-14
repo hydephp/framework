@@ -36,5 +36,4 @@ interface HydeManagerContract
      * =========================================================================.
      */
     public function hydeSystemManager(): HydeSystemManager;
-
 }
