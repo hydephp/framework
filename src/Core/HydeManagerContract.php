@@ -30,8 +30,6 @@ interface HydeManagerContract
      */
     public function getHydeSystemManager(): string;
 
-    public function getSourceLocationManager(): string;
-
     /**
      * =========================================================================
      * Get the manager implementation instantiated in the bootstrap process.
@@ -39,5 +37,4 @@ interface HydeManagerContract
      */
     public function hydeSystemManager(): HydeSystemManager;
 
-    public function sourceLocationManager(): SourceLocationManager;
 }

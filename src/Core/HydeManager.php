@@ -12,7 +12,6 @@ namespace Hyde\Framework\Core;
 class HydeManager implements HydeManagerContract
 {
     protected HydeSystemManager $hydeSystemManager;
-    protected SourceLocationManager $sourceLocationManager;
 
     public function __construct()
     {
@@ -22,7 +21,6 @@ class HydeManager implements HydeManagerContract
     public function bootstrap(): void
     {
         $this->hydeSystemManager = new ($this->getHydeSystemManager());
-        $this->sourceLocationManager = new ($this->getSourceLocationManager());
     }
 
     public function getHydeSystemManager(): string
@@ -30,19 +28,9 @@ class HydeManager implements HydeManagerContract
         return HydeSystemProvider::class;
     }
 
-    public function getSourceLocationManager(): string
-    {
-        return SourceLocationProvider::class;
-    }
-
     public function hydeSystemManager(): HydeSystemManager
     {
         return $this->hydeSystemManager;
-    }
-
-    public function sourceLocationManager(): SourceLocationManager
-    {
-        return $this->sourceLocationManager;
     }
 
     /**
