@@ -73,13 +73,16 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        try {
-            if (HydeManager::get(HydeSystemManager::class)->shouldPublishDefaultDirectories()) {
-                (new CreatesDefaultDirectories)->__invoke();
-            }
-        } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
+        /**
+         * Creates the default directories required for Hyde to be able to process files.
+         * If you running the Framework in a non-standard environment that does not
+         * use the Framework to generate files automatically, such as in Buddy,
+         * you can disable this with the "hidden" config option seen below.
+         */
+        if (config('hyde.create_default_directories', true)) {
+            (new CreatesDefaultDirectories)->__invoke();
         }
-
+        
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
         $this->publishes([
