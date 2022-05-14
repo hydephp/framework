@@ -11,4 +11,9 @@ class HydeSystemProvider implements HydeSystemManager
     {
         return getcwd();
     }
+
+    public function shouldPublishDefaultDirectories(): bool
+    {
+        return true;
+    }
 }
