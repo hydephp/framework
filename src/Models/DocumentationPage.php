@@ -9,7 +9,7 @@ class DocumentationPage extends MarkdownDocument
 {
     use HasTableOfContents;
 
-    public static string $sourceDirectory = '_docs';
+    public static string $sourceDirectory = config('hyde.findDocumentationPagesIn', '_pages');
     public static string $parserClass = DocumentationPageParser::class;
 
     public function __construct(array $matter, string $body, string $title = '', string $slug = '')
