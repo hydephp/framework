@@ -42,7 +42,7 @@ class BuildService
 
     /**
      * Get the source directory path of a model.
-     * 
+     *
      * This is what powers the Hyde autodiscovery.
      */
     public static function getFilePathForModelClassFiles(string $model): string
