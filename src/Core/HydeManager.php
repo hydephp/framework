@@ -44,4 +44,12 @@ class HydeManager implements HydeManagerContract
     {
         return $this->sourceLocationManager;
     }
+
+    /**
+     * Get the instantiated provider from the service container for the given contract.
+     */
+    public static function get(string $classImplementingContract)
+    {
+        return app()->get(HydeManagerContract::class)->{basename($classImplementingContract)}();
+    }
 }

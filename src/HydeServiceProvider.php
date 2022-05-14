@@ -6,6 +6,7 @@ use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Core\HydeManager;
 use Hyde\Framework\Core\HydeManagerContract;
+use Hyde\Framework\Core\HydeSystemManager;
 use Illuminate\Support\ServiceProvider;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -73,7 +74,7 @@ class HydeServiceProvider extends ServiceProvider
     public function boot()
     {
         try {
-            if ($this->app->get(HydeManagerContract::class)->hydeSystemManager()->shouldPublishDefaultDirectories()) {
+            if (HydeManager::get(HydeSystemManager::class)->shouldPublishDefaultDirectories()) {
                 (new CreatesDefaultDirectories)->__invoke();
             }
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
