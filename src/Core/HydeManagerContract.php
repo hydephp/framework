@@ -17,6 +17,11 @@ namespace Hyde\Framework\Core;
 interface HydeManagerContract
 {
     /**
+     * Load all the core service implementations into the HydeManager.
+     */
+    public function bootstrap(): void;
+
+    /**
      * Get the fully qualified class name of the SourceLocationManager implementation.
      * @see \Hyde\Framework\Core\SourceLocationManager
      */
