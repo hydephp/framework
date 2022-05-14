@@ -6,6 +6,8 @@ namespace Hyde\Framework\Core;
  * Define where the source content files are located.
  * This is then used for Hyde auto-discovery.
  * Returned paths must be relative to the project root. e.g. '_posts', 'src/posts', etc.
+ * 
+ * @note that changing these will cause the realtime compiler to fail.
  *
  * @todo Please note that these methods are not yet used, but will be.
  */
