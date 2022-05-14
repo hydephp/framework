@@ -38,6 +38,14 @@ class HydeServiceProvider extends ServiceProvider
             }
         );
 
+
+        $this->app->bind(
+            'project-path',
+            function () {
+                return getcwd();
+            }
+        );
+
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
             Commands\HydeUpdateConfigsCommand::class,

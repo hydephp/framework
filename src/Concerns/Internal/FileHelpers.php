@@ -51,12 +51,12 @@ trait FileHelpers
     public static function path(string $path = ''): string
     {
         if (empty($path)) {
-            return getcwd();
+            return app('project-path');
         }
 
         $path = trim($path, '/\\');
 
-        return getcwd().DIRECTORY_SEPARATOR.$path;
+        return app('project-path').DIRECTORY_SEPARATOR.$path;
     }
 
     /**
