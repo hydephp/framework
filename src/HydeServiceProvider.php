@@ -34,6 +34,10 @@ class HydeServiceProvider extends ServiceProvider
             }
         );
 
+        /**
+         * Register the HydeManager implementation class.
+         * Swap this out if you want to override the services.
+         */
         $this->app->singleton(HydeManagerContract::class, function ($app) {
             return new HydeManager();
         });
