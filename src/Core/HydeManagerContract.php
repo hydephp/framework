@@ -30,7 +30,6 @@ interface HydeManagerContract
      */
 
     public function getHydeSystemManager(): string;
-
     public function getSourceLocationManager(): string;
 
 
@@ -41,4 +40,5 @@ interface HydeManagerContract
      */
 
     public function hydeSystemManager(): HydeSystemManager;
+    public function sourceLocationManager(): SourceLocationManager;
 }

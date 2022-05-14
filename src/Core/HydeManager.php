@@ -39,4 +39,9 @@ class HydeManager implements HydeManagerContract
     {
         return $this->hydeSystemManager;
     }
+
+    public function sourceLocationManager(): SourceLocationManager
+    {
+        return $this->sourceLocationManager;
+    }
 }
