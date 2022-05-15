@@ -90,9 +90,10 @@ trait FileHelpers
 
     /**
      * Inject the proper number of `../` before the links in Blade templates.
+     * @see \Tests\Unit\FileHelperRelativeLinkTest
      *
-     * @param  string  $destination  the route to format
-     * @param  string  $current  the current route
+     * @param  string  $destination  relative to `_site` directory on compiled site
+     * @param  string  $current  the current URI path relative to the same root
      * @return string
      */
     public static function relativeLink(string $destination, string $current = ''): string
