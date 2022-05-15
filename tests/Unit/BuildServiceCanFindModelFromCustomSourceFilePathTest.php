@@ -2,14 +2,12 @@
 
 namespace Tests\Unit;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\BuildService;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 /**
