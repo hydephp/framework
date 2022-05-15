@@ -85,6 +85,9 @@ trait FileHelpers
                 if ($destination === 'index.html') {
                     return '/';
                 }
+                if ($destination === static::docsDirectory().'/index.html') {
+                    return static::docsDirectory().'/';
+                }
 
                 return substr($destination, 0, -5);
             }
