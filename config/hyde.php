@@ -263,7 +263,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Hyde Config Version @HydeConfigVersion 1.0.0
+    | Hyde Config Version @HydeConfigVersion 0.0.0
     |--------------------------------------------------------------------------
     |
     | Hyde can use the value above to determine if this configuration file
