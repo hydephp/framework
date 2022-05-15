@@ -47,7 +47,7 @@ class DocumentationSidebarItem
     public static function parseFromFile(string $documentationPageSlug): static
     {
         $matter = YamlFrontMatter::markdownCompatibleParse(
-            file_get_contents(Hyde::path('_docs/'.$documentationPageSlug.'.md'))
+            file_get_contents(Hyde::path(DocumentationPage::$sourceDirectory.'/'.$documentationPageSlug.'.md'))
         )->matter();
 
         return new static(
