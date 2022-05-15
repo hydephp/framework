@@ -18,7 +18,7 @@ class MarkdownPostParser extends AbstractPageParser
     public function execute(): void
     {
         $document = (new MarkdownFileService(
-            Hyde::path(MarkdownPost::$sourceDirectory."/$this->slug.md")
+            Hyde::getMarkdownPostPath("/$this->slug.md")
         ))->get();
 
         $this->matter = array_merge($document->matter, [
