@@ -75,7 +75,7 @@ trait FileHelpers
 
     /**
      * Format a link to an HTML file, allowing for pretty URLs, if enabled.
-     * @see \Tests\Unit\HydeFileHelperForPageLinksCanCreatePrettyUrlsTest
+     * @see \Tests\Unit\FileHelperPageLinkPrettyUrlTest
      */
     public static function pageLink(string $destination): string
     {

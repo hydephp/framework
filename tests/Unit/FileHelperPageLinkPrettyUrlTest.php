@@ -6,11 +6,11 @@ use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
 /**
- * Class HydeFileHelperForPageLinksCanCreatePrettyUrlsTest.
+ * Class FileHelperPageLinkPrettyUrlTest.
  *
  * @covers \Hyde\Framework\Concerns\Internal\FileHelpers
  */
-class HydeFileHelperForPageLinksCanCreatePrettyUrlsTest extends TestCase
+class FileHelperPageLinkPrettyUrlTest extends TestCase
 {
     public function test_helper_returns_string_as_is_if_pretty_urls_is_not_true()
     {
