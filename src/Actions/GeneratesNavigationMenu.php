@@ -79,12 +79,12 @@ class GeneratesNavigationMenu
             // And there is no link to the docs...
             if (! in_array('Docs', array_column($links, 'title'))) {
                 // But a suitable file exists...
-                if (file_exists(DocumentationPage::$sourceDirectory.'/index.md') || file_exists(DocumentationPage::$sourceDirectory.'/readme.md')) {
+                if (file_exists(Hyde::getDocumentationPagePath('/index.md')) || file_exists(Hyde::getDocumentationPagePath('/readme.md'))) {
                     // Then we can add a link.
                     $links[] = [
                         'title' => 'Docs',
                         'route' => $this->getRelativeRoutePathForSlug(
-                            file_exists(DocumentationPage::$sourceDirectory.'/index.md')
+                            file_exists(Hyde::getDocumentationPagePath('/index.md'))
                                 ? Hyde::docsDirectory().'/index'
                                 : Hyde::docsDirectory().'/readme'
                         ),
