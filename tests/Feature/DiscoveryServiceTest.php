@@ -13,7 +13,7 @@ use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
 use Tests\TestCase;
 
-class BuildServiceTest extends TestCase
+class DiscoveryServiceTest extends TestCase
 {
     public function createContentSourceTestFiles()
     {
