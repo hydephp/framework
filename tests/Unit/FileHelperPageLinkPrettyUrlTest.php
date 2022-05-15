@@ -68,4 +68,10 @@ class FileHelperPageLinkPrettyUrlTest extends TestCase
         config(['hyde.prettyUrls' => true]);
         $this->assertEquals('/foo/bar.jpg', Hyde::pageLink('/foo/bar.jpg'));
     }
+
+    public function test_helper_rewrites_index_when_using_pretty_urls()
+    {
+        config(['hyde.prettyUrls' => true]);
+        $this->assertEquals('/', Hyde::pageLink('index.html'));
+    }
 }

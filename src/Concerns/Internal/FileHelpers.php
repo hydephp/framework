@@ -81,6 +81,9 @@ trait FileHelpers
     {
         if (config('hyde.prettyUrls', false) === true) {
             if (str_ends_with($destination, '.html')) {
+                if ($destination === 'index.html') {
+                    return '/';
+                }
                 return substr($destination, 0, -5);
             }
         }
@@ -105,7 +108,7 @@ trait FileHelpers
         }
         $route .= static::pageLink($destination);
 
-        return $route;
+        return str_replace('//', '/', $route);
     }
 
     /**

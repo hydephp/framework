@@ -83,4 +83,12 @@ class FileHelperRelativeLinkTest extends TestCase
         config(['hyde.prettyUrls' => true]);
         $this->assertEquals('../foo.png', Hyde::relativeLink('foo.png', 'foo/bar.html'));
     }
+
+    public function test_helper_rewrites_index_when_using_pretty_urls()
+    {
+        config(['hyde.prettyUrls' => true]);
+        $this->assertEquals('/', Hyde::relativeLink('index.html', 'foo.html'));
+        $this->assertEquals('../', Hyde::relativeLink('index.html', 'foo/bar.html'));
+        $this->assertEquals('../../', Hyde::relativeLink('index.html', 'foo/bar/baz.html'));
+    }
 }
