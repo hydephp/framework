@@ -53,26 +53,27 @@ class BuildService
 
     /**
      * Determine the Page Model to use for a given file path.
-     *
-     * @todo refactor to use the source directories instead of hard-coded paths
+     * @see \Tests\Unit\BuildServiceCanFindModelFromCustomSourceFilePathTest
      *
      * @return string The model class constant, or false if none was found.
      */
     public static function findModelFromFilePath(string $filepath): string|false
     {
-        if (str_starts_with($filepath, '_posts')) {
+        if (str_starts_with($filepath, MarkdownPost::$sourceDirectory)) {
             return MarkdownPost::class;
         }
 
-        if (str_starts_with($filepath, '_docs')) {
+        if (str_starts_with($filepath, DocumentationPage::$sourceDirectory)) {
             return DocumentationPage::class;
         }
 
-        if (str_starts_with($filepath, '_pages') && str_ends_with($filepath, '.md')) {
+        if (str_starts_with($filepath, MarkdownPage::$sourceDirectory)
+            && str_ends_with($filepath, '.md')) {
             return MarkdownPage::class;
         }
 
-        if (str_starts_with($filepath, '_pages') && str_ends_with($filepath, '.blade.php')) {
+        if (str_starts_with($filepath, BladePage::$sourceDirectory)
+            && str_ends_with($filepath, '.blade.php')) {
             return BladePage::class;
         }
 
