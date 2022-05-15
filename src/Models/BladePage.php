@@ -28,7 +28,7 @@ class BladePage extends AbstractPage
         $this->view = $view;
     }
 
-    public static string $sourceDirectory = config('hyde.findBladePagesIn', '_pages');
+    public static string $defaultSourceDirectory = '_pages';
     public static string $fileExtension = '.blade.php';
     public static string $parserClass = self::class;
 

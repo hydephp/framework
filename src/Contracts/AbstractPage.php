@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Contracts;
 
+use Hyde\Framework\Concerns\HasSourceDirectory;
+
 /**
  * To ensure compatability with the Hyde Framework,
  * all Page Models must extend this class.
@@ -10,6 +12,9 @@ namespace Hyde\Framework\Contracts;
  */
 abstract class AbstractPage
 {
+    use HasSourceDirectory;
+
+    public static string $defaultSourceDirectory;
     public static string $sourceDirectory;
     public static string $fileExtension;
     public static string $parserClass;

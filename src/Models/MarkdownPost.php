@@ -17,7 +17,7 @@ class MarkdownPost extends MarkdownDocument
 
     public ?string $category;
 
-    public static string $sourceDirectory = config('hyde.findPostsIn', '_posts');
+    public static string $defaultSourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
 
     public function __construct(array $matter, string $body, string $title = '', string $slug = '')

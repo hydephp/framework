@@ -6,6 +6,6 @@ use Hyde\Framework\MarkdownPageParser;
 
 class MarkdownPage extends MarkdownDocument
 {
-    public static string $sourceDirectory = config('hyde.findMarkdownPagesIn', '_pages');
+    public static string $defaultSourceDirectory = '_pages';
     public static string $parserClass = MarkdownPageParser::class;
 }
