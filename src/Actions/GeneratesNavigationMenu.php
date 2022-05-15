@@ -10,6 +10,8 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Generate the dynamic navigation menu.
+ *
+ * @todo #350 Replace hard-coded source paths with page model properties
  */
 class GeneratesNavigationMenu
 {
@@ -177,14 +179,7 @@ class GeneratesNavigationMenu
      */
     private function getRelativeRoutePathForSlug(string $slug): string
     {
-        $nestCount = substr_count($this->currentPage, '/');
-        $route = '';
-        if ($nestCount > 0) {
-            $route .= str_repeat('../', $nestCount);
-        }
-        $route .= $slug.'.html';
-
-        return $route;
+        return Hyde::relativeLink($slug.'.html', $this->currentPage);
     }
 
     /**

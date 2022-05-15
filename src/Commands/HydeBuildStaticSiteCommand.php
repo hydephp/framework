@@ -36,6 +36,7 @@ class HydeBuildStaticSiteCommand extends Command
         {--run-dev : Run the NPM dev script after build}
         {--run-prod : Run the NPM prod script after build}
         {--pretty : Should the build files be prettified?}
+        {--pretty-urls : Should links in output use pretty URLs?}
         {--no-api : Disable external API calls, such as Torchlight}';
 
     /**
@@ -96,6 +97,12 @@ class HydeBuildStaticSiteCommand extends Command
             $config = config('hyde.features');
             unset($config[array_search('torchlight', $config)]);
             Config::set(['hyde.features' => $config]);
+        }
+
+        if ($this->option('pretty-urls')) {
+            $this->info('Generating site with pretty URLs');
+            $this->newLine();
+            Config::set(['hyde.prettyUrls' => true]);
         }
     }
 

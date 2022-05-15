@@ -5,6 +5,9 @@ namespace Hyde\Framework\Concerns\Internal;
 /**
  * Offloads file helper methods for the Hyde Facade.
  *
+ * If a method uses the name `path` it refers to an internal file path.
+ * if a method uses the name `link` it refers to a web link used in Blade templates.
+ *
  * @see \Hyde\Framework\Hyde
  */
 trait FileHelpers
@@ -27,11 +30,11 @@ trait FileHelpers
     public static function docsIndexPath(): string|false
     {
         if (file_exists(static::path('_docs/index.md'))) {
-            return static::docsDirectory().'/index.html';
+            return static::pageLink(static::docsDirectory().'/index.html');
         }
 
         if (file_exists(static::path('_docs/readme.md'))) {
-            return static::docsDirectory().'/readme.html';
+            return static::pageLink(static::docsDirectory().'/readme.html');
         }
 
         return false;
@@ -71,18 +74,35 @@ trait FileHelpers
     }
 
     /**
-     * @deprecated use relativeLink() instead
+     * Format a link to an HTML file, allowing for pretty URLs, if enabled.
+     *
+     * @see \Tests\Unit\FileHelperPageLinkPrettyUrlTest
      */
-    public static function relativePath(string $destination, string $current = ''): string
+    public static function pageLink(string $destination): string
     {
-        return static::relativeLink($destination, $current);
+        if (config('hyde.prettyUrls', false) === true) {
+            if (str_ends_with($destination, '.html')) {
+                if ($destination === 'index.html') {
+                    return '/';
+                }
+                if ($destination === static::docsDirectory().'/index.html') {
+                    return static::docsDirectory().'/';
+                }
+
+                return substr($destination, 0, -5);
+            }
+        }
+
+        return $destination;
     }
 
     /**
      * Inject the proper number of `../` before the links in Blade templates.
      *
-     * @param  string  $destination  the route to format
-     * @param  string  $current  the current route
+     * @see \Tests\Unit\FileHelperRelativeLinkTest
+     *
+     * @param  string  $destination  relative to `_site` directory on compiled site
+     * @param  string  $current  the current URI path relative to the same root
      * @return string
      */
     public static function relativeLink(string $destination, string $current = ''): string
@@ -92,9 +112,9 @@ trait FileHelpers
         if ($nestCount > 0) {
             $route .= str_repeat('../', $nestCount);
         }
-        $route .= $destination;
+        $route .= static::pageLink($destination);
 
-        return $route;
+        return str_replace('//', '/', $route);
     }
 
     /**
