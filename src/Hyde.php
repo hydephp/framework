@@ -3,9 +3,9 @@
 namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
-use Hyde\Framework\Concerns\Internal\SourcePathHelpers;
 use Hyde\Framework\Concerns\Internal\AssetManager;
 use Hyde\Framework\Concerns\Internal\FileHelpers;
+use Hyde\Framework\Concerns\Internal\SourcePathHelpers;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
