@@ -4,6 +4,7 @@ namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
@@ -78,12 +79,12 @@ class GeneratesNavigationMenu
             // And there is no link to the docs...
             if (! in_array('Docs', array_column($links, 'title'))) {
                 // But a suitable file exists...
-                if (file_exists('_docs/index.md') || file_exists('_docs/readme.md')) {
+                if (file_exists(DocumentationPage::$sourceDirectory.'/index.md') || file_exists(DocumentationPage::$sourceDirectory.'/readme.md')) {
                     // Then we can add a link.
                     $links[] = [
                         'title' => 'Docs',
                         'route' => $this->getRelativeRoutePathForSlug(
-                            file_exists('_docs/index.md')
+                            file_exists(DocumentationPage::$sourceDirectory.'/index.md')
                                 ? Hyde::docsDirectory().'/index'
                                 : Hyde::docsDirectory().'/readme'
                         ),
@@ -157,15 +158,9 @@ class GeneratesNavigationMenu
     #[Pure]
     private function getListOfCustomPages(): array
     {
-        $array = [];
-
-        foreach (glob(Hyde::path('_pages/*.blade.php')) as $path) {
-            $array[] = basename($path, '.blade.php');
-        }
-
         return array_unique(
             array_merge(
-                $array,
+                CollectionService::getBladePageList(),
                 CollectionService::getMarkdownPageList()
             )
         );
