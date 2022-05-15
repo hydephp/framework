@@ -36,7 +36,11 @@ class DocumentationSidebarItem
             return 500;
         }
 
-        return array_search($slug, $orderIndexArray); //  + 250?
+        return array_search($slug, $orderIndexArray) + 250;
+
+        // Adding 250 makes so that pages with a front matter priority that is lower
+        // can be shown first. It's lower than the fallback of 500 so that they
+        // still come first. This is all to make it easier to mix priorities.
     }
 
     public function isHidden(): bool
@@ -47,7 +51,7 @@ class DocumentationSidebarItem
     public static function parseFromFile(string $documentationPageSlug): static
     {
         $matter = YamlFrontMatter::markdownCompatibleParse(
-            file_get_contents(Hyde::path('_docs/'.$documentationPageSlug.'.md'))
+            file_get_contents(Hyde::getDocumentationPagePath('/'.$documentationPageSlug.'.md'))
         )->matter();
 
         return new static(

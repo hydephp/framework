@@ -44,7 +44,7 @@ class RebuildService
     public function __construct(string $filepath)
     {
         $this->filepath = $filepath;
-        $this->model = BuildService::findModelFromFilePath($this->filepath);
+        $this->model = DiscoveryService::findModelFromFilePath($this->filepath);
     }
 
     /**
@@ -53,15 +53,15 @@ class RebuildService
     public function execute(): StaticPageBuilder
     {
         return $this->builder = (new StaticPageBuilder(
-            BuildService::getParserInstanceForModel(
+            DiscoveryService::getParserInstanceForModel(
                 $this->model,
                 basename(
                     str_replace(
-                        BuildService::getFilePathForModelClassFiles($this->model).'/',
+                        DiscoveryService::getFilePathForModelClassFiles($this->model).'/',
                         '',
                         $this->filepath
                     ),
-                    BuildService::getFileExtensionForModelFiles($this->model)
+                    DiscoveryService::getFileExtensionForModelFiles($this->model)
                 )
             )->get(),
             true

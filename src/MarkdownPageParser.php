@@ -20,7 +20,7 @@ class MarkdownPageParser extends AbstractPageParser
     public function execute(): void
     {
         $document = (new MarkdownFileService(
-            Hyde::path("_pages/$this->slug.md")
+            Hyde::getMarkdownPagePath("/$this->slug.md")
         ))->get();
 
         $this->title = $document->findTitleForDocument();

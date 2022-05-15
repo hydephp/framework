@@ -10,6 +10,8 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Generate the dynamic navigation menu.
+ *
+ * @todo #350 Replace hard-coded source paths with page model properties
  */
 class GeneratesNavigationMenu
 {
@@ -76,12 +78,12 @@ class GeneratesNavigationMenu
             // And there is no link to the docs...
             if (! in_array('Docs', array_column($links, 'title'))) {
                 // But a suitable file exists...
-                if (file_exists('_docs/index.md') || file_exists('_docs/readme.md')) {
+                if (file_exists(Hyde::getDocumentationPagePath('/index.md')) || file_exists(Hyde::getDocumentationPagePath('/readme.md'))) {
                     // Then we can add a link.
                     $links[] = [
                         'title' => 'Docs',
                         'route' => $this->getRelativeRoutePathForSlug(
-                            file_exists('_docs/index.md')
+                            file_exists(Hyde::getDocumentationPagePath('/index.md'))
                                 ? Hyde::docsDirectory().'/index'
                                 : Hyde::docsDirectory().'/readme'
                         ),
@@ -155,15 +157,9 @@ class GeneratesNavigationMenu
     #[Pure]
     private function getListOfCustomPages(): array
     {
-        $array = [];
-
-        foreach (glob(Hyde::path('_pages/*.blade.php')) as $path) {
-            $array[] = basename($path, '.blade.php');
-        }
-
         return array_unique(
             array_merge(
-                $array,
+                CollectionService::getBladePageList(),
                 CollectionService::getMarkdownPageList()
             )
         );
@@ -177,14 +173,7 @@ class GeneratesNavigationMenu
      */
     private function getRelativeRoutePathForSlug(string $slug): string
     {
-        $nestCount = substr_count($this->currentPage, '/');
-        $route = '';
-        if ($nestCount > 0) {
-            $route .= str_repeat('../', $nestCount);
-        }
-        $route .= $slug.'.html';
-
-        return $route;
+        return Hyde::relativeLink($slug.'.html', $this->currentPage);
     }
 
     /**

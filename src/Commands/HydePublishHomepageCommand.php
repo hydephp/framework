@@ -90,12 +90,12 @@ class HydePublishHomepageCommand extends Command
 
     protected function canExistingIndexFileBeOverwritten(): bool
     {
-        if (! file_exists(Hyde::path('_pages/index.blade.php')) || $this->option('force')) {
+        if (! file_exists(Hyde::getBladePagePath('index.blade.php')) || $this->option('force')) {
             return true;
         }
 
         return FileCacheService::checksumMatchesAny(FileCacheService::unixsumFile(
-            Hyde::path('_pages/index.blade.php')
+            Hyde::getBladePagePath('index.blade.php')
         )) ?? $this->option('force');
     }
 }

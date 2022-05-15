@@ -12,7 +12,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -36,6 +36,7 @@ class HydeBuildStaticSiteCommand extends Command
         {--run-dev : Run the NPM dev script after build}
         {--run-prod : Run the NPM prod script after build}
         {--pretty : Should the build files be prettified?}
+        {--pretty-urls : Should links in output use pretty URLs?}
         {--no-api : Disable external API calls, such as Torchlight}';
 
     /**
@@ -97,6 +98,12 @@ class HydeBuildStaticSiteCommand extends Command
             unset($config[array_search('torchlight', $config)]);
             Config::set(['hyde.features' => $config]);
         }
+
+        if ($this->option('pretty-urls')) {
+            $this->info('Generating site with pretty URLs');
+            $this->newLine();
+            Config::set(['hyde.prettyUrls' => true]);
+        }
     }
 
     /** @internal */
@@ -112,7 +119,7 @@ class HydeBuildStaticSiteCommand extends Command
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
             'Your new homepage is stored here -> '.
-                BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
+                DiscoveryService::createClickableFilepath(Hyde::path('_site/index.html'))
         );
     }
 

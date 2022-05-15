@@ -5,7 +5,7 @@ namespace Hyde\Framework\Commands;
 use Exception;
 use Hyde\Framework\Concerns\Internal\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\Services\RebuildService;
 use LaravelZero\Framework\Commands\Command;
 
@@ -68,7 +68,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
         $this->info(sprintf(
             'Created %s in %s seconds. (%sms)',
-            BuildService::createClickableFilepath($this->getOutputPath($this->path)),
+            DiscoveryService::createClickableFilepath($this->getOutputPath($this->path)),
             number_format(
                 $execution_time,
                 2

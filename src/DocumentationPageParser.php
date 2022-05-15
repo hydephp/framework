@@ -17,7 +17,7 @@ class DocumentationPageParser extends AbstractPageParser
     public function execute(): void
     {
         $document = (new MarkdownFileService(
-            Hyde::path("_docs/$this->slug.md")
+            Hyde::getDocumentationPagePath("/$this->slug.md")
         ))->get();
 
         $this->title = $document->findTitleForDocument();

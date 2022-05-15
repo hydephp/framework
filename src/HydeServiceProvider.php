@@ -4,6 +4,11 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Hyde\Framework\Concerns\RegistersDefaultDirectories;
+use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Models\MarkdownPost;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -11,6 +16,8 @@ use Illuminate\Support\ServiceProvider;
  */
 class HydeServiceProvider extends ServiceProvider
 {
+    use RegistersDefaultDirectories;
+
     /**
      * Register any application services.
      *
@@ -18,6 +25,9 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /**
+         * @deprecated
+         */
         $this->app->bind(
             'hyde.version',
             function () {
@@ -25,12 +35,24 @@ class HydeServiceProvider extends ServiceProvider
             }
         );
 
+        /**
+         * @deprecated
+         */
         $this->app->bind(
             'framework.version',
             function () {
                 return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
             }
         );
+
+        $this->registerDefaultDirectories([
+            BladePage::class => '_pages',
+            MarkdownPage::class => '_pages',
+            MarkdownPost::class => '_posts',
+            DocumentationPage::class => '_docs',
+        ]);
+
+        $this->discoverBladeViewsIn('_pages');
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
@@ -54,7 +76,9 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        (new CreatesDefaultDirectories)->__invoke();
+        if (config('hyde.create_default_directories', true)) {
+            (new CreatesDefaultDirectories)->__invoke();
+        }
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'hyde');
 
@@ -73,5 +97,18 @@ class HydeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../_pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
         ], 'hyde-page-404');
+    }
+
+    /**
+     * If you are loading Blade views from a different directory,
+     * you need to add the path to the view.php config. This is
+     * here done automatically when registering this provider.
+     */
+    protected function discoverBladeViewsIn(string $directory): void
+    {
+        config(['view.paths' => array_merge(
+            config('view.paths', []),
+            [base_path($directory)]
+        )]);
     }
 }
