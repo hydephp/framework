@@ -9,6 +9,8 @@ use Hyde\Framework\Models\MarkdownPost;
 
 /**
  * Static service helpers for building static pages.
+ * 
+ * @package HydeAutoDiscovery
  */
 class BuildService
 {

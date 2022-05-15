@@ -13,6 +13,8 @@ use Hyde\Framework\Models\MarkdownPost;
  *
  * @see \Tests\Feature\Services\CollectionServiceTest
  * @todo refactor to use the source directories instead of hard-coded paths
+ * 
+ * @package HydeAutoDiscovery
  */
 class CollectionService
 {
