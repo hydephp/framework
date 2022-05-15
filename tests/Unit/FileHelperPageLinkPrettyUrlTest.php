@@ -79,5 +79,5 @@ class FileHelperPageLinkPrettyUrlTest extends TestCase
     {
         config(['hyde.prettyUrls' => false]);
         $this->assertEquals('index.html', Hyde::pageLink('index.html'));
-    }	
+    }
 }
