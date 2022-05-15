@@ -56,7 +56,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('_pages/*.blade.php')) as $filepath) {
+        foreach (glob(Hyde::path(BladePage::$sourceDirectory . '/*.blade.php')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.blade.php');
             }
@@ -74,7 +74,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('_pages/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(MarkdownPage::$sourceDirectory . '/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }
@@ -92,7 +92,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('_posts/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(MarkdownPost::$sourceDirectory . '/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }
@@ -110,7 +110,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path('_docs/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(DocumentationPage::$sourceDirectory. '/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }
