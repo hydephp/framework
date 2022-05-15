@@ -4,7 +4,7 @@ namespace Hyde\Framework\Concerns\Internal;
 
 /**
  * Offloads file helper methods for the Hyde Facade.
- * 
+ *
  * If a method uses the name `path` it refers to an internal file path.
  * if a method uses the name `link` it refers to a web link used in Blade templates.
  *
@@ -75,6 +75,7 @@ trait FileHelpers
 
     /**
      * Format a link to an HTML file, allowing for pretty URLs, if enabled.
+     *
      * @see \Tests\Unit\FileHelperPageLinkPrettyUrlTest
      */
     public static function pageLink(string $destination): string
@@ -93,6 +94,7 @@ trait FileHelpers
 
     /**
      * Inject the proper number of `../` before the links in Blade templates.
+     *
      * @see \Tests\Unit\FileHelperRelativeLinkTest
      *
      * @param  string  $destination  relative to `_site` directory on compiled site

@@ -18,7 +18,7 @@ class FileHelperRelativeLinkTest extends TestCase
         $this->assertEquals('foo/bar.html', Hyde::relativeLink('foo/bar.html'));
     }
 
-    // Test helper injects the proper number of `../` 
+    // Test helper injects the proper number of `../`
     public function test_helper_injects_proper_number_of_doubles_slash()
     {
         $this->assertEquals('../foo.html', Hyde::relativeLink('foo.html', 'foo/bar.html'));
