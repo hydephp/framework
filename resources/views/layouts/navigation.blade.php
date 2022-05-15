@@ -1,6 +1,6 @@
 @php
 $links = Hyde\Framework\Actions\GeneratesNavigationMenu::getNavigationLinks($currentPage);
-$homeRoute = ($links[array_search('Home', array_column($links, 'title'))])['route'] ?? 'index.html';
+$homeRoute = ($links[array_search('Home', array_column($links, 'title'))])['route'] ?? Hyde::pageLink('index.html');
 @endphp
 
 <nav aria-label="Main navigation" id="main-navigation" class="flex flex-wrap items-center justify-between p-4 shadow-lg sm:shadow-xl md:shadow-none dark:bg-gray-800">
