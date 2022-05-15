@@ -13,7 +13,7 @@ use Tests\TestCase;
 /**
  * Class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest.
  *
- * @covers \Hyde\Framework\DiscoveryService::findModelFromFilePath()
+ * @covers \Hyde\Framework\DiscoveryService::findModelFromFilePath
  */
 class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
 {
