@@ -62,4 +62,25 @@ class FileHelperRelativeLinkTest extends TestCase
         $this->assertEquals('../foo.css', Hyde::relativeLink('foo.css', 'foo/bar'));
         $this->assertEquals('../foo.js', Hyde::relativeLink('foo.js', 'foo/bar'));
     }
+
+    // Test helper returns pretty URL if enabled and destination is a HTML file
+    public function test_helper_returns_pretty_url_if_enabled_and_destination_is_a_html_file()
+    {
+        config(['hyde.prettyUrls' => true]);
+        $this->assertEquals('../foo', Hyde::relativeLink('foo.html', 'foo/bar.html'));
+    }
+
+    // Test helper method does not require current path to be HTML to use pretty URLs
+    public function test_helper_method_does_not_require_current_path_to_be_html_to_use_pretty_urls()
+    {
+        config(['hyde.prettyUrls' => true]);
+        $this->assertEquals('../foo', Hyde::relativeLink('foo.html', 'foo/bar'));
+    }
+
+    // Test helper returns does not return pretty URL if when enabled but and destination is not a HTML file
+    public function test_helper_returns_does_not_return_pretty_url_if_when_enabled_but_and_destination_is_not_a_html_file()
+    {
+        config(['hyde.prettyUrls' => true]);
+        $this->assertEquals('../foo.png', Hyde::relativeLink('foo.png', 'foo/bar.html'));
+    }
 }

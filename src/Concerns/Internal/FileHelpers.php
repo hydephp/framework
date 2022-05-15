@@ -103,7 +103,7 @@ trait FileHelpers
         if ($nestCount > 0) {
             $route .= str_repeat('../', $nestCount);
         }
-        $route .= $destination;
+        $route .= static::pageLink($destination);
 
         return $route;
     }
