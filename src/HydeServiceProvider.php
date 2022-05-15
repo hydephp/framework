@@ -52,6 +52,8 @@ class HydeServiceProvider extends ServiceProvider
             DocumentationPage::class => '_docs',
         ]);
 
+        $this->discoverBladeViewsIn('_pages');
+
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
             Commands\HydeUpdateConfigsCommand::class,
@@ -95,5 +97,18 @@ class HydeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../_pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
         ], 'hyde-page-404');
+    }
+
+    /**
+     * If you are loading Blade views from a different directory,
+     * you need to add the path to the view.php config. This is
+     * here done automatically when registering this provider.
+     */
+    protected function discoverBladeViewsIn(string $directory): void
+    {
+        config(['view.paths' => array_merge(
+            config('view.paths', []),
+            [base_path($directory)]
+        )]);
     }
 }
