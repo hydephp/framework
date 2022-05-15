@@ -4,7 +4,6 @@ namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
