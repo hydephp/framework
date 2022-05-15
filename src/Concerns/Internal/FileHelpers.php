@@ -30,11 +30,11 @@ trait FileHelpers
     public static function docsIndexPath(): string|false
     {
         if (file_exists(static::path('_docs/index.md'))) {
-            return static::docsDirectory().'/index.html';
+            return static::pageLink(static::docsDirectory().'/index.html');
         }
 
         if (file_exists(static::path('_docs/readme.md'))) {
-            return static::docsDirectory().'/readme.html';
+            return static::pageLink(static::docsDirectory().'/readme.html');
         }
 
         return false;
