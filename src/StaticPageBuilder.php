@@ -13,6 +13,7 @@ use Hyde\Framework\Models\MarkdownPost;
  * Converts a Page Model into a static HTML page.
  * 
  * @todo Create the required directories if they don't exist.
+ *          Can be done using a trait where an array of the required directories is passed.
  */
 class StaticPageBuilder
 {
