@@ -9,6 +9,7 @@ use Hyde\Framework\Models\MarkdownPost;
 
 /**
  * Static service helpers for building static pages.
+ * @deprecated may be renamed to DiscoveryService
  * 
  * @package HydeAutoDiscovery
  */
