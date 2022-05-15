@@ -12,7 +12,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -112,7 +112,7 @@ class HydeBuildStaticSiteCommand extends Command
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
             'Your new homepage is stored here -> '.
-                BuildService::createClickableFilepath(Hyde::path('_site/index.html'))
+                DiscoveryService::createClickableFilepath(Hyde::path('_site/index.html'))
         );
     }
 

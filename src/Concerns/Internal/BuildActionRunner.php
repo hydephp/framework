@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
 
@@ -40,7 +40,7 @@ trait BuildActionRunner
                 $collection,
                 function ($basename) use ($model) {
                     new StaticPageBuilder(
-                        BuildService::getParserInstanceForModel(
+                        DiscoveryService::getParserInstanceForModel(
                             $model,
                             $basename
                         )->get(),

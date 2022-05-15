@@ -53,9 +53,10 @@ class DiscoveryService
     /**
      * Determine the Page Model to use for a given file path.
      *
+     * @param string $filepath
+     * @return string|false The model class constant, or false if none was found.
      * @see \Tests\Unit\BuildServiceCanFindModelFromCustomSourceFilePathTest
      *
-     * @return string The model class constant, or false if none was found.
      */
     public static function findModelFromFilePath(string $filepath): string|false
     {
