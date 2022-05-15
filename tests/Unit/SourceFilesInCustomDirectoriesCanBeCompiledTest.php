@@ -8,7 +8,6 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\BuildService;
-use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;

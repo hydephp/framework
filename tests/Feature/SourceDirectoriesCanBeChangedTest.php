@@ -36,7 +36,7 @@ class SourceDirectoriesCanBeChangedTest extends TestCase
         $this->assertEquals('.source/posts', MarkdownPost::$sourceDirectory);
         $this->assertEquals('.source/docs', DocumentationPage::$sourceDirectory);
     }
-    
+
     public function test_build_service_recognizes_changed_directory()
     {
         MarkdownPost::$sourceDirectory = '_source/posts';
