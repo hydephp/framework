@@ -6,9 +6,9 @@ use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Concerns\RegistersDefaultDirectories;
 use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Models\DocumentationPage;
 use Illuminate\Support\ServiceProvider;
 
 /**
