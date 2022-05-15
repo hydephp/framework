@@ -51,6 +51,8 @@ class BuildService
     /**
      * Determine the Page Model to use for a given file path.
      *
+     * @todo refactor to use the source directories instead of hard-coded paths
+     *
      * @return string The model class constant, or false if none was found.
      */
     public static function findModelFromFilePath(string $filepath): string|false

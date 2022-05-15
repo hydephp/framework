@@ -12,6 +12,7 @@ use Hyde\Framework\Models\MarkdownPost;
  * Contains service methods to return helpful collections of arrays and lists.
  *
  * @see \Tests\Feature\Services\CollectionServiceTest
+ * @todo refactor to use the source directories instead of hard-coded paths
  */
 class CollectionService
 {
