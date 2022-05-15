@@ -7,7 +7,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -41,7 +41,7 @@ class SourceFilesInCustomDirectoriesCanBeCompiledTest extends TestCase
 
         // Uses the same logic as the BuildActionRunner for an accurate test.
         new StaticPageBuilder(
-            BuildService::getParserInstanceForModel(
+            DiscoveryService::getParserInstanceForModel(
                 MarkdownPost::class,
                 'test'
             )->get(),
@@ -61,7 +61,7 @@ class SourceFilesInCustomDirectoriesCanBeCompiledTest extends TestCase
 
         // Uses the same logic as the BuildActionRunner for an accurate test.
         new StaticPageBuilder(
-            BuildService::getParserInstanceForModel(
+            DiscoveryService::getParserInstanceForModel(
                 MarkdownPage::class,
                 'test'
             )->get(),
@@ -81,7 +81,7 @@ class SourceFilesInCustomDirectoriesCanBeCompiledTest extends TestCase
 
         // Uses the same logic as the BuildActionRunner for an accurate test.
         new StaticPageBuilder(
-            BuildService::getParserInstanceForModel(
+            DiscoveryService::getParserInstanceForModel(
                 DocumentationPage::class,
                 'test'
             )->get(),
@@ -102,7 +102,7 @@ class SourceFilesInCustomDirectoriesCanBeCompiledTest extends TestCase
 
         // Uses the same logic as the BuildActionRunner for an accurate test.
         new StaticPageBuilder(
-            BuildService::getParserInstanceForModel(
+            DiscoveryService::getParserInstanceForModel(
                 BladePage::class,
                 'test'
             )->get(),

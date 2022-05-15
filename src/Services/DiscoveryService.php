@@ -8,11 +8,11 @@ use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 
 /**
- * Static service helpers for building static pages.
- *
- * @deprecated may be renamed to DiscoveryService
+ * The Discovery Service (previously called BuildService) provides
+ * helper methods for source file autodiscovery used in the building
+ * process to determine where files are located and how to parse them.
  */
-class BuildService
+class DiscoveryService
 {
     public static function getParserClassForModel(string $model): string
     {
@@ -53,9 +53,10 @@ class BuildService
     /**
      * Determine the Page Model to use for a given file path.
      *
-     * @see \Tests\Unit\BuildServiceCanFindModelFromCustomSourceFilePathTest
+     * @param  string  $filepath
+     * @return string|false The model class constant, or false if none was found.
      *
-     * @return string The model class constant, or false if none was found.
+     * @see \Tests\Unit\DiscoveryServiceCanFindModelFromCustomSourceFilePathTest
      */
     public static function findModelFromFilePath(string $filepath): string|false
     {

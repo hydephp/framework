@@ -6,16 +6,16 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\BuildService;
+use Hyde\Framework\Services\DiscoveryService;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * Class BuildServiceCanFindModelFromCustomSourceFilePathTest.
+ * Class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest.
  *
- * @covers \Hyde\Framework\BuildService::findModelFromFilePath()
+ * @covers \Hyde\Framework\DiscoveryService::findModelFromFilePath()
  */
-class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
+class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -32,7 +32,7 @@ class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
     {
         $this->assertEquals(
             BladePage::class,
-            BuildService::findModelFromFilePath('.source/pages/test.blade.php')
+            DiscoveryService::findModelFromFilePath('.source/pages/test.blade.php')
         );
     }
 
@@ -40,7 +40,7 @@ class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
     {
         $this->assertEquals(
             MarkdownPage::class,
-            BuildService::findModelFromFilePath('.source/pages/test.md')
+            DiscoveryService::findModelFromFilePath('.source/pages/test.md')
         );
     }
 
@@ -48,7 +48,7 @@ class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
     {
         $this->assertEquals(
             MarkdownPost::class,
-            BuildService::findModelFromFilePath('.source/posts/test.md')
+            DiscoveryService::findModelFromFilePath('.source/posts/test.md')
         );
     }
 
@@ -56,7 +56,7 @@ class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
     {
         $this->assertEquals(
             DocumentationPage::class,
-            BuildService::findModelFromFilePath('.source/docs/test.md')
+            DiscoveryService::findModelFromFilePath('.source/docs/test.md')
         );
     }
 }
