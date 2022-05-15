@@ -8,6 +8,10 @@ use JetBrains\PhpStorm\Pure;
 /**
  * Create the default directories required by the Application.
  *
+ * @deprecated as Hyde is bringing support for changing the default directories.
+ *              The directories needed will be created (if needed) when the filesystem
+ *              needs to access them. The default directories may be created in the TestCase.
+ * 
  * To prevent any issues with file generations, this action
  * is automatically whenever the application is booted.
  *
