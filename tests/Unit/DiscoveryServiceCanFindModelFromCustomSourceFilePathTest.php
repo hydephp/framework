@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * Class BuildServiceCanFindModelFromCustomSourceFilePathTest.
+ * Class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest.
  *
  * @covers \Hyde\Framework\DiscoveryService::findModelFromFilePath()
  */
-class BuildServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
+class DiscoveryServiceCanFindModelFromCustomSourceFilePathTest extends TestCase
 {
     protected function setUp(): void
     {
