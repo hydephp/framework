@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\Services\CollectionService;
+use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\StaticPageBuilder;
 
 /**
