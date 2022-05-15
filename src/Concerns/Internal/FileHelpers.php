@@ -74,6 +74,21 @@ trait FileHelpers
     }
 
     /**
+     * Format a link to an HTML file, allowing for pretty URLs, if enabled.
+     * @see \Tests\Unit\HydeFileHelperForPageLinksCanCreatePrettyUrlsTest
+     */
+    public static function pageLink(string $destination): string
+    {
+        if (config('hyde.prettyUrls', false) === true) {
+            if (str_ends_with($destination, '.html')) {
+                return substr($destination, 0, -5);
+            }
+        }
+
+        return $destination;
+    }
+
+    /**
      * Inject the proper number of `../` before the links in Blade templates.
      *
      * @param  string  $destination  the route to format
