@@ -85,6 +85,7 @@ trait FileHelpers
                 if ($destination === 'index.html') {
                     return '/';
                 }
+
                 return substr($destination, 0, -5);
             }
         }
