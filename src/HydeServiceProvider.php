@@ -4,6 +4,11 @@ namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
+use Hyde\Framework\Concerns\RegistersDefaultDirectories;
+use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\DocumentationPage;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -11,6 +16,8 @@ use Illuminate\Support\ServiceProvider;
  */
 class HydeServiceProvider extends ServiceProvider
 {
+    use RegistersDefaultDirectories;
+
     /**
      * Register any application services.
      *
@@ -37,6 +44,13 @@ class HydeServiceProvider extends ServiceProvider
                 return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
             }
         );
+
+        $this->registerDefaultDirectories([
+            BladePage::class => '_pages',
+            MarkdownPage::class => '_pages',
+            MarkdownPost::class => '_posts',
+            DocumentationPage::class => '_docs',
+        ]);
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
