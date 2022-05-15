@@ -55,7 +55,7 @@ class DiscoveryService
      *
      * @param string $filepath
      * @return string|false The model class constant, or false if none was found.
-     * @see \Tests\Unit\BuildServiceCanFindModelFromCustomSourceFilePathTest
+     * @see \Tests\Unit\DiscoveryServiceCanFindModelFromCustomSourceFilePathTest
      *
      */
     public static function findModelFromFilePath(string $filepath): string|false
