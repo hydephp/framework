@@ -36,7 +36,11 @@ class DocumentationSidebarItem
             return 500;
         }
 
-        return array_search($slug, $orderIndexArray); //  + 250?
+        return array_search($slug, $orderIndexArray) + 250;
+
+        // Adding 250 makes so that pages with a front matter priority that is lower
+        // can be shown first. It's lower than the fallback of 500 so that they
+        // still come first. This is all to make it easier to mix priorities.
     }
 
     public function isHidden(): bool
