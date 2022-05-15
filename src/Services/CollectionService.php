@@ -12,9 +12,8 @@ use Hyde\Framework\Models\MarkdownPost;
  * Contains service methods to return helpful collections of arrays and lists.
  *
  * @see \Tests\Feature\Services\CollectionServiceTest
+ *
  * @todo refactor to use the source directories instead of hard-coded paths
- * 
- * @package HydeAutoDiscovery
  */
 class CollectionService
 {
@@ -56,7 +55,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path(BladePage::$sourceDirectory . '/*.blade.php')) as $filepath) {
+        foreach (glob(Hyde::path(BladePage::$sourceDirectory.'/*.blade.php')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.blade.php');
             }
@@ -74,7 +73,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path(MarkdownPage::$sourceDirectory . '/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(MarkdownPage::$sourceDirectory.'/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }
@@ -92,7 +91,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path(MarkdownPost::$sourceDirectory . '/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(MarkdownPost::$sourceDirectory.'/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }
@@ -110,7 +109,7 @@ class CollectionService
     {
         $array = [];
 
-        foreach (glob(Hyde::path(DocumentationPage::$sourceDirectory. '/*.md')) as $filepath) {
+        foreach (glob(Hyde::path(DocumentationPage::$sourceDirectory.'/*.md')) as $filepath) {
             if (! str_starts_with(basename($filepath), '_')) {
                 $array[] = basename($filepath, '.md');
             }

@@ -9,9 +9,8 @@ use Hyde\Framework\Models\MarkdownPost;
 
 /**
  * Static service helpers for building static pages.
+ *
  * @deprecated may be renamed to DiscoveryService
- * 
- * @package HydeAutoDiscovery
  */
 class BuildService
 {
@@ -53,6 +52,7 @@ class BuildService
 
     /**
      * Determine the Page Model to use for a given file path.
+     *
      * @see \Tests\Unit\BuildServiceCanFindModelFromCustomSourceFilePathTest
      *
      * @return string The model class constant, or false if none was found.

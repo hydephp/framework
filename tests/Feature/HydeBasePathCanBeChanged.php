@@ -11,6 +11,6 @@ class HydeBasePathCanBeChanged extends TestCase
 {
     public function test_example()
     {
-       // TODO: Implement class
+        // TODO: Implement class
     }
 }
