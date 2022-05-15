@@ -132,7 +132,7 @@ class DocumentationSidebarServiceTest extends TestCase
         $this->assertEquals(25, DocumentationSidebarService::get()->first()->priority);
     }
 
-    public function test_both_sidebar_priority_setting_methods_can_be_used()
+    public function test_sidebar_priorities_can_be_set_in_both_front_matter_and_config()
     {
         Config::set('hyde.documentationPageOrder', [
             'first',
@@ -142,7 +142,7 @@ class DocumentationSidebarServiceTest extends TestCase
         touch(Hyde::path('_docs/first.md'));
         touch(Hyde::path('_docs/second.md'));
         file_put_contents(Hyde::path('_docs/third.md'),
-            (new ConvertsArrayToFrontMatter)->execute(['priority' => 3])
+            (new ConvertsArrayToFrontMatter)->execute(['priority' => 300])
         );
         $sidebar = DocumentationSidebarService::get();
         $this->assertEquals('first', $sidebar[0]->destination);
