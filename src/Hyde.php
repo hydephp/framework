@@ -3,6 +3,7 @@
 namespace Hyde\Framework;
 
 use Composer\InstalledVersions;
+use Hyde\Framework\Concerns\Internal\SourcePathHelpers;
 use Hyde\Framework\Concerns\Internal\AssetManager;
 use Hyde\Framework\Concerns\Internal\FileHelpers;
 use Hyde\Framework\Services\CollectionService;
@@ -22,6 +23,7 @@ class Hyde
 {
     use FileHelpers;
     use AssetManager;
+    use SourcePathHelpers;
 
     protected static string $basePath;
 

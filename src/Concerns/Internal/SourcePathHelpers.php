@@ -1,0 +1,56 @@
+<?php
+
+namespace Hyde\Framework\Concerns\Internal;
+
+use Hyde\Framework\Services\DiscoveryService;
+
+use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\DocumentationPage;
+
+/**
+ * Offloads file helper methods for the Hyde Facade.
+ * 
+ * Provides a more fluent way of getting either the absolute path
+ * to a model's source directory, or an absolute path to a file within it.
+ * 
+ * These are intended to be used as a dynamic alternative to legacy code
+ * Hyde::path('_pages/foo') becomes Hyde::getBladePagePath('foo')
+ *
+ * @see \Hyde\Framework\Hyde
+ * @see \Tests\Unit\SourcePathHelpersTest
+ */
+trait SourcePathHelpers
+{
+	public static function getBladePagePath(string $path = ''): string
+	{
+		return static::getModelSourcePath(BladePage::class, $path);
+	}
+
+	public static function getMarkdownPagePath(string $path = ''): string
+	{
+		return static::getModelSourcePath(MarkdownPage::class, $path);
+	}
+
+	public static function getMarkdownPostPath(string $path = ''): string
+	{
+		return static::getModelSourcePath(MarkdownPost::class, $path);
+	}
+
+	public static function getDocumentationPagePath(string $path = ''): string
+	{
+		return static::getModelSourcePath(DocumentationPage::class, $path);
+	}
+
+	public static function getModelSourcePath(string $model, string $path = ''): string
+    {
+        if (empty($path)) {
+            return static::path(DiscoveryService::getFilePathForModelClassFiles($model));
+        }
+
+        $path = trim($path, '/\\');
+
+        return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
+    }
+}
