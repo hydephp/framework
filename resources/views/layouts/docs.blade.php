@@ -57,7 +57,7 @@
 		</nav>
 		<footer id="sidebar-footer">
 			<p>
-				<a href="{{ Hyde::relativePath('index.html', $currentPage) }}">Back to home page</a>
+				<a href="{{ Hyde::relativeLink('index.html', $currentPage) }}">Back to home page</a>
 			</p>
 		</footer>
 	</aside>
