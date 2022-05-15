@@ -23,9 +23,25 @@ class Hyde
     use FileHelpers;
     use AssetManager;
 
+    protected static string $basePath;
+
     public static function version(): string
     {
         return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
+    }
+
+    public static function getBasePath(): string
+    {
+        if (! isset(static::$basePath)) {
+            static::$basePath = getcwd();
+        }
+
+        return static::$basePath;
+    }
+
+    public static function setBasePath(string $path): void
+    {
+        static::$basePath = $path;
     }
 
     public static function titleFromSlug(string $slug): string
