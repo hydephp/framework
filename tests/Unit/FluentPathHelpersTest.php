@@ -11,6 +11,7 @@ use Tests\TestCase;
 
 /**
  * Class FluentPathHelpersTest.
+ *
  * @deprecated Move to Feature namespace
  * @covers \Hyde\Framework\Concerns\Internal\FluentPathHelpers
  */
@@ -183,7 +184,7 @@ class FluentPathHelpersTest extends TestCase
 
         foreach ($testStrings as $testString) {
             $this->assertEquals(
-                $this->systemPath(($testString)), 
+                $this->systemPath(($testString)),
                 Hyde::pathToRelative(
                     $this->systemPath($testString)
                 )
