@@ -12,8 +12,6 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Hyde Command to scaffold a new Markdown or Blade page file.
  *
- * @todo Ask for title if it was not specified.
- *
  * @see \Tests\Feature\Commands\HydeMakePageCommandTest
  */
 class HydeMakePageCommand extends Command
@@ -24,7 +22,7 @@ class HydeMakePageCommand extends Command
      * @var string
      */
     protected $signature = 'make:page 
-		{title : The name of the page file to create. Will be used to generate the slug}
+		{title? : The name of the page file to create. Will be used to generate the slug}
 		{--type=markdown : The type of page to create (markdown, blade, or docs)}
 		{--force : Overwrite any existing files}';
 
@@ -61,7 +59,11 @@ class HydeMakePageCommand extends Command
     {
         $this->title('Creating a new page!');
 
-        $this->title = $this->argument('title');
+        $this->title =  $this->argument('title')
+            ?? $this->ask('What is the title of the page?')
+            ?? 'My New Page';
+
+        $this->line('<info>Creating page with title:</> '.$this->title."\n");
 
         $this->validateOptions();
 

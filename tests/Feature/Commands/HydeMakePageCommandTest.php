@@ -119,4 +119,22 @@ class HydeMakePageCommandTest extends TestCase
 
         $this->assertNotEquals('This should be overwritten', file_get_contents($this->markdownPath));
     }
+
+    // Assert the command prompts for title if it was not specified
+    public function test_command_prompts_for_title_if_it_was_not_specified()
+    {
+        $this->artisan('make:page')
+            ->expectsQuestion('What is the title of the page?', 'Test Page')
+            ->expectsOutput("Creating page with title: Test Page\n")
+            ->assertExitCode(0);
+    }
+
+    // Assert the command falls back to default title if the user enters nothing
+    public function test_command_falls_back_to_default_title_if_user_enters_nothing()
+    {
+        $this->artisan('make:page')
+            ->expectsQuestion('What is the title of the page?', null)
+            ->expectsOutput("Creating page with title: My New Page\n")
+            ->assertExitCode(0);
+    }
 }
