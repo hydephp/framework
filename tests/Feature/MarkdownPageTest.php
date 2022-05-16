@@ -7,6 +7,7 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\MarkdownPageParser;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Services\CollectionService;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 /**
@@ -19,6 +20,8 @@ class MarkdownPageTest extends TestCase
         parent::setUp();
 
         backupDirectory(Hyde::path('_pages'));
+        File::deleteDirectory(Hyde::path('_pages'));
+        mkdir(Hyde::path('_pages'));
 
         file_put_contents(Hyde::path('_pages/test-post.md'), "# PHPUnit Test File \n Hello World!");
     }
