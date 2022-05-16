@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 /**
  * Class FluentPathHelpersTest.
- *
+ * @deprecated Move to Feature namespace
  * @covers \Hyde\Framework\Concerns\Internal\FluentPathHelpers
  */
 class FluentPathHelpersTest extends TestCase
@@ -145,5 +145,54 @@ class FluentPathHelpersTest extends TestCase
             '_site'.DIRECTORY_SEPARATOR.'foo.html',
             Hyde::getRelativeSiteOutputPath('/foo.html/')
         );
+    }
+
+    public function test_path_to_relative_helper_decodes_hyde_path_into_relative()
+    {
+        $s = DIRECTORY_SEPARATOR;
+        $this->assertEquals('foo', Hyde::pathToRelative(Hyde::path('foo')));
+        $this->assertEquals('foo', Hyde::pathToRelative(Hyde::path('/foo/')));
+        $this->assertEquals('foo.md', Hyde::pathToRelative(Hyde::path('foo.md')));
+        $this->assertEquals("foo{$s}bar", Hyde::pathToRelative(Hyde::path("foo{$s}bar")));
+        $this->assertEquals("foo{$s}bar.md", Hyde::pathToRelative(Hyde::path("foo{$s}bar.md")));
+    }
+
+    public function test_path_to_relative_helper_does_not_modify_already_relative_paths()
+    {
+        $this->assertEquals('foo', Hyde::pathToRelative('foo'));
+        $this->assertEquals('foo/', Hyde::pathToRelative('foo/'));
+        $this->assertEquals('../foo', Hyde::pathToRelative('../foo'));
+        $this->assertEquals('../foo/', Hyde::pathToRelative('../foo/'));
+        $this->assertEquals('foo.md', Hyde::pathToRelative('foo.md'));
+        $this->assertEquals('foo/bar', Hyde::pathToRelative('foo/bar'));
+        $this->assertEquals('foo/bar.md', Hyde::pathToRelative('foo/bar.md'));
+    }
+
+    public function test_path_to_relative_helper_does_not_modify_non_project_paths()
+    {
+        $testStrings = [
+            'C:\Documents\Newsletters\Summer2018.pdf',
+            '\Program Files\Custom Utilities\StringFinder.exe',
+            '2018\January.xlsx',
+            '..\Publications\TravelBrochure.pdf',
+            'C:\Projects\library\library.sln',
+            'C:Projects\library\library.sln',
+            '/home/seth/Pictures/penguin.jpg',
+            '~/Pictures/penguin.jpg',
+        ];
+
+        foreach ($testStrings as $testString) {
+            $this->assertEquals(
+                $this->systemPath(($testString)), 
+                Hyde::pathToRelative(
+                    $this->systemPath($testString)
+                )
+            );
+        }
+    }
+
+    protected function systemPath(string $path): string
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
     }
 }
