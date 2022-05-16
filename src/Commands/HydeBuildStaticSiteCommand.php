@@ -21,6 +21,7 @@ use LaravelZero\Framework\Commands\Command;
  * Hyde Command to run the Build Process.
  *
  * @see \Tests\Feature\Commands\BuildStaticSiteCommandTest
+ * @todo #361 Rename --pretty option to --run-prettier to distinguish it better
  */
 class HydeBuildStaticSiteCommand extends Command
 {
