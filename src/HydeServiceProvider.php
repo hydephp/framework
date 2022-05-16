@@ -5,10 +5,12 @@ namespace Hyde\Framework;
 use Composer\InstalledVersions;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Concerns\RegistersDefaultDirectories;
+use Hyde\Framework\Contracts\AssetServiceContract;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Services\AssetService;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -44,6 +46,8 @@ class HydeServiceProvider extends ServiceProvider
                 return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
             }
         );
+
+        $this->app->singleton(AssetServiceContract::class, AssetService::class);
 
         $this->registerDefaultDirectories([
             BladePage::class => '_pages',
