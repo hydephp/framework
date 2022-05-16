@@ -109,4 +109,41 @@ class FluentPathHelpersTest extends TestCase
             Hyde::getSiteOutputPath('foo.html')
         );
     }
+
+    public function test_get_site_output_path_returns_absolute_path()
+    {
+        $this->assertEquals(
+            Hyde::path('_site'),
+            Hyde::getSiteOutputPath()
+        );
+    }
+
+    public function test_get_relative_site_output_path_returns_relative_path()
+    {
+        $this->assertEquals(
+            '_site',
+            Hyde::getRelativeSiteOutputPath()
+        );
+    }
+
+    public function test_get_relative_site_output_path_returns_relative_path_to_file()
+    {
+        $this->assertEquals(
+            '_site'.DIRECTORY_SEPARATOR.'foo.html',
+            Hyde::getRelativeSiteOutputPath('foo.html')
+        );
+    }
+
+    public function test_site_output_path_helpers_ignore_trailing_slashes()
+    {
+        $this->assertEquals(
+            Hyde::path('_site'.DIRECTORY_SEPARATOR.'foo.html'),
+            Hyde::getSiteOutputPath('/foo.html/')
+        );
+
+        $this->assertEquals(
+            '_site'.DIRECTORY_SEPARATOR.'foo.html',
+            Hyde::getRelativeSiteOutputPath('/foo.html/')
+        );
+    }
 }

@@ -54,6 +54,9 @@ trait FluentPathHelpers
         return static::getModelSourcePath(DocumentationPage::class, $path);
     }
 
+    /**
+     * Get the absolute path to the compiled site directory, or a file within it.
+     */
     public static function getSiteOutputPath(string $path = ''): string
     {
         if (empty($path)) {
@@ -63,5 +66,15 @@ trait FluentPathHelpers
         $path = trim($path, '/\\');
 
         return StaticPageBuilder::$outputPath.DIRECTORY_SEPARATOR.$path;
+    }
+
+    /**
+     * Get the relative path to the compiled site directory, or a file within it.
+     */
+    public static function getRelativeSiteOutputPath(string $path = ''): string
+    {
+        return trim(str_replace(
+            static::path(), '', static::getSiteOutputPath($path)), '/\\'
+        );
     }
 }
