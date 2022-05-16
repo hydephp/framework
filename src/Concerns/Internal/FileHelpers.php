@@ -103,7 +103,7 @@ trait FileHelpers
      *
      * @see \Tests\Unit\FileHelperRelativeLinkTest
      *
-     * @param  string  $destination  relative to `_site` directory on compiled site
+     * @param  string  $destination  relative to output directory on compiled site
      * @param  string  $current  the current URI path relative to the same root
      * @return string
      */
