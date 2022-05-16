@@ -5,9 +5,9 @@ namespace Tests\Unit;
 use Tests\TestCase;
 
 /**
- * Class TestBuildStaticSiteCommandFlagToEnablePrettyUrls.
+ * Class TestBuildStaticSiteCommandFlagToEnablePrettyUrlsTest.
  */
-class TestBuildStaticSiteCommandFlagToEnablePrettyUrls extends TestCase
+class TestBuildStaticSiteCommandFlagToEnablePrettyUrlsTest extends TestCase
 {
     public function test_pretty_urls_can_be_enabled_with_flag()
     {
