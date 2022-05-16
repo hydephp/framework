@@ -11,8 +11,6 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to build a single static site file.
- *
- * @todo Refactor to work with custom paths.
  */
 class HydeRebuildStaticSiteCommand extends Command
 {
@@ -99,10 +97,11 @@ class HydeRebuildStaticSiteCommand extends Command
      */
     public function validate(): void
     {
-        if (! (str_starts_with($this->path, '_docs') ||
-            str_starts_with($this->path, '_posts') ||
-            str_starts_with($this->path, '_pages') ||
-            str_starts_with($this->path, '_pages')
+        if (! (
+            str_starts_with($this->path, Hyde::pathToRelative(Hyde::getDocumentationPagePath())) ||
+            str_starts_with($this->path, Hyde::pathToRelative(Hyde::getMarkdownPostPath())) ||
+            str_starts_with($this->path, Hyde::pathToRelative(Hyde::getBladePagePath())) ||
+            str_starts_with($this->path, Hyde::pathToRelative(Hyde::getMarkdownPostPath()))
         )) {
             throw new Exception("Path [$this->path] is not in a valid source directory.", 400);
         }
@@ -128,6 +127,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * Get the output path for the given source file path.
+     * Will fall back to the input path when using non-standard source paths.
      *
      * @param  string  $path
      * @return string
