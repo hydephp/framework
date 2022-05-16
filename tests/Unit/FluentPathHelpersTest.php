@@ -93,4 +93,20 @@ class FluentPathHelpersTest extends TestCase
             Hyde::getDocumentationPagePath()
         );
     }
+
+    public function test_helper_for_site_output_path()
+    {
+        $this->assertEquals(
+            Hyde::path('_site'),
+            Hyde::getSiteOutputPath()
+        );
+    }
+
+    public function test_helper_for_site_output_path_returns_path_to_file_within_the_directory()
+    {
+        $this->assertEquals(
+            Hyde::path('_site'.DIRECTORY_SEPARATOR.'foo.html'),
+            Hyde::getSiteOutputPath('foo.html')
+        );
+    }
 }

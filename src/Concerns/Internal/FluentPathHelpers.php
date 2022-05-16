@@ -7,6 +7,7 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
+use Hyde\Framework\StaticPageBuilder;
 
 /**
  * Offloads file helper methods for the Hyde Facade.
@@ -51,5 +52,16 @@ trait FluentPathHelpers
         $path = trim($path, '/\\');
 
         return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
+    }
+
+    public static function getSiteOutputPath(string $path = ''): string
+    {
+        if (empty($path)) {
+            return StaticPageBuilder::$outputPath;
+        }
+
+        $path = trim($path, '/\\');
+
+        return StaticPageBuilder::$outputPath.DIRECTORY_SEPARATOR.$path;
     }
 }
