@@ -20,8 +20,7 @@ class HydeBasePathCanBeChangedTest extends TestCase
     {
         parent::setUp();
 
-        if (! isset($this->basePath))
-        {
+        if (! isset($this->basePath)) {
             $this->basePath = Hyde::getBasePath();
         }
     }
@@ -29,7 +28,7 @@ class HydeBasePathCanBeChangedTest extends TestCase
     protected function tearDown(): void
     {
         Hyde::setBasePath($this->basePath);
-        
+
         parent::tearDown();
     }
 
