@@ -18,6 +18,11 @@ use Hyde\Framework\Models\MarkdownPost;
 class StaticPageBuilder
 {
     /**
+     * @var string Absolute path to the directory to place compiled files in.
+     */
+    public static string $outputPath;
+
+    /**
      * Construct the class.
      *
      * @param  MarkdownDocument|BladePage  $page  the Page to compile into HTML
