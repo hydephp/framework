@@ -18,9 +18,9 @@ use Hyde\Framework\Services\DiscoveryService;
  * Hyde::path('_pages/foo') becomes Hyde::getBladePagePath('foo')
  *
  * @see \Hyde\Framework\Hyde
- * @see \Tests\Unit\SourcePathHelpersTest
+ * @see \Tests\Unit\FluentPathHelpersTest
  */
-trait SourcePathHelpers
+trait FluentPathHelpers
 {
     public static function getBladePagePath(string $path = ''): string
     {

@@ -10,11 +10,11 @@ use Hyde\Framework\Models\MarkdownPost;
 use Tests\TestCase;
 
 /**
- * Class SourcePathHelpersTest.
+ * Class FluentPathHelpersTest.
  *
- * @covers \Hyde\Framework\Concerns\Internal\SourcePathHelpers
+ * @covers \Hyde\Framework\Concerns\Internal\FluentPathHelpers
  */
-class SourcePathHelpersTest extends TestCase
+class FluentPathHelpersTest extends TestCase
 {
     public function test_get_model_source_path_method_returns_path_for_model_classes()
     {
