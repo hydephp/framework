@@ -7,6 +7,7 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
+use Hyde\Framework\StaticPageBuilder;
 
 /**
  * Offloads file helper methods for the Hyde Facade.
@@ -18,10 +19,21 @@ use Hyde\Framework\Services\DiscoveryService;
  * Hyde::path('_pages/foo') becomes Hyde::getBladePagePath('foo')
  *
  * @see \Hyde\Framework\Hyde
- * @see \Tests\Unit\SourcePathHelpersTest
+ * @see \Tests\Unit\FluentPathHelpersTest
  */
-trait SourcePathHelpers
+trait FluentPathHelpers
 {
+    public static function getModelSourcePath(string $model, string $path = ''): string
+    {
+        if (empty($path)) {
+            return static::path(DiscoveryService::getFilePathForModelClassFiles($model));
+        }
+
+        $path = trim($path, '/\\');
+
+        return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
+    }
+
     public static function getBladePagePath(string $path = ''): string
     {
         return static::getModelSourcePath(BladePage::class, $path);
@@ -42,14 +54,27 @@ trait SourcePathHelpers
         return static::getModelSourcePath(DocumentationPage::class, $path);
     }
 
-    public static function getModelSourcePath(string $model, string $path = ''): string
+    /**
+     * Get the absolute path to the compiled site directory, or a file within it.
+     */
+    public static function getSiteOutputPath(string $path = ''): string
     {
         if (empty($path)) {
-            return static::path(DiscoveryService::getFilePathForModelClassFiles($model));
+            return StaticPageBuilder::$outputPath;
         }
 
         $path = trim($path, '/\\');
 
-        return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
+        return StaticPageBuilder::$outputPath.DIRECTORY_SEPARATOR.$path;
+    }
+
+    /**
+     * Decode an absolute path created with a Hyde::path() helper into its relative counterpart.
+     */
+    public static function pathToRelative(string $path): string
+    {
+        return str_starts_with($path, static::path()) ? trim(str_replace(
+            static::path(), '', $path), '/\\'
+        ) : $path;
     }
 }

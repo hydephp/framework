@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
+use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
 
@@ -16,16 +17,19 @@ use Hyde\Framework\Services\CollectionService;
 trait TransfersMediaAssetsForBuildCommands
 {
     use BuildActionRunner;
+    use InteractsWithDirectories;
 
     /** @internal */
     protected function transferMediaAssets(): void
     {
+        $this->needsDirectory(Hyde::getSiteOutputPath('media'));
+
         $collection = CollectionService::getMediaAssetFiles();
         if ($this->canRunBuildAction($collection, 'Media Assets', 'Transferring')) {
             $this->withProgressBar(
                 $collection,
                 function ($filepath) {
-                    copy($filepath, Hyde::path('_site/media/'.basename($filepath)));
+                    copy($filepath, Hyde::getSiteOutputPath('media/'.basename($filepath)));
                 }
             );
             $this->newLine(2);

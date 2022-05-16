@@ -21,6 +21,8 @@ use LaravelZero\Framework\Commands\Command;
  * Hyde Command to run the Build Process.
  *
  * @see \Tests\Feature\Commands\BuildStaticSiteCommandTest
+ *
+ * @todo #361 Rename --pretty option to --run-prettier to distinguish it better
  */
 class HydeBuildStaticSiteCommand extends Command
 {
@@ -119,12 +121,12 @@ class HydeBuildStaticSiteCommand extends Command
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
             'Your new homepage is stored here -> '.
-                DiscoveryService::createClickableFilepath(Hyde::path('_site/index.html'))
+                DiscoveryService::createClickableFilepath(Hyde::getSiteOutputPath('index.html'))
         );
     }
 
     /**
-     * Clear the entire _site directory before running the build.
+     * Clear the entire output directory before running the build.
      *
      * @return void
      */
@@ -132,8 +134,8 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $this->warn('Removing all files from build directory.');
 
-        File::deleteDirectory(Hyde::path('_site'));
-        mkdir(Hyde::path('_site'));
+        File::deleteDirectory(Hyde::getSiteOutputPath());
+        mkdir(Hyde::getSiteOutputPath());
 
         $this->line('<fg=gray> > Directory purged');
 
@@ -146,13 +148,15 @@ class HydeBuildStaticSiteCommand extends Command
     /**
      * Run any post-build actions.
      *
+     * @todo #363 Add unit test for prettier command (can work by comparing compiled baseline to output to see if it was prettified);
+     *
      * @return void
      */
     public function postBuildActions(): void
     {
         if ($this->option('pretty')) {
             $this->runNodeCommand(
-                'npx prettier _site/ --write --bracket-same-line',
+                'npx prettier '.Hyde::pathToRelative(Hyde::getSiteOutputPath($path)).'/ --write --bracket-same-line',
                 'Prettifying code!',
                 'prettify code'
             );

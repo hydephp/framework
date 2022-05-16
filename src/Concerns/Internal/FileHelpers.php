@@ -15,6 +15,12 @@ trait FileHelpers
     /**
      * Get the subdirectory compiled documentation files are stored in.
      *
+     * @deprecated will be renamed to be more distinct from other path helpers.
+     *              Naming suggestion is `getDocumentationOutputPath()`.
+     *              The configuration is deprecated as well and will be renamed.
+     *
+     * @todo Test and if needed add support for storing documentation files in the site root
+     *
      * @return string
      */
     public static function docsDirectory(): string
@@ -101,7 +107,7 @@ trait FileHelpers
      *
      * @see \Tests\Unit\FileHelperRelativeLinkTest
      *
-     * @param  string  $destination  relative to `_site` directory on compiled site
+     * @param  string  $destination  relative to output directory on compiled site
      * @param  string  $current  the current URI path relative to the same root
      * @return string
      */

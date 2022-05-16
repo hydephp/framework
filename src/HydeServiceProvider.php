@@ -54,6 +54,10 @@ class HydeServiceProvider extends ServiceProvider
 
         $this->discoverBladeViewsIn('_pages');
 
+        $this->storeCompiledSiteIn(config(
+            'hyde.siteOutputPath', Hyde::path('_site')
+        ));
+
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
             Commands\HydeUpdateConfigsCommand::class,
@@ -110,5 +114,13 @@ class HydeServiceProvider extends ServiceProvider
             config('view.paths', []),
             [base_path($directory)]
         )]);
+    }
+
+    /**
+     * The absolute path to the directory when the compiled site is stored.
+     */
+    protected function storeCompiledSiteIn(string $directory): void
+    {
+        StaticPageBuilder::$outputPath = $directory;
     }
 }

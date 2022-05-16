@@ -3,6 +3,7 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\MarkdownConverter;
+use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownDocument;
@@ -11,12 +12,16 @@ use Hyde\Framework\Models\MarkdownPost;
 
 /**
  * Converts a Page Model into a static HTML page.
- *
- * @todo Create the required directories if they don't exist.
- *          Can be done using a trait where an array of the required directories is passed.
  */
 class StaticPageBuilder
 {
+    use InteractsWithDirectories;
+
+    /**
+     * @var string Absolute path to the directory to place compiled files in.
+     */
+    public static string $outputPath;
+
     /**
      * Construct the class.
      *
@@ -28,6 +33,8 @@ class StaticPageBuilder
         if ($selfInvoke) {
             $this->__invoke();
         }
+
+        $this->needsDirectory(static::$outputPath);
     }
 
     /**
@@ -42,6 +49,8 @@ class StaticPageBuilder
         }
 
         if ($this->page instanceof MarkdownPost) {
+            $this->needsDirectory(Hyde::getSiteOutputPath('posts'));
+
             return $this->save('posts/'.$this->page->slug, $this->compilePost());
         }
 
@@ -50,7 +59,7 @@ class StaticPageBuilder
         }
 
         if ($this->page instanceof DocumentationPage) {
-            $this->makeSureDocsDirectoryExists();
+            $this->needsDirectory(Hyde::getSiteOutputPath(Hyde::docsDirectory()));
 
             return $this->save(Hyde::docsDirectory().'/'.$this->page->slug, $this->compileDocs());
         }
@@ -59,12 +68,12 @@ class StaticPageBuilder
     /**
      * Save the compiled HTML to file.
      *
-     * @param  string  $location  of the output file relative to _site/
+     * @param  string  $location  of the output file relative to the site output directory
      * @param  string  $contents  to save to the file
      */
     private function save(string $location, string $contents): bool|int
     {
-        $path = Hyde::path("_site/$location.html");
+        $path = Hyde::getSiteOutputPath("$location.html");
 
         return file_put_contents($path, $contents);
     }
@@ -123,18 +132,5 @@ class StaticPageBuilder
             'markdown' => MarkdownConverter::parse($this->page->body, DocumentationPage::class),
             'currentPage' => Hyde::docsDirectory().'/'.$this->page->slug,
         ])->render();
-    }
-
-    /**
-     * Make sure the config defined directory for outputting the
-     * documentation files exists by creating it if it doesn't.
-     *
-     * @return void
-     */
-    protected function makeSureDocsDirectoryExists(): void
-    {
-        if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
-            mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
-        }
     }
 }
