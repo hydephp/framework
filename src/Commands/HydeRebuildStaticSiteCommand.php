@@ -129,7 +129,8 @@ class HydeRebuildStaticSiteCommand extends Command
      * Get the output path for the given source file path.
      * Will fall back to the input path when using non-standard source paths.
      *
-     * @deprecated, reimplementing path information in StaticPageBuilder
+     * @deprecated, reimplementing path information in StaticPageBuilder,
+     *              alternatively, recreating in the DiscoveryService
      *
      * @param  string  $path
      * @return string
