@@ -79,7 +79,7 @@ class BuildStaticSiteCommandTest extends TestCase
 
     public function test_node_action_outputs()
     {
-        $this->artisan('build --pretty --run-dev --run-prod')
+        $this->artisan('build --run-prettier --run-dev --run-prod')
             ->expectsOutput('Prettifying code! This may take a second.')
             ->expectsOutput('Building frontend assets for development! This may take a second.')
             ->expectsOutput('Building frontend assets for production! This may take a second.')

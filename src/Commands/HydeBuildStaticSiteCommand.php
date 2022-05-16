@@ -21,8 +21,6 @@ use LaravelZero\Framework\Commands\Command;
  * Hyde Command to run the Build Process.
  *
  * @see \Tests\Feature\Commands\BuildStaticSiteCommandTest
- *
- * @todo #361 Rename --pretty option to --run-prettier to distinguish it better
  */
 class HydeBuildStaticSiteCommand extends Command
 {
@@ -37,7 +35,7 @@ class HydeBuildStaticSiteCommand extends Command
     protected $signature = 'build 
         {--run-dev : Run the NPM dev script after build}
         {--run-prod : Run the NPM prod script after build}
-        {--pretty : Should the build files be prettified?}
+        {--run-prettier : Should the build files be prettified?}
         {--pretty-urls : Should links in output use pretty URLs?}
         {--no-api : Disable external API calls, such as Torchlight}';
 
@@ -154,7 +152,7 @@ class HydeBuildStaticSiteCommand extends Command
      */
     public function postBuildActions(): void
     {
-        if ($this->option('pretty')) {
+        if ($this->option('run-prettier')) {
             $this->runNodeCommand(
                 'npx prettier '.Hyde::pathToRelative(Hyde::getSiteOutputPath($path)).'/ --write --bracket-same-line',
                 'Prettifying code!',
