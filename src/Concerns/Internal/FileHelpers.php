@@ -14,7 +14,9 @@ trait FileHelpers
 {
     /**
      * Get the subdirectory compiled documentation files are stored in.
-     *
+     * @deprecated will be renamed to be more distinct from other path helpers.
+     *              Naming suggestion is `getDocumentationOutputPath()`.
+     *              The configuration is deprecated as well and will be renamed.
      * @return string
      */
     public static function docsDirectory(): string
