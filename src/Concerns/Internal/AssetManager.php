@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-use Hyde\Framework\Services\AssetService;
+use Hyde\Framework\Contracts\AssetServiceContract;
 
 /**
  * Offloads asset related methods for the Hyde Facade.
@@ -14,13 +14,11 @@ trait AssetManager
     /**
      * Get the asset service instance.
      *
-     * @todo Refactor to load the service from the container.
-     *
-     * @return \Hyde\Framework\Services\AssetService
+     * @return \Hyde\Framework\Services\AssetServiceContract
      */
-    public static function assetManager(): AssetService
+    public static function assetManager(): AssetServiceContract
     {
-        return new AssetService;
+        return app(AssetServiceContract::class);
     }
 
     /**
