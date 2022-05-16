@@ -59,7 +59,7 @@ class HydeMakePageCommand extends Command
     {
         $this->title('Creating a new page!');
 
-        $this->title =  $this->argument('title')
+        $this->title = $this->argument('title')
             ?? $this->ask('What is the title of the page?')
             ?? 'My New Page';
 
