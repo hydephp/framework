@@ -11,6 +11,7 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to build a single static site file.
+ *
  * @todo Refactor to work with custom paths.
  */
 class HydeRebuildStaticSiteCommand extends Command
@@ -93,7 +94,7 @@ class HydeRebuildStaticSiteCommand extends Command
 
     /**
      * Validate the path to catch common errors.
-     * 
+     *
      * @throws Exception
      */
     public function validate(): void

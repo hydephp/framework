@@ -2,14 +2,15 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\StaticPageBuilder;
 use Hyde\Framework\Services\RebuildService;
+use Hyde\Framework\StaticPageBuilder;
 use Illuminate\Support\Facades\File;
+use Tests\TestCase;
 
 /**
  * Class BuildOutputDirectoryCanBeChangedTest.
+ *
  * @todo add test for the Rebuild Service
  * @todo add test for configurable option
  */
@@ -18,7 +19,7 @@ class BuildOutputDirectoryCanBeChangedTest extends TestCase
     public function test_site_output_directory_can_be_changed_in_static_page_builder()
     {
         createTestPost();
-       
+
         StaticPageBuilder::$outputPath = Hyde::path('build');
 
         (new RebuildService('_posts/test-post.md'))->execute();

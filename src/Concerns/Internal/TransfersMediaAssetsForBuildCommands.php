@@ -2,9 +2,9 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
+use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
-use Hyde\Framework\Concerns\InteractsWithDirectories;
 
 /**
  * Transfer all media assets to the build directory.
