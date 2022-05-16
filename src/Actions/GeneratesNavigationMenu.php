@@ -10,8 +10,6 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Generate the dynamic navigation menu.
- *
- * @todo #350 Replace hard-coded source paths with page model properties
  */
 class GeneratesNavigationMenu
 {
