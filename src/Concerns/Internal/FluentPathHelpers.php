@@ -69,15 +69,6 @@ trait FluentPathHelpers
     }
 
     /**
-     * Get the relative path to the compiled site directory, or a file within it.
-     * @deprecated use Hyde::pathToRelative() instead
-     */
-    public static function getRelativeSiteOutputPath(string $path = ''): string
-    {
-        return static::pathToRelative(static::getSiteOutputPath($path));
-    }
-
-    /**
      * Decode an absolute path created with a Hyde::path() helper into its relative counterpart.
      */
     public static function pathToRelative(string $path): string
