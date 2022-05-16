@@ -85,4 +85,15 @@ class BuildStaticSiteCommandTest extends TestCase
             ->expectsOutput('Building frontend assets for production! This may take a second.')
             ->assertExitCode(0);
     }
+
+    /**
+     * Added for code coverage, deprecated as the pretty flag is deprecated
+     * @deprecated
+     */
+    public function test_command_warns_when_deprecated_pretty_flag_is_used()
+    {
+        $this->artisan('build --pretty')
+            ->expectsOutput('Warning: The --pretty option is deprecated, use --run-prettier instead')
+            ->assertExitCode(0);
+    }
 }
