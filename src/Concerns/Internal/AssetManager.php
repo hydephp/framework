@@ -3,7 +3,6 @@
 namespace Hyde\Framework\Concerns\Internal;
 
 use Hyde\Framework\Contracts\AssetServiceContract;
-use Hyde\Framework\Services\AssetService;
 
 /**
  * Offloads asset related methods for the Hyde Facade.
