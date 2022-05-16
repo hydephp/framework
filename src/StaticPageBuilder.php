@@ -59,7 +59,6 @@ class StaticPageBuilder
 
         if ($this->page instanceof DocumentationPage) {
             $this->needsDirectory(Hyde::getSiteOutputPath(Hyde::docsDirectory()));
-            // $this->makeSureDocsDirectoryExists();
 
             return $this->save(Hyde::docsDirectory().'/'.$this->page->slug, $this->compileDocs());
         }
@@ -132,18 +131,5 @@ class StaticPageBuilder
             'markdown' => MarkdownConverter::parse($this->page->body, DocumentationPage::class),
             'currentPage' => Hyde::docsDirectory().'/'.$this->page->slug,
         ])->render();
-    }
-
-    /**
-     * Make sure the config defined directory for outputting the
-     * documentation files exists by creating it if it doesn't.
-     * @deprecated 
-     * @return void
-     */
-    protected function makeSureDocsDirectoryExists(): void
-    {
-        if (! file_exists(Hyde::path('_site/'.Hyde::docsDirectory()))) {
-            mkdir(Hyde::path('_site/'.Hyde::docsDirectory()), recursive: true);
-        }
     }
 }
