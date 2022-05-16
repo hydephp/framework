@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 /**
  * Class BuildOutputDirectoryCanBeChangedTest.
  * @todo add test for the Rebuild Service
+ * @todo add test for configurable option
  */
 class BuildOutputDirectoryCanBeChangedTest extends TestCase
 {
