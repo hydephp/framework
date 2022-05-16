@@ -119,12 +119,12 @@ class HydeBuildStaticSiteCommand extends Command
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
             'Your new homepage is stored here -> '.
-                DiscoveryService::createClickableFilepath(Hyde::path('_site/index.html'))
+                DiscoveryService::createClickableFilepath(Hyde::getSiteOutputPath('index.html'))
         );
     }
 
     /**
-     * Clear the entire _site directory before running the build.
+     * Clear the entire output directory before running the build.
      *
      * @return void
      */
@@ -132,8 +132,8 @@ class HydeBuildStaticSiteCommand extends Command
     {
         $this->warn('Removing all files from build directory.');
 
-        File::deleteDirectory(Hyde::path('_site'));
-        mkdir(Hyde::path('_site'));
+        File::deleteDirectory(Hyde::getSiteOutputPath());
+        mkdir(Hyde::getSiteOutputPath());
 
         $this->line('<fg=gray> > Directory purged');
 
@@ -152,7 +152,7 @@ class HydeBuildStaticSiteCommand extends Command
     {
         if ($this->option('pretty')) {
             $this->runNodeCommand(
-                'npx prettier _site/ --write --bracket-same-line',
+                'npx prettier '.basename(Hyde::getSiteOutputPath()).'/ --write --bracket-same-line',
                 'Prettifying code!',
                 'prettify code'
             );
