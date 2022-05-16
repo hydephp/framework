@@ -23,6 +23,17 @@ use Hyde\Framework\StaticPageBuilder;
  */
 trait FluentPathHelpers
 {
+    public static function getModelSourcePath(string $model, string $path = ''): string
+    {
+        if (empty($path)) {
+            return static::path(DiscoveryService::getFilePathForModelClassFiles($model));
+        }
+
+        $path = trim($path, '/\\');
+
+        return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
+    }
+    
     public static function getBladePagePath(string $path = ''): string
     {
         return static::getModelSourcePath(BladePage::class, $path);
@@ -41,17 +52,6 @@ trait FluentPathHelpers
     public static function getDocumentationPagePath(string $path = ''): string
     {
         return static::getModelSourcePath(DocumentationPage::class, $path);
-    }
-
-    public static function getModelSourcePath(string $model, string $path = ''): string
-    {
-        if (empty($path)) {
-            return static::path(DiscoveryService::getFilePathForModelClassFiles($model));
-        }
-
-        $path = trim($path, '/\\');
-
-        return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
     }
 
     public static function getSiteOutputPath(string $path = ''): string
