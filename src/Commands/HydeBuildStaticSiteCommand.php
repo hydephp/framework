@@ -35,9 +35,9 @@ class HydeBuildStaticSiteCommand extends Command
     protected $signature = 'build 
         {--run-dev : Run the NPM dev script after build}
         {--run-prod : Run the NPM prod script after build}
-        {--run-prettier : Should the build files be prettified?}
+        {--run-prettier : Format the output using NPM Prettier}
         {--pretty-urls : Should links in output use pretty URLs?}
-        {--no-api : Disable external API calls, such as Torchlight}';
+        {--no-api : Disable API calls, for example, Torchlight}';
 
     /**
      * The description of the command.
