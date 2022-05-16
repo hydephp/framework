@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
 /**
- * Class HydeBasePathCanBeChanged.
+ * Class HydeBasePathCanBeChangedTest.
  *
- * @covers \Hyde\Framework\Hyde::getBasePath()
- * @covers \Hyde\Framework\Hyde::setBasePath()
- * @covers \Hyde\Framework\Hyde::path()
+ * @covers \Hyde\Framework\Hyde::getBasePath
+ * @covers \Hyde\Framework\Hyde::setBasePath
+ * @covers \Hyde\Framework\Hyde::path
  */
-class HydeBasePathCanBeChanged extends TestCase
+class HydeBasePathCanBeChangedTest extends TestCase
 {
     public function test_hyde_base_path_can_be_changed()
     {
