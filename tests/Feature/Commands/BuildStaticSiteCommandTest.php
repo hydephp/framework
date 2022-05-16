@@ -87,7 +87,8 @@ class BuildStaticSiteCommandTest extends TestCase
     }
 
     /**
-     * Added for code coverage, deprecated as the pretty flag is deprecated
+     * Added for code coverage, deprecated as the pretty flag is deprecated.
+     *
      * @deprecated
      */
     public function test_command_warns_when_deprecated_pretty_flag_is_used()
