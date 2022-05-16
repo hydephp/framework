@@ -147,8 +147,6 @@ class HydeBuildStaticSiteCommand extends Command
     /**
      * Run any post-build actions.
      *
-     * @todo #363 Add unit test for prettier command (can work by comparing compiled baseline to output to see if it was prettified);
-     *
      * @return void
      */
     public function postBuildActions(): void
