@@ -14,6 +14,25 @@ use Tests\TestCase;
  */
 class HydeBasePathCanBeChangedTest extends TestCase
 {
+    protected string $basePath;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (! isset($this->basePath))
+        {
+            $this->basePath = Hyde::getBasePath();
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        Hyde::setBasePath($this->basePath);
+        
+        parent::tearDown();
+    }
+
     public function test_hyde_base_path_can_be_changed()
     {
         Hyde::setBasePath('/foo/bar');
