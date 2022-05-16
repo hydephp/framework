@@ -3,12 +3,12 @@
 namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\MarkdownConverter;
+use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownDocument;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Concerns\InteractsWithDirectories;
 
 /**
  * Converts a Page Model into a static HTML page.
@@ -50,6 +50,7 @@ class StaticPageBuilder
 
         if ($this->page instanceof MarkdownPost) {
             $this->needsDirectory(Hyde::getSiteOutputPath('posts'));
+
             return $this->save('posts/'.$this->page->slug, $this->compilePost());
         }
 

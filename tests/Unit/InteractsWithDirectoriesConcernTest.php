@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
+use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
-use Hyde\Framework\Concerns\InteractsWithDirectories;
 
 /**
  * Class InteractsWithDirectoriesConcernTest.
@@ -32,8 +32,8 @@ class InteractsWithDirectoriesConcernTest extends TestCase
 
     public function test_needs_directory_creates_the_directory()
     {
-       $this->needsDirectory(Hyde::path('foo'));
-       $this->assertDirectoryExists(Hyde::path('foo'));
+        $this->needsDirectory(Hyde::path('foo'));
+        $this->assertDirectoryExists(Hyde::path('foo'));
     }
 
     public function test_needs_directory_creates_the_directory_recursively()

@@ -33,7 +33,7 @@ trait FluentPathHelpers
 
         return static::path(DiscoveryService::getFilePathForModelClassFiles($model).DIRECTORY_SEPARATOR.$path);
     }
-    
+
     public static function getBladePagePath(string $path = ''): string
     {
         return static::getModelSourcePath(BladePage::class, $path);
