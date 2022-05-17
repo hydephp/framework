@@ -82,7 +82,7 @@ class HydeInstallCommand extends Command
         $this->line('<fg=gray> > Run `hyde help` to get help for one of the commands.</>');
         $this->line('<fg=gray> > You can run `npm install` and `npm run dev` to compile any TailwindCSS assets.</>');
         $this->newLine();
-        $this->line('<fg=gray> > You may also want to check out the <href=https://hydephp.github.io/docs>HydePHP Docs</>');
+        $this->line('<fg=gray> > You may also want to check out the <href=https://hydephp.com/docs>HydePHP Docs</>');
         $this->newLine();
 
         return 0;

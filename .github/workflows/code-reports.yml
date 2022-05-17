@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: live-coverage-report
-      url: https://hydephp.github.io/developer-tools/coverage-report/
+      url: https://hydephp.com/developer-tools/coverage-report/
 
 
     steps:
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: internal-api-docs
-      url: https://hydephp.github.io/developer-tools/api-docs/
+      url: https://hydephp.com/developer-tools/api-docs/
     steps:
       - name: Download the Framework
         run: git clone https://github.com/hydephp/framework.git

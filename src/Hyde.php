@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
  * @copyright 2022 Caen De Silva
  * @license MIT License
  *
- * @link https://hydephp.github.io/
+ * @link https://hydephp.com/
  */
 class Hyde
 {
