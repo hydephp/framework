@@ -51,6 +51,6 @@ abstract class AbstractPage
 
     protected function getCanonicalUrl(): string
     {
-        return Hyde::uriPath(Hyde::pageLink($this->slug . '.html'));
+        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath() . '.html'));
     }
 }
