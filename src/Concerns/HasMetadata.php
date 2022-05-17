@@ -14,6 +14,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * @see \Tests\Feature\Concerns\HasMetadataTest
  *
  * @todo Unify the $page property and handle metadata through it
+ * @todo Only add blog post properties if the page is a blog post
  */
 trait HasMetadata
 {
@@ -27,14 +28,14 @@ trait HasMetadata
     }
 
     #[ArrayShape(['name' => "\content"])]
- public function getMetadata(): array
- {
-     if (! isset($this->metadata)) {
-         return [];
-     }
+    public function getMetadata(): array
+    {
+        if (! isset($this->metadata)) {
+            return [];
+        }
 
-     return $this->metadata->metadata;
- }
+        return $this->metadata->metadata;
+    }
 
     #[ArrayShape(['property' => 'content'])]
     public function getMetaProperties(): array
