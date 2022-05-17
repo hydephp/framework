@@ -1,19 +1,19 @@
-<article aria-label="Article" id="{{ Hyde::uriPath() ?? '' }}posts/{{ $post->slug }}" itemscope itemtype="https://schema.org/Article"
+<article aria-label="Article" id="{{ Hyde::uriPath() ?? '' }}posts/{{ $page->slug }}" itemscope itemtype="https://schema.org/Article"
     @class(['post-article mx-auto prose dark:prose-invert', 'torchlight-enabled' => Hyde\Framework\Features::hasTorchlight()])>
-    <meta itemprop="identifier" content="{{ $post->slug }}">
+    <meta itemprop="identifier" content="{{ $page->slug }}">
     @if(Hyde::uriPath())
-    <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $post->slug) }}">
+    <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $page->slug) }}">
     @endif
     
     <header aria-label="Header section" role="doc-pageheader">
         <h1 itemprop="headline" class="mb-4">{{ $title ?? 'Blog Post' }}</h1>
 		<div id="byline" aria-label="About the post" role="doc-introduction">
-            @includeWhen(isset($post->date), 'hyde::components.post.date')
-		    @includeWhen(isset($post->author), 'hyde::components.post.author')
-            @includeWhen(isset($post->category), 'hyde::components.post.category')
+            @includeWhen(isset($page->date), 'hyde::components.post.date')
+		    @includeWhen(isset($page->author), 'hyde::components.post.author')
+            @includeWhen(isset($page->category), 'hyde::components.post.category')
         </div>
     </header>
-    @includeWhen(isset($post->image), 'hyde::components.post.image')
+    @includeWhen(isset($page->image), 'hyde::components.post.image')
     <div aria-label="Article body" itemprop="articleBody">
         {!! $markdown !!}
     </div>

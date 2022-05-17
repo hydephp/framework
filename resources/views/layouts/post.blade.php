@@ -4,10 +4,10 @@
 
 @push('meta')
 <!-- Blog Post Meta Tags -->
-@foreach ($post->getMetadata() as $name => $content)
+@foreach ($page->getMetadata() as $name => $content)
     <meta name="{{ $name }}" content="{{ $content }}">
 @endforeach
-@foreach ($post->getMetaProperties() as $name => $content)
+@foreach ($page->getMetaProperties() as $name => $content)
     <meta property="{{ $name }}" content="{{ $content }}">
 @endforeach
 @endpush

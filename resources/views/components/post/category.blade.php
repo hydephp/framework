@@ -1,1 +1,1 @@
-in the category "{{ $post->category }}"
+in the category "{{ $page->category }}"

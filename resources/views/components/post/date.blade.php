@@ -1,1 +1,1 @@
-Posted <time itemprop="dateCreated datePublished" datetime="{{ $post->date->datetime }}" title="{{ $post->date->sentence }}">{{ $post->date->short }}</time>
+Posted <time itemprop="dateCreated datePublished" datetime="{{ $page->date->datetime }}" title="{{ $page->date->sentence }}">{{ $page->date->short }}</time>
