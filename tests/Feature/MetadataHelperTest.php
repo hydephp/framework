@@ -62,7 +62,7 @@ class MetadataHelperTest extends TestCase
 
             Meta::render([
                 Meta::name('foo', 'bar'),
-                Meta::property('og:foo', 'bar')
+                Meta::property('og:foo', 'bar'),
             ])
         );
     }
@@ -81,7 +81,7 @@ class MetadataHelperTest extends TestCase
     {
         config(['hyde.meta' => [
             Meta::name('foo', 'bar'),
-            Meta::property('og:foo', 'bar')
+            Meta::property('og:foo', 'bar'),
         ]]);
 
         $this->assertEquals(
@@ -104,7 +104,7 @@ class MetadataHelperTest extends TestCase
             ."\n".'<meta property="og:foo" content="bar">',
 
             Meta::render([
-                Meta::property('foo', 'bar')
+                Meta::property('foo', 'bar'),
             ])
         );
     }

@@ -3,7 +3,8 @@
 namespace Hyde\Framework;
 
 /**
- * Helpers to fluently declare HTML meta tags
+ * Helpers to fluently declare HTML meta tags.
+ *
  * @see \Tests\Feature\MetadataHelperTest
  */
 class Meta
@@ -30,7 +31,6 @@ class Meta
                 )
             )
         );
-
     }
 
     protected static function filterUnique(array $meta): array
@@ -41,7 +41,7 @@ class Meta
         foreach ($meta as $metaItem) {
             $substring = substr($metaItem, 6, strpos($metaItem, ' content="') - 6);
 
-            if (!in_array($substring, $existing)) {
+            if (! in_array($substring, $existing)) {
                 $array[] = $metaItem;
                 $existing[] = $substring;
             }
