@@ -19,7 +19,7 @@ class DocumentationPage extends MarkdownDocument
 
         $this->constructTableOfContents();
     }
-    
+
     public function getCurrentPagePath(): string
     {
         return  Hyde::docsDirectory().'/'.$this->slug;

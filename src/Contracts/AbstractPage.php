@@ -10,7 +10,7 @@ use Hyde\Framework\Meta;
  * all Page Models must extend this class.
  *
  * Markdown-based Pages should extend MarkdownDocument.
- * 
+ *
  * @todo Extract metadata helpers to concern
  */
 abstract class AbstractPage
@@ -29,7 +29,7 @@ abstract class AbstractPage
         $dynamicMetadata = $this->getDynamicMetadata();
 
         return Meta::render(
-            $dynamicMetadata 
+            $dynamicMetadata
         );
     }
 
@@ -38,7 +38,7 @@ abstract class AbstractPage
         $array = [];
 
         if ($this->canUseCanonicalUrl()) {
-            $array[] = '<link rel="canonical" href="'. $this->getCanonicalUrl().'" />';
+            $array[] = '<link rel="canonical" href="'.$this->getCanonicalUrl().'" />';
         }
 
         return $array;
@@ -51,6 +51,6 @@ abstract class AbstractPage
 
     protected function getCanonicalUrl(): string
     {
-        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath() . '.html'));
+        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath().'.html'));
     }
 }
