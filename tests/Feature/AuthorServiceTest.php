@@ -121,4 +121,22 @@ class AuthorServiceTest extends TestCase
 
         $this->assertEquals([], $service->getYaml());
     }
+    
+    public function test_get_author_name_helper_returns_string_for_string()
+    {
+        $this->assertEquals('foo', AuthorService::getAuthorName('foo'));
+    }
+
+    public function test_get_author_name_helper_returns_string_for_array()
+    {
+        $this->assertEquals('foo', AuthorService::getAuthorName(['name' => 'foo']));
+    }
+
+    public function test_get_author_name_helper_returns_string_for_array_with_proper_fallback_priorities()
+    {
+        $this->assertEquals('foo', AuthorService::getAuthorName(['name' => 'foo', 'username' => 'bar']));
+        $this->assertEquals('bar', AuthorService::getAuthorName(['username' => 'bar']));
+        $this->assertEquals('Guest', AuthorService::getAuthorName([]));
+    }
+
 }

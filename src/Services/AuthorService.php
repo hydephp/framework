@@ -107,4 +107,20 @@ EOF
 
         return $service->authors->firstWhere('username', $username) ?? false;
     }
+
+    
+    /**
+     * Parse the author name string from front matter with support for both flat and array notation.
+     *
+     * @param  string|array  $author
+     * @return string
+     */
+    public static function getAuthorName(string|array $author): string
+    {
+        if (is_string($author)) {
+            return $author;
+        }
+
+        return $author['name'] ?? $author['username'] ?? 'Guest';
+    }
 }

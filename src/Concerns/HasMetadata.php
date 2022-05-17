@@ -3,7 +3,9 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\Author;
 use Hyde\Framework\Models\Metadata;
+use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
@@ -59,7 +61,7 @@ trait HasMetadata
         }
 
         if (isset($this->matter['author'])) {
-            $this->metadata->add('author', $this->getAuthor($this->matter['author']));
+            $this->metadata->add('author', AuthorService::getAuthorName($this->matter['author']));
         }
 
         if (isset($this->matter['category'])) {
@@ -104,20 +106,4 @@ trait HasMetadata
         }
     }
 
-    /**
-     * Parse the author string from the front matter with support for both flat and array notation.
-     *
-     * @deprecated Will be moved to the Author model
-     *
-     * @param  string|array  $author
-     * @return string
-     */
-    protected function getAuthor(string|array $author): string
-    {
-        if (is_string($author)) {
-            return $author;
-        }
-
-        return $author['username'] ?? $author['name'] ?? 'Guest';
-    }
 }
