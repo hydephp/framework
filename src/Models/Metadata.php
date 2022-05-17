@@ -7,7 +7,7 @@ use JetBrains\PhpStorm\ArrayShape;
 /**
  * Metadata class for storing metadata about a model.
  * Is used in Blade views to create <meta> tags.
- * 
+ *
  * @deprecated Will be merged with Meta class
  */
 class Metadata
