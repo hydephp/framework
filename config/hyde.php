@@ -74,7 +74,7 @@ return [
     | these settings allow you to easily add tags for the meta component.
     |
     | The `meta` array is for standard meta tags. See the examples below.
-    | The `og` array is for Open Graph properties. Do not include the `og:` prefix. 
+    | The `og` array is for Open Graph properties. Do not include the `og:` prefix.
     |
     */
 
