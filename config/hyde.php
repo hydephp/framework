@@ -71,22 +71,23 @@ return [
     |--------------------------------------------------------------------------
     |
     | While you can add any number of meta tags in the meta.blade.php component,
-    | this config setting allows you to easily customize some common metadata
-    | tags so increase your SEO score. You can keep them to their defaults
-    | or you can set a value to false or null to disable it completely.
+    | these settings allow you to easily add tags for the meta component.
     |
-    | Note that some tags may be overwritten on certain pages, for instance post pages.
-    |
-    | Tip: See https://www.w3schools.com/tags/att_meta_name.asp
-    | for a list of tags and what they are for.
+    | The `meta` array is for standard meta tags. See the examples below.
+    | The `og` array is for Open Graph properties. Do not include the `og:` prefix. 
     |
     */
 
     'meta' => [
         // 'author' => 'Mr. Hyde',
+        // 'twitter:creator' => '@hyde_php',
         // 'description' => 'My Hyde Blog',
         // 'keywords' => 'Static Sites, Blogs, Documentation',
         'generator' => 'HydePHP '.Hyde\Framework\Hyde::version(),
+    ],
+
+    'ogProperties' => [
+        'site_name' => $siteName,
     ],
 
     /*

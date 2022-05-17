@@ -1,10 +1,12 @@
-{{-- Config Defined Tags --}}
+{{-- Config Defined Meta Tags --}}
 @foreach (config('hyde.meta', []) as $name => $content) 
 <meta name="{{ $name }}" content="{{ $content }}">
 @endforeach
 
-{{-- Add any extra tags to include in the <head> section --}}
-<meta property="og:site_name" content="{{ config('hyde.name', 'HydePHP') }}">
+@foreach (config('hyde.ogProperties', []) as $property => $content) 
+<meta property="og:{{ $property }}" content="{{ $content }}">
+@endforeach
 
-{{-- Add any extra meta tags to include after the others --}}
+{{-- Add any extra tags to include in the <head> section --}}
 @stack('meta')
+
