@@ -12,7 +12,7 @@ use JetBrains\PhpStorm\ArrayShape;
  *
  * @see \Hyde\Framework\Models\Metadata
  * @see \Tests\Feature\Concerns\HasMetadataTest
- * 
+ *
  * @todo Unify the $page property and handle metadata through it
  */
 trait HasMetadata
@@ -48,6 +48,7 @@ trait HasMetadata
 
     /**
      * Generate metadata from the front matter that can be used in standard <meta> tags.
+     *
      * @deprecated Will be refactored to parseFrontMatterMetadata
      */
     protected function makeMetadata(): void
@@ -68,6 +69,7 @@ trait HasMetadata
     /**
      * Generate metadata from the front matter that can be used for og:type <meta> tags.
      * Note that this currently assumes that the object using it is a Blog Post.
+     *
      * @deprecated Will be refactored to parseFrontMatterMetadata
      */
     protected function makeMetaProperties(): void
@@ -103,6 +105,7 @@ trait HasMetadata
 
     /**
      * Parse the author string from the front matter with support for both flat and array notation.
+     *
      * @deprecated Will be moved to the Author model
      *
      * @param  string|array  $author
