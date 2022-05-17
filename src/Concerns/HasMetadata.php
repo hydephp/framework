@@ -3,7 +3,6 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Author;
 use Hyde\Framework\Models\Metadata;
 use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
@@ -105,5 +104,4 @@ trait HasMetadata
             }
         }
     }
-
 }
