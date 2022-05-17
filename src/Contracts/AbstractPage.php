@@ -7,6 +7,8 @@ namespace Hyde\Framework\Contracts;
  * all Page Models must extend this class.
  *
  * Markdown-based Pages should extend MarkdownDocument.
+ * 
+ * @todo Extract metadata helpers to concern
  */
 abstract class AbstractPage
 {
