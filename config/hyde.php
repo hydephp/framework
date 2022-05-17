@@ -76,15 +76,15 @@ return [
     | meta tag, use Meta::name() helper. To add an Open Graph property, use
     | Meta::property() helper which also adds the `og:` prefix for you.
     |
-    | Note that these global tags may be overridden by a page's meta tags.
+    | Please note that these tags might conflict with blog post tags.
     |
     */
 
     'meta' => [
-        Meta::name('author', 'Mr. Hyde'),
-        Meta::name('twitter:creator', '@hyde_php'),
-        Meta::name('description', 'My Hyde Blog'),
-        Meta::name('keywords', 'Static Sites, Blogs, Documentation'),
+        // Meta::name('author', 'Mr. Hyde'),
+        // Meta::name('twitter:creator', '@hyde_php'),
+        // Meta::name('description', 'My Hyde Blog'),
+        // Meta::name('keywords', 'Static Sites, Blogs, Documentation'),
         Meta::name('generator', 'HydePHP '.Hyde\Framework\Hyde::version()),
         Meta::property('site_name', $siteName),
     ],
