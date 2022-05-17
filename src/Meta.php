@@ -7,8 +7,9 @@ class Meta
     public static function name(string $name, string $content, bool $ifConditionIsMet = true): ?string
     {
         if ($ifConditionIsMet) {
-            return '<meta name="' . e($name) . '" content="' . e($content) . '">';
+            return '<meta name="'.e($name).'" content="'.e($content).'">';
         }
+
         return null;
     }
 
@@ -16,8 +17,10 @@ class Meta
     {
         if ($ifConditionIsMet) {
             $property = static::formatOpenGraphProperty($property);
-            return '<meta property="' . e($property) . '" content="' . e($content) . '">';
+
+            return '<meta property="'.e($property).'" content="'.e($content).'">';
         }
+
         return null;
     }
 
@@ -40,6 +43,6 @@ class Meta
 
     protected static function formatOpenGraphProperty(string $property): string
     {
-        return str_starts_with('og:', $property) ? $property : 'og:' . $property;
+        return str_starts_with('og:', $property) ? $property : 'og:'.$property;
     }
 }
