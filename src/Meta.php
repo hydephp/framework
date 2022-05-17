@@ -9,12 +9,12 @@ namespace Hyde\Framework;
  */
 class Meta
 {
-    public static function name(string $name, string $content, bool $ifConditionIsMet = true): string
+    public static function name(string $name, string $content): string
     {
         return '<meta name="'.e($name).'" content="'.e($content).'">';
     }
 
-    public static function property(string $property, string $content, bool $ifConditionIsMet = true): string
+    public static function property(string $property, string $content): string
     {
         $property = static::formatOpenGraphProperty($property);
 
