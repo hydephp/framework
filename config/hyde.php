@@ -18,6 +18,7 @@
 */
 
 use Hyde\Framework\Features;
+use Hyde\Framework\Meta;
 
 return [
 
@@ -70,24 +71,22 @@ return [
     | Global Site Meta Tags
     |--------------------------------------------------------------------------
     |
-    | While you can add any number of meta tags in the meta.blade.php component,
-    | these settings allow you to easily add tags for the meta component.
+    | While you can add any number of meta tags in the meta.blade.php component
+    | using standard HTML, you can also use the Meta helper. To add a regular
+    | meta tag, use Meta::name() helper. To add an Open Graph property, use
+    | Meta::property() helper which also adds the `og:` prefix for you.
     |
-    | The `meta` array is for standard meta tags. See the examples below.
-    | The `og` array is for Open Graph properties. Do not include the `og:` prefix. 
+    | Note that these global tags may be overridden by a page's meta tags.
     |
     */
 
     'meta' => [
-        // 'author' => 'Mr. Hyde',
-        // 'twitter:creator' => '@hyde_php',
-        // 'description' => 'My Hyde Blog',
-        // 'keywords' => 'Static Sites, Blogs, Documentation',
-        'generator' => 'HydePHP '.Hyde\Framework\Hyde::version(),
-    ],
-
-    'ogProperties' => [
-        'site_name' => $siteName,
+        Meta::name('author', 'Mr. Hyde'),
+        Meta::name('twitter:creator', '@hyde_php'),
+        Meta::name('description', 'My Hyde Blog'),
+        Meta::name('keywords', 'Static Sites, Blogs, Documentation'),
+        Meta::name('generator', 'HydePHP '.Hyde\Framework\Hyde::version()),
+        Meta::property('site_name', $siteName),
     ],
 
     /*
