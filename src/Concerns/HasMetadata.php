@@ -79,7 +79,7 @@ trait HasMetadata
         $this->metadata->addProperty('og:type', 'article');
 
         if (Hyde::uriPath()) {
-            $this->metadata->addProperty('og:url', Hyde::uriPath('posts/'.$this->slug));
+            $this->metadata->addProperty('og:url', Hyde::uriPath(Hyde::pageLink('posts/'.$this->slug . '.html')));
         }
 
         if (isset($this->matter['title'])) {
