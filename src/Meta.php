@@ -24,9 +24,11 @@ class Meta
     public static function render(array $overridesGlobalMeta = []): string
     {
         return implode("\n",
-            array_merge(
-                static::getGlobalMeta(),
-                $overridesGlobalMeta
+            array_unique(
+                array_merge(
+                    static::getGlobalMeta(),
+                    $overridesGlobalMeta
+                )
             )
         );
     }
