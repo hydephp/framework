@@ -121,7 +121,7 @@ class AuthorServiceTest extends TestCase
 
         $this->assertEquals([], $service->getYaml());
     }
-    
+
     public function test_get_author_name_helper_returns_string_for_string()
     {
         $this->assertEquals('foo', AuthorService::getAuthorName('foo'));
@@ -138,5 +138,4 @@ class AuthorServiceTest extends TestCase
         $this->assertEquals('bar', AuthorService::getAuthorName(['username' => 'bar']));
         $this->assertEquals('Guest', AuthorService::getAuthorName([]));
     }
-
 }

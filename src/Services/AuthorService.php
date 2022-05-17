@@ -108,7 +108,6 @@ EOF
         return $service->authors->firstWhere('username', $username) ?? false;
     }
 
-    
     /**
      * Parse the author name string from front matter with support for both flat and array notation.
      *
