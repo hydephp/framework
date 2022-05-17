@@ -13,4 +13,9 @@ abstract class AbstractPage
     public static string $sourceDirectory;
     public static string $fileExtension;
     public static string $parserClass;
+
+    public function renderPageMetadata(): string
+    {
+        return \Hyde\Framework\Meta::render();
+    }
 }
