@@ -30,11 +30,11 @@ class StaticPageBuilder
      */
     public function __construct(protected MarkdownDocument|BladePage $page, bool $selfInvoke = false)
     {
+        $this->needsDirectory(static::$outputPath);
+        
         if ($selfInvoke) {
             $this->__invoke();
         }
-
-        $this->needsDirectory(static::$outputPath);
     }
 
     /**
