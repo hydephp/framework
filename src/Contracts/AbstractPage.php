@@ -38,7 +38,7 @@ abstract class AbstractPage
         $array = [];
 
         if ($this->canUseCanonicalUrl()) {
-            $array[] = Meta::property('og:url', $this->getCanonicalUrl());
+            $array[] = '<link rel="canonical" href="'. $this->getCanonicalUrl().'" />';
         }
 
         return $array;
