@@ -4,6 +4,7 @@ namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Metadata;
+use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
@@ -12,6 +13,9 @@ use JetBrains\PhpStorm\ArrayShape;
  *
  * @see \Hyde\Framework\Models\Metadata
  * @see \Tests\Feature\Concerns\HasMetadataTest
+ *
+ * @todo Unify the $page property and handle metadata through it
+ * @todo Only add blog post properties if the page is a blog post
  */
 trait HasMetadata
 {
@@ -25,14 +29,14 @@ trait HasMetadata
     }
 
     #[ArrayShape(['name' => "\content"])]
- public function getMetadata(): array
- {
-     if (! isset($this->metadata)) {
-         return [];
-     }
+    public function getMetadata(): array
+    {
+        if (! isset($this->metadata)) {
+            return [];
+        }
 
-     return $this->metadata->metadata;
- }
+        return $this->metadata->metadata;
+    }
 
     #[ArrayShape(['property' => 'content'])]
     public function getMetaProperties(): array
@@ -46,6 +50,8 @@ trait HasMetadata
 
     /**
      * Generate metadata from the front matter that can be used in standard <meta> tags.
+     *
+     * @deprecated Will be refactored to parseFrontMatterMetadata
      */
     protected function makeMetadata(): void
     {
@@ -54,7 +60,7 @@ trait HasMetadata
         }
 
         if (isset($this->matter['author'])) {
-            $this->metadata->add('author', $this->getAuthor($this->matter['author']));
+            $this->metadata->add('author', AuthorService::getAuthorName($this->matter['author']));
         }
 
         if (isset($this->matter['category'])) {
@@ -65,6 +71,8 @@ trait HasMetadata
     /**
      * Generate metadata from the front matter that can be used for og:type <meta> tags.
      * Note that this currently assumes that the object using it is a Blog Post.
+     *
+     * @deprecated Will be refactored to parseFrontMatterMetadata
      */
     protected function makeMetaProperties(): void
     {
@@ -95,20 +103,5 @@ trait HasMetadata
                 }
             }
         }
-    }
-
-    /**
-     * Parse the author string from the front matter with support for both flat and array notation.
-     *
-     * @param  string|array  $author
-     * @return string
-     */
-    protected function getAuthor(string|array $author): string
-    {
-        if (is_string($author)) {
-            return $author;
-        }
-
-        return $author['username'] ?? $author['name'] ?? 'Guest';
     }
 }
