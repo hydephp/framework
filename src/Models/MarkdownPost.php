@@ -31,4 +31,9 @@ class MarkdownPost extends MarkdownDocument
 
         $this->category = $this->matter['category'] ?? null;
     }
+    
+    public function getCurrentPagePath(): string
+    {
+        return 'posts/'.$this->slug;
+    }
 }

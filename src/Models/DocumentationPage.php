@@ -4,6 +4,7 @@ namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Concerns\HasTableOfContents;
 use Hyde\Framework\DocumentationPageParser;
+use Hyde\Framework\Hyde;
 
 class DocumentationPage extends MarkdownDocument
 {
@@ -17,5 +18,10 @@ class DocumentationPage extends MarkdownDocument
         parent::__construct($matter, $body, $title, $slug);
 
         $this->constructTableOfContents();
+    }
+    
+    public function getCurrentPagePath(): string
+    {
+        return  Hyde::docsDirectory().'/'.$this->slug;
     }
 }

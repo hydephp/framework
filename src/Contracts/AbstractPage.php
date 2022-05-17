@@ -2,6 +2,9 @@
 
 namespace Hyde\Framework\Contracts;
 
+use Hyde\Framework\Hyde;
+use Hyde\Framework\Meta;
+
 /**
  * To ensure compatability with the Hyde Framework,
  * all Page Models must extend this class.
@@ -16,8 +19,38 @@ abstract class AbstractPage
     public static string $fileExtension;
     public static string $parserClass;
 
+    public function getCurrentPagePath(): string
+    {
+        return $this->slug;
+    }
+
     public function renderPageMetadata(): string
     {
-        return \Hyde\Framework\Meta::render();
+        $dynamicMetadata = $this->getDynamicMetadata();
+
+        return Meta::render(
+            $dynamicMetadata 
+        );
+    }
+
+    protected function getDynamicMetadata(): array
+    {
+        $array = [];
+
+        if ($this->canUseCanonicalUrl()) {
+            $array[] = Meta::property('og:url', $this->getCanonicalUrl());
+        }
+
+        return $array;
+    }
+
+    protected function canUseCanonicalUrl(): bool
+    {
+        return Hyde::uriPath() && isset($this->slug);
+    }
+
+    protected function getCanonicalUrl(): string
+    {
+        return Hyde::uriPath(Hyde::pageLink($this->slug . '.html'));
     }
 }

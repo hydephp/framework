@@ -40,4 +40,9 @@ class BladePage extends AbstractPage
     {
         return $this;
     }
+
+    public function getCurrentPagePath(): string
+    {
+        return $this->view;
+    }
 }
