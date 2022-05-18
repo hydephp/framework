@@ -83,7 +83,6 @@ class HydeBuildStaticSiteCommand extends Command
             $this->runBuildAction(DocumentationPage::class);
         }
 
-
         $this->postBuildActions();
 
         $this->printFinishMessage($time_start);
