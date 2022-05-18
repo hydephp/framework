@@ -51,7 +51,7 @@ trait HasMetadata
 
     /**
      * Generate metadata from the front matter that can be used in standard <meta> tags.
-     * This helper is page type agnostic and works with any kind of model having front matter. 
+     * This helper is page type agnostic and works with any kind of model having front matter.
      */
     protected function parseFrontMatterMetadata(): void
     {
