@@ -72,16 +72,16 @@ class SitemapService
         foreach ($collection as $page) {
             $urlItem = $this->xmlElement->addChild('url');
             $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$page . '.html'))));
-            $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
-                Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$page.$pageClass::$fileExtension)
-            )));
+            $urlItem->addChild('lastmod', htmlentities($this->getLastModDate($pageClass, $page)));
             $urlItem->addChild('changefreq', 'daily');
         }
     }
 
-    protected function getLastModDate(string $filepath): string
+    protected function getLastModDate(string $pageClass, string $page): string
     {
-        return date('c', filemtime($filepath));
+        return date('c', filemtime(
+            Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$page.$pageClass::$fileExtension)
+        ));
     }
 
     public static function generateSitemap(): string
