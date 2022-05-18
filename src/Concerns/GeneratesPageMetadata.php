@@ -8,8 +8,7 @@ use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * Handle logic for Page models that have Metadata.
- * Metadata is used to create meta SEO tags.
+ * Generates metadata for page models that have front matter.
  *
  * @see \Hyde\Framework\Models\Metadata
  * @see \Tests\Feature\Concerns\HasMetadataTest
@@ -17,7 +16,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * @todo Unify the $page property and handle metadata through it
  * @todo Only add blog post properties if the page is a blog post
  */
-trait HasMetadata
+trait GeneratesPageMetadata
 {
     public ?Metadata $metadata = null;
 

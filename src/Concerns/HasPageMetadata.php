@@ -25,7 +25,7 @@ trait HasPageMetadata
         }
 
         if ($this instanceof MarkdownPost) {
-            // Temporarly merge data with HasMetadata trait for compatibility
+            // Temporarly merge data with GeneratesPageMetadata trait for compatibility
             $array[] = "\n<!-- Blog Post Meta Tags -->";
             foreach ($this->getMetadata() as $name => $content) {
                 $array[] = Meta::name($name, $content);

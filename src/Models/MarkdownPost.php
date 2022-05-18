@@ -5,13 +5,13 @@ namespace Hyde\Framework\Models;
 use Hyde\Framework\Concerns\HasAuthor;
 use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
-use Hyde\Framework\Concerns\HasMetadata;
+use Hyde\Framework\Concerns\GeneratesPageMetadata;
 use Hyde\Framework\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
 {
     use HasAuthor;
-    use HasMetadata;
+    use GeneratesPageMetadata;
     use HasDateString;
     use HasFeaturedImage;
 
