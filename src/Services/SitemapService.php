@@ -9,6 +9,8 @@ use SimpleXMLElement;
 
 /**
  * @see \Tests\Feature\Services\SitemapServiceTest
+ * 
+ * @see https://www.sitemaps.org/protocol.html
  */
 class SitemapService
 {
