@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 use Hyde\Framework\Hyde;
 
@@ -26,7 +27,9 @@ class RssFeedService
 
     public function generate(): self
     {
-        // TODO: Implement generate() method.
+        foreach (Hyde::getLatestPosts() as $post) {
+            $this->addItem($post);
+        }
 
         return $this;
     }
@@ -36,6 +39,14 @@ class RssFeedService
         $this->feed->addAttribute('processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2));
 
         return $this->feed->asXML();
+    }
+
+    protected function addItem(MarkdownPost $post): void
+    {
+        $item = $this->feed->channel->addChild('item');
+        $item->addChild('title', $post->findTitleForDocument());
+        $item->addChild('link', $post->getCanonicalLink());
+        $item->addChild('description', $post->getPostDescription());
     }
 
     protected function addInitialChannelItems(): void
