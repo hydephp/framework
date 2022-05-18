@@ -39,20 +39,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Site URL
+    | Site URL Configuration
     |--------------------------------------------------------------------------
-    |
-    | If you want, you can set your site's URL here or in the .env file.
-    |
-    | The URL will then be used in meta tags to create permalinks.
-    | If you are serving your site from a subdirectory, you will
-    | need to include that in the path without a trailing slash.
-    |
-    | Example: https://example.org/blog
-    |
+    | 
+    | Here are some configuration options for URL generation. 
+    | 
+    | `site_url` is used to create canonical URLs and permalinks.
+    | `prettyUrls` will when enabled create links that do not end in .html.
+    | `generateSitemap` determines if a sitemap.xml file should be generated.
+    | 
+    | To see the full documentation, please visit the (temporary link) below.
+    | https://github.com/hydephp/framework/wiki/Documentation-Page-Drafts
+    | 
+    | 
     */
 
     'site_url' => env('SITE_URL', null),
+
+    'prettyUrls' => false,
+
+    'generateSitemap' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -279,21 +285,6 @@ return [
         'maxHeadingLevel' => 4,
         'smoothPageScrolling' => true,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pretty URLs (Links that do not end in .html)
-    |--------------------------------------------------------------------------
-    |
-    | Introduced in v0.25.0, you can now enable "pretty URLs". When the setting
-    | is enabled, generated links in the compiled HTML site are without the
-    | `.html` extension. Since this breaks local browsing you can leave
-    | the setting disabled, and instead add the `--pretty-urls` flag
-    | when running the `php hyde build` command for deployment.
-    |
-    */
-
-    'prettyUrls' => false,
 
     /*
     |--------------------------------------------------------------------------
