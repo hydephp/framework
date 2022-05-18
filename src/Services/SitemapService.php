@@ -5,6 +5,7 @@ namespace Hyde\Framework\Services;
 use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
@@ -62,6 +63,20 @@ class SitemapService
                 $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink('posts/'.$page . '.html'))));
                 $urlItem->addChild('lastmod', htmlentities($this->getLastModDateForFileOrFallback(
                     Hyde::path(MarkdownPost::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
+                )));
+                $urlItem->addChild('changefreq', 'daily');
+            }
+        }
+
+        
+        if (Features::hasDocumentationPages()) {
+            $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
+            
+            foreach ($collection as $page) {
+                $urlItem = $this->xmlElement->addChild('url');
+                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink(Hyde::docsDirectory().'/'.$page . '.html'))));
+                $urlItem->addChild('lastmod', htmlentities($this->getLastModDateForFileOrFallback(
+                    Hyde::path(DocumentationPage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
                 )));
                 $urlItem->addChild('changefreq', 'daily');
             }
