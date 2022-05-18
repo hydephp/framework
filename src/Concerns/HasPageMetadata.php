@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Concerns;
 
+use Hyde\Framework\Helpers\Meta;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Meta;
 use Hyde\Framework\Models\MarkdownPost;
 
 /**

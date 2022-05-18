@@ -18,7 +18,7 @@
 */
 
 use Hyde\Framework\Features;
-use Hyde\Framework\Meta;
+use Hyde\Framework\Helpers\Meta;
 
 return [
 

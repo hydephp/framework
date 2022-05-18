@@ -1,6 +1,8 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Helpers;
+
+use function Hyde\Framework\str_starts_with;
 
 /**
  * Helpers to fluently declare HTML meta tags.

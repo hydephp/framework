@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Hyde\Framework\Meta;
+use Hyde\Framework\Helpers\Meta;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Meta
+ * @covers \Hyde\Framework\Helpers\Meta
  */
 class MetadataHelperTest extends TestCase
 {
