@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\Metadata;
 use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
@@ -25,7 +26,10 @@ trait GeneratesPageMetadata
         $this->metadata = new Metadata();
 
         $this->parseFrontMatterMetadata();
-        $this->makeOpenGraphPropertiesForArticle();
+        
+        if ($this instanceof MarkdownPost || $this instanceof \Tests\TestCase) {
+            $this->makeOpenGraphPropertiesForArticle();
+        }
     }
 
     #[ArrayShape(['name' => "\content"])]
