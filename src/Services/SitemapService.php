@@ -36,7 +36,11 @@ class SitemapService
         $collection = CollectionService::getSourceFileListForModel($model);
        
         foreach ($collection as $page) {
-            $this->xmlElement->addChild('url')->addChild('loc', Hyde::uriPath(Hyde::pageLink($page . '.html')));
+            $urlItem = $this->xmlElement->addChild('url');
+            $urlItem->addChild('loc', Hyde::uriPath(Hyde::pageLink($page . '.html')));
+            $urlItem->addChild('lastmod', date('c', filemtime(
+                Hyde::path(BladePage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.blade.php')
+            )));
         }
 
         return $this;
