@@ -30,55 +30,29 @@ class SitemapService
     public function generate(): self
     {
         if (Features::hasBladePages()) {
-            $collection = CollectionService::getSourceFileListForModel(BladePage::class);
-            
-            foreach ($collection as $page) {
-                $urlItem = $this->xmlElement->addChild('url');
-                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($page . '.html'))));
-                $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
-                    Hyde::path(BladePage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.blade.php')
-                )));
-                $urlItem->addChild('changefreq', 'daily');
-            }
+            $this->addPageModelUrls(
+                BladePage::class
+            );
         }
 
         if (Features::hasMarkdownPages()) {
-            $collection = CollectionService::getSourceFileListForModel(MarkdownPage::class);
-            
-            foreach ($collection as $page) {
-                $urlItem = $this->xmlElement->addChild('url');
-                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($page . '.html'))));
-                $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
-                    Hyde::path(MarkdownPage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
-                )));
-                $urlItem->addChild('changefreq', 'daily');
-            }
+            $this->addPageModelUrls(
+                MarkdownPage::class
+            );
         }
 
         if (Features::hasBlogPosts()) {
-            $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
-            
-            foreach ($collection as $page) {
-                $urlItem = $this->xmlElement->addChild('url');
-                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink('posts/'.$page . '.html'))));
-                $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
-                    Hyde::path(MarkdownPost::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
-                )));
-                $urlItem->addChild('changefreq', 'daily');
-            }
+            $this->addPageModelUrls(
+                MarkdownPost::class,
+                'posts/'
+            );
         }
 
         if (Features::hasDocumentationPages()) {
-            $collection = CollectionService::getSourceFileListForModel(DocumentationPage::class);
-            
-            foreach ($collection as $page) {
-                $urlItem = $this->xmlElement->addChild('url');
-                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink(Hyde::docsDirectory().'/'.$page . '.html'))));
-                $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
-                    Hyde::path(DocumentationPage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
-                )));
-                $urlItem->addChild('changefreq', 'daily');
-            }
+            $this->addPageModelUrls(
+                DocumentationPage::class,
+                Hyde::docsDirectory().'/'
+            );
         }
         
         return $this;
@@ -89,6 +63,20 @@ class SitemapService
         $this->xmlElement->addAttribute('processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2));
         
         return $this->xmlElement->asXML();
+    }
+
+    public function addPageModelUrls(string $pageClass, string $routePrefix = ''): void
+    {
+        $collection = CollectionService::getSourceFileListForModel($pageClass);
+
+        foreach ($collection as $page) {
+            $urlItem = $this->xmlElement->addChild('url');
+            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$page . '.html'))));
+            $urlItem->addChild('lastmod', htmlentities($this->getLastModDate(
+                Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$page.$pageClass::$fileExtension)
+            )));
+            $urlItem->addChild('changefreq', 'daily');
+        }
     }
 
     protected function getLastModDate(string $filepath): string
