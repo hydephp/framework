@@ -63,7 +63,7 @@
 	</aside>
 	<main id="content">
 		<article id="document" itemscope itemtype="https://schema.org/Article" @class(['mx-auto lg:ml-8 prose dark:prose-invert
-			max-w-3xl', 'torchlight-enabled'=> Hyde\Framework\Features::hasTorchlight()])>
+			max-w-3xl', 'torchlight-enabled'=> Hyde\Framework\Helpers\Features::hasTorchlight()])>
 			<section id="document-main-content" itemprop="articleBody">
 				{!! $markdown !!}
 			</section>

@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Hyde\Framework\Features;
+use Hyde\Framework\Helpers\Features;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Features
+ * @covers \Hyde\Framework\Helpers\Features
  */
 class ConfigurableFeaturesTest extends TestCase
 {
@@ -30,7 +30,7 @@ class ConfigurableFeaturesTest extends TestCase
         $features = [];
         foreach (get_class_methods(Features::class) as $method) {
             if (! str_starts_with($method, 'has') && $method !== 'enabled') {
-                $features[] = '\Hyde\Framework\Features::'.$method.'()';
+                $features[] = '\Hyde\Framework\Helpers\Features::'.$method.'()';
             }
         }
 

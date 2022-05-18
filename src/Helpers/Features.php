@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Helpers;
 
 /**
  * Allows features to be enabled and disabled in a simple object-oriented manner.
