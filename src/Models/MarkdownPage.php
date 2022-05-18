@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Models;
 
-use Hyde\Framework\MarkdownPageParser;
+use Hyde\Framework\Models\Parsers\MarkdownPageParser;
 
 class MarkdownPage extends MarkdownDocument
 {

@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use Exception;
-use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\Parsers\DocumentationPageParser;
 use Hyde\Framework\Services\CollectionService;
 use Tests\TestCase;
 

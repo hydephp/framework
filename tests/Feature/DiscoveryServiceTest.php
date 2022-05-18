@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\MarkdownPageParser;
-use Hyde\Framework\MarkdownPostParser;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Parsers\DocumentationPageParser;
+use Hyde\Framework\Models\Parsers\MarkdownPageParser;
+use Hyde\Framework\Models\Parsers\MarkdownPostParser;
 use Hyde\Framework\Services\DiscoveryService;
 use Tests\TestCase;
 

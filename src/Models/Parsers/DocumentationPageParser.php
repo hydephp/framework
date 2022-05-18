@@ -1,17 +1,15 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Models\Parsers;
 
 use Hyde\Framework\Contracts\AbstractPageParser;
-use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\MarkdownFileService;
 
-/**
- * Parses a Markdown file into a MarkdownPage object using the MarkdownDocument intermediary.
- */
-class MarkdownPageParser extends AbstractPageParser
+class DocumentationPageParser extends AbstractPageParser
 {
-    protected string $pageModel = MarkdownPage::class;
+    protected string $pageModel = DocumentationPage::class;
     protected string $slug;
 
     public string $title;
@@ -20,7 +18,7 @@ class MarkdownPageParser extends AbstractPageParser
     public function execute(): void
     {
         $document = (new MarkdownFileService(
-            Hyde::getMarkdownPagePath("/$this->slug.md")
+            Hyde::getDocumentationPagePath("/$this->slug.md")
         ))->get();
 
         $this->title = $document->findTitleForDocument();
@@ -28,9 +26,9 @@ class MarkdownPageParser extends AbstractPageParser
         $this->body = $document->body;
     }
 
-    public function get(): MarkdownPage
+    public function get(): DocumentationPage
     {
-        return new MarkdownPage(
+        return new DocumentationPage(
             matter: [],
             body: $this->body,
             title: $this->title,
