@@ -12,6 +12,15 @@ use Tests\TestCase;
  */
 class HasPageMetadataTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config(['hyde.meta' => []]);
+        config(['hyde.site_url' => null]);
+        config(['hyde.prettyUrls' => false]);
+    }
+
     public function testGetCanonicalUrlReturnsUrlForTopLevelPage()
     {
         $page = new class extends AbstractPage {
@@ -20,7 +29,6 @@ class HasPageMetadataTest extends TestCase
            public string $slug = 'foo';
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.prettyUrls' => false]);
 
         $this->assertEquals('https://example.com/foo.html', $page->getCanonicalUrl());
     }
@@ -51,7 +59,6 @@ class HasPageMetadataTest extends TestCase
             }
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.prettyUrls' => false]);
 
         $this->assertEquals('https://example.com/bar/foo.html', $page->getCanonicalUrl());
     }
@@ -69,7 +76,6 @@ class HasPageMetadataTest extends TestCase
             }
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.prettyUrls' => false]);
 
         $this->assertEquals('https://example.com/bar/baz/foo.html', $page->getCanonicalUrl());
     }
@@ -93,7 +99,6 @@ class HasPageMetadataTest extends TestCase
 
             public string $slug;
         };
-        config(['hyde.site_url' => null]);
 
         $this->assertFalse($page->canUseCanonicalUrl());
     }
@@ -147,8 +152,6 @@ class HasPageMetadataTest extends TestCase
 
             public string $slug = 'foo';
         };
-        config(['hyde.site_url' => null]);
-        config(['hyde.meta' => []]);
 
         $this->assertEquals(
             '',
@@ -163,8 +166,6 @@ class HasPageMetadataTest extends TestCase
 
             public string $slug = 'foo';
         };
-        config(['hyde.site_url' => null]);
-        config(['hyde.meta' => []]);
 
         $this->assertEquals(
             [],
