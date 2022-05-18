@@ -75,7 +75,7 @@ class HasMetadataTest extends TestCase
 
         $this->assertEquals([
             'og:type' => 'article',
-            'og:url' => 'https://example.com/foo/posts/bar',
+            'og:url' => 'https://example.com/foo/posts/bar.html',
         ], $this->getMetaProperties());
     }
 

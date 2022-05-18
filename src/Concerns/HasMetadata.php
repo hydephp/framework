@@ -23,6 +23,8 @@ trait HasMetadata
 
     public function constructMetadata(): void
     {
+        $this->metadata = new Metadata();
+
         $this->parseFrontMatterMetadata();
         $this->makeOpenGraphPropertiesForArticle();
     }
