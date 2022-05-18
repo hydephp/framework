@@ -69,18 +69,18 @@ class SitemapService
     {
         $collection = CollectionService::getSourceFileListForModel($pageClass);
 
-        foreach ($collection as $page) {
+        foreach ($collection as $slug) {
             $urlItem = $this->xmlElement->addChild('url');
-            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$page . '.html'))));
-            $urlItem->addChild('lastmod', htmlentities($this->getLastModDate($pageClass, $page)));
+            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$slug . '.html'))));
+            $urlItem->addChild('lastmod', htmlentities($this->getLastModDate($pageClass, $slug)));
             $urlItem->addChild('changefreq', 'daily');
         }
     }
 
-    protected function getLastModDate(string $pageClass, string $page): string
+    protected function getLastModDate(string $pageClass, string $slug): string
     {
         return date('c', filemtime(
-            Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$page.$pageClass::$fileExtension)
+            Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$slug.$pageClass::$fileExtension)
         ));
     }
 
