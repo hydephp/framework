@@ -175,6 +175,7 @@ class HydeBuildStaticSiteCommand extends Command
         if (SitemapService::canGenerateSitemap()) {
             $this->info('Generating sitemap.xml');
             file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
+            $this->newLine();
         }
     }
 
