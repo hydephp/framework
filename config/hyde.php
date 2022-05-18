@@ -288,7 +288,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Warn about outdated config? 
+    | Warn about outdated config?
     |--------------------------------------------------------------------------
     |
     | If your config needs updating, a message will be shown in the
