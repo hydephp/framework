@@ -4,6 +4,7 @@ namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Meta;
+use Hyde\Framework\Models\MarkdownPost;
 
 /**
  * @see \Tests\Feature\Concerns\HasPageMetadataTest
@@ -21,6 +22,17 @@ trait HasPageMetadata
 
         if ($this->canUseCanonicalUrl()) {
             $array[] = '<link rel="canonical" href="'.$this->getCanonicalUrl().'" />';
+        }
+
+        if ($this instanceof MarkdownPost) {
+            // Temporarly merge data with HasMetadata trait for compatibility
+            $array[] = "\n<!-- Blog Post Meta Tags -->";
+            foreach ($this->getMetadata() as $name => $content) {
+                $array[] = Meta::name($name, $content);
+            }
+            foreach ($this->getMetaProperties() as $property => $content) {
+                $array[] = Meta::property($property, $content);
+            }
         }
 
         return $array;
