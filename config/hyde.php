@@ -41,17 +41,17 @@ return [
     |--------------------------------------------------------------------------
     | Site URL Configuration
     |--------------------------------------------------------------------------
-    | 
-    | Here are some configuration options for URL generation. 
-    | 
+    |
+    | Here are some configuration options for URL generation.
+    |
     | `site_url` is used to create canonical URLs and permalinks.
     | `prettyUrls` will when enabled create links that do not end in .html.
     | `generateSitemap` determines if a sitemap.xml file should be generated.
-    | 
+    |
     | To see the full documentation, please visit the (temporary link) below.
     | https://github.com/hydephp/framework/wiki/Documentation-Page-Drafts
-    | 
-    | 
+    |
+    |
     */
 
     'site_url' => env('SITE_URL', null),
