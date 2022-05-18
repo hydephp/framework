@@ -12,14 +12,14 @@ use Tests\TestCase;
 class SitemapServiceTest extends TestCase
 {
     // Test service instantiates an XML element
-    public function testServiceInstantiatesXmlElement()
+    public function test_service_instantiates_xml_element()
     {
         $service = new SitemapService();
         $this->assertInstanceOf('SimpleXMLElement', $service->xmlElement);
     }
 
     // Test generate method adds default pages to sitemap XML
-    public function testGenerateAddsDefaultPagesToXml()
+    public function test_generate_adds_default_pages_to_xml()
     {
         $service = new SitemapService();
         $service->generate();
@@ -29,7 +29,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test generate method adds Markdown pages to sitemap XML
-    public function testGenerateAddsMarkdownPagesToXml()
+    public function test_generate_adds_markdown_pages_to_xml()
     {
         touch(Hyde::path('_pages/foo.md'));
 
@@ -42,7 +42,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test generate method adds Markdown posts to sitemap XML
-    public function testGenerateAddsMarkdownPostsToXml()
+    public function test_generate_adds_markdown_posts_to_xml()
     {
         touch(Hyde::path('_posts/foo.md'));
 
@@ -55,7 +55,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test generate method adds documentation pages to sitemap XML
-    public function testGenerateAddsDocumentationPagesToXml()
+    public function test_generate_adds_documentation_pages_to_xml()
     {
         touch(Hyde::path('_docs/foo.md'));
 
@@ -68,7 +68,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test getXML method returns XML string
-    public function testGetXMLReturnsXMLString()
+    public function test_get_xml_returns_xml_string()
     {
         $service = new SitemapService();
         $service->generate();
@@ -79,7 +79,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test generateSitemap shorthand method returns XML string
-    public function testGenerateSitemapShorthandMethodReturnsXMLString()
+    public function test_generate_sitemap_shorthand_method_returns_xml_string()
     {
         $xml = SitemapService::generateSitemap();
 
@@ -88,21 +88,21 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test canGenerateSitemap helper returns true if Hyde has a base URL
-    public function testCanGenerateSitemapHelperReturnsTrueIfHydeHasBaseUrl()
+    public function test_can_generate_sitemap_helper_returns_true_if_hyde_has_base_url()
     {
         config(['hyde.site_url' => 'foo']);
         $this->assertTrue(SitemapService::canGenerateSitemap());
     }
 
     // Test canGenerateSitemap helper returns false if Hyde does not have a base URL
-    public function testCanGenerateSitemapHelperReturnsFalseIfHydeDoesNotHaveBaseUrl()
+    public function test_can_generate_sitemap_helper_returns_false_if_hyde_does_not_have_base_url()
     {
         config(['hyde.site_url' => '']);
         $this->assertFalse(SitemapService::canGenerateSitemap());
     }
 
     // Test canGenerateSitemap helper returns false if sitemaps are disabled in config
-    public function testCanGenerateSitemapHelperReturnsFalseIfSitemapsAreDisabledInConfig()
+    public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
     {
         config(['hyde.site_url' => 'foo']);
         config(['hyde.generateSitemap' => false]);
@@ -110,7 +110,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test URL item is generated correctly
-    public function testURLItemIsGeneratedCorrectly()
+    public function test_url_item_is_generated_correctly()
     {
         config(['hyde.prettyUrls' => false]);
         config(['hyde.site_url' => 'https://example.com']);
@@ -128,7 +128,7 @@ class SitemapServiceTest extends TestCase
     }
 
     // Test URL item is generated with pretty URLs if enabled
-    public function testURLItemIsGeneratedWithPrettyURLsIfEnabled()
+    public function test_url_item_is_generated_with_pretty_ur_ls_if_enabled()
     {
         config(['hyde.prettyUrls' => true]);
         config(['hyde.site_url' => 'https://example.com']);
