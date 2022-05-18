@@ -11,22 +11,21 @@ use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 
 /**
-* @see \Tests\Feature\Services\SitemapServiceTest
-* 
-* @see https://www.sitemaps.org/protocol.html
-*/
+ * @see \Tests\Feature\Services\SitemapServiceTest
+ * @see https://www.sitemaps.org/protocol.html
+ */
 class SitemapService
 {
     public SimpleXMLElement $xmlElement;
-    
+
     public function __construct()
     {
         $this->time_start = microtime(true);
-        
+
         $this->xmlElement = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
         $this->xmlElement->addAttribute('generator', 'HydePHP '.Hyde::version());
     }
-    
+
     public function generate(): self
     {
         if (Features::hasBladePages()) {
@@ -54,14 +53,14 @@ class SitemapService
                 Hyde::docsDirectory().'/'
             );
         }
-        
+
         return $this;
     }
-    
+
     public function getXML(): string
     {
         $this->xmlElement->addAttribute('processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2));
-        
+
         return $this->xmlElement->asXML();
     }
 
@@ -71,7 +70,7 @@ class SitemapService
 
         foreach ($collection as $slug) {
             $urlItem = $this->xmlElement->addChild('url');
-            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$slug . '.html'))));
+            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$slug.'.html'))));
             $urlItem->addChild('lastmod', htmlentities($this->getLastModDate($pageClass, $slug)));
             $urlItem->addChild('changefreq', 'daily');
         }
@@ -91,6 +90,6 @@ class SitemapService
 
     public static function canGenerateSitemap(): bool
     {
-        return (Hyde::uriPath() !== false);
+        return Hyde::uriPath() !== false;
     }
 }
