@@ -17,7 +17,7 @@ class RssFeedService
 
     public function __construct()
     {
-        $this->feed = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" />');
+        $this->feed = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" />');
         $this->feed->addChild('channel');
 
         $this->addInitialChannelItems();
@@ -64,6 +64,13 @@ class RssFeedService
         $this->feed->channel->addChild('title', $this->getTitle());
         $this->feed->channel->addChild('link', $this->getLink());
         $this->feed->channel->addChild('description', $this->getDescription());
+
+        $atomLink = $this->feed->channel->addChild('atom:link', namespace: 'http://www.w3.org/2005/Atom');
+        $atomLink->addAttribute('href', $this->getLink() . '/rss.xml');
+        $atomLink->addAttribute('rel', 'self');
+        $atomLink->addAttribute('type', 'application/rss+xml');
+
+
 
         $this->addAdditionalChannelData();
     }
