@@ -11,14 +11,12 @@ use Tests\TestCase;
  */
 class SitemapServiceTest extends TestCase
 {
-    // Test service instantiates an XML element
     public function test_service_instantiates_xml_element()
     {
         $service = new SitemapService();
         $this->assertInstanceOf('SimpleXMLElement', $service->xmlElement);
     }
 
-    // Test generate method adds default pages to sitemap XML
     public function test_generate_adds_default_pages_to_xml()
     {
         $service = new SitemapService();
@@ -28,7 +26,6 @@ class SitemapServiceTest extends TestCase
         $this->assertCount(2, $service->xmlElement->url);
     }
 
-    // Test generate method adds Markdown pages to sitemap XML
     public function test_generate_adds_markdown_pages_to_xml()
     {
         touch(Hyde::path('_pages/foo.md'));
@@ -41,7 +38,6 @@ class SitemapServiceTest extends TestCase
         unlink(Hyde::path('_pages/foo.md'));
     }
 
-    // Test generate method adds Markdown posts to sitemap XML
     public function test_generate_adds_markdown_posts_to_xml()
     {
         touch(Hyde::path('_posts/foo.md'));
@@ -54,7 +50,6 @@ class SitemapServiceTest extends TestCase
         unlink(Hyde::path('_posts/foo.md'));
     }
 
-    // Test generate method adds documentation pages to sitemap XML
     public function test_generate_adds_documentation_pages_to_xml()
     {
         touch(Hyde::path('_docs/foo.md'));
@@ -67,7 +62,6 @@ class SitemapServiceTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
     }
 
-    // Test getXML method returns XML string
     public function test_get_xml_returns_xml_string()
     {
         $service = new SitemapService();
@@ -78,7 +72,6 @@ class SitemapServiceTest extends TestCase
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', $xml);
     }
 
-    // Test generateSitemap shorthand method returns XML string
     public function test_generate_sitemap_shorthand_method_returns_xml_string()
     {
         $xml = SitemapService::generateSitemap();
@@ -87,21 +80,18 @@ class SitemapServiceTest extends TestCase
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', $xml);
     }
 
-    // Test canGenerateSitemap helper returns true if Hyde has a base URL
     public function test_can_generate_sitemap_helper_returns_true_if_hyde_has_base_url()
     {
         config(['hyde.site_url' => 'foo']);
         $this->assertTrue(SitemapService::canGenerateSitemap());
     }
 
-    // Test canGenerateSitemap helper returns false if Hyde does not have a base URL
     public function test_can_generate_sitemap_helper_returns_false_if_hyde_does_not_have_base_url()
     {
         config(['hyde.site_url' => '']);
         $this->assertFalse(SitemapService::canGenerateSitemap());
     }
 
-    // Test canGenerateSitemap helper returns false if sitemaps are disabled in config
     public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
     {
         config(['hyde.site_url' => 'foo']);
@@ -109,7 +99,6 @@ class SitemapServiceTest extends TestCase
         $this->assertFalse(SitemapService::canGenerateSitemap());
     }
 
-    // Test URL item is generated correctly
     public function test_url_item_is_generated_correctly()
     {
         config(['hyde.prettyUrls' => false]);
@@ -127,7 +116,6 @@ class SitemapServiceTest extends TestCase
         unlink(Hyde::path('_pages/0-test.blade.php'));
     }
 
-    // Test URL item is generated with pretty URLs if enabled
     public function test_url_item_is_generated_with_pretty_ur_ls_if_enabled()
     {
         config(['hyde.prettyUrls' => true]);
