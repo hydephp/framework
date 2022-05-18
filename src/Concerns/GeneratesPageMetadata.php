@@ -6,75 +6,74 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Models\Metadata;
 use Hyde\Framework\Services\AuthorService;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
-* Generates metadata for page models that have front matter.
-*
-* @see \Hyde\Framework\Models\Metadata
-* @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
-*/
+ * Generates metadata for page models that have front matter.
+ *
+ * @see \Hyde\Framework\Models\Metadata
+ * @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
+ */
 trait GeneratesPageMetadata
 {
     public array $metadata = [];
     public array $properties = [];
-    
+
     public function constructMetadata(): void
     {
         $this->parseFrontMatterMetadata();
-        
+
         if ($this instanceof MarkdownPost || $this instanceof \Tests\TestCase) {
             $this->makeOpenGraphPropertiesForArticle();
         }
     }
-    
+
     public function getMetadata(): array
     {
         return $this->metadata;
     }
-    
+
     public function getMetaProperties(): array
     {
         return $this->properties;
     }
-    
+
     /**
-    * Generate metadata from the front matter that can be used in standard <meta> tags.
-    * This helper is page type agnostic and works with any kind of model having front matter.
-    */
+     * Generate metadata from the front matter that can be used in standard <meta> tags.
+     * This helper is page type agnostic and works with any kind of model having front matter.
+     */
     protected function parseFrontMatterMetadata(): void
     {
         if (isset($this->matter['description'])) {
             $this->metadata['description'] = $this->matter['description'];
         }
-        
+
         if (isset($this->matter['author'])) {
             $this->metadata['author'] = AuthorService::getAuthorName($this->matter['author']);
         }
-        
+
         if (isset($this->matter['category'])) {
             $this->metadata['keywords'] = $this->matter['category'];
         }
     }
-    
+
     /**
-    * Generate opengraph metadata from front matter for an og:article such as a blog post.
-    */
+     * Generate opengraph metadata from front matter for an og:article such as a blog post.
+     */
     protected function makeOpenGraphPropertiesForArticle(): void
     {
         $this->properties['og:type'] = 'article';
         if (Hyde::uriPath()) {
-            $this->properties['og:url'] = Hyde::uriPath(Hyde::pageLink('posts/' . $this->slug . '.html'));
+            $this->properties['og:url'] = Hyde::uriPath(Hyde::pageLink('posts/'.$this->slug.'.html'));
         }
-        
+
         if (isset($this->matter['title'])) {
             $this->properties['og:title'] = $this->matter['title'];
         }
-        
+
         if (isset($this->matter['date'])) {
             $this->properties['og:article:published_time'] = date('c', strtotime($this->matter['date']));
         }
-        
+
         if (isset($this->matter['image'])) {
             if (is_string($this->matter['image'])) {
                 $this->properties['og:image'] = $this->matter['image'];
