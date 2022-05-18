@@ -14,12 +14,9 @@ use Hyde\Framework\Hyde;
 class RssFeedService
 {
     public SimpleXMLElement $feed;
-    protected float $time_start;
 
     public function __construct()
     {
-        $this->time_start = microtime(true);
-
         $this->feed = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" />');
         $this->feed->addChild('channel');
 
@@ -37,8 +34,6 @@ class RssFeedService
 
     public function getXML(): string
     {
-        $this->feed->channel->generator->addAttribute('hyde:processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2), 'hyde');
-
         return $this->feed->asXML();
     }
 
