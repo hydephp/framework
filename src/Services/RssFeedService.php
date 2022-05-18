@@ -58,6 +58,8 @@ class RssFeedService
         if ($post->date) {
             $item->addChild('pubDate', $post->date->dateTimeObject->format(DATE_RSS));
         }
+
+        $item->addChild('author', $post->author->getName());
     }
 
     protected function addInitialChannelItems(): void
