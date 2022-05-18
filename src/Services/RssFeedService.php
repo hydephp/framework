@@ -57,6 +57,10 @@ class RssFeedService
         if (isset($post->author)) {
             $item->addChild('dc:creator', $post->author->getName(), 'http://purl.org/dc/elements/1.1/');
         }
+
+        if (isset($post->category)) {
+            $item->addChild('category', $post->category);
+        }
     }
 
     protected function addInitialChannelItems(): void
