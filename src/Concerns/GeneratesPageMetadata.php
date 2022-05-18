@@ -13,9 +13,6 @@ use JetBrains\PhpStorm\ArrayShape;
  *
  * @see \Hyde\Framework\Models\Metadata
  * @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
- *
- * @todo Unify the $page property and handle metadata through it
- * @todo Only add blog post properties if the page is a blog post
  */
 trait GeneratesPageMetadata
 {
