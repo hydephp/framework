@@ -42,4 +42,9 @@ class MarkdownPost extends MarkdownDocument
     {
         return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath().'.html'));
     }
+
+    public function getPostDescription(): string
+    {
+        return $this->matter['description'] ?? substr($this->body, 0, 125).'...';
+    }
 }
