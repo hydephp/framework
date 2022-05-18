@@ -6,6 +6,7 @@ use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\MarkdownPage;
+use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 
 /**
@@ -52,6 +53,19 @@ class SitemapService
                 $urlItem->addChild('changefreq', 'daily');
             }
         }
+
+        if (Features::hasBlogPosts()) {
+            $collection = CollectionService::getSourceFileListForModel(MarkdownPost::class);
+            
+            foreach ($collection as $page) {
+                $urlItem = $this->xmlElement->addChild('url');
+                $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink('posts/'.$page . '.html'))));
+                $urlItem->addChild('lastmod', htmlentities($this->getLastModDateForFileOrFallback(
+                    Hyde::path(MarkdownPost::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.md')
+                )));
+                $urlItem->addChild('changefreq', 'daily');
+            }
+        }
         
         return $this;
     }
@@ -78,6 +92,6 @@ class SitemapService
     {
         return file_exists($filepath)
         ? date('c', filemtime($filepath))
-        : date('c');
+        : 'null' ; // ?? date('c')
     }
 }
