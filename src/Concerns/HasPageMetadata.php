@@ -12,7 +12,7 @@ trait HasPageMetadata
 {
     public function getCanonicalUrl(): string
     {
-        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath() . '.html'));
+        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath().'.html'));
     }
 
     public function getDynamicMetadata(): array
@@ -20,7 +20,7 @@ trait HasPageMetadata
         $array = [];
 
         if ($this->canUseCanonicalUrl()) {
-            $array[] = '<link rel="canonical" href="' . $this->getCanonicalUrl() . '" />';
+            $array[] = '<link rel="canonical" href="'.$this->getCanonicalUrl().'" />';
         }
 
         return $array;

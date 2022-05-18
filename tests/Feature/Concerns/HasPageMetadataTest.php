@@ -23,10 +23,11 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetCanonicalUrlReturnsUrlForTopLevelPage()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
-           public string $slug = 'foo';
+            public string $slug = 'foo';
         };
         config(['hyde.site_url' => 'https://example.com']);
 
@@ -35,7 +36,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetCanonicalUrlReturnsPrettyUrlForTopLevelPage()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -48,7 +50,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetCanonicalUrlReturnsUrlForNestedPage()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -65,7 +68,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetCanonicalUrlReturnsUrlForDeeplyNestedPage()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -82,7 +86,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testCanUseCanonicalUrlReturnsTrueWhenBothUriPathAndSlugIsSet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -94,7 +99,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testCanUseCanonicalUrlReturnsFalseNoConditionsAreMet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug;
@@ -105,7 +111,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testCanUseCanonicalUrlReturnsFalseWhenOnlyOneConditionIsMet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug;
@@ -114,7 +121,8 @@ class HasPageMetadataTest extends TestCase
 
         $this->assertFalse($page->canUseCanonicalUrl());
 
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -124,10 +132,10 @@ class HasPageMetadataTest extends TestCase
         $this->assertFalse($page->canUseCanonicalUrl());
     }
 
-
     public function testRenderPageMetadataReturnsStringWithMergedMetadata()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -135,7 +143,7 @@ class HasPageMetadataTest extends TestCase
         config(['hyde.site_url' => 'https://example.com']);
 
         config(['hyde.meta' => [
-            Meta::name('foo', 'bar')
+            Meta::name('foo', 'bar'),
         ]]);
 
         $this->assertEquals(
@@ -147,7 +155,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testRenderPageMetadataOnlyAddsCanonicalIfConditionsAreMet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -161,7 +170,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetDynamicMetadataOnlyAddsCanonicalIfConditionsAreMet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -175,7 +185,8 @@ class HasPageMetadataTest extends TestCase
 
     public function testGetDynamicMetadataAddsCanonicalUrlWhenConditionsAreMet()
     {
-        $page = new class extends AbstractPage {
+        $page = new class extends AbstractPage
+        {
             use HasPageMetadata;
 
             public string $slug = 'foo';
@@ -183,7 +194,7 @@ class HasPageMetadataTest extends TestCase
         config(['hyde.site_url' => 'https://example.com']);
 
         config(['hyde.meta' => [
-            Meta::name('foo', 'bar')
+            Meta::name('foo', 'bar'),
         ]]);
 
         $this->assertEquals(['<link rel="canonical" href="https://example.com/foo.html" />'],
