@@ -6,6 +6,7 @@ use Hyde\Framework\Concerns\GeneratesPageMetadata;
 use Hyde\Framework\Concerns\HasAuthor;
 use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
@@ -35,5 +36,10 @@ class MarkdownPost extends MarkdownDocument
     public function getCurrentPagePath(): string
     {
         return 'posts/'.$this->slug;
+    }
+
+    public function getCanonicalLink(): string
+    {
+        return Hyde::uriPath(Hyde::pageLink($this->getCurrentPagePath().'.html'));
     }
 }
