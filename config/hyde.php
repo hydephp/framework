@@ -288,12 +288,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Hyde Config Version @HydeConfigVersion 0.1.0
+    | Warn about outdated config? 
     |--------------------------------------------------------------------------
     |
-    | Hyde can use the value above to determine if this configuration file
-    | contains the latest config options. If your config needs updating,
-    | a message will be shown in the HydeCLI, unless disabled below.
+    | If your config needs updating, a message will be shown in the
+    | HydeCLI info screen, unless disabled below.
     |
     */
 
