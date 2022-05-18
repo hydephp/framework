@@ -47,18 +47,29 @@ class RssFeedService
 
     protected function getTitle(): string
     {
-        return config('hyde.name', 'HydePHP');
+        return $this->xmlEscape(
+            config('hyde.name', 'HydePHP')
+        );
     }
 
     protected function getLink(): string
     {
-        return config('hyde.site_url') ?? 'http://localhost';
+        return $this->xmlEscape(
+            config('hyde.site_url') ?? 'http://localhost'
+        );
     }
 
     protected function getDescription(): string
     {
-        return config('hyde.rssDescription',
-            $this->getTitle() . ' RSS Feed');
+        return $this->xmlEscape(
+            config('hyde.rssDescription',
+                $this->getTitle() . ' RSS Feed')
+        );
+    }
+
+    protected function xmlEscape(string $string): string
+    {
+        return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
     }
 }
 
