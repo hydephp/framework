@@ -3,7 +3,6 @@
 namespace  Tests\Feature\Concerns;
 
 use Hyde\Framework\Concerns\GeneratesPageMetadata;
-use Hyde\Framework\Models\Metadata;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
@@ -25,12 +24,6 @@ class GeneratesPageMetadataTest extends TestCase
         unset($this->matter);
 
         parent::tearDown();
-    }
-
-    public function test_metadata_object_can_be_constructed()
-    {
-        $this->constructMetadata();
-        $this->assertInstanceOf(Metadata::class, $this->metadata);
     }
 
     public function test_get_metadata_returns_empty_array_when_uninitialized()
