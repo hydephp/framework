@@ -3,7 +3,6 @@
 namespace  Tests\Feature\Concerns;
 
 use Hyde\Framework\Concerns\GeneratesPageMetadata;
-use Hyde\Framework\Models\Metadata;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
