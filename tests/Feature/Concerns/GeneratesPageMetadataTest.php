@@ -12,7 +12,7 @@ use Tests\TestCase;
  *
  * @see \Hyde\Framework\Models\Metadata
  */
-class HasMetadataTest extends TestCase
+class GeneratesPageMetadataTest extends TestCase
 {
     use GeneratesPageMetadata;
 

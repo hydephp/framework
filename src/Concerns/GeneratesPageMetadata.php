@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * Generates metadata for page models that have front matter.
  *
  * @see \Hyde\Framework\Models\Metadata
- * @see \Tests\Feature\Concerns\HasMetadataTest
+ * @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
  *
  * @todo Unify the $page property and handle metadata through it
  * @todo Only add blog post properties if the page is a blog post
