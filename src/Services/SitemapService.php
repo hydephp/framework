@@ -39,10 +39,10 @@ class SitemapService
        
         foreach ($collection as $page) {
             $urlItem = $this->xmlElement->addChild('url');
-            $urlItem->addChild('loc', Hyde::uriPath(Hyde::pageLink($page . '.html')));
-            $urlItem->addChild('lastmod', date('c', filemtime(
+            $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($page . '.html'))));
+            $urlItem->addChild('lastmod', htmlentities(date('c', filemtime(
                 Hyde::path(BladePage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.blade.php')
-            )));
+            ))));
             $urlItem->addChild('changefreq', 'daily');
         }
 
