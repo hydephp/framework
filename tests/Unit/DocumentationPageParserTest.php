@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use Hyde\Framework\DocumentationPageParser;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\Parsers\DocumentationPageParser;
 use Tests\TestCase;
 
 class DocumentationPageParserTest extends TestCase

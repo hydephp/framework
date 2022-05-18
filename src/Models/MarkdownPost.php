@@ -6,7 +6,7 @@ use Hyde\Framework\Concerns\GeneratesPageMetadata;
 use Hyde\Framework\Concerns\HasAuthor;
 use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
-use Hyde\Framework\MarkdownPostParser;
+use Hyde\Framework\Models\Parsers\MarkdownPostParser;
 
 class MarkdownPost extends MarkdownDocument
 {

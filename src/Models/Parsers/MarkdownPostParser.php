@@ -1,8 +1,9 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Models\Parsers;
 
 use Hyde\Framework\Contracts\AbstractPageParser;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
 
