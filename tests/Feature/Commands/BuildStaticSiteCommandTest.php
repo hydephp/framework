@@ -86,6 +86,13 @@ class BuildStaticSiteCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
+    public function test_pretty_urls_option_output()
+    {
+        $this->artisan('build --pretty-urls')
+            ->expectsOutput('Generating site with pretty URLs')
+            ->assertExitCode(0);
+    }
+
     /**
      * Added for code coverage, deprecated as the pretty flag is deprecated.
      *
