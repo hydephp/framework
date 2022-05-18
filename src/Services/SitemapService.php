@@ -92,21 +92,21 @@ class SitemapService
         
         return $this->xmlElement->asXML();
     }
-    
-    public static function generateSitemap(): string
-    {
-        return (new static)->generate()->getXML();
-    }
-    
-    public static function canGenerateSitemap(): bool
-    {
-        return (Hyde::uriPath() !== false);
-    }
-    
+
     protected function getLastModDateForFileOrFallback(string $filepath): string
     {
         return file_exists($filepath)
         ? date('c', filemtime($filepath))
-        : 'null' ; // ?? date('c')
+        : date('c');
+    }
+
+    public static function generateSitemap(): string
+    {
+        return (new static)->generate()->getXML();
+    }
+
+    public static function canGenerateSitemap(): bool
+    {
+        return (Hyde::uriPath() !== false);
     }
 }
