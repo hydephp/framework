@@ -47,6 +47,15 @@ class RssFeedService
         $item->addChild('title', $post->findTitleForDocument());
         $item->addChild('link', $post->getCanonicalLink());
         $item->addChild('description', $post->getPostDescription());
+
+        $this->addAdditionalItemData($item, $post);
+    }
+
+    protected function addAdditionalItemData(SimpleXMLElement $item, MarkdownPost $post): void
+    {
+        if ($post->date) {
+            $item->addChild('pubDate', $post->date->dateTimeObject->format(DATE_RSS));
+        }
     }
 
     protected function addInitialChannelItems(): void
