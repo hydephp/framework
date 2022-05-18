@@ -47,4 +47,14 @@ class Author
             $this->website = $data['website'];
         }
     }
+
+    /**
+     * Get the author's name.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name ?? $this->username;
+    }
 }
