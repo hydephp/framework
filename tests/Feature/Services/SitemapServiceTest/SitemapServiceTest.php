@@ -90,14 +90,48 @@ class SitemapServiceTest extends TestCase
     // Test canGenerateSitemap helper returns true if Hyde has a base URL
     public function testCanGenerateSitemapHelperReturnsTrueIfHydeHasBaseUrl()
     {
-        $this->app['config']->set('hyde.site_url', 'foo');
+        config(['hyde.site_url' => 'foo']);
         $this->assertTrue(SitemapService::canGenerateSitemap());
     }
 
     // Test canGenerateSitemap helper returns false if Hyde does not have a base URL
     public function testCanGenerateSitemapHelperReturnsFalseIfHydeDoesNotHaveBaseUrl()
     {
-        $this->app['config']->set('hyde.site_url', '');
+        config(['hyde.site_url' => '']);
         $this->assertFalse(SitemapService::canGenerateSitemap());
+    }
+
+    // Test URL item is generated correctly
+    public function testURLItemIsGeneratedCorrectly()
+    {
+        config(['hyde.prettyUrls' => false]);
+        config(['hyde.site_url' => 'https://example.com']);
+        touch(Hyde::path('_pages/0-test.blade.php'));
+
+        $service = new SitemapService();
+        $service->generate();
+
+        $url = $service->xmlElement->url[0];
+        $this->assertEquals('https://example.com/0-test.html', $url->loc);
+        $this->assertEquals('daily', $url->changefreq);
+        $this->assertEquals(date('c'), $url->lastmod);
+
+        unlink(Hyde::path('_pages/0-test.blade.php'));
+    }
+
+    // Test URL item is generated with pretty URLs if enabled
+    public function testURLItemIsGeneratedWithPrettyURLsIfEnabled()
+    {
+        config(['hyde.prettyUrls' => true]);
+        config(['hyde.site_url' => 'https://example.com']);
+        touch(Hyde::path('_pages/0-test.blade.php'));
+
+        $service = new SitemapService();
+        $service->generate();
+
+        $url = $service->xmlElement->url[0];
+        $this->assertEquals('https://example.com/0-test', $url->loc);
+
+        unlink(Hyde::path('_pages/0-test.blade.php'));
     }
 }
