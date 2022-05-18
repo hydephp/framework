@@ -40,9 +40,9 @@ class SitemapService
         foreach ($collection as $page) {
             $urlItem = $this->xmlElement->addChild('url');
             $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($page . '.html'))));
-            $urlItem->addChild('lastmod', htmlentities(date('c', filemtime(
+            $urlItem->addChild('lastmod', htmlentities($this->getLastModDateForFileOrFallback(
                 Hyde::path(BladePage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.blade.php')
-            ))));
+            )));
             $urlItem->addChild('changefreq', 'daily');
         }
 
@@ -64,5 +64,12 @@ class SitemapService
     public static function canGenerateSitemap(): bool
     {
         return (Hyde::uriPath() !== false);
+    }
+
+    protected function getLastModDateForFileOrFallback(string $filepath): string
+    {
+        return file_exists($filepath)
+            ? date('c', filemtime($filepath))
+            : date('c');
     }
 }
