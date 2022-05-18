@@ -41,6 +41,7 @@ class SitemapService
             $urlItem->addChild('lastmod', date('c', filemtime(
                 Hyde::path(BladePage::$sourceDirectory.DIRECTORY_SEPARATOR.$page.'.blade.php')
             )));
+            $urlItem->addChild('changefreq', 'daily');
         }
 
         return $this;
