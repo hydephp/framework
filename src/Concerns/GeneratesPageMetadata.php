@@ -23,7 +23,7 @@ trait GeneratesPageMetadata
         $this->metadata = new Metadata();
 
         $this->parseFrontMatterMetadata();
-        
+
         if ($this instanceof MarkdownPost || $this instanceof \Tests\TestCase) {
             $this->makeOpenGraphPropertiesForArticle();
         }
