@@ -21,7 +21,6 @@ class RssFeedService
         $this->time_start = microtime(true);
 
         $this->feed = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" />');
-        $this->feed->addAttribute('generator', 'HydePHP '.Hyde::version());
         $this->feed->addChild('channel');
 
         $this->addInitialChannelItems();
@@ -38,7 +37,7 @@ class RssFeedService
 
     public function getXML(): string
     {
-        $this->feed->addAttribute('processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2));
+        $this->feed->channel->generator->addAttribute('hyde:processing_time_ms', (string) round((microtime(true) - $this->time_start) * 1000, 2), 'hyde');
 
         return $this->feed->asXML();
     }
@@ -69,6 +68,15 @@ class RssFeedService
         $this->feed->channel->addChild('title', $this->getTitle());
         $this->feed->channel->addChild('link', $this->getLink());
         $this->feed->channel->addChild('description', $this->getDescription());
+
+        $this->addAdditionalChannelData();
+    }
+
+    protected function addAdditionalChannelData(): void
+    {
+        $this->feed->channel->addChild('language', config('hyde.language', 'en'));
+        $this->feed->channel->addChild('generator', 'HydePHP '.Hyde::version());
+        $this->feed->channel->addChild('lastBuildDate', date(DATE_RSS));
     }
 
     protected function getTitle(): string
