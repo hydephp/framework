@@ -8,7 +8,7 @@ class EnsureCommandsFollowNamingConventionTest extends TestCase
 {
     public function test_ensure_commands_follow_naming_convention()
     {
-        $files = glob('vendor/hyde/framework/src/commands/*.php');
+        $files = glob('vendor/hyde/framework/src/Commands/*.php');
 
         if (empty($files)) {
             $this->markTestSkipped('No commands found.');
