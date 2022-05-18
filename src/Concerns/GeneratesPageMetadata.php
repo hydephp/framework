@@ -8,24 +8,24 @@ use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * Handle logic for Page models that have Metadata.
- * Metadata is used to create meta SEO tags.
+ * Generates metadata for page models that have front matter.
  *
  * @see \Hyde\Framework\Models\Metadata
- * @see \Tests\Feature\Concerns\HasMetadataTest
+ * @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
  *
  * @todo Unify the $page property and handle metadata through it
  * @todo Only add blog post properties if the page is a blog post
  */
-trait HasMetadata
+trait GeneratesPageMetadata
 {
     public ?Metadata $metadata = null;
 
     public function constructMetadata(): void
     {
         $this->metadata = new Metadata();
-        $this->makeMetadata();
-        $this->makeMetaProperties();
+
+        $this->parseFrontMatterMetadata();
+        $this->makeOpenGraphPropertiesForArticle();
     }
 
     #[ArrayShape(['name' => "\content"])]
@@ -50,10 +50,9 @@ trait HasMetadata
 
     /**
      * Generate metadata from the front matter that can be used in standard <meta> tags.
-     *
-     * @deprecated Will be refactored to parseFrontMatterMetadata
+     * This helper is page type agnostic and works with any kind of model having front matter.
      */
-    protected function makeMetadata(): void
+    protected function parseFrontMatterMetadata(): void
     {
         if (isset($this->matter['description'])) {
             $this->metadata->add('description', $this->matter['description']);
@@ -69,17 +68,14 @@ trait HasMetadata
     }
 
     /**
-     * Generate metadata from the front matter that can be used for og:type <meta> tags.
-     * Note that this currently assumes that the object using it is a Blog Post.
-     *
-     * @deprecated Will be refactored to parseFrontMatterMetadata
+     * Generate opengraph metadata from front matter for an og:article such as a blog post.
      */
-    protected function makeMetaProperties(): void
+    protected function makeOpenGraphPropertiesForArticle(): void
     {
         $this->metadata->addProperty('og:type', 'article');
 
         if (Hyde::uriPath()) {
-            $this->metadata->addProperty('og:url', Hyde::uriPath('posts/'.$this->slug));
+            $this->metadata->addProperty('og:url', Hyde::uriPath(Hyde::pageLink('posts/'.$this->slug.'.html')));
         }
 
         if (isset($this->matter['title'])) {

@@ -2,19 +2,19 @@
 
 namespace  Tests\Feature\Concerns;
 
-use Hyde\Framework\Concerns\HasMetadata;
+use Hyde\Framework\Concerns\GeneratesPageMetadata;
 use Hyde\Framework\Models\Metadata;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Concerns\HasMetadata
+ * @covers \Hyde\Framework\Concerns\GeneratesPageMetadata
  *
  * @see \Hyde\Framework\Models\Metadata
  */
-class HasMetadataTest extends TestCase
+class GeneratesPageMetadataTest extends TestCase
 {
-    use HasMetadata;
+    use GeneratesPageMetadata;
 
     public array $matter;
     private string $slug;
@@ -75,7 +75,7 @@ class HasMetadataTest extends TestCase
 
         $this->assertEquals([
             'og:type' => 'article',
-            'og:url' => 'https://example.com/foo/posts/bar',
+            'og:url' => 'https://example.com/foo/posts/bar.html',
         ], $this->getMetaProperties());
     }
 

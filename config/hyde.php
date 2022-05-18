@@ -76,7 +76,8 @@ return [
     | meta tag, use Meta::name() helper. To add an Open Graph property, use
     | Meta::property() helper which also adds the `og:` prefix for you.
     |
-    | Please note that these tags might conflict with blog post tags.
+    | Please note that some pages like blog posts contain dynamic meta tags
+    | which may override these globals when present in the front matter.
     |
     */
 

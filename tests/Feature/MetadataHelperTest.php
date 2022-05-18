@@ -132,7 +132,7 @@ class MetadataHelperTest extends TestCase
         ]]);
 
         $this->assertEquals(
-            '<meta name="foo" content="bar">',
+            '<meta name="foo" content="baz">',
 
             Meta::render([
                 Meta::name('foo', 'baz'),

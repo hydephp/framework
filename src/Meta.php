@@ -38,7 +38,7 @@ class Meta
         $array = [];
         $existing = [];
 
-        foreach ($meta as $metaItem) {
+        foreach (array_reverse($meta) as $metaItem) {
             $substring = substr($metaItem, 6, strpos($metaItem, ' content="') - 6);
 
             if (! in_array($substring, $existing)) {
@@ -47,7 +47,7 @@ class Meta
             }
         }
 
-        return $array;
+        return array_reverse($array);
     }
 
     public static function getGlobalMeta(): array

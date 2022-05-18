@@ -45,6 +45,7 @@ class StaticPageBuilder
     public function __invoke()
     {
         view()->share('page', $this->page);
+        view()->share('currentPage', $this->page->getCurrentPagePath());
 
         if ($this->page instanceof BladePage) {
             return $this->save($this->page->view, $this->compileView());
@@ -87,9 +88,7 @@ class StaticPageBuilder
      */
     private function compileView(): string
     {
-        return view($this->page->view, [
-            'currentPage' => $this->page->view,
-        ])->render();
+        return view($this->page->view)->render();
     }
 
     /**
@@ -102,7 +101,6 @@ class StaticPageBuilder
         return view('hyde::layouts/post')->with([
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
-            'currentPage' => 'posts/'.$this->page->slug,
         ])->render();
     }
 
@@ -116,7 +114,6 @@ class StaticPageBuilder
         return view('hyde::layouts/page')->with([
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body),
-            'currentPage' => $this->page->slug,
         ])->render();
     }
 
@@ -130,7 +127,6 @@ class StaticPageBuilder
         return view('hyde::layouts/docs')->with([
             'title' => $this->page->title,
             'markdown' => MarkdownConverter::parse($this->page->body, DocumentationPage::class),
-            'currentPage' => Hyde::docsDirectory().'/'.$this->page->slug,
         ])->render();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Contracts;
 
+use Hyde\Framework\Concerns\HasPageMetadata;
+
 /**
  * To ensure compatability with the Hyde Framework,
  * all Page Models must extend this class.
@@ -10,7 +12,14 @@ namespace Hyde\Framework\Contracts;
  */
 abstract class AbstractPage
 {
+    use HasPageMetadata;
+
     public static string $sourceDirectory;
     public static string $fileExtension;
     public static string $parserClass;
+
+    public function getCurrentPagePath(): string
+    {
+        return $this->slug;
+    }
 }

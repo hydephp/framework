@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Hyde\Framework\Features;
+use Hyde\Framework\Models\MarkdownPage;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
@@ -12,6 +13,13 @@ use Tests\TestCase;
  */
 class DarkmodeFeatureTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        view()->share('page', new MarkdownPage([], ''));
+    }
+
     public function test_has_darkmode()
     {
         Config::set('hyde.features', []);
