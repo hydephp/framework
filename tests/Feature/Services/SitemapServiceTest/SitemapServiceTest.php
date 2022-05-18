@@ -4,6 +4,7 @@ namespace Tests\Feature\Services\SitemapServiceTest;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\SitemapService;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 /**
@@ -11,6 +12,16 @@ use Tests\TestCase;
  */
 class SitemapServiceTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        File::deleteDirectory(Hyde::path('_pages'));
+        File::makeDirectory(Hyde::path('_pages'));
+        Hyde::copy(Hyde::vendorPath('resources/views/homepages/welcome.blade.php'), Hyde::path('_pages/index.blade.php'));
+        Hyde::copy(Hyde::vendorPath('resources/views/pages/404.blade.php'), Hyde::path('_pages/404.blade.php'));
+    }
+
     public function test_service_instantiates_xml_element()
     {
         $service = new SitemapService();
