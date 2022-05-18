@@ -55,11 +55,13 @@ class RssFeedService
 
     protected function addAdditionalItemData(SimpleXMLElement $item, MarkdownPost $post): void
     {
-        if ($post->date) {
+        if (isset($post->date)) {
             $item->addChild('pubDate', $post->date->dateTimeObject->format(DATE_RSS));
         }
 
-        $item->addChild('author', $post->author->getName());
+        if (isset($post->author)) {
+            $item->addChild('author', $post->author->getName());
+        }
     }
 
     protected function addInitialChannelItems(): void
