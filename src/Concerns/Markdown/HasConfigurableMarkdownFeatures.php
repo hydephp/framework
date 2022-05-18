@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Concerns\Markdown;
 
 use Hyde\Framework\Features;
-use Hyde\Framework\Markdown;
+use Hyde\Framework\Helpers\Markdown;
 use Hyde\Framework\Models\DocumentationPage;
 
 /**
