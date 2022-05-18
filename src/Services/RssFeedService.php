@@ -60,7 +60,7 @@ class RssFeedService
         }
 
         if (isset($post->author)) {
-            $item->addChild('author', $post->author->getName());
+            $item->addChild('dc:creator', $post->author->getName(), 'http://purl.org/dc/elements/1.1/');
         }
     }
 
