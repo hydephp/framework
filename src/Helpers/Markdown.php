@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Helpers;
 
 use Hyde\Framework\Concerns\Markdown\HasMarkdownFeatures;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework;
+namespace Hyde\Framework\Helpers;
 
 /**
  * Helpers to fluently declare HTML meta tags.

@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use Hyde\Framework\Features;
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Models\MarkdownPage;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Features::darkmode
- * @covers \Hyde\Framework\Features::hasDarkmode
+ * @covers \Hyde\Framework\Helpers\Features::darkmode
+ * @covers \Hyde\Framework\Helpers\Features::hasDarkmode
  */
 class DarkmodeFeatureTest extends TestCase
 {

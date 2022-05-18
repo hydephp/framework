@@ -6,7 +6,7 @@ use Exception;
 use Hyde\Framework\Actions\CreatesDefaultDirectories;
 use Hyde\Framework\Concerns\Internal\BuildActionRunner;
 use Hyde\Framework\Concerns\Internal\TransfersMediaAssetsForBuildCommands;
-use Hyde\Framework\Features;
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;

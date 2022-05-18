@@ -4,7 +4,7 @@ namespace Tests\Feature\Concerns;
 
 use Hyde\Framework\Concerns\HasPageMetadata;
 use Hyde\Framework\Contracts\AbstractPage;
-use Hyde\Framework\Meta;
+use Hyde\Framework\Helpers\Meta;
 use Tests\TestCase;
 
 /**

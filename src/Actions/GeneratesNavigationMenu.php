@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use Hyde\Framework\Features;
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
