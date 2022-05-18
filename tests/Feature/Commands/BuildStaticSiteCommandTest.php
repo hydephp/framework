@@ -86,6 +86,38 @@ class BuildStaticSiteCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
+    public function test_pretty_urls_option_output()
+    {
+        $this->artisan('build --pretty-urls')
+            ->expectsOutput('Generating site with pretty URLs')
+            ->assertExitCode(0);
+    }
+
+    public function test_sitemap_is_not_generated_when_conditions_are_not_met()
+    {
+        config(['hyde.site_url' => '']);
+        config(['hyde.generateSitemap' => false]);
+
+        unlinkIfExists(Hyde::path('_site/sitemap.xml'));
+        $this->artisan('build')
+            ->assertExitCode(0);
+
+        $this->assertFileDoesNotExist(Hyde::path('_site/sitemap.xml'));
+    }
+
+    public function test_sitemap_is_generated_when_conditions_are_met()
+    {
+        config(['hyde.site_url' => 'https://example.com']);
+        config(['hyde.generateSitemap' => true]);
+
+        unlinkIfExists(Hyde::path('_site/sitemap.xml'));
+        $this->artisan('build')
+            ->expectsOutput('Generating sitemap.xml')
+            ->assertExitCode(0);
+
+        $this->assertFileExists(Hyde::path('_site/sitemap.xml'));
+    }
+
     /**
      * Added for code coverage, deprecated as the pretty flag is deprecated.
      *

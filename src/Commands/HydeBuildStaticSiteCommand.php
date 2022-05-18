@@ -13,6 +13,7 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
+use Hyde\Framework\Services\SitemapService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -66,20 +67,20 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->transferMediaAssets();
 
-        if (Features::hasBlogPosts()) {
-            $this->runBuildAction(MarkdownPost::class);
+        if (Features::hasBladePages()) {
+            $this->runBuildAction(BladePage::class);
         }
 
         if (Features::hasMarkdownPages()) {
             $this->runBuildAction(MarkdownPage::class);
         }
 
-        if (Features::hasDocumentationPages()) {
-            $this->runBuildAction(DocumentationPage::class);
+        if (Features::hasBlogPosts()) {
+            $this->runBuildAction(MarkdownPost::class);
         }
 
-        if (Features::hasBladePages()) {
-            $this->runBuildAction(BladePage::class);
+        if (Features::hasDocumentationPages()) {
+            $this->runBuildAction(DocumentationPage::class);
         }
 
         $this->postBuildActions();
@@ -168,6 +169,12 @@ class HydeBuildStaticSiteCommand extends Command
 
         if ($this->option('run-prod')) {
             $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
+        }
+
+        if (SitemapService::canGenerateSitemap()) {
+            $this->info('Generating sitemap.xml');
+            file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
+            $this->newLine();
         }
     }
 
