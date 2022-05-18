@@ -8,6 +8,8 @@ use Hyde\Framework\Hyde;
 
 /**
  * @see \Tests\Feature\Services\RssFeedServiceTest
+ *
+ * @see https://validator.w3.org/feed/docs/rss2.html
  */
 class RssFeedService
 {
