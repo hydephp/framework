@@ -9,94 +9,81 @@ use Hyde\Framework\Services\AuthorService;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
- * Generates metadata for page models that have front matter.
- *
- * @see \Hyde\Framework\Models\Metadata
- * @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
- */
+* Generates metadata for page models that have front matter.
+*
+* @see \Hyde\Framework\Models\Metadata
+* @see \Tests\Feature\Concerns\GeneratesPageMetadataTest
+*/
 trait GeneratesPageMetadata
 {
-    public ?Metadata $metadata = null;
-
+    public array $metadata = [];
+    public array $properties = [];
+    
     public function constructMetadata(): void
     {
-        $this->metadata = new Metadata();
-
         $this->parseFrontMatterMetadata();
-
+        
         if ($this instanceof MarkdownPost || $this instanceof \Tests\TestCase) {
             $this->makeOpenGraphPropertiesForArticle();
         }
     }
-
-    #[ArrayShape(['name' => "\content"])]
+    
     public function getMetadata(): array
     {
-        if (! isset($this->metadata)) {
-            return [];
-        }
-
-        return $this->metadata->metadata;
+        return $this->metadata;
     }
-
-    #[ArrayShape(['property' => 'content'])]
+    
     public function getMetaProperties(): array
     {
-        if (! isset($this->metadata)) {
-            return [];
-        }
-
-        return $this->metadata->properties;
+        return $this->properties;
     }
-
+    
     /**
-     * Generate metadata from the front matter that can be used in standard <meta> tags.
-     * This helper is page type agnostic and works with any kind of model having front matter.
-     */
+    * Generate metadata from the front matter that can be used in standard <meta> tags.
+    * This helper is page type agnostic and works with any kind of model having front matter.
+    */
     protected function parseFrontMatterMetadata(): void
     {
         if (isset($this->matter['description'])) {
-            $this->metadata->add('description', $this->matter['description']);
+            $this->metadata['description'] = $this->matter['description'];
         }
-
+        
         if (isset($this->matter['author'])) {
-            $this->metadata->add('author', AuthorService::getAuthorName($this->matter['author']));
+            $this->metadata['author'] = AuthorService::getAuthorName($this->matter['author']);
         }
-
+        
         if (isset($this->matter['category'])) {
-            $this->metadata->add('keywords', $this->matter['category']);
+            $this->metadata['keywords'] = $this->matter['category'];
         }
     }
-
+    
     /**
-     * Generate opengraph metadata from front matter for an og:article such as a blog post.
-     */
+    * Generate opengraph metadata from front matter for an og:article such as a blog post.
+    */
     protected function makeOpenGraphPropertiesForArticle(): void
     {
-        $this->metadata->addProperty('og:type', 'article');
-
+        $this->properties['og:type'] = 'article';
         if (Hyde::uriPath()) {
-            $this->metadata->addProperty('og:url', Hyde::uriPath(Hyde::pageLink('posts/'.$this->slug.'.html')));
+            $this->properties['og:url'] = Hyde::uriPath(Hyde::pageLink('posts/' . $this->slug . '.html'));
         }
-
+        
         if (isset($this->matter['title'])) {
-            $this->metadata->addProperty('og:title', $this->matter['title']);
+            $this->properties['og:title'] = $this->matter['title'];
         }
-
+        
         if (isset($this->matter['date'])) {
-            $date = date('c', strtotime($this->matter['date']));
-            $this->metadata->addProperty('og:article:published_time', $date);
+            $this->properties['og:article:published_time'] = date('c', strtotime($this->matter['date']));
         }
-
+        
         if (isset($this->matter['image'])) {
             if (is_string($this->matter['image'])) {
-                $this->metadata->addProperty('og:image', $this->matter['image']);
+                $this->properties['og:image'] = $this->matter['image'];
             } else {
                 if (isset($this->matter['image']['path'])) {
-                    $this->metadata->addProperty('og:image', $this->matter['image']['path']);
+                    $this->properties['og:image'] = $this->matter['image']['path'];
                 }
                 if (isset($this->matter['image']['uri'])) {
-                    $this->metadata->addProperty('og:image', $this->matter['image']['uri']);
+                    $this->properties['og:image'] = $this->matter['image']['uri'];
                 }
             }
         }

@@ -27,12 +27,6 @@ class GeneratesPageMetadataTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_metadata_object_can_be_constructed()
-    {
-        $this->constructMetadata();
-        $this->assertInstanceOf(Metadata::class, $this->metadata);
-    }
-
     public function test_get_metadata_returns_empty_array_when_uninitialized()
     {
         $this->matter = ['description' => 'foo'];
