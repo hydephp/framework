@@ -21,7 +21,8 @@ class BladePage extends AbstractPage
     public string $view;
 
     /**
-     * The page slug for compatibility
+     * The page slug for compatibility.
+     *
      * @var string
      */
     public string $slug;
