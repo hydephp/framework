@@ -99,7 +99,7 @@ class RssFeedServiceTest extends TestCase
 
         config(['hyde.site_url' => 'https://example.com']);
 
-        file_put_contents(Hyde::path('rss-test.jpg'), 'statData'); // 8 bytes to test stat gets file length
+        file_put_contents(Hyde::path('_media/rss-test.jpg'), 'statData'); // 8 bytes to test stat gets file length
 
         $service = new RssFeedService();
         $service->generate();
@@ -114,12 +114,12 @@ class RssFeedServiceTest extends TestCase
         $this->assertEquals('test', $item->category);
 
         $this->assertObjectHasAttribute('enclosure', $item);
-        $this->assertEquals('https://example.com/rss-test.jpg', $item->enclosure->attributes()->url);
+        $this->assertEquals('https://example.com/media/rss-test.jpg', $item->enclosure->attributes()->url);
         $this->assertEquals('image/jpeg', $item->enclosure->attributes()->type);
         $this->assertEquals('8', $item->enclosure->attributes()->length);
 
         unlink(Hyde::path('_posts/rss.md'));
-        unlink(Hyde::path('rss-test.jpg'));
+        unlink(Hyde::path('_media/rss-test.jpg'));
     }
 
     // Test getXML method returns XML string
