@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\SitemapServiceTest;
+namespace Tests\Feature\Services;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\RssFeedService;
