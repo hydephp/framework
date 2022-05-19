@@ -74,12 +74,12 @@ class RssFeedService
 
     protected function addInitialChannelItems(): void
     {
-        $this->feed->channel->addChild('title', $this->getTitle());
-        $this->feed->channel->addChild('link', $this->getLink());
+        $this->feed->channel->addChild('title', static::getTitle());
+        $this->feed->channel->addChild('link', static::getLink());
         $this->feed->channel->addChild('description', $this->getDescription());
 
         $atomLink = $this->feed->channel->addChild('atom:link', namespace: 'http://www.w3.org/2005/Atom');
-        $atomLink->addAttribute('href', $this->getLink().'/'.static::getDefaultOutputFilename());
+        $atomLink->addAttribute('href', static::getLink().'/'.static::getDefaultOutputFilename());
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
 
@@ -93,31 +93,32 @@ class RssFeedService
         $this->feed->channel->addChild('lastBuildDate', date(DATE_RSS));
     }
 
-    protected function getTitle(): string
+
+    protected function getDescription(): string
     {
-        return $this->xmlEscape(
+        return static::xmlEscape(
+            config('hyde.rssDescription',
+                static::getTitle().' RSS Feed')
+        );
+    }
+
+    protected static function xmlEscape(string $string): string
+    {
+        return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
+    }
+
+    public static function getTitle(): string
+    {
+        return static::xmlEscape(
             config('hyde.name', 'HydePHP')
         );
     }
 
-    protected function getLink(): string
+    public static function getLink(): string
     {
-        return $this->xmlEscape(
+        return static::xmlEscape(
             config('hyde.site_url') ?? 'http://localhost'
         );
-    }
-
-    protected function getDescription(): string
-    {
-        return $this->xmlEscape(
-            config('hyde.rssDescription',
-                $this->getTitle().' RSS Feed')
-        );
-    }
-
-    protected function xmlEscape(string $string): string
-    {
-        return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
     }
 
     public static function getDefaultOutputFilename(): string
