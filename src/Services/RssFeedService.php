@@ -64,11 +64,12 @@ class RssFeedService
         }
 
         // Only support local images, as remote images would take extra time to make HTTP requests to get length
+        // Image front matter must be in the form: _media/image.png
         if (isset($post->image) && isset($post->image->path)) {
             $image = $item->addChild('enclosure');
             $image->addAttribute('url', Hyde::uriPath(str_replace('_media', 'media', $post->image->path)));
             $image->addAttribute('type', str_ends_with($post->image->path, '.png') ? 'image/png' : 'image/jpeg');
-            $image->addAttribute('length', filesize(Hyde::path($post->image->path)));
+            $image->addAttribute('length', filesize(Hyde::path(str_replace('media', '_media', $post->image->path))));
         }
     }
 
