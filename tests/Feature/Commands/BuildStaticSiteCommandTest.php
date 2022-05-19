@@ -124,11 +124,11 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.site_url' => '']);
         config(['hyde.generateRssFeed' => false]);
 
-        unlinkIfExists(Hyde::path('_site/feed.rss'));
+        unlinkIfExists(Hyde::path('_site/feed.xml'));
         $this->artisan('build')
             ->assertExitCode(0);
 
-        $this->assertFileDoesNotExist(Hyde::path('_site/feed.rss'));
+        $this->assertFileDoesNotExist(Hyde::path('_site/feed.xml'));
     }
 
     public function test_rss_feed_is_generated_when_conditions_are_met()
@@ -136,13 +136,13 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.site_url' => 'https://example.com']);
         config(['hyde.generateRssFeed' => true]);
 
-        unlinkIfExists(Hyde::path('_site/feed.rss'));
+        unlinkIfExists(Hyde::path('_site/feed.xml'));
         $this->artisan('build')
             ->expectsOutput('Generating RSS feed...')
             ->assertExitCode(0);
 
-        $this->assertFileExists(Hyde::path('_site/feed.rss'));
-        unlink(Hyde::path('_site/feed.rss'));
+        $this->assertFileExists(Hyde::path('_site/feed.xml'));
+        unlink(Hyde::path('_site/feed.xml'));
     }
 
     public function test_rss_filename_can_be_changed()
@@ -151,14 +151,14 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.generateRssFeed' => true]);
         config(['hyde.rssFilename' => 'blog.xml']);
 
-        unlinkIfExists(Hyde::path('_site/feed.rss'));
+        unlinkIfExists(Hyde::path('_site/feed.xml'));
         unlinkIfExists(Hyde::path('_site/blog.xml'));
 
         $this->artisan('build')
             ->expectsOutput('Generating RSS feed...')
             ->assertExitCode(0);
 
-        $this->assertFileDoesNotExist(Hyde::path('_site/feed.rss'));
+        $this->assertFileDoesNotExist(Hyde::path('_site/feed.xml'));
         $this->assertFileExists(Hyde::path('_site/blog.xml'));
         unlink(Hyde::path('_site/blog.xml'));
     }

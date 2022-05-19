@@ -122,7 +122,7 @@ class RssFeedService
 
     public static function getDefaultOutputFilename(): string
     {
-        return config('hyde.rssFilename', 'feed.rss');
+        return config('hyde.rssFilename', 'feed.xml');
     }
 
     public static function generateFeed(): string
