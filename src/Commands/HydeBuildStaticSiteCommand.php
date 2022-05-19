@@ -13,6 +13,7 @@ use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
+use Hyde\Framework\Services\RssFeedService;
 use Hyde\Framework\Services\SitemapService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -174,6 +175,13 @@ class HydeBuildStaticSiteCommand extends Command
         if (SitemapService::canGenerateSitemap()) {
             $this->info('Generating sitemap.xml');
             file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
+            $this->newLine();
+        }
+
+        if (RssFeedService::canGenerateFeed()) {
+            $this->info('Generating RSS feed');
+            
+            file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
             $this->newLine();
         }
     }
