@@ -93,7 +93,6 @@ class RssFeedService
         $this->feed->channel->addChild('lastBuildDate', date(DATE_RSS));
     }
 
-
     protected function getDescription(): string
     {
         return static::xmlEscape(

@@ -20,7 +20,6 @@ class HasPageMetadataRssFeedLinkTest extends TestCase
         config(['hyde.site_url' => 'foo']);
     }
 
-
     public function test_can_use_rss_feed_link_adds_meta_link_for_markdown_posts()
     {
         $page = new MarkdownPost([], '');
@@ -50,7 +49,7 @@ class HasPageMetadataRssFeedLinkTest extends TestCase
             $page->renderPageMetadata()
         );
     }
-    
+
     public function test_can_use_rss_feed_link_adds_meta_link_for_blade_index_page()
     {
         $page = new BladePage('index');
@@ -60,7 +59,7 @@ class HasPageMetadataRssFeedLinkTest extends TestCase
             $page->renderPageMetadata()
         );
     }
-    
+
     public function test_can_use_rss_feed_link_does_not_add_meta_link_for_documentation_index_page()
     {
         $page = new DocumentationPage([], '', slug: 'index');
@@ -80,7 +79,7 @@ class HasPageMetadataRssFeedLinkTest extends TestCase
             '<link rel="alternate" type="application/rss+xml" title="HydePHP RSS Feed" href="https://example.org/feed.xml" />',
             $page->renderPageMetadata()
         );
-    }   
+    }
 
     public function test_can_use_rss_feed_uses_configured_rss_file_name()
     {

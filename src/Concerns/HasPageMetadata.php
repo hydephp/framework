@@ -64,7 +64,6 @@ trait HasPageMetadata
     public function canUseRssFeedLink(): bool
     {
         if (RssFeedService::canGenerateFeed() && isset($this->slug)) {
-
             if ($this instanceof MarkdownPost) {
                 return true;
             }
