@@ -57,7 +57,7 @@ class RssFeedServiceTest extends TestCase
         $service = new RssFeedService();
         $this->assertObjectHasAttribute('link', $service->feed->channel);
         $this->assertEquals('https://example.com', $service->feed->channel->link);
-        $this->assertEquals('https://example.com/rss.xml',
+        $this->assertEquals('https://example.com/feed.rss',
             $service->feed->channel->children('atom', true)->link->attributes()->href);
 
         $this->assertObjectHasAttribute('language', $service->feed->channel);

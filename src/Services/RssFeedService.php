@@ -80,7 +80,7 @@ class RssFeedService
         $this->feed->channel->addChild('description', $this->getDescription());
 
         $atomLink = $this->feed->channel->addChild('atom:link', namespace: 'http://www.w3.org/2005/Atom');
-        $atomLink->addAttribute('href', $this->getLink() . '/rss.xml');
+        $atomLink->addAttribute('href', $this->getLink() . '/' . static::getDefaultOutputFilename());
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
 
@@ -119,6 +119,11 @@ class RssFeedService
     protected function xmlEscape(string $string): string
     {
         return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
+    }
+
+    public static function getDefaultOutputFilename(): string
+    {
+        return config('hyde.rssFilename', 'feed.rss');
     }
 }
 
