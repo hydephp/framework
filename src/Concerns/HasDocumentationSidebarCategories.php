@@ -32,7 +32,7 @@ trait HasDocumentationSidebarCategories
     {
         return $this->sidebar->filter(function ($item) use ($category) {
             return $item->category === Str::slug($category);
-        });
+        })->sortBy('priority')->values();
     }
 
     protected function assembleCategories(): void
