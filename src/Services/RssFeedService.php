@@ -62,6 +62,14 @@ class RssFeedService
         if (isset($post->category)) {
             $item->addChild('category', $post->category);
         }
+
+        // Only support local images, as remote images would take extra time to make HTTP requests to get length
+        if (isset($post->image) && isset($post->image->path)) {
+            $image = $item->addChild('enclosure');
+            $image->addAttribute('url' , Hyde::uriPath(str_replace('_media', 'media', $post->image->path)));
+            $image->addAttribute('type' , str_ends_with($post->image->path, '.png') ? 'image/png' : 'image/jpeg');
+            $image->addAttribute('length' , filesize(Hyde::path($post->image->path)));
+        }
     }
 
     protected function addInitialChannelItems(): void
