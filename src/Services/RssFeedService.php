@@ -124,4 +124,9 @@ class RssFeedService
     {
         return config('hyde.rssFilename', 'feed.rss');
     }
+
+    public static function canGenerateFeed(): bool
+    {
+        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true);
+    }
 }

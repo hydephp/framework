@@ -128,4 +128,24 @@ class RssFeedServiceTest extends TestCase
         $service = new RssFeedService();
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', ($service->getXML()));
     }
+
+
+    public function test_can_generate_sitemap_helper_returns_true_if_hyde_has_base_url()
+    {
+        config(['hyde.site_url' => 'foo']);
+        $this->assertTrue(RssFeedService::canGenerateFeed());
+    }
+
+    public function test_can_generate_sitemap_helper_returns_false_if_hyde_does_not_have_base_url()
+    {
+        config(['hyde.site_url' => '']);
+        $this->assertFalse(RssFeedService::canGenerateFeed());
+    }
+
+    public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
+    {
+        config(['hyde.site_url' => 'foo']);
+        config(['hyde.generateRssFeed' => false]);
+        $this->assertFalse(RssFeedService::canGenerateFeed());
+    }
 }
