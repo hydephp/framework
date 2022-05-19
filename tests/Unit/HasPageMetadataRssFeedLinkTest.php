@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Concerns\HasPageMetadata::canUseRssFeedLink
+ * @covers \Hyde\Framework\Concerns\HasPageMetadata::getDynamicMetadata
  */
 class HasPageMetadataRssFeedLinkTest extends TestCase
 {
