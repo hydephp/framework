@@ -51,6 +51,8 @@ class Author
     /**
      * Get the author's name.
      *
+     * @see \Tests\Unit\AuthorGetNameTest
+     *
      * @return string
      */
     public function getName(): string
