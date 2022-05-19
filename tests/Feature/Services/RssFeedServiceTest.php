@@ -129,6 +129,11 @@ class RssFeedServiceTest extends TestCase
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', ($service->getXML()));
     }
 
+    // Test generateFeed helper returns XML string
+    public function test_generateFeed_helper_returns_XML_string()
+    {
+        $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', (RssFeedService::generateFeed()));
+    }
 
     public function test_can_generate_sitemap_helper_returns_true_if_hyde_has_base_url()
     {
