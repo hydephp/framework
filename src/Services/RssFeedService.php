@@ -2,13 +2,12 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
-use Hyde\Framework\Hyde;
 
 /**
  * @see \Tests\Feature\Services\RssFeedServiceTest
- *
  * @see https://validator.w3.org/feed/docs/rss2.html
  */
 class RssFeedService
@@ -67,9 +66,9 @@ class RssFeedService
         // Only support local images, as remote images would take extra time to make HTTP requests to get length
         if (isset($post->image) && isset($post->image->path)) {
             $image = $item->addChild('enclosure');
-            $image->addAttribute('url' , Hyde::uriPath(str_replace('_media', 'media', $post->image->path)));
-            $image->addAttribute('type' , str_ends_with($post->image->path, '.png') ? 'image/png' : 'image/jpeg');
-            $image->addAttribute('length' , filesize(Hyde::path($post->image->path)));
+            $image->addAttribute('url', Hyde::uriPath(str_replace('_media', 'media', $post->image->path)));
+            $image->addAttribute('type', str_ends_with($post->image->path, '.png') ? 'image/png' : 'image/jpeg');
+            $image->addAttribute('length', filesize(Hyde::path($post->image->path)));
         }
     }
 
@@ -80,7 +79,7 @@ class RssFeedService
         $this->feed->channel->addChild('description', $this->getDescription());
 
         $atomLink = $this->feed->channel->addChild('atom:link', namespace: 'http://www.w3.org/2005/Atom');
-        $atomLink->addAttribute('href', $this->getLink() . '/rss.xml');
+        $atomLink->addAttribute('href', $this->getLink().'/rss.xml');
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
 
@@ -112,7 +111,7 @@ class RssFeedService
     {
         return $this->xmlEscape(
             config('hyde.rssDescription',
-                $this->getTitle() . ' RSS Feed')
+                $this->getTitle().' RSS Feed')
         );
     }
 
@@ -121,4 +120,3 @@ class RssFeedService
         return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
     }
 }
-
