@@ -66,6 +66,9 @@ of your `_site` directory to the web server, usually in the `public_html`, `htdo
 
 GitHub Pages is a free service that allows you to host your static site on the web.
 
+In general, push the entire contents of your `_site` directory to the `gh-pages` branch of your repository,
+or the `docs/` directory on your main branch, depending on how you set it up.
+
 Please see the [GitHub Pages documentation](https://help.github.com/pages/getting-started-with-github-pages/) for more information.
 
 ### GitHub Pages - CI/CD
@@ -76,4 +79,4 @@ HydePHP.com is hosted on GitHub Pages, and the site is compiled in a GitHub Acti
 deploys the site automatically when the source is updated. This is done in the [DocsCI repository](https://github.com/hydephp/DocsCI).
 
 You can take a look at the workflow HydePHP.com uses to create your own workflow.
-[DocsCI build.yml on GitHub](https://github.com/hydephp/DocsCI/blob/master/.github/workflows/build.yml)
+See the [DocsCI build.yml on GitHub](https://github.com/hydephp/DocsCI/blob/master/.github/workflows/build.yml)
