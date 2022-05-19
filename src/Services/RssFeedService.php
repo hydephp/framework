@@ -79,7 +79,7 @@ class RssFeedService
         $this->feed->channel->addChild('description', $this->getDescription());
 
         $atomLink = $this->feed->channel->addChild('atom:link', namespace: 'http://www.w3.org/2005/Atom');
-        $atomLink->addAttribute('href', $this->getLink() . '/' . static::getDefaultOutputFilename());
+        $atomLink->addAttribute('href', $this->getLink().'/'.static::getDefaultOutputFilename());
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
 
