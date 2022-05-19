@@ -117,7 +117,9 @@ class RssFeedService
     public static function getLink(): string
     {
         return static::xmlEscape(
-            config('hyde.site_url') ?? 'http://localhost'
+            rtrim(
+                config('hyde.site_url') ?? 'http://localhost', '/'
+            )
         );
     }
 
