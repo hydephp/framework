@@ -11,43 +11,43 @@ use Tests\TestCase;
  */
 class RssFeedServiceTest extends TestCase
 {
-	// Test service instantiates the XML element
-	public function test_service_instantiates_xml_element()
+    // Test service instantiates the XML element
+    public function test_service_instantiates_xml_element()
     {
         $service = new RssFeedService();
         $this->assertInstanceOf('SimpleXMLElement', $service->feed);
     }
 
-	// Test XML root element is set to RSS 2.0
-	public function test_xml_root_element_is_set_to_rss_2_0()
-	{
-		$service = new RssFeedService();
-		$this->assertEquals('rss', $service->feed->getName());
-		$this->assertEquals('2.0', $service->feed->attributes()->version);
-	}
+    // Test XML root element is set to RSS 2.0
+    public function test_xml_root_element_is_set_to_rss_2_0()
+    {
+        $service = new RssFeedService();
+        $this->assertEquals('rss', $service->feed->getName());
+        $this->assertEquals('2.0', $service->feed->attributes()->version);
+    }
 
-	// Test XML element has channel element
-	public function test_xml_element_has_channel_element()
-	{
-		$service = new RssFeedService();
-		$this->assertObjectHasAttribute('channel', $service->feed);
-	}
+    // Test XML element has channel element
+    public function test_xml_element_has_channel_element()
+    {
+        $service = new RssFeedService();
+        $this->assertObjectHasAttribute('channel', $service->feed);
+    }
 
-	// Test XML channel element has required elements
-	public function test_xml_channel_element_has_required_elements()
-	{
+    // Test XML channel element has required elements
+    public function test_xml_channel_element_has_required_elements()
+    {
         config(['hyde.name' => 'Test Blog']);
         config(['hyde.site_url' => 'https://example.com']);
 
         $service = new RssFeedService();
-		$this->assertObjectHasAttribute('title', $service->feed->channel);
-		$this->assertObjectHasAttribute('link', $service->feed->channel);
-		$this->assertObjectHasAttribute('description', $service->feed->channel);
+        $this->assertObjectHasAttribute('title', $service->feed->channel);
+        $this->assertObjectHasAttribute('link', $service->feed->channel);
+        $this->assertObjectHasAttribute('description', $service->feed->channel);
 
         $this->assertEquals('Test Blog', $service->feed->channel->title);
         $this->assertEquals('https://example.com', $service->feed->channel->link);
         $this->assertEquals('Test Blog RSS Feed', $service->feed->channel->description);
-	}
+    }
 
     // Test XML channel element has additional elements
     public function test_xml_channel_element_has_additional_elements()
@@ -103,7 +103,7 @@ class RssFeedServiceTest extends TestCase
 
         $service = new RssFeedService();
         $service->generate();
-		$this->assertCount(1, $service->feed->channel->item);
+        $this->assertCount(1, $service->feed->channel->item);
 
         $item = $service->feed->channel->item[0];
         $this->assertEquals('RSS', $item->title);
