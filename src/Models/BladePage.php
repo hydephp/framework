@@ -21,11 +21,18 @@ class BladePage extends AbstractPage
     public string $view;
 
     /**
+     * The page slug for compatibility
+     * @var string
+     */
+    public string $slug;
+
+    /**
      * @param  string  $view
      */
     public function __construct(string $view)
     {
         $this->view = $view;
+        $this->slug = $view;
     }
 
     public static string $sourceDirectory = '_pages';
