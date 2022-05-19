@@ -176,14 +176,14 @@ class HydeBuildStaticSiteCommand extends Command
             $actionTime = microtime(true);
             $this->comment('Generating sitemap...');
             file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
-            $this->line(' > Created <info>sitemap.xml</> in ' .$this->getExecutionTimeInMs($actionTime)."ms\n");
+            $this->line(' > Created <info>sitemap.xml</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
         }
 
         if (RssFeedService::canGenerateFeed()) {
             $actionTime = microtime(true);
             $this->comment('Generating RSS feed...');
             file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
-            $this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in ' .$this->getExecutionTimeInMs($actionTime)."ms\n");
+            $this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
         }
     }
 
