@@ -112,10 +112,37 @@ class BuildStaticSiteCommandTest extends TestCase
 
         unlinkIfExists(Hyde::path('_site/sitemap.xml'));
         $this->artisan('build')
-            ->expectsOutput('Generating sitemap.xml')
+            ->expectsOutput('Generating sitemap...')
             ->assertExitCode(0);
 
         $this->assertFileExists(Hyde::path('_site/sitemap.xml'));
+        unlink(Hyde::path('_site/sitemap.xml'));
+    }
+
+    public function test_rss_feed_is_not_generated_when_conditions_are_not_met()
+    {
+        config(['hyde.site_url' => '']);
+        config(['hyde.generateRssFeed' => false]);
+
+        unlinkIfExists(Hyde::path('_site/feed.rss'));
+        $this->artisan('build')
+            ->assertExitCode(0);
+
+        $this->assertFileDoesNotExist(Hyde::path('_site/feed.rss'));
+    }
+
+    public function test_rss_feed_is_generated_when_conditions_are_met()
+    {
+        config(['hyde.site_url' => 'https://example.com']);
+        config(['hyde.generateRssFeed' => true]);
+
+        unlinkIfExists(Hyde::path('_site/feed.rss'));
+        $this->artisan('build')
+            ->expectsOutput('Generating RSS feed...')
+            ->assertExitCode(0);
+
+        $this->assertFileExists(Hyde::path('_site/feed.rss'));
+        unlink(Hyde::path('_site/feed.rss'));
     }
 
     /**
