@@ -19,16 +19,18 @@ class FindsContentLengthForImageObject implements ActionContract
      */
     protected OutputInterface $output;
 
-    public function __construct(Image $image)
+    public function __construct(Image $image, bool $withOutput = false)
     {
         $this->image = $image;
      
-        $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
+        if ($withOutput) {
+            $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
+        }
     }
 
     public function execute(): int
     {
-        $this->output->writeln('Attempting to find content length for image object...');
+        $this->write('Attempting to find content length for image object...');
 
         if ($this->isImageStoredRemotely()) {
             return $this->fetchRemoteImageInformation();
@@ -44,7 +46,7 @@ class FindsContentLengthForImageObject implements ActionContract
 
     protected function fetchRemoteImageInformation(): int
     {
-        $this->output->writeln('Fetching remote image information...');
+        $this->write('Fetching remote image information...');
 
         $response = Http::withHeaders([
             'User-Agent' => config('hyde.http_user_agent', 'RSS Request Client'),
@@ -54,27 +56,34 @@ class FindsContentLengthForImageObject implements ActionContract
         $headers = $response->headers();
 
         if (array_key_exists('Content-Length', $headers)) {
-            $this->output->writeln('Found content length in headers.');
+            $this->write('Found content length in headers.');
             return (int) key(array_flip($headers['Content-Length']));
         }
 
-        $this->output->writeln('<comment>Warning</comment> Could not find content length in headers.');
+        $this->write('<comment>Warning</comment> Could not find content length in headers.');
 
         return 0;
     }   
 
     protected function fetchLocalImageInformation(): int
     {
-        $this->output->writeln('Fetching local image information...');
+        $this->write('Fetching local image information...');
 
         if (! file_exists($this->image->getSource())) {
-            $this->output->writeln('<comment>Warning</comment> Could not find image file.');
+            $this->write('<comment>Warning</comment> Could not find image file.');
 
             return 0;
         }
 
-        $this->output->writeln('Found image file.');
+        $this->write('Found image file.');
 
         return filesize($this->image->getSource());
+    }
+
+    protected function write(string $string): void
+    {
+        if (isset($this->output)) {
+            $this->output->writeln($string);
+        }
     }
 }
