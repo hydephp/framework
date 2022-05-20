@@ -98,11 +98,9 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.site_url' => '']);
         config(['hyde.generateSitemap' => false]);
 
-        unlinkIfExists(Hyde::path('_site/sitemap.xml'));
         $this->artisan('build')
+            ->doesntExpectOutput('Generating sitemap...')
             ->assertExitCode(0);
-
-        $this->assertFileDoesNotExist(Hyde::path('_site/sitemap.xml'));
     }
 
     public function test_sitemap_is_generated_when_conditions_are_met()
@@ -110,12 +108,9 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.site_url' => 'https://example.com']);
         config(['hyde.generateSitemap' => true]);
 
-        unlinkIfExists(Hyde::path('_site/sitemap.xml'));
         $this->artisan('build')
             ->expectsOutput('Generating sitemap...')
             ->assertExitCode(0);
-
-        $this->assertFileExists(Hyde::path('_site/sitemap.xml'));
         unlink(Hyde::path('_site/sitemap.xml'));
     }
 
