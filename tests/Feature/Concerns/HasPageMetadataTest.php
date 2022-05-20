@@ -203,4 +203,20 @@ class HasPageMetadataTest extends TestCase
             $page->getDynamicMetadata()
         );
     }
+
+
+
+    public function testGetDynamicMetadataAddsSitemapLinkWhenConditionsAreMet()
+    {
+        $page = new class extends AbstractPage
+        {
+            use HasPageMetadata;
+        };
+        config(['hyde.site_url' => 'https://example.com']);
+        config(['hyde.generateSitemap' => true]);
+
+        $this->assertEquals(['<link rel="sitemap" type="application/xml" title="Sitemap" href="https://example.com/sitemap.xml" />'],
+            $page->getDynamicMetadata()
+        );
+    }
 }
