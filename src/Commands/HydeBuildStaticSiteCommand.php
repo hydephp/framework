@@ -91,7 +91,6 @@ class HydeBuildStaticSiteCommand extends Command
         return 0;
     }
 
-        
     /** @internal */
     protected function runPreBuildActions(): void
     {

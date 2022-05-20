@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Concerns\HasPageMetadata
+ *
  * @see \Tests\Unit\HasPageMetadataRssFeedLinkTest
  */
 class HasPageMetadataTest extends TestCase
