@@ -36,11 +36,25 @@ class HydeBuildSitemapCommand extends Command
     {
         $actionTime = microtime(true);
         
+        if (! $this->runPreflightCheck()) {
+            return 1;
+        }
+
         $this->comment('Generating sitemap...');
         file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
         $this->line(' > Created <info>sitemap.xml</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
       
         return 0;
+    }
+
+    protected function runPreflightCheck(): bool
+    {
+        if (! SitemapService::canGenerateSitemap()) {
+            $this->error('Cannot generate sitemap.xml, please check your configuration.');
+            return false;
+        }
+
+        return true;
     }
 
 	protected function getExecutionTimeInMs(float $timeStart): float
