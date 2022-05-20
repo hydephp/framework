@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Services;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Helpers\Features;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 

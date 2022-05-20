@@ -17,7 +17,7 @@ class HydeBuildSitemapCommandTest extends TestCase
         unlinkIfExists(Hyde::path('_site/sitemap.xml'));
 
         $this->artisan('build:sitemap')
-			->expectsOutput('Cannot generate sitemap.xml, please check your configuration.')
+            ->expectsOutput('Cannot generate sitemap.xml, please check your configuration.')
             ->assertExitCode(1);
 
         $this->assertFileDoesNotExist(Hyde::path('_site/sitemap.xml'));
@@ -31,7 +31,7 @@ class HydeBuildSitemapCommandTest extends TestCase
         unlinkIfExists(Hyde::path('_site/sitemap.xml'));
         $this->artisan('build:sitemap')
             ->expectsOutput('Generating sitemap...')
-			->expectsOutputToContain('Created sitemap.xml')
+            ->expectsOutputToContain('Created sitemap.xml')
             ->assertExitCode(0);
 
         $this->assertFileExists(Hyde::path('_site/sitemap.xml'));

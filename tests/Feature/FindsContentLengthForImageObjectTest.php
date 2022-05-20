@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Hyde\Framework\Actions\FindsContentLengthForImageObject;
 use Hyde\Framework\Models\Image;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
@@ -15,6 +14,7 @@ class FindsContentLengthForImageObjectTest extends TestCase
 {
     /**
      * Unit test for the shorthand. Logic is tested in the rest of the case.
+     *
      * @covers \Hyde\Framework\Models\Image::getContentLength
      */
     public function test_image_helper_shorthand_returns_content_length()

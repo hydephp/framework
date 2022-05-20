@@ -3,7 +3,6 @@
 namespace Tests\Feature\Commands;
 
 use Hyde\Framework\Hyde;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 /**
@@ -11,7 +10,7 @@ use Tests\TestCase;
  */
 class HydeBuildRssFeedCommandTest extends TestCase
 {
-	public function test_rss_feed_is_not_generated_when_conditions_are_not_met()
+    public function test_rss_feed_is_not_generated_when_conditions_are_not_met()
     {
         config(['hyde.site_url' => '']);
         config(['hyde.generateRssFeed' => false]);

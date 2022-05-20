@@ -15,14 +15,14 @@ class FindsContentLengthForImageObject implements ActionContract
     protected Image $image;
 
     /**
-     * Testing adding console debug output
+     * Testing adding console debug output.
      */
     protected OutputInterface $output;
 
     public function __construct(Image $image)
     {
         $this->image = $image;
-     
+
         $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
     }
 
@@ -48,7 +48,6 @@ class FindsContentLengthForImageObject implements ActionContract
             'User-Agent' => config('hyde.http_user_agent', 'RSS Request Client'),
         ])->head($this->image->getSource());
 
-
         $headers = $response->headers();
 
         if (array_key_exists('Content-Length', $headers)) {
@@ -60,7 +59,7 @@ class FindsContentLengthForImageObject implements ActionContract
         $this->write('           <fg=gray> Is the image path valid? '.($this->image->getSource()).'</>');
 
         return 0;
-    }   
+    }
 
     protected function fetchLocalImageInformation(): int
     {
