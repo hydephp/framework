@@ -88,7 +88,7 @@ class RssFeedServiceTest extends TestCase
             date: "2022-05-19 10:15:30"
             description: RSS description
             category: test
-            image: rss-test.jpg
+            image: _media/rss-test.jpg
             ---
             
             # RSS Post
