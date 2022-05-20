@@ -62,7 +62,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->title('Building your static site!');
 
-        $this->printInitialInformation();
+        $this->runPreBuildActions();
 
         $this->purge();
 
@@ -84,15 +84,16 @@ class HydeBuildStaticSiteCommand extends Command
             $this->runBuildAction(DocumentationPage::class);
         }
 
-        $this->postBuildActions();
+        $this->runPostBuildActions();
 
         $this->printFinishMessage($time_start);
 
         return 0;
     }
 
+        
     /** @internal */
-    protected function printInitialInformation(): void
+    protected function runPreBuildActions(): void
     {
         if ($this->option('no-api')) {
             $this->info('Disabling external API calls');
@@ -106,6 +107,47 @@ class HydeBuildStaticSiteCommand extends Command
             $this->info('Generating site with pretty URLs');
             $this->newLine();
             Config::set(['hyde.prettyUrls' => true]);
+        }
+    }
+
+    /**
+     * Run any post-build actions.
+     *
+     * @return void
+     */
+    public function runPostBuildActions(): void
+    {
+        if ($this->option('run-prettier') || $this->option('pretty')) {
+            if ($this->option('pretty')) {
+                $this->warn('<error>Warning:</> The --pretty option is deprecated, use --run-prettier instead');
+            }
+            $this->runNodeCommand(
+                'npx prettier '.Hyde::pathToRelative(Hyde::getSiteOutputPath()).'/ --write --bracket-same-line',
+                'Prettifying code!',
+                'prettify code'
+            );
+        }
+
+        if ($this->option('run-dev')) {
+            $this->runNodeCommand('npm run dev', 'Building frontend assets for development!');
+        }
+
+        if ($this->option('run-prod')) {
+            $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
+        }
+
+        if (SitemapService::canGenerateSitemap()) {
+            $actionTime = microtime(true);
+            $this->comment('Generating sitemap...');
+            file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
+            $this->line(' > Created <info>sitemap.xml</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
+        }
+
+        if (RssFeedService::canGenerateFeed()) {
+            $actionTime = microtime(true);
+            $this->comment('Generating RSS feed...');
+            file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
+            $this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
         }
     }
 
@@ -144,47 +186,6 @@ class HydeBuildStaticSiteCommand extends Command
         (new CreatesDefaultDirectories)->__invoke();
 
         $this->line('</>');
-    }
-
-    /**
-     * Run any post-build actions.
-     *
-     * @return void
-     */
-    public function postBuildActions(): void
-    {
-        if ($this->option('run-prettier') || $this->option('pretty')) {
-            if ($this->option('pretty')) {
-                $this->warn('<error>Warning:</> The --pretty option is deprecated, use --run-prettier instead');
-            }
-            $this->runNodeCommand(
-                'npx prettier '.Hyde::pathToRelative(Hyde::getSiteOutputPath()).'/ --write --bracket-same-line',
-                'Prettifying code!',
-                'prettify code'
-            );
-        }
-
-        if ($this->option('run-dev')) {
-            $this->runNodeCommand('npm run dev', 'Building frontend assets for development!');
-        }
-
-        if ($this->option('run-prod')) {
-            $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
-        }
-
-        if (SitemapService::canGenerateSitemap()) {
-            $actionTime = microtime(true);
-            $this->comment('Generating sitemap...');
-            file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
-            $this->line(' > Created <info>sitemap.xml</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
-        }
-
-        if (RssFeedService::canGenerateFeed()) {
-            $actionTime = microtime(true);
-            $this->comment('Generating RSS feed...');
-            file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
-            $this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
-        }
     }
 
     /** @internal */
