@@ -30,8 +30,6 @@ class FindsContentLengthForImageObject implements ActionContract
 
     public function execute(): int
     {
-        $this->write('Attempting to find content length for image object...');
-
         if ($this->isImageStoredRemotely()) {
             return $this->fetchRemoteImageInformation();
         }
@@ -46,7 +44,7 @@ class FindsContentLengthForImageObject implements ActionContract
 
     protected function fetchRemoteImageInformation(): int
     {
-        $this->write('Fetching remote image information...');
+        $this->write('<fg=gray> ></> <fg=gray>Fetching remote image information for '.basename($this->image->getSource()).'...</>');
 
         $response = Http::withHeaders([
             'User-Agent' => config('hyde.http_user_agent', 'RSS Request Client'),
@@ -56,21 +54,21 @@ class FindsContentLengthForImageObject implements ActionContract
         $headers = $response->headers();
 
         if (array_key_exists('Content-Length', $headers)) {
-            $this->write('Found content length in headers.');
             return (int) key(array_flip($headers['Content-Length']));
         }
 
-        $this->write('<comment>Warning</comment> Could not find content length in headers.');
+        $this->write(' > <comment>Warning:</comment> Could not find content length in headers for '.basename($this->image->getSource().'!'));
+        $this->write('           <fg=gray> Using default content length of 0. '.'</>');
+        $this->write('           <fg=gray> Is the image path valid? '.($this->image->getSource()).'</>');
 
         return 0;
     }   
 
     protected function fetchLocalImageInformation(): int
     {
-        $this->write('Fetching local image information...');
-
         if (! file_exists($this->image->getSource())) {
-            $this->write('<comment>Warning</comment> Could not find image file.');
+            $this->write(' > <comment>Warning:</comment> Could not find image file at '.$this->image->getSource().'!');
+            $this->write('         <fg=gray>   Using default content length of 0. '.'</>');
 
             return 0;
         }
