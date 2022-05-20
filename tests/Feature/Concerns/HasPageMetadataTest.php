@@ -23,7 +23,7 @@ class HasPageMetadataTest extends TestCase
         config(['hyde.generateSitemap' => false]);
     }
 
-    public function testGetCanonicalUrlReturnsUrlForTopLevelPage()
+    public function test_get_canonical_url_returns_url_for_top_level_page()
     {
         $page = new class extends AbstractPage
         {
@@ -36,7 +36,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertEquals('https://example.com/foo.html', $page->getCanonicalUrl());
     }
 
-    public function testGetCanonicalUrlReturnsPrettyUrlForTopLevelPage()
+    public function test_get_canonical_url_returns_pretty_url_for_top_level_page()
     {
         $page = new class extends AbstractPage
         {
@@ -50,7 +50,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertEquals('https://example.com/foo', $page->getCanonicalUrl());
     }
 
-    public function testGetCanonicalUrlReturnsUrlForNestedPage()
+    public function test_get_canonical_url_returns_url_for_nested_page()
     {
         $page = new class extends AbstractPage
         {
@@ -68,7 +68,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertEquals('https://example.com/bar/foo.html', $page->getCanonicalUrl());
     }
 
-    public function testGetCanonicalUrlReturnsUrlForDeeplyNestedPage()
+    public function test_get_canonical_url_returns_url_for_deeply_nested_page()
     {
         $page = new class extends AbstractPage
         {
@@ -86,7 +86,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertEquals('https://example.com/bar/baz/foo.html', $page->getCanonicalUrl());
     }
 
-    public function testCanUseCanonicalUrlReturnsTrueWhenBothUriPathAndSlugIsSet()
+    public function test_can_use_canonical_url_returns_true_when_both_uri_path_and_slug_is_set()
     {
         $page = new class extends AbstractPage
         {
@@ -99,7 +99,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertTrue($page->canUseCanonicalUrl());
     }
 
-    public function testCanUseCanonicalUrlReturnsFalseNoConditionsAreMet()
+    public function test_can_use_canonical_url_returns_false_no_conditions_are_met()
     {
         $page = new class extends AbstractPage
         {
@@ -111,7 +111,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertFalse($page->canUseCanonicalUrl());
     }
 
-    public function testCanUseCanonicalUrlReturnsFalseWhenOnlyOneConditionIsMet()
+    public function test_can_use_canonical_url_returns_false_when_only_one_condition_is_met()
     {
         $page = new class extends AbstractPage
         {
@@ -134,7 +134,7 @@ class HasPageMetadataTest extends TestCase
         $this->assertFalse($page->canUseCanonicalUrl());
     }
 
-    public function testRenderPageMetadataReturnsStringWithMergedMetadata()
+    public function test_render_page_metadata_returns_string_with_merged_metadata()
     {
         $page = new class extends AbstractPage
         {
@@ -155,7 +155,7 @@ class HasPageMetadataTest extends TestCase
         );
     }
 
-    public function testRenderPageMetadataOnlyAddsCanonicalIfConditionsAreMet()
+    public function test_render_page_metadata_only_adds_canonical_if_conditions_are_met()
     {
         $page = new class extends AbstractPage
         {
@@ -170,7 +170,7 @@ class HasPageMetadataTest extends TestCase
         );
     }
 
-    public function testGetDynamicMetadataOnlyAddsCanonicalIfConditionsAreMet()
+    public function test_get_dynamic_metadata_only_adds_canonical_if_conditions_are_met()
     {
         $page = new class extends AbstractPage
         {
@@ -185,7 +185,7 @@ class HasPageMetadataTest extends TestCase
         );
     }
 
-    public function testGetDynamicMetadataAddsCanonicalUrlWhenConditionsAreMet()
+    public function test_get_dynamic_metadata_adds_canonical_url_when_conditions_are_met()
     {
         $page = new class extends AbstractPage
         {
@@ -204,9 +204,7 @@ class HasPageMetadataTest extends TestCase
         );
     }
 
-
-
-    public function testGetDynamicMetadataAddsSitemapLinkWhenConditionsAreMet()
+    public function test_get_dynamic_metadata_adds_sitemap_link_when_conditions_are_met()
     {
         $page = new class extends AbstractPage
         {
