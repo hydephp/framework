@@ -136,7 +136,6 @@ class BuildStaticSiteCommandTest extends TestCase
         unlink(Hyde::path('_site/feed.xml'));
     }
 
-
     /**
      * Added for code coverage, deprecated as the pretty flag is deprecated.
      *
