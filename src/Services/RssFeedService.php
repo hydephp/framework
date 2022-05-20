@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 
@@ -133,6 +134,6 @@ class RssFeedService
 
     public static function canGenerateFeed(): bool
     {
-        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true);
+        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true) && Features::hasBlogPosts();
     }
 }
