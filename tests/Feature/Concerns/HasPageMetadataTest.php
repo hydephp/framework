@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Concerns\HasPageMetadata
+ * @see \Tests\Unit\HasPageMetadataRssFeedLinkTest
  */
 class HasPageMetadataTest extends TestCase
 {
@@ -19,6 +20,7 @@ class HasPageMetadataTest extends TestCase
         config(['hyde.meta' => []]);
         config(['hyde.site_url' => null]);
         config(['hyde.prettyUrls' => false]);
+        config(['hyde.generateSitemap' => false]);
     }
 
     public function testGetCanonicalUrlReturnsUrlForTopLevelPage()

@@ -6,6 +6,7 @@ use Hyde\Framework\Helpers\Meta;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\RssFeedService;
+use Hyde\Framework\Services\SitemapService;
 
 /**
  * @see \Tests\Feature\Concerns\HasPageMetadataTest
@@ -23,6 +24,10 @@ trait HasPageMetadata
 
         if ($this->canUseCanonicalUrl()) {
             $array[] = '<link rel="canonical" href="'.$this->getCanonicalUrl().'" />';
+        }
+
+        if ($this->canUseSitemapLink()) {
+            $array[] = '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.Hyde::uriPath('sitemap.xml').'" />';
         }
 
         if ($this->canUseRssFeedlink()) {
@@ -59,6 +64,11 @@ trait HasPageMetadata
     public function canUseCanonicalUrl(): bool
     {
         return Hyde::uriPath() && isset($this->slug);
+    }
+
+    public function canUseSitemapLink(): bool
+    {
+        return SitemapService::canGenerateSitemap();
     }
 
     public function canUseRssFeedLink(): bool
