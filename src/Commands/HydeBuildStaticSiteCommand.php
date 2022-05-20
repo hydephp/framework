@@ -202,9 +202,4 @@ class HydeBuildStaticSiteCommand extends Command
             $output ?? '<fg=red>Could not '.($actionMessage ?? 'run script').'! Is NPM installed?</>'
         );
     }
-
-    protected function getExecutionTimeInMs(float $timeStart): float
-    {
-        return number_format(((microtime(true) - $timeStart) * 1000), 2);
-    }
 }
