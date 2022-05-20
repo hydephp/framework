@@ -217,4 +217,18 @@ class HasPageMetadataTest extends TestCase
             $page->getDynamicMetadata()
         );
     }
+
+    public function test_get_dynamic_metadata_does_not_add_sitemap_link_when_conditions_are_not_met()
+    {
+        $page = new class extends AbstractPage
+        {
+            use HasPageMetadata;
+        };
+        config(['hyde.site_url' => 'https://example.com']);
+        config(['hyde.generateSitemap' => false]);
+
+        $this->assertEquals([],
+            $page->getDynamicMetadata()
+        );
+    }
 }
