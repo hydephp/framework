@@ -35,12 +35,12 @@ class HydeBuildRssFeedCommand extends Command
     public function handle(): int
     {
 		$actionTime = microtime(true);
-		$this->comment('Generating RSS feed...');
-        
+
         if (! $this->runPreflightCheck()) {
             return 1;
         }
 
+        $this->comment('Generating RSS feed...');
 		file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), $this->generateFeed());
 		$this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
 	
@@ -59,28 +59,8 @@ class HydeBuildRssFeedCommand extends Command
             return false;
         }
 
-		if ($this->areThereRemoteImages()) {
-			$this->line(' > <comment>Heads up!</> There are remote images in your blog posts.');
-			$this->line('             Generating the RSS feed will take a bit longer as HTTP requests need to be made.');
-		}
-
         return true;
     }
-
-	protected function areThereRemoteImages(): bool
-	{
-		$posts = Hyde::getLatestPosts();
-
-		foreach ($posts as $post) {
-			if (isset($post->image)) {
-				if (str_starts_with($post->image->getSource(), 'http')) {
-					return true;
-				}
-			}
-		}
-
-		return true;
-	}
 
 	protected function getExecutionTimeInMs(float $timeStart): float
     {

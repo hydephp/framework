@@ -19,13 +19,11 @@ class FindsContentLengthForImageObject implements ActionContract
      */
     protected OutputInterface $output;
 
-    public function __construct(Image $image, bool $withOutput = false)
+    public function __construct(Image $image)
     {
         $this->image = $image;
      
-        if ($withOutput) {
-            $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
-        }
+        $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
     }
 
     public function execute(): int
@@ -73,15 +71,11 @@ class FindsContentLengthForImageObject implements ActionContract
             return 0;
         }
 
-        $this->write('Found image file.');
-
         return filesize($this->image->getSource());
     }
 
     protected function write(string $string): void
     {
-        if (isset($this->output)) {
-            $this->output->writeln($string);
-        }
+        $this->output->writeln($string);
     }
 }
