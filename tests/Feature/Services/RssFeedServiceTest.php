@@ -123,14 +123,14 @@ class RssFeedServiceTest extends TestCase
     }
 
     // Test getXML method returns XML string
-    public function test_getXML_method_returns_XML_string()
+    public function test_get_xml_method_returns_xml_string()
     {
         $service = new RssFeedService();
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', ($service->getXML()));
     }
 
     // Test generateFeed helper returns XML string
-    public function test_generateFeed_helper_returns_XML_string()
+    public function test_generate_feed_helper_returns_xml_string()
     {
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', (RssFeedService::generateFeed()));
     }
