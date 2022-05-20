@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
@@ -63,13 +64,11 @@ class RssFeedService
             $item->addChild('category', $post->category);
         }
 
-        // Only support local images, as remote images would take extra time to make HTTP requests to get length
-        // Image front matter must be in the form: _media/image.png
-        if (isset($post->image) && isset($post->image->path)) {
+        if (isset($post->image)) {
             $image = $item->addChild('enclosure');
-            $image->addAttribute('url', Hyde::uriPath('media/'.basename($post->image->path)));
-            $image->addAttribute('type', str_ends_with($post->image->path, '.png') ? 'image/png' : 'image/jpeg');
-            $image->addAttribute('length', filesize(Hyde::path('_media/'.basename($post->image->path))));
+            $image->addAttribute('url', isset($post->image->path) ? Hyde::uriPath('media/'.basename($post->image->path)) : $post->image->getSource());
+            $image->addAttribute('type', str_ends_with($post->image->getSource(), '.png') ? 'image/png' : 'image/jpeg');
+            $image->addAttribute('length', $post->image->getContentLength());
         }
     }
 
@@ -135,6 +134,6 @@ class RssFeedService
 
     public static function canGenerateFeed(): bool
     {
-        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true);
+        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true) && Features::hasBlogPosts();
     }
 }

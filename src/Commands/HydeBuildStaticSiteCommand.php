@@ -15,6 +15,7 @@ use Hyde\Framework\Models\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\Services\RssFeedService;
 use Hyde\Framework\Services\SitemapService;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
@@ -136,17 +137,11 @@ class HydeBuildStaticSiteCommand extends Command
         }
 
         if (SitemapService::canGenerateSitemap()) {
-            $actionTime = microtime(true);
-            $this->comment('Generating sitemap...');
-            file_put_contents(Hyde::getSiteOutputPath('sitemap.xml'), SitemapService::generateSitemap());
-            $this->line(' > Created <info>sitemap.xml</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
+            Artisan::call('build:sitemap', outputBuffer: $this->output);
         }
 
         if (RssFeedService::canGenerateFeed()) {
-            $actionTime = microtime(true);
-            $this->comment('Generating RSS feed...');
-            file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
-            $this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
+            Artisan::call('build:rss', outputBuffer: $this->output);
         }
     }
 
@@ -206,10 +201,5 @@ class HydeBuildStaticSiteCommand extends Command
         $this->line(
             $output ?? '<fg=red>Could not '.($actionMessage ?? 'run script').'! Is NPM installed?</>'
         );
-    }
-
-    protected function getExecutionTimeInMs(float $timeStart): float
-    {
-        return number_format(((microtime(true) - $timeStart) * 1000), 2);
     }
 }

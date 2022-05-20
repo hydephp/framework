@@ -2,6 +2,8 @@
 
 namespace Hyde\Framework\Models;
 
+use Hyde\Framework\Actions\FindsContentLengthForImageObject;
+
 /**
  * Holds the information for an image.
  */
@@ -96,6 +98,11 @@ class Image
     public function getSource(): ?string
     {
         return $this->uri ?? $this->path ?? null;
+    }
+
+    public function getContentLength(): int
+    {
+        return (new FindsContentLengthForImageObject($this))->execute();
     }
 
     public function getImageAuthorAttributionString(): ?string
