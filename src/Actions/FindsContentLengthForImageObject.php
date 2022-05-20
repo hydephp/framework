@@ -4,6 +4,7 @@ namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Models\Image;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -45,15 +46,19 @@ class FindsContentLengthForImageObject implements ActionContract
     {
         $this->output->writeln('Fetching remote image information...');
 
-        $headers = get_headers($this->image->getSource(), 1);
+        $response = Http::withHeaders([
+            'User-Agent' => config('hyde.http_user_agent', 'RSS Request Client'),
+        ])->head($this->image->getSource());
+
+
+        $headers = $response->headers();
 
         if (array_key_exists('Content-Length', $headers)) {
             $this->output->writeln('Found content length in headers.');
-
-            return (int) $headers['Content-Length'];
+            return (int) key(array_flip($headers['Content-Length']));
         }
 
-        $this->output->writeln('Could not find content length in headers.');
+        $this->output->writeln('<comment>Warning</comment> Could not find content length in headers.');
 
         return 0;
     }   
@@ -63,7 +68,7 @@ class FindsContentLengthForImageObject implements ActionContract
         $this->output->writeln('Fetching local image information...');
 
         if (! file_exists($this->image->getSource())) {
-            $this->output->writeln('Could not find image file.');
+            $this->output->writeln('<comment>Warning</comment> Could not find image file.');
 
             return 0;
         }
