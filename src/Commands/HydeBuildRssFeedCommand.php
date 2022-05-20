@@ -41,16 +41,11 @@ class HydeBuildRssFeedCommand extends Command
         }
 
         $this->comment('Generating RSS feed...');
-		file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), $this->generateFeed());
+		file_put_contents(Hyde::getSiteOutputPath(RssFeedService::getDefaultOutputFilename()), RssFeedService::generateFeed());
 		$this->line(' > Created <info>'.RssFeedService::getDefaultOutputFilename().'</> in '.$this->getExecutionTimeInMs($actionTime)."ms\n");
 	
         return 0;
     }
-
-	protected function generateFeed(): string
-	{
-		return (new RssFeedService)->withDebugOutput()->generate()->getXML();
-	}
 
     protected function runPreflightCheck(): bool
     {
