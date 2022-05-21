@@ -73,6 +73,9 @@ class SitemapService
             $urlItem->addChild('loc', htmlentities(Hyde::uriPath(Hyde::pageLink($routePrefix.$slug.'.html'))));
             $urlItem->addChild('lastmod', htmlentities($this->getLastModDate($pageClass, $slug)));
             $urlItem->addChild('changefreq', 'daily');
+            if (config('hyde.sitemap.dynamic_priority', true)) {
+                $urlItem->addChild('priority', $this->getPriority($pageClass, $slug));
+            }
         }
     }
 
@@ -81,6 +84,31 @@ class SitemapService
         return date('c', filemtime(
             Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$slug.$pageClass::$fileExtension)
         ));
+    }
+
+    protected function getPriority(string $pageClass, string $slug): string
+    {
+        $priority = 0.5;
+
+        if (in_array($pageClass, [BladePage::class, MarkdownPage::class])) {
+            $priority = 0.9;
+            if ($slug === 'index') {
+                $priority = 1;
+            }
+            if ($slug === '404') {
+                $priority = 0.5;
+            }
+        }
+
+        if ($pageClass === DocumentationPage::class) {
+            $priority = 0.9;
+        }
+
+        if ($pageClass === MarkdownPost::class) {
+            $priority = 0.75;
+        }
+
+        return (string) $priority;
     }
 
     public static function generateSitemap(): string
