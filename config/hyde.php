@@ -58,9 +58,9 @@ return [
 
     'site_url' => env('SITE_URL', null),
 
-    'prettyUrls' => false,
+    'pretty_urls' => false,
 
-    'generateSitemap' => true,
+    'generate_sitemap' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -141,8 +141,8 @@ return [
     |
     */
 
-    'loadHydeAssetsUsingCDN' => true,
-    // 'cdnVersionOverride' => 'v1.0.0',
+    'load_hyde_assets_using_cdn' => true,
+    // 'cdn_version_override' => 'v1.0.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,7 @@ return [
     |
     */
 
-    'navigationMenuLinks' => [
+    'navigation_menu_links' => [
         // [
         //     'title' => 'GitHub',
         //     'destination' => 'https://github.com/hydephp/hyde',
@@ -199,7 +199,7 @@ return [
     |
     */
 
-    'navigationMenuBlacklist' => [
+    'navigation_menu_blacklist' => [
         '404',
     ],
 
@@ -213,7 +213,7 @@ return [
     |
     */
 
-    'docsSidebarHeaderTitle' => $siteName.' Docs',
+    'docs_sidebar_header_title' => $siteName.' Docs',
 
     /*
     |--------------------------------------------------------------------------
@@ -234,7 +234,7 @@ return [
     /**
      * @deprecated version 0.25.0, will be renamed to documentationOutputPath
      */
-    'docsDirectory' => 'docs',
+    'docs_directory' => 'docs',
 
     /*
     |--------------------------------------------------------------------------
@@ -249,7 +249,7 @@ return [
     |
     */
 
-    'siteOutputPath' => Hyde\Framework\Hyde::path('_site'),
+    'site_output_path' => Hyde\Framework\Hyde::path('_site'),
 
     /*
     |--------------------------------------------------------------------------
@@ -264,7 +264,7 @@ return [
     |
     */
 
-    'documentationPageOrder' => [
+    'documentation_page_order' => [
         'readme',
         'installation',
         'getting-started',
@@ -281,7 +281,7 @@ return [
     |
     */
 
-    'documentationPageTableOfContents' => [
+    'documentation_page_table_of_contents' => [
         'enabled' => true,
         'minHeadingLevel' => 2,
         'maxHeadingLevel' => 4,
@@ -298,6 +298,6 @@ return [
     |
     */
 
-    'warnAboutOutdatedConfig' => true,
+    'warn_about_outdated_config' => true,
 
 ];
