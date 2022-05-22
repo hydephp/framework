@@ -15,10 +15,10 @@
 		<strong class="mr-auto">
 			@if(Hyde::docsIndexPath() !== false)
 			<a href="{{ Hyde::relativeLink(Hyde::docsIndexPath(), $currentPage) }}">
-				{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
+				{{ config('hyde.docs_sidebar_header_title', 'Documentation') }}
 			</a>
 			@else
-			{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
+			{{ config('hyde.docs_sidebar_header_title', 'Documentation') }}
 			@endif
 		</strong>
         @include('hyde::components.navigation.theme-toggle-button')
@@ -35,10 +35,10 @@
 				<strong>
 					@if(Hyde::docsIndexPath() !== false)
 					<a href="{{ Hyde::relativeLink(Hyde::docsIndexPath(), $currentPage) }}">
-						{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
+						{{ config('hyde.docs_sidebar_header_title', 'Documentation') }}
 					</a>
 					@else
-					{{ config('hyde.docsSidebarHeaderTitle', 'Documentation') }}
+					{{ config('hyde.docs_sidebar_header_title', 'Documentation') }}
 					@endif
 				</strong>
 				@include('hyde::components.navigation.theme-toggle-button')
