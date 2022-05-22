@@ -38,7 +38,7 @@ class AuthorService
      *
      * If the file does not exist, it will be created.
      */
-    public function publishFile()
+    public function publishFile(): void
     {
         file_put_contents($this->filepath, <<<'EOF'
 # In this file you can declare custom authors.

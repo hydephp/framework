@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Contracts\AbstractPage;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -16,6 +17,7 @@ class DiscoveryService
 {
     public static function getParserClassForModel(string $model): string
     {
+        /** @var AbstractPage $model */
         return $model::$parserClass;
     }
 
@@ -31,6 +33,7 @@ class DiscoveryService
      */
     public static function getParserInstanceForModel(string $model, string $slug): object
     {
+        /** @var AbstractPage $model */
         return new $model::$parserClass($slug);
     }
 
@@ -39,6 +42,7 @@ class DiscoveryService
      */
     public static function getFileExtensionForModelFiles(string $model): string
     {
+        /** @var AbstractPage $model */
         return $model::$fileExtension;
     }
 
@@ -47,6 +51,7 @@ class DiscoveryService
      */
     public static function getFilePathForModelClassFiles(string $model): string
     {
+        /** @var AbstractPage $model */
         return $model::$sourceDirectory;
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
  */
 trait AsksToRebuildSite
 {
-    protected function askToRebuildSite()
+    protected function askToRebuildSite(): void
     {
         if ($this->option('no-interaction')) {
             return;

@@ -31,7 +31,7 @@ trait BuildActionRunner
     }
 
     /** @internal */
-    protected function runBuildAction(string $model)
+    protected function runBuildAction(string $model): void
     {
         $collection = CollectionService::getSourceFileListForModel($model);
         $modelName = $this->getModelPluralName($model);

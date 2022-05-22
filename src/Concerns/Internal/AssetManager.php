@@ -14,7 +14,7 @@ trait AssetManager
     /**
      * Get the asset service instance.
      *
-     * @return \Hyde\Framework\Services\AssetServiceContract
+     * @return \Hyde\Framework\Contracts\AssetServiceContract
      */
     public static function assetManager(): AssetServiceContract
     {

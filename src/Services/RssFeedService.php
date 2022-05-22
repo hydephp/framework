@@ -24,6 +24,9 @@ class RssFeedService
         $this->addInitialChannelItems();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function generate(): self
     {
         /** @var MarkdownPost $post */
