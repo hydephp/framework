@@ -93,7 +93,7 @@ class GeneratesNavigationMenu
 
         // Remove config defined blacklisted links
         foreach ($links as $key => $link) {
-            if (in_array(Str::slug($link['title']), config('hyde.navigationMenuBlacklist', []))) {
+            if (in_array(Str::slug($link['title']), config('hyde.navigation_menu_blacklist', []))) {
                 unset($links[$key]);
             }
         }
@@ -113,7 +113,7 @@ class GeneratesNavigationMenu
      */
     public function getLinksFromConfig(): array
     {
-        $configLinks = config('hyde.navigationMenuLinks', []);
+        $configLinks = config('hyde.navigation_menu_links', []);
 
         $links = [];
 

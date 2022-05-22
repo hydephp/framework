@@ -25,7 +25,7 @@ trait FileHelpers
      */
     public static function docsDirectory(): string
     {
-        return trim(config('hyde.docsDirectory', 'docs'), '/\\');
+        return trim(config('hyde.docs_directory', 'docs'), '/\\');
     }
 
     /**
@@ -86,7 +86,7 @@ trait FileHelpers
      */
     public static function pageLink(string $destination): string
     {
-        if (config('hyde.prettyUrls', false) === true) {
+        if (config('hyde.pretty_urls', false) === true) {
             if (str_ends_with($destination, '.html')) {
                 if ($destination === 'index.html') {
                     return '/';
