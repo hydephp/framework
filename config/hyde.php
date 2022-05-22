@@ -264,7 +264,6 @@ return [
         'enabled' => true,
         'min_heading_level' => 2,
         'max_heading_level' => 4,
-        'smoothPageScrolling' => true,
     ],
 
     /*
