@@ -13,6 +13,9 @@ trait HasDateString
 {
     public ?DateString $date = null;
 
+    /**
+     * @throws \Exception
+     */
     public function constructDateString(): void
     {
         if (isset($this->matter['date'])) {
