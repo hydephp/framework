@@ -24,9 +24,9 @@ trait AssetManager
     /**
      * Return the Hyde stylesheet.
      */
-    public static function styles(): string|false
+    public static function styles(): string
     {
-        return config('hyde.loadHydeAssetsUsingCDN', true) ? static::assetManager()->stylePath() : false;
+        return static::assetManager()->stylePath();
     }
 
     /**
@@ -34,6 +34,6 @@ trait AssetManager
      */
     public static function scripts(): string
     {
-        return config('hyde.loadHydeAssetsUsingCDN', true) ? static::assetManager()->scriptPath() : false;
+        return static::assetManager()->scriptPath();
     }
 }

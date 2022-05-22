@@ -16,7 +16,7 @@ class AssetService implements AssetServiceContract
 
     public function version(): string
     {
-        return config('hyde.cdnVersionOverride', $this->version);
+        return $this->version;
     }
 
     public function stylePath(): string

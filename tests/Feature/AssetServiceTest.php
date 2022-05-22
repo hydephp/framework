@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Hyde\Framework\Services\AssetService;
-use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
@@ -30,13 +29,6 @@ class AssetServiceTest extends TestCase
         $this->assertEquals($service->version, $service->version());
     }
 
-    public function test_can_change_version_in_config()
-    {
-        $service = new AssetService();
-        Config::set('hyde.cdnVersionOverride', '2.0.0');
-        $this->assertEquals('2.0.0', $service->version());
-    }
-
     public function test_style_path_method_returns_cdn_path()
     {
         $service = new AssetService();
@@ -56,12 +48,5 @@ class AssetServiceTest extends TestCase
         $service = new AssetService();
         $this->assertIsString($path = $service->constructCdnPath('styles.css'));
         $this->assertStringContainsString('styles.css', $path);
-    }
-
-    public function test_cdn_path_constructor_uses_selected_version()
-    {
-        $service = new AssetService();
-        Config::set('hyde.cdnVersionOverride', '1.2.3');
-        $this->assertStringContainsString('@1.2.3', $service->constructCdnPath('styles.css'));
     }
 }
