@@ -20,7 +20,7 @@ class HasPageMetadataTest extends TestCase
 
         config(['hyde.meta' => []]);
         config(['hyde.site_url' => null]);
-        config(['hyde.prettyUrls' => false]);
+        config(['hyde.pretty_urls' => false]);
         config(['hyde.generateSitemap' => false]);
     }
 
@@ -46,7 +46,7 @@ class HasPageMetadataTest extends TestCase
             public string $slug = 'foo';
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.prettyUrls' => true]);
+        config(['hyde.pretty_urls' => true]);
 
         $this->assertEquals('https://example.com/foo', $page->getCanonicalUrl());
     }
