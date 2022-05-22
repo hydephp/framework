@@ -13,7 +13,7 @@ class HydeBuildSitemapCommandTest extends TestCase
     public function test_sitemap_is_not_generated_when_conditions_are_not_met()
     {
         config(['hyde.site_url' => '']);
-        config(['hyde.generateSitemap' => false]);
+        config(['hyde.generate_sitemap' => false]);
         unlinkIfExists(Hyde::path('_site/sitemap.xml'));
 
         $this->artisan('build:sitemap')
@@ -26,7 +26,7 @@ class HydeBuildSitemapCommandTest extends TestCase
     public function test_sitemap_is_generated_when_conditions_are_met()
     {
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.generateSitemap' => true]);
+        config(['hyde.generate_sitemap' => true]);
 
         unlinkIfExists(Hyde::path('_site/sitemap.xml'));
         $this->artisan('build:sitemap')
