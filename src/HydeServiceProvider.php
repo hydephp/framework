@@ -25,7 +25,7 @@ class HydeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         /**
          * @deprecated
@@ -84,7 +84,7 @@ class HydeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if (config('hyde.create_default_directories', true)) {
             (new CreatesDefaultDirectories)->__invoke();

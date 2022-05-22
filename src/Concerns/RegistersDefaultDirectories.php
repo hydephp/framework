@@ -9,7 +9,7 @@ trait RegistersDefaultDirectories
      *
      * @return void
      */
-    protected function registerDefaultDirectories(array $directoryMapping)
+    protected function registerDefaultDirectories(array $directoryMapping): void
     {
         foreach ($directoryMapping as $class => $location) {
             $class::$sourceDirectory = $location;
