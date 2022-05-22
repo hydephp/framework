@@ -5,6 +5,7 @@ namespace Hyde\Framework\Actions;
 use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Models\Image;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -23,7 +24,7 @@ class FindsContentLengthForImageObject implements ActionContract
     {
         $this->image = $image;
 
-        $this->output = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $this->output = new ConsoleOutput();
     }
 
     public function execute(): int
