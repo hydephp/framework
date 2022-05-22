@@ -12,7 +12,6 @@ class MarkdownConverter
     /**
      * Parse the Markdown into HTML.
      *
-     * @param  string  $markdown
      * @return string $html
      */
     public static function parse(string $markdown, ?string $sourceModel = null): string
