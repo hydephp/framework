@@ -1,5 +1,5 @@
 <?php
-	
+
 /*
 |--------------------------------------------------------------------------
 | Documentation Module Settings
@@ -11,7 +11,7 @@
 */
 
 return [
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Sidebar Header Name
     |--------------------------------------------------------------------------
@@ -23,7 +23,6 @@ return [
 
     'header_title' => config('hyde.name', 'HydePHP').' Docs',
 
-	
     /*
     |--------------------------------------------------------------------------
     | Documentation Site Output Directory
@@ -37,12 +36,11 @@ return [
     | may conflict with other parts, such as media or posts directories.
     |
     | The default value is 'docs'. For easy versioning you can do what
-	| HydePHP.com does, setting it to 'docs/master'.
+    | HydePHP.com does, setting it to 'docs/master'.
     |
     */
 
     'output_directory' => 'docs',
-
 
     /*
     |--------------------------------------------------------------------------
