@@ -70,7 +70,7 @@ class RssFeedServiceTest extends TestCase
     {
         config(['hyde.name' => 'Foo']);
         config(['hyde.site_url' => 'https://blog.foo.com/bar']);
-        config(['hyde.rssDescription' => 'Foo is a web log about stuff']);
+        config(['hyde.rss_description' => 'Foo is a web log about stuff']);
 
         $service = new RssFeedService();
         $this->assertEquals('Foo', $service->feed->channel->title);

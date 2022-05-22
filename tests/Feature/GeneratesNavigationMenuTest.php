@@ -30,7 +30,7 @@ class GeneratesNavigationMenuTest extends TestCase
     {
         $generator = new GeneratesNavigationMenu(currentPage: 'foo/bar');
 
-        Config::set('hyde.navigationMenuLinks', [
+        Config::set('hyde.navigation_menu_links', [
             [
                 'title' => 'GNMTestExt',
                 'destination' => 'https://example.org/test',

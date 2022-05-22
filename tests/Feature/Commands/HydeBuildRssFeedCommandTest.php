@@ -40,7 +40,7 @@ class HydeBuildRssFeedCommandTest extends TestCase
     {
         config(['hyde.site_url' => 'https://example.com']);
         config(['hyde.generate_rss_feed' => true]);
-        config(['hyde.rssFilename' => 'blog.xml']);
+        config(['hyde.rss_filename' => 'blog.xml']);
 
         unlinkIfExists(Hyde::path('_site/feed.xml'));
         unlinkIfExists(Hyde::path('_site/blog.xml'));
