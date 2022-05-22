@@ -9,7 +9,7 @@ trait RegistersDefaultDirectories
     /**
      * Register the default directories.
      *
-     * @param array $directoryMapping
+     * @param  array  $directoryMapping
      * @return void
      */
     protected function registerDefaultDirectories(array $directoryMapping): void
