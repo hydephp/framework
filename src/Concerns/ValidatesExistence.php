@@ -6,7 +6,7 @@ use Exception;
 use Hyde\Framework\Hyde;
 
 /**
- * Validate the existance of a Page model's source file.
+ * Validate the existence of a Page model's source file.
  */
 trait ValidatesExistence
 {
