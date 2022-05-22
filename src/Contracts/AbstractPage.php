@@ -18,6 +18,8 @@ abstract class AbstractPage
     public static string $fileExtension;
     public static string $parserClass;
 
+    public string $slug;
+
     public function getCurrentPagePath(): string
     {
         return $this->slug;
