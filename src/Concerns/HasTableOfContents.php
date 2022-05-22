@@ -5,7 +5,7 @@ namespace Hyde\Framework\Concerns;
 use Hyde\Framework\Actions\GeneratesTableOfContents;
 
 /**
- * Generate a Table of Contents HTML string from a Markdown document body.
+ * Generate Table of Contents as HTML from a Markdown document body.
  *
  * @see \Tests\Unit\HasTableOfContentsTest
  */
