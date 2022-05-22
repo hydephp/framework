@@ -17,6 +17,7 @@ use SimpleXMLElement;
 class SitemapService
 {
     public SimpleXMLElement $xmlElement;
+    protected float $time_start;
 
     public function __construct()
     {
