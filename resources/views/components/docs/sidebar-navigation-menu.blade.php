@@ -5,9 +5,9 @@
 		<a href="{{ Hyde::pageLink($item->destination . '.html') }}" aria-current="true">{{
 			$item->label }}</a>
 
-		@if(isset($docs->tableOfContents))
+		@if(isset($page->tableOfContents))
 		<span class="sr-only">Table of contents</span>
-		{!! ($docs->tableOfContents) !!}
+		{!! ($page->tableOfContents) !!}
 		@endif
 		@else
 		<a href="{{ Hyde::pageLink($item->destination . '.html') }}">{{ $item->label }}</a>
