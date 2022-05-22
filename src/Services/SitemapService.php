@@ -83,6 +83,7 @@ class SitemapService
     protected function getLastModDate(string $pageClass, string $slug): string
     {
         return date('c', filemtime(
+            /** @var \Hyde\Framework\Contracts\AbstractPage $pageClass */
             Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$slug.$pageClass::$fileExtension)
         ));
     }
