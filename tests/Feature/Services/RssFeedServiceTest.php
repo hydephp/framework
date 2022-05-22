@@ -150,7 +150,7 @@ class RssFeedServiceTest extends TestCase
     public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
     {
         config(['hyde.site_url' => 'foo']);
-        config(['hyde.generateRssFeed' => false]);
+        config(['hyde.generate_rss_feed' => false]);
         $this->assertFalse(RssFeedService::canGenerateFeed());
     }
 }
