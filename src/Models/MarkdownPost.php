@@ -21,6 +21,9 @@ class MarkdownPost extends MarkdownDocument
     public static string $sourceDirectory = '_posts';
     public static string $parserClass = MarkdownPostParser::class;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(array $matter, string $body, string $title = '', string $slug = '')
     {
         parent::__construct($matter, $body, $title, $slug);
