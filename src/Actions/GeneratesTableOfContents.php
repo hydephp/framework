@@ -30,8 +30,8 @@ class GeneratesTableOfContents implements ActionContract
                 'html_class' => 'table-of-contents',
                 'position' => 'top',
                 'style' => 'bullet',
-                'min_heading_level' => config('hyde.documentationPageTableOfContents.minHeadingLevel', 2),
-                'max_heading_level' => config('hyde.documentationPageTableOfContents.maxHeadingLevel', 4),
+                'min_heading_level' => config('hyde.documentation_page_table_of_contents.min_heading_level', 2),
+                'max_heading_level' => config('hyde.documentation_page_table_of_contents.max_heading_level', 4),
                 'normalize' => 'relative',
             ],
             'heading_permalink' => [

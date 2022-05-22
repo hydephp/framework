@@ -165,8 +165,8 @@ If you want to store the compiled documentation pages in a different directory t
 for example to specify a version like the Hyde docs does, you can specify the output directory in the Hyde configuration file.
 
 ```php
-'docsDirectory' => 'docs' // Default
-'docsDirectory' => 'docs/master' // What the Hyde docs use
+'docs_directory' => 'docs' // default
+'docs_directory' => 'docs/master' // What the Hyde docs use
 ```
 
 ### Sidebar header name
@@ -175,7 +175,7 @@ By default, the site title shown in the sidebar header is generated from the con
 You can change this in the Hyde configuration file.
 
 ```php
-'docsSidebarHeaderTitle' => 'API Documentation',
+'docs_sidebar_header_title' => 'API Documentation',
 ```
 
 ### Sidebar page order
@@ -184,7 +184,7 @@ To quickly arrange the order of items in the sidebar, you can reorder the page s
 Link items without an entry here will have fall back to the default priority of 999, putting them last.
 
 ```php
-'documentationPageOrder' => [
+'documentation_page_order' => [
     'readme',
     'installation',
     'getting-started',
@@ -200,10 +200,10 @@ In the Hyde config you can configure the behavior, content, and the look and fee
 You can also disable the feature completely.
 
 ```php
-'documentationPageTableOfContents' => [
+'documentation_page_table_of_contents' => [
 	'enabled' => true,
-	'minHeadingLevel' => 2,
-	'maxHeadingLevel' => 4,
-	'smoothPageScrolling' => true,
+	'min_heading_level' => 2,
+	'max_heading_level' => 4,
+	'smooth_page_scrolling' => true,
 ],
 ```

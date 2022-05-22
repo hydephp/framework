@@ -262,8 +262,8 @@ return [
 
     'documentation_page_table_of_contents' => [
         'enabled' => true,
-        'minHeadingLevel' => 2,
-        'maxHeadingLevel' => 4,
+        'min_heading_level' => 2,
+        'max_heading_level' => 4,
         'smoothPageScrolling' => true,
     ],
 
