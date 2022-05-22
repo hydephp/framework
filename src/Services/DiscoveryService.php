@@ -2,11 +2,11 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Contracts\AbstractPage;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Contracts\AbstractPage;
 
 /**
  * The Discovery Service (previously called BuildService) provides
