@@ -6,7 +6,6 @@ use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * Generate the dynamic navigation menu.
@@ -152,7 +151,6 @@ class GeneratesNavigationMenu
      *
      * @return array
      */
-    #[Pure]
     private function getListOfCustomPages(): array
     {
         return array_unique(
