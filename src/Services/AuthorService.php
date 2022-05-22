@@ -10,7 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Contains service methods relating to blog post authors.
- * 
+ *
  * The YAML service is deprecated, the data will be
  * fetched from the main config instead.
  */
@@ -44,6 +44,7 @@ class AuthorService
      * Returns the filepath of the Yaml file.
      *
      * If the file does not exist, it will be created.
+     *
      * @deprecated version 0.28.0
      */
     public function publishFile(): void
@@ -70,6 +71,7 @@ EOF
      * Parse the Yaml file.
      *
      * @deprecated version 0.28.0
+     *
      * @return array
      */
     public function getYaml(): array
