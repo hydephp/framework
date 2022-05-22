@@ -106,7 +106,7 @@ class StaticPageBuilderTest extends TestCase
     {
         $page = new DocumentationPage([], '# Body', 'Title', 'foo');
 
-        Config::set('hyde.docsDirectory', 'docs/foo');
+        Config::set('docs.output_directory', 'docs/foo');
 
         new StaticPageBuilder($page, true);
 

@@ -11,6 +11,6 @@ trait HasMarkdownFeatures
 {
     public static function hasTableOfContents(): bool
     {
-        return config('hyde.documentationPageTableOfContents.enabled', true);
+        return config('docs.table_of_contents.enabled', true);
     }
 }

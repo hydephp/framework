@@ -120,6 +120,6 @@ class SitemapService
 
     public static function canGenerateSitemap(): bool
     {
-        return (Hyde::uriPath() !== false) && config('hyde.generateSitemap', true);
+        return (Hyde::uriPath() !== false) && config('hyde.generate_sitemap', true);
     }
 }

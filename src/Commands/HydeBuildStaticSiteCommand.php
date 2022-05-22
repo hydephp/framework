@@ -106,7 +106,7 @@ class HydeBuildStaticSiteCommand extends Command
         if ($this->option('pretty-urls')) {
             $this->info('Generating site with pretty URLs');
             $this->newLine();
-            Config::set(['hyde.prettyUrls' => true]);
+            Config::set(['hyde.pretty_urls' => true]);
         }
     }
 

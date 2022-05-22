@@ -30,7 +30,7 @@ class DocumentationSidebarItem
 
     protected function findPriorityInConfig(string $slug): int
     {
-        $orderIndexArray = config('hyde.documentationPageOrder', []);
+        $orderIndexArray = config('docs.sidebar_order', []);
 
         if (! in_array($slug, $orderIndexArray)) {
             return 500;

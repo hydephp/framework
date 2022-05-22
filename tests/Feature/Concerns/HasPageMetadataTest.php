@@ -20,8 +20,8 @@ class HasPageMetadataTest extends TestCase
 
         config(['hyde.meta' => []]);
         config(['hyde.site_url' => null]);
-        config(['hyde.prettyUrls' => false]);
-        config(['hyde.generateSitemap' => false]);
+        config(['hyde.pretty_urls' => false]);
+        config(['hyde.generate_sitemap' => false]);
     }
 
     public function test_get_canonical_url_returns_url_for_top_level_page()
@@ -46,7 +46,7 @@ class HasPageMetadataTest extends TestCase
             public string $slug = 'foo';
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.prettyUrls' => true]);
+        config(['hyde.pretty_urls' => true]);
 
         $this->assertEquals('https://example.com/foo', $page->getCanonicalUrl());
     }
@@ -212,7 +212,7 @@ class HasPageMetadataTest extends TestCase
             use HasPageMetadata;
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.generateSitemap' => true]);
+        config(['hyde.generate_sitemap' => true]);
 
         $this->assertEquals(['<link rel="sitemap" type="application/xml" title="Sitemap" href="https://example.com/sitemap.xml" />'],
             $page->getDynamicMetadata()
@@ -226,7 +226,7 @@ class HasPageMetadataTest extends TestCase
             use HasPageMetadata;
         };
         config(['hyde.site_url' => 'https://example.com']);
-        config(['hyde.generateSitemap' => false]);
+        config(['hyde.generate_sitemap' => false]);
 
         $this->assertEquals([],
             $page->getDynamicMetadata()

@@ -10,10 +10,17 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Contains service methods relating to blog post authors.
+ *
+ * The YAML service is deprecated, the data will be
+ * fetched from the main config instead.
  */
 class AuthorService
 {
     public string $filepath;
+
+    /**
+     * @deprecated version 0.28.0
+     */
     public array $yaml = [];
 
     public Collection $authors;
@@ -37,10 +44,15 @@ class AuthorService
      * Returns the filepath of the Yaml file.
      *
      * If the file does not exist, it will be created.
+     *
+     * @deprecated version 0.28.0
      */
     public function publishFile(): void
     {
         file_put_contents($this->filepath, <<<'EOF'
+# Note that this file is deprecated. You'll be able to
+# define authors using the Author facade in the config
+
 # In this file you can declare custom authors.
 
 # In the default example, `mr_hyde` is the username. 
@@ -57,6 +69,8 @@ EOF
 
     /**
      * Parse the Yaml file.
+     *
+     * @deprecated version 0.28.0
      *
      * @return array
      */

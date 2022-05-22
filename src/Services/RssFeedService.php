@@ -99,7 +99,7 @@ class RssFeedService
     protected function getDescription(): string
     {
         return static::xmlEscape(
-            config('hyde.rssDescription',
+            config('hyde.rss_description',
                 static::getTitle().' RSS Feed')
         );
     }
@@ -127,7 +127,7 @@ class RssFeedService
 
     public static function getDefaultOutputFilename(): string
     {
-        return config('hyde.rssFilename', 'feed.xml');
+        return config('hyde.rss_filename', 'feed.xml');
     }
 
     public static function generateFeed(): string
@@ -137,6 +137,6 @@ class RssFeedService
 
     public static function canGenerateFeed(): bool
     {
-        return (Hyde::uriPath() !== false) && config('hyde.generateRssFeed', true) && Features::hasBlogPosts();
+        return (Hyde::uriPath() !== false) && config('hyde.generate_rss_feed', true) && Features::hasBlogPosts();
     }
 }

@@ -70,7 +70,7 @@ class RssFeedServiceTest extends TestCase
     {
         config(['hyde.name' => 'Foo']);
         config(['hyde.site_url' => 'https://blog.foo.com/bar']);
-        config(['hyde.rssDescription' => 'Foo is a web log about stuff']);
+        config(['hyde.rss_description' => 'Foo is a web log about stuff']);
 
         $service = new RssFeedService();
         $this->assertEquals('Foo', $service->feed->channel->title);
@@ -150,7 +150,7 @@ class RssFeedServiceTest extends TestCase
     public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
     {
         config(['hyde.site_url' => 'foo']);
-        config(['hyde.generateRssFeed' => false]);
+        config(['hyde.generate_rss_feed' => false]);
         $this->assertFalse(RssFeedService::canGenerateFeed());
     }
 }

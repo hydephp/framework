@@ -84,7 +84,7 @@ class HasPageMetadataRssFeedLinkTest extends TestCase
 
     public function test_can_use_rss_feed_uses_configured_rss_file_name()
     {
-        config(['hyde.rssFilename' => 'posts.rss']);
+        config(['hyde.rss_filename' => 'posts.rss']);
         $page = new MarkdownPost([], '');
 
         $this->assertStringContainsString(

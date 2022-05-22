@@ -17,7 +17,7 @@ trait FileHelpers
      *
      * @deprecated will be renamed to be more distinct from other path helpers.
      *              Naming suggestion is `getDocumentationOutputPath()`.
-     *              The configuration is deprecated as well and will be renamed.
+     *              The configuration option has been renamed.
      *
      * @todo Test and if needed add support for storing documentation files in the site root
      *
@@ -25,7 +25,7 @@ trait FileHelpers
      */
     public static function docsDirectory(): string
     {
-        return trim(config('hyde.docsDirectory', 'docs'), '/\\');
+        return trim(config('docs.output_directory', 'docs'), '/\\');
     }
 
     /**
@@ -86,7 +86,7 @@ trait FileHelpers
      */
     public static function pageLink(string $destination): string
     {
-        if (config('hyde.prettyUrls', false) === true) {
+        if (config('hyde.pretty_urls', false) === true) {
             if (str_ends_with($destination, '.html')) {
                 if ($destination === 'index.html') {
                     return '/';

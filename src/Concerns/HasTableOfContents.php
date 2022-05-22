@@ -15,7 +15,7 @@ trait HasTableOfContents
 
     public function constructTableOfContents(): void
     {
-        if (config('hyde.documentationPageTableOfContents.enabled', true)) {
+        if (config('docs.table_of_contents.enabled', true)) {
             $this->tableOfContents = (new GeneratesTableOfContents($this->body))->execute();
         }
     }
