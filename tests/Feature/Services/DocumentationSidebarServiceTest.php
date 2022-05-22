@@ -79,7 +79,7 @@ class DocumentationSidebarServiceTest extends TestCase
 
     public function test_sidebar_is_ordered_alphabetically_when_no_order_is_set_in_config()
     {
-        Config::set('hyde.documentationPageOrder', []);
+        Config::set('docs.sidebar_order', []);
         touch(Hyde::path('_docs/alpha.md'));
         touch(Hyde::path('_docs/bravo.md'));
         touch(Hyde::path('_docs/charlie.md'));
@@ -93,7 +93,7 @@ class DocumentationSidebarServiceTest extends TestCase
 
     public function test_sidebar_is_ordered_by_priority_when_priority_is_set_in_config()
     {
-        Config::set('hyde.documentationPageOrder', [
+        Config::set('docs.sidebar_order', [
             'charlie',
             'bravo',
             'alpha',
@@ -127,14 +127,14 @@ class DocumentationSidebarServiceTest extends TestCase
             (new ConvertsArrayToFrontMatter)->execute(['priority' => 25])
         );
 
-        Config::set('hyde.documentationPageOrder', ['foo']);
+        Config::set('docs.sidebar_order', ['foo']);
 
         $this->assertEquals(25, DocumentationSidebarService::get()->first()->priority);
     }
 
     public function test_sidebar_priorities_can_be_set_in_both_front_matter_and_config()
     {
-        Config::set('hyde.documentationPageOrder', [
+        Config::set('docs.sidebar_order', [
             'first',
             'third',
             'second',

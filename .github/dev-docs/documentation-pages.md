@@ -111,7 +111,7 @@ The default priority is 999. You can override the priority using the following f
 priority: 5
 ```
 
-You can also change the order in the Hyde configuration file.
+You can also change the order in the Docs configuration file.
 See [the chapter in the customization page](customization.html#navigation-menu--sidebar) for more details. <br>
  _I personally think the config route is easier as it gives an instant overview, however the first way is nice as well._
 
@@ -162,20 +162,20 @@ including the documentation pages. Here is a high level overview for quick refer
 ### Output directory
 
 If you want to store the compiled documentation pages in a different directory than the default 'docs' directory,
-for example to specify a version like the Hyde docs does, you can specify the output directory in the Hyde configuration file.
+for example to specify a version like the Hyde docs does, you can specify the output directory in the Docs configuration file.
 
 ```php
-'docs_directory' => 'docs' // default
-'docs_directory' => 'docs/master' // What the Hyde docs use
+'output_directory' => 'docs' // default
+'output_directory' => 'docs/master' // What the Hyde docs use
 ```
 
 ### Sidebar header name
 
 By default, the site title shown in the sidebar header is generated from the configured site name suffixed with "docs".
-You can change this in the Hyde configuration file.
+You can change this in the Docs configuration file.
 
 ```php
-'docs_sidebar_header_title' => 'API Documentation',
+'title' => 'API Documentation',
 ```
 
 ### Sidebar page order
@@ -184,7 +184,7 @@ To quickly arrange the order of items in the sidebar, you can reorder the page s
 Link items without an entry here will have fall back to the default priority of 999, putting them last.
 
 ```php
-'documentation_page_order' => [
+'sidebar_order' => [
     'readme',
     'installation',
     'getting-started',
@@ -196,11 +196,12 @@ See [the chapter in the customization page](customization.html#navigation-menu--
 
 ### Table of contents settings
 
-In the Hyde config you can configure the behavior, content, and the look and feel of the sidebar table of contents.
+In the `config/docs.php` file you can configure the behavior, content,
+and the look and feel of the sidebar table of contents.
 You can also disable the feature completely.
 
 ```php
-'documentation_page_table_of_contents' => [
+'table_of_contents' => [
 	'enabled' => true,
 	'min_heading_level' => 2,
 	'max_heading_level' => 4,

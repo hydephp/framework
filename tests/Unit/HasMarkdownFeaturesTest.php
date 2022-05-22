@@ -17,10 +17,10 @@ class HasMarkdownFeaturesTest extends TestCase
     {
         $this->assertIsBool(static::hasTableOfContents());
 
-        Config::set('hyde.documentationPageTableOfContents.enabled', true);
+        Config::set('docs.table_of_contents.enabled', true);
         $this->assertTrue(static::hasTableOfContents());
 
-        Config::set('hyde.documentationPageTableOfContents.enabled', false);
+        Config::set('docs.table_of_contents.enabled', false);
         $this->assertFalse(static::hasTableOfContents());
     }
 }

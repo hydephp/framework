@@ -95,7 +95,7 @@ class HasConfigurableMarkdownFeaturesTest extends TestCase
     // Test that method canEnablePermalinks is automatically for DocumentationPages
     public function test_has_features_array_can_enable_permalinks_auto()
     {
-        Config::set('hyde.documentationPageTableOfContents.enabled', true);
+        Config::set('docs.table_of_contents.enabled', true);
         $this->sourceModel = DocumentationPage::class;
 
         $this->assertTrue($this->canEnablePermalinks());

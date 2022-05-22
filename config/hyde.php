@@ -182,38 +182,7 @@ return [
         '404',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Documentation Sidebar Header Name
-    |--------------------------------------------------------------------------
-    |
-    | By default, the sidebar title shown in the documentation page layouts uses
-    | the app name suffixed with "docs". You can change it with this setting.
-    |
-    */
-
-    'docs_sidebar_header_title' => $siteName.' Docs',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Documentation Site Output Directory
-    |--------------------------------------------------------------------------
-    |
-    | If you want to store the compiled documentation pages in a different
-    | directory than the default 'docs' directory, for example to set the
-    | specified version, you can specify the directory here.
-    |
-    | Note that you need to take care as to not set it to something that
-    | may conflict with other parts, such as media or posts directories.
-    |
-    | The default value is 'docs'.
-    |
-    */
-
-    /**
-     * @deprecated version 0.25.0, will be renamed to documentationOutputPath
-     */
-    'docs_directory' => 'docs',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -230,41 +199,6 @@ return [
 
     'site_output_path' => Hyde\Framework\Hyde::path('_site'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Documentation Sidebar Page Order
-    |--------------------------------------------------------------------------
-    |
-    | In the generated Documentation pages the navigation links in the sidebar
-    | are sorted alphabetically by default. As this rarely makes sense, you
-    | can reorder the page slugs in the list and the links will be sorted
-    | in that order. Link items without an entry here will have fall
-    | back to the default priority of 999, putting them last.
-    |
-    */
-
-    'documentation_page_order' => [
-        'readme',
-        'installation',
-        'getting-started',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Documentation Table of Contents Settings
-    |--------------------------------------------------------------------------
-    |
-    | The Hyde Documentation Module comes with a fancy Sidebar that, by default,
-    | has a Table of Contents included. Here, you can configure its behavior,
-    | content, look and feel. You can also disable the feature completely.
-    |
-    */
-
-    'documentation_page_table_of_contents' => [
-        'enabled' => true,
-        'min_heading_level' => 2,
-        'max_heading_level' => 4,
-    ],
 
     /*
     |--------------------------------------------------------------------------
