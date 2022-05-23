@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
  */
 class AuthorHelperTest extends TestCase
 {
-    // Test create method creates new Author model
     public function test_create_method_creates_new_author_model()
     {
         $author = AuthorHelper::create('mr_hyde');
@@ -23,7 +22,6 @@ class AuthorHelperTest extends TestCase
         $this->assertInstanceOf(AuthorModel::class, $author);
     }
 
-    // Test create method accepts all parameters
     public function test_create_method_accepts_all_parameters()
     {
         $author = AuthorHelper::create('mr_hyde', 'Mr Hyde', 'https://mrhyde.com');
@@ -33,7 +31,6 @@ class AuthorHelperTest extends TestCase
         $this->assertEquals('https://mrhyde.com', $author->website);
     }
     
-    // Test all method returns empty Collection if no Authors are set in config
     public function test_all_method_returns_empty_collection_if_no_authors_are_set_in_config()
     {
         Config::set('authors', []);
@@ -43,7 +40,6 @@ class AuthorHelperTest extends TestCase
         $this->assertCount(0, $authors);
     }
 
-    // Test all method returns Collection with all Authors defined in config
     public function test_all_method_returns_collection_with_all_authors_defined_in_config()
     {
         Config::set('authors', [
@@ -56,7 +52,6 @@ class AuthorHelperTest extends TestCase
         $this->assertEquals(AuthorHelper::create('mr_hyde'), $authors->first());
     }
 
-    // Test get method returns config defined Author by username
     public function test_get_method_returns_config_defined_author_by_username()
     {
         Config::set('authors', [
@@ -69,7 +64,6 @@ class AuthorHelperTest extends TestCase
         $this->assertEquals('bar', $author->name);
     }
 
-    // Test get method returns new Author if username not found in config
     public function test_get_method_returns_new_author_if_username_not_found_in_config()
     {
         Config::set('authors', []);
