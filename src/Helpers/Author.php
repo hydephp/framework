@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Helpers;
 
 use Hyde\Framework\Models\Author as AuthorModel;
+use Illuminate\Support\Collection;
 
 /**
  * @see \Tests\Feature\AuthorHelperTest
@@ -15,5 +16,10 @@ class Author
 			'name' => $display_name,
 			'website'=> $website
 		]);
+	}
+
+	static function all(): Collection
+	{
+		return new Collection(config('authors', []));
 	}
 }

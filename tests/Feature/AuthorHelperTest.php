@@ -34,8 +34,27 @@ class AuthorHelperTest extends TestCase
     }
     
     // Test all method returns empty Collection if no Authors are set in config
+    public function test_all_method_returns_empty_collection_if_no_authors_are_set_in_config()
+    {
+        Config::set('authors', []);
+        $authors = AuthorHelper::all();
+
+        $this->assertInstanceOf(Collection::class, $authors);
+        $this->assertCount(0, $authors);
+    }
 
     // Test all method returns Collection with all Authors defined in config
+    public function test_all_method_returns_collection_with_all_authors_defined_in_config()
+    {
+        Config::set('authors', [
+            AuthorHelper::create('mr_hyde')
+        ]);
+        $authors = AuthorHelper::all();
+
+        $this->assertInstanceOf(Collection::class, $authors);
+        $this->assertCount(1, $authors);
+        $this->assertEquals(AuthorHelper::create('mr_hyde'), $authors->first());
+    }
 
     // Test get method returns config defined Author by username
 
