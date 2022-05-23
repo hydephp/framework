@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Concerns;
 
-use Hyde\Framework\Models\Author;
 use Hyde\Framework\Helpers\Author as AuthorHelper;
+use Hyde\Framework\Models\Author;
 
 /**
  * Handle logic for Page models that have an Author.

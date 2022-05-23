@@ -9,7 +9,7 @@ class Author
 {
     /**
      * The username of the author.
-     * This is the key used to find authors in the config
+     * This is the key used to find authors in the config.
      *
      * @var string
      */
@@ -34,7 +34,7 @@ class Author
 
     /**
      * Construct a new Author object.
-     * 
+     *
      * Parameters are supplied through an array to make it
      * easy to load data from Markdown post front matter.
      *

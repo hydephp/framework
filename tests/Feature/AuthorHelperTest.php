@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Hyde\Framework\Helpers\Author as AuthorHelper;
 use Hyde\Framework\Models\Author as AuthorModel;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
+use Tests\TestCase;
 
 /**
  * Class AuthorHelperTest.
@@ -30,7 +30,7 @@ class AuthorHelperTest extends TestCase
         $this->assertEquals('bar', $author->name);
         $this->assertEquals('https://example.com', $author->website);
     }
-    
+
     public function test_all_method_returns_empty_collection_if_no_authors_are_set_in_config()
     {
         Config::set('authors', []);
@@ -43,7 +43,7 @@ class AuthorHelperTest extends TestCase
     public function test_all_method_returns_collection_with_all_authors_defined_in_config()
     {
         Config::set('authors', [
-            AuthorHelper::create('foo')
+            AuthorHelper::create('foo'),
         ]);
         $authors = AuthorHelper::all();
 
@@ -55,7 +55,7 @@ class AuthorHelperTest extends TestCase
     public function test_get_method_returns_config_defined_author_by_username()
     {
         Config::set('authors', [
-            AuthorHelper::create('foo', 'bar')
+            AuthorHelper::create('foo', 'bar'),
         ]);
         $author = AuthorHelper::get('foo');
 

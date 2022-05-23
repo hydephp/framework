@@ -10,22 +10,22 @@ use Illuminate\Support\Collection;
  */
 class Author
 {
-	public static function create(string $username, ?string $display_name = null, ?string $website = null): AuthorModel
-	{
-		return new AuthorModel($username, [
-			'name' => $display_name,
-			'website'=> $website
-		]);
-	}
+    public static function create(string $username, ?string $display_name = null, ?string $website = null): AuthorModel
+    {
+        return new AuthorModel($username, [
+            'name' => $display_name,
+            'website'=> $website,
+        ]);
+    }
 
-	public static function all(): Collection
-	{
-		return new Collection(config('authors', []));
-	}
+    public static function all(): Collection
+    {
+        return new Collection(config('authors', []));
+    }
 
-	public static function get(string $username): AuthorModel
-	{
-		return static::all()->firstWhere('username', $username)
-			?? static::create($username);
-	}
+    public static function get(string $username): AuthorModel
+    {
+        return static::all()->firstWhere('username', $username)
+            ?? static::create($username);
+    }
 }
