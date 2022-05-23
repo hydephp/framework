@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Models\Author;
-use Hyde\Framework\Services\AuthorService;
+use Hyde\Framework\Helpers\Author as AuthorHelper;
 
 /**
  * Handle logic for Page models that have an Author.
@@ -34,7 +34,7 @@ trait HasAuthor
 
     protected function findAuthor(string $author): Author
     {
-        return AuthorService::find($author) ?: new Author($author);
+        return AuthorHelper::get($author);
     }
 
     protected function createAuthor(array $data): Author
