@@ -17,18 +17,18 @@ class AuthorHelperTest extends TestCase
 {
     public function test_create_method_creates_new_author_model()
     {
-        $author = AuthorHelper::create('mr_hyde');
+        $author = AuthorHelper::create('foo');
 
         $this->assertInstanceOf(AuthorModel::class, $author);
     }
 
     public function test_create_method_accepts_all_parameters()
     {
-        $author = AuthorHelper::create('mr_hyde', 'Mr Hyde', 'https://mrhyde.com');
+        $author = AuthorHelper::create('foo', 'bar', 'https://example.com');
 
-        $this->assertEquals('mr_hyde', $author->username);
-        $this->assertEquals('Mr Hyde', $author->name);
-        $this->assertEquals('https://mrhyde.com', $author->website);
+        $this->assertEquals('foo', $author->username);
+        $this->assertEquals('bar', $author->name);
+        $this->assertEquals('https://example.com', $author->website);
     }
     
     public function test_all_method_returns_empty_collection_if_no_authors_are_set_in_config()
@@ -43,13 +43,13 @@ class AuthorHelperTest extends TestCase
     public function test_all_method_returns_collection_with_all_authors_defined_in_config()
     {
         Config::set('authors', [
-            AuthorHelper::create('mr_hyde')
+            AuthorHelper::create('foo')
         ]);
         $authors = AuthorHelper::all();
 
         $this->assertInstanceOf(Collection::class, $authors);
         $this->assertCount(1, $authors);
-        $this->assertEquals(AuthorHelper::create('mr_hyde'), $authors->first());
+        $this->assertEquals(AuthorHelper::create('foo'), $authors->first());
     }
 
     public function test_get_method_returns_config_defined_author_by_username()
