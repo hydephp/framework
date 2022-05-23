@@ -10,10 +10,10 @@ use Illuminate\Support\Collection;
  */
 class Author
 {
-    public static function create(string $username, ?string $display_name = null, ?string $website = null): AuthorModel
+    public static function create(string $username, ?string $name = null, ?string $website = null): AuthorModel
     {
         return new AuthorModel($username, [
-            'name' => $display_name,
+            'name' => $name,
             'website'=> $website,
         ]);
     }
