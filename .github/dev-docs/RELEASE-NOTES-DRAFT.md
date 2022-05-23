@@ -25,4 +25,4 @@ The deprecated option named `hyde.docs_directory` has been removed.
 
 Use `docs.output_directory` instead.
 
-The authors.yml has been deprecated, and will be refactored in an upcoming release.
+The authors.yml and related services have been removed. Define authors in the main Hyde config instead.

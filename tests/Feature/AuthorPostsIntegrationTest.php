@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * Test that the config/authors.yml feature works in
+ * Test that the Author feature works in
  * conjunction with the static Post generator.
  *
- * @see AuthorServiceTest
  * @see StaticSiteBuilderPostModuleTest
  */
 class AuthorPostsIntegrationTest extends TestCase
