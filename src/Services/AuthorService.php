@@ -10,6 +10,9 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Contains service methods relating to blog post authors.
+ * 
+ * @deprecated version 0.28.0 as the new Author system
+ * is now simple enough as to not warrant a service class.
  *
  * The YAML service is deprecated, the data will be
  * fetched from the main config instead.
