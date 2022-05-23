@@ -4,7 +4,6 @@ namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\MarkdownPost;
-use Hyde\Framework\Services\AuthorService;
 use Tests\TestCase;
 
 /**
@@ -48,7 +47,7 @@ trait GeneratesPageMetadata
         }
 
         if (isset($this->matter['author'])) {
-            $this->metadata['author'] = AuthorService::getAuthorName($this->matter['author']);
+            $this->metadata['author'] = $this->getAuthorName($this->matter['author']);
         }
 
         if (isset($this->matter['category'])) {
@@ -86,5 +85,21 @@ trait GeneratesPageMetadata
                 }
             }
         }
+    }
+
+    
+    /**
+     * Parse the author name string from front matter with support for both flat and array notation.
+     *
+     * @param  string|array  $author
+     * @return string
+     */
+    protected function getAuthorName(string|array $author): string
+    {
+        if (is_string($author)) {
+            return $author;
+        }
+
+        return $author['name'] ?? $author['username'] ?? 'Guest';
     }
 }
