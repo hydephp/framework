@@ -4,13 +4,12 @@ namespace Hyde\Framework\Models;
 
 /**
  * The Post Author Object Model.
- *
- * The Author is parsed from the config/authors.yml file using the AuthorService class
  */
 class Author
 {
     /**
-     * The username (slug) of the author.
+     * The username of the author.
+     * This is the key used to find authors in the config
      *
      * @var string
      */
@@ -49,7 +48,7 @@ class Author
     }
 
     /**
-     * Get the author's name.
+     * Get the author's preferred name.
      *
      * @see \Tests\Unit\AuthorGetNameTest
      *
