@@ -142,9 +142,9 @@ return [
 
     'authors' => [
         Author::create(
-            'mrhyde', // Required username
-            'Mr. Hyde', // Optional display name
-            'https://hydephp.com' // Optional website URL
+            username: 'mrhyde', // Required username
+            displayName: 'Mr. Hyde', // Optional display name
+            website: 'https://hydephp.com' // Optional website URL
         ),
     ],
 
