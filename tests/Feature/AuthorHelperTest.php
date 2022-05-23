@@ -57,6 +57,25 @@ class AuthorHelperTest extends TestCase
     }
 
     // Test get method returns config defined Author by username
+    public function test_get_method_returns_config_defined_author_by_username()
+    {
+        Config::set('authors', [
+            AuthorHelper::create('foo', 'bar')
+        ]);
+        $author = AuthorHelper::get('foo');
+
+        $this->assertInstanceOf(AuthorModel::class, $author);
+        $this->assertEquals('foo', $author->username);
+        $this->assertEquals('bar', $author->name);
+    }
 
     // Test get method returns new Author if username not found in config
+    public function test_get_method_returns_new_author_if_username_not_found_in_config()
+    {
+        Config::set('authors', []);
+        $author = AuthorHelper::get('foo');
+
+        $this->assertInstanceOf(AuthorModel::class, $author);
+        $this->assertEquals('foo', $author->username);
+    }
 }

@@ -22,4 +22,10 @@ class Author
 	{
 		return new Collection(config('authors', []));
 	}
+
+	static function get(string $username): AuthorModel
+	{
+		return static::all()->firstWhere('username', $username)
+			?? static::create($username);
+	}
 }
