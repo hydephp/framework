@@ -16,8 +16,22 @@ use Illuminate\Support\Collection;
 class AuthorHelperTest extends TestCase
 {
     // Test create method creates new Author model
+    public function test_create_method_creates_new_author_model()
+    {
+        $author = AuthorHelper::create('mr_hyde');
+
+        $this->assertInstanceOf(AuthorModel::class, $author);
+    }
 
     // Test create method accepts all parameters
+    public function test_create_method_accepts_all_parameters()
+    {
+        $author = AuthorHelper::create('mr_hyde', 'Mr Hyde', 'https://mrhyde.com');
+
+        $this->assertEquals('mr_hyde', $author->username);
+        $this->assertEquals('Mr Hyde', $author->name);
+        $this->assertEquals('https://mrhyde.com', $author->website);
+    }
     
     // Test all method returns empty Collection if no Authors are set in config
 
