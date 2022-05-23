@@ -3,6 +3,10 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Hyde\Framework\Helpers\Author as AuthorHelper;
+use Hyde\Framework\Models\Author as AuthorModel;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Collection;
 
 /**
  * Class AuthorHelperTest.
