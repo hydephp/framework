@@ -13,7 +13,7 @@ class Author
 	{
 		return new AuthorModel($username, [
 			'name' => $display_name,
-			'website '=> $website
+			'website'=> $website
 		]);
 	}
 }
