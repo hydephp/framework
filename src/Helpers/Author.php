@@ -4,6 +4,9 @@ namespace Hyde\Framework\Helpers;
 
 use Hyde\Framework\Models\Author as AuthorModel;
 
+/**
+ * @see \Tests\Feature\AuthorHelperTest
+ */
 class Author
 {
 	static function create(string $username, ?string $display_name = null, ?string $website = null): AuthorModel
