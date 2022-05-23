@@ -52,6 +52,20 @@ class AuthorHelperTest extends TestCase
         $this->assertEquals(AuthorHelper::create('foo'), $authors->first());
     }
 
+    public function test_multiple_authors_can_be_defined_in_config()
+    {
+        Config::set('authors', [
+            AuthorHelper::create('foo'),
+            AuthorHelper::create('bar'),
+        ]);
+        $authors = AuthorHelper::all();
+
+        $this->assertInstanceOf(Collection::class, $authors);
+        $this->assertCount(2, $authors);
+        $this->assertEquals(AuthorHelper::create('foo'), $authors->first());
+        $this->assertEquals(AuthorHelper::create('bar'), $authors->last());
+    }
+
     public function test_get_method_returns_config_defined_author_by_username()
     {
         Config::set('authors', [
