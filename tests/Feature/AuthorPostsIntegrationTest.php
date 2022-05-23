@@ -3,34 +3,24 @@
 namespace Tests\Feature;
 
 use Hyde\Framework\Actions\CreatesNewMarkdownPostFile;
+use Hyde\Framework\Helpers\Author;
 use Hyde\Framework\Hyde;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 /**
- * Test that the config/authors.yml feature works in
+ * Test that the Author feature works in
  * conjunction with the static Post generator.
  *
- * @see AuthorServiceTest
  * @see StaticSiteBuilderPostModuleTest
  */
 class AuthorPostsIntegrationTest extends TestCase
 {
-    /**
-     * Set up the test environment.
-     *
-     * @return void
-     */
-    public function test_setup_integration_test_environment()
+    protected function setUp(): void
     {
-        // If an authors.yml file exists, back it up.
-        if (file_exists(Hyde::path('config/authors.yml')) && ! file_exists(Hyde::path('config/authors.yml.bak'))) {
-            copy(Hyde::path('config/authors.yml'), Hyde::path('config/authors.yml.bak'));
-        }
+        parent::setUp();
 
-        // Create a new authors.yml file.
-        file_put_contents(Hyde::path('config/authors.yml'), "authors:\n");
-
-        $this->assertTrue(true);
+        Config::set('authors', []);
     }
 
     /**
@@ -86,13 +76,9 @@ class AuthorPostsIntegrationTest extends TestCase
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
 
-        // Add the author to the authors.yml file
-        file_put_contents(
-            Hyde::path('config/authors.yml'),
-            'authors:
-  test_named_author:
-    name: Test Author'
-        );
+        Config::set('authors', [
+            Author::create('test_named_author', 'Test Author'),
+        ]);
 
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
@@ -128,15 +114,9 @@ class AuthorPostsIntegrationTest extends TestCase
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
 
-        // Add the author to the authors.yml file
-        file_put_contents(
-            Hyde::path('config/authors.yml'),
-            'authors:
-  test_author_with_website:
-    name: Test Author
-    website: https://example.org
-'
-        );
+        Config::set('authors', [
+            Author::create('test_author_with_website', 'Test Author', 'https://example.org'),
+        ]);
 
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
@@ -160,24 +140,5 @@ class AuthorPostsIntegrationTest extends TestCase
         // Remove the test files
         unlink(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
         unlink(Hyde::path('_site/posts/test-2dcbb2c-post-with-defined-author-with-name.html'));
-    }
-
-    /**
-     * Tear down the test environment.
-     *
-     * @return void
-     */
-    public function test_teardown_integration_test_environment()
-    {
-        // Remove the test authors.yml file.
-        unlink(Hyde::path('config/authors.yml'));
-
-        // If an authors.yml backup exists, restore it.
-        if (file_exists(Hyde::path('config/authors.yml.bak'))) {
-            copy(Hyde::path('config/authors.yml.bak'), Hyde::path('config/authors.yml'));
-            unlink(Hyde::path('config/authors.yml.bak'));
-        }
-
-        $this->assertTrue(true);
     }
 }
