@@ -3,9 +3,13 @@
 namespace Tests\Unit;
 
 use DateTime;
+use Hyde\Framework\Exceptions\CouldNotParseDateStringException;
 use Hyde\Framework\Models\DateString;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Hyde\Framework\Models\DateString
+ */
 class DateStringTest extends TestCase
 {
     // Test it can parse a date string
@@ -41,5 +45,12 @@ class DateStringTest extends TestCase
     {
         $dateString = new DateString('2020-01-01 UTC');
         $this->assertEquals('Jan 1st, 2020', $dateString->short);
+    }
+
+    // Test it handles invalid date strings
+    public function test_it_handles_invalid_date_strings()
+    {
+        $this->expectException(CouldNotParseDateStringException::class);
+        new DateString('foo bar');
     }
 }

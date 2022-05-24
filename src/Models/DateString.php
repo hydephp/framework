@@ -3,9 +3,11 @@
 namespace Hyde\Framework\Models;
 
 use DateTime;
+use Hyde\Framework\Exceptions\CouldNotParseDateStringException;
 
 /**
  * Parse a date string and create normalized formats.
+ * @see \Tests\Unit\DateStringTest
  */
 class DateString
 {
@@ -25,15 +27,18 @@ class DateString
     public string $short;
 
     /**
-     * @param  string  $string
-     *
-     * @throws \Exception
+     * @param string $string
+     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException 
      */
     public function __construct(string $string)
     {
         $this->string = $string;
 
-        $this->dateTimeObject = new DateTime($this->string);
+        try {
+            $this->dateTimeObject = new DateTime($this->string);
+        } catch (\Exception $e) {
+            throw new CouldNotParseDateStringException($e->getMessage());
+        }
 
         $this->datetime = $this->dateTimeObject->format('c');
         $this->sentence = $this->dateTimeObject->format('l M jS, Y, \a\t g:ia');

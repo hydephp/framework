@@ -14,7 +14,7 @@ trait HasDateString
     public ?DateString $date = null;
 
     /**
-     * @throws \Exception
+     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException
      */
     public function constructDateString(): void
     {
