@@ -2,18 +2,20 @@
 
 namespace Hyde\Framework\Concerns;
 
-use Exception;
+use Hyde\Framework\Exceptions\FileNotFoundException;
 use Hyde\Framework\Hyde;
 
 /**
  * Validate the existence of a Page model's source file.
+ *
+ * @see \Tests\Unit\ValidatesExistenceTest
  */
 trait ValidatesExistence
 {
     /**
      * Check if a supplied source file exists or throw an exception.
      *
-     * @throws Exception If the file does not exist.
+     * @throws FileNotFoundException If the file does not exist.
      */
     public function validateExistence(string $model, string $slug): void
     {
@@ -22,7 +24,7 @@ trait ValidatesExistence
             $slug.$model::$fileExtension;
 
         if (! file_exists(Hyde::path($filepath))) {
-            throw new Exception("File $filepath not found.", 404);
+            throw new FileNotFoundException("File $filepath not found.", 404);
         }
     }
 }
