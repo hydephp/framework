@@ -132,12 +132,12 @@ class CreatesNewPageSourceFileTest extends TestCase
     {
         $this->assertEquals(
             Hyde::path('_pages/682072b-test-page.md'),
-            (new CreatesNewPageSourceFile('682072b Test Page'))->path
+            (new CreatesNewPageSourceFile('682072b Test Page'))->outputPath
         );
 
         $this->assertEquals(
             Hyde::path('_pages/682072b-test-page.blade.php'),
-            (new CreatesNewPageSourceFile('682072b Test Page', BladePage::class))->path
+            (new CreatesNewPageSourceFile('682072b Test Page', BladePage::class))->outputPath
         );
     }
 }

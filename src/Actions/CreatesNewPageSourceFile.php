@@ -2,7 +2,6 @@
 
 namespace Hyde\Framework\Actions;
 
-use Exception;
 use Hyde\Framework\Exceptions\FileConflictException;
 use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Framework\Hyde;
@@ -18,32 +17,10 @@ use Illuminate\Support\Str;
  */
 class CreatesNewPageSourceFile
 {
-    /**
-     * The Page title.
-     *
-     * @var string
-     */
     public string $title;
-
-    /**
-     * The Page slug.
-     */
     public string $slug;
+    public string $outputPath;
 
-    /**
-     * The file path.
-     */
-    public string $path;
-
-    /**
-     * Construct the class.
-     *
-     * @param  string  $title  - The page title, will be used to generate the slug
-     * @param  string  $type  - The page type, FQDN of the page class
-     * @param  bool  $force  - Overwrite any existing files?
-     *
-     * @throws Exception if the page type is not supported or the file already exists
-     */
     public function __construct(string $title, string $type = MarkdownPage::class, public bool $force = false)
     {
         $this->title = $title;
@@ -52,11 +29,7 @@ class CreatesNewPageSourceFile
         $this->createPage($type);
     }
 
-    /**
-     * Check if the file can be saved.
-     *
-     * @throws FileConflictException if the file already exists and cannot be overwritten
-     */
+
     public function canSaveFile(string $path): void
     {
         if (file_exists($path) && ! $this->force) {
@@ -64,13 +37,6 @@ class CreatesNewPageSourceFile
         }
     }
 
-    /**
-     * Create the page.
-     *
-     * @param  string  $type  FQDN of the page class
-     *
-     * @throws UnsupportedPageTypeException if the page type is not supported
-     */
     public function createPage(string $type): int|false
     {
         if ($type === MarkdownPage::class) {
@@ -87,36 +53,26 @@ class CreatesNewPageSourceFile
         throw new UnsupportedPageTypeException('The page type must be either "markdown", "blade", or "documentation"');
     }
 
-    /**
-     * Create the Markdown file.
-     *
-     * @throws FileConflictException if the file cannot be saved.
-     */
     public function createMarkdownFile(): int|false
     {
-        $this->path = Hyde::path("_pages/$this->slug.md");
+        $this->outputPath = Hyde::path("_pages/$this->slug.md");
 
-        $this->canSaveFile($this->path);
+        $this->canSaveFile($this->outputPath);
 
         return file_put_contents(
-            $this->path,
+            $this->outputPath,
             "---\ntitle: $this->title\n---\n\n# $this->title\n"
         );
     }
 
-    /**
-     * Create the Blade file.
-     *
-     * @throws FileConflictException if the file cannot be saved.
-     */
     public function createBladeFile(): int|false
     {
-        $this->path = Hyde::path("_pages/$this->slug.blade.php");
+        $this->outputPath = Hyde::path("_pages/$this->slug.blade.php");
 
-        $this->canSaveFile($this->path);
+        $this->canSaveFile($this->outputPath);
 
         return file_put_contents(
-            $this->path,
+            $this->outputPath,
             <<<EOF
 @extends('hyde::layouts.app')
 @section('content')
@@ -132,19 +88,14 @@ EOF
         );
     }
 
-    /**
-     * Create the Documentation file.
-     *
-     * @throws FileConflictException if the file cannot be saved.
-     */
     public function createDocumentationFile(): int|false
     {
-        $this->path = Hyde::path("_docs/$this->slug.md");
+        $this->outputPath = Hyde::path("_docs/$this->slug.md");
 
-        $this->canSaveFile($this->path);
+        $this->canSaveFile($this->outputPath);
 
         return file_put_contents(
-            $this->path,
+            $this->outputPath,
             "# $this->title\n"
         );
     }
