@@ -7,7 +7,7 @@ use Exception;
 class FileNotFoundException extends Exception
 {
     protected $message = 'File not found.';
-	protected $code = 404;
+    protected $code = 404;
 
     public function __construct(?string $path = null)
     {
