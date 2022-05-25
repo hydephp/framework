@@ -4,6 +4,7 @@ namespace Tests\Feature\Actions;
 
 use Exception;
 use Hyde\Framework\Actions\CreatesNewPageSourceFile;
+use Hyde\Framework\Exceptions\FileConflictException;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
@@ -56,8 +57,8 @@ class CreatesNewPageSourceFileTest extends TestCase
         $path = Hyde::path('_pages/foo.md');
         file_put_contents($path, 'foo');
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("File $path already exists!");
+        $this->expectException(FileConflictException::class);
+        $this->expectExceptionMessage("File already exists: $path");
         $this->expectExceptionCode(409);
 
         new CreatesNewPageSourceFile('foo');

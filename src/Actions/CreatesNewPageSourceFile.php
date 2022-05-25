@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Actions;
 
 use Exception;
+use Hyde\Framework\Exceptions\FileConflictException;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
@@ -53,12 +54,12 @@ class CreatesNewPageSourceFile
     /**
      * Check if the file can be saved.
      *
-     * @throws Exception if the file already exists and cannot be overwritten
+     * @throws FileConflictException if the file already exists and cannot be overwritten
      */
     public function canSaveFile(string $path): void
     {
         if (file_exists($path) && ! $this->force) {
-            throw new Exception("File $path already exists!", 409);
+            throw new FileConflictException($path);
         }
     }
 
@@ -88,7 +89,7 @@ class CreatesNewPageSourceFile
     /**
      * Create the Markdown file.
      *
-     * @throws Exception if the file cannot be saved.
+     * @throws FileConflictException if the file cannot be saved.
      */
     public function createMarkdownFile(): int|false
     {
@@ -105,7 +106,7 @@ class CreatesNewPageSourceFile
     /**
      * Create the Blade file.
      *
-     * @throws Exception if the file cannot be saved.
+     * @throws FileConflictException if the file cannot be saved.
      */
     public function createBladeFile(): int|false
     {
@@ -133,7 +134,7 @@ EOF
     /**
      * Create the Documentation file.
      *
-     * @throws Exception if the file cannot be saved.
+     * @throws FileConflictException if the file cannot be saved.
      */
     public function createDocumentationFile(): int|false
     {

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Commands;
 
 use Exception;
+use Hyde\Framework\Exceptions\FileConflictException;
 use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
@@ -102,8 +103,8 @@ class HydeMakePageCommandTest extends TestCase
     {
         file_put_contents($this->markdownPath, 'This should not be overwritten');
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("File $this->markdownPath already exists!");
+        $this->expectException(FileConflictException::class);
+        $this->expectExceptionMessage("File already exists: $this->markdownPath");
         $this->expectExceptionCode(409);
         $this->artisan('make:page "8450de2 test page"')->assertExitCode(409);
 
