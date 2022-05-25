@@ -24,7 +24,7 @@ trait ValidatesExistence
             $slug.$model::$fileExtension;
 
         if (! file_exists(Hyde::path($filepath))) {
-            throw new FileNotFoundException("File $filepath not found.", 404);
+            throw new FileNotFoundException($filepath);
         }
     }
 }

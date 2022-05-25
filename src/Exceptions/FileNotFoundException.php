@@ -6,5 +6,11 @@ use Exception;
 
 class FileNotFoundException extends Exception
 {
-    //
+    protected $message = 'File not found.';
+	protected $code = 404;
+
+    public function __construct(?string $path = null)
+    {
+        $this->message = $path ? "File not found: {$path}" : $this->message;
+    }
 }
