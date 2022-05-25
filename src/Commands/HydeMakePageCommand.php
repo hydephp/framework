@@ -2,8 +2,8 @@
 
 namespace Hyde\Framework\Commands;
 
-use Exception;
 use Hyde\Framework\Actions\CreatesNewPageSourceFile;
+use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
@@ -50,10 +50,6 @@ class HydeMakePageCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int the exit code of the command.
-     *
-     * @throws Exception if the page type is invalid.
      */
     public function handle(): int
     {
@@ -71,7 +67,7 @@ class HydeMakePageCommand extends Command
 
         $creator = new CreatesNewPageSourceFile($this->title, $this->type, $this->force);
 
-        $this->info("Created file $creator->path");
+        $this->info("Created file $creator->outputPath");
 
         return 0;
     }
@@ -81,7 +77,7 @@ class HydeMakePageCommand extends Command
      *
      * @return void
      *
-     * @throws Exception if the page type is invalid.
+     * @throws UnsupportedPageTypeException if the page type is invalid.
      */
     protected function validateOptions(): void
     {
@@ -104,6 +100,6 @@ class HydeMakePageCommand extends Command
             return;
         }
 
-        throw new Exception("Invalid page type: $type", 400);
+        throw new UnsupportedPageTypeException("Invalid page type: $type", 400);
     }
 }
