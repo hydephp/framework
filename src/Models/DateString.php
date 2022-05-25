@@ -7,6 +7,7 @@ use Hyde\Framework\Exceptions\CouldNotParseDateStringException;
 
 /**
  * Parse a date string and create normalized formats.
+ *
  * @see \Tests\Unit\DateStringTest
  */
 class DateString
@@ -27,8 +28,9 @@ class DateString
     public string $short;
 
     /**
-     * @param string $string
-     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException 
+     * @param  string  $string
+     *
+     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException
      */
     public function __construct(string $string)
     {

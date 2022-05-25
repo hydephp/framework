@@ -12,25 +12,27 @@ use Tests\TestCase;
  */
 class ValidatesExistenceTest extends TestCase
 {
-	public function test_validate_existence_does_nothing_if_file_exists()
-	{
-		$class = new class {
-			use ValidatesExistence;
-		};
+    public function test_validate_existence_does_nothing_if_file_exists()
+    {
+        $class = new class
+        {
+            use ValidatesExistence;
+        };
 
-		$class->validateExistence(BladePage::class, 'index');
+        $class->validateExistence(BladePage::class, 'index');
 
-		$this->assertTrue(true);
-	}
+        $this->assertTrue(true);
+    }
 
-	public function test_validate_existence_throws_file_not_found_exception_if_file_does_not_exist()
-	{
-		$this->expectException(FileNotFoundException::class);
+    public function test_validate_existence_throws_file_not_found_exception_if_file_does_not_exist()
+    {
+        $this->expectException(FileNotFoundException::class);
 
-		$class = new class {
-			use ValidatesExistence;
-		};
+        $class = new class
+        {
+            use ValidatesExistence;
+        };
 
-		$class->validateExistence(BladePage::class, 'not-found');
-	}
+        $class->validateExistence(BladePage::class, 'not-found');
+    }
 }
