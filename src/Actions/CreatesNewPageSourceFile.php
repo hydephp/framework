@@ -29,7 +29,6 @@ class CreatesNewPageSourceFile
         $this->createPage($type);
     }
 
-
     public function canSaveFile(string $path): void
     {
         if (file_exists($path) && ! $this->force) {
