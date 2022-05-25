@@ -22,7 +22,7 @@ class MarkdownPost extends MarkdownDocument
     public static string $parserClass = MarkdownPostParser::class;
 
     /**
-     * @throws \Exception
+     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException
      */
     public function __construct(array $matter, string $body, string $title = '', string $slug = '')
     {

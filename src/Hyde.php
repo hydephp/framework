@@ -53,9 +53,6 @@ class Hyde
         return Str::title(str_replace('-', ' ', ($slug)));
     }
 
-    /**
-     * @throws \Exception
-     */
     public static function getLatestPosts(): Collection
     {
         $collection = new Collection();

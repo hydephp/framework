@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Actions;
 
-use Exception;
 use Hyde\Framework\Actions\CreatesNewPageSourceFile;
+use Hyde\Framework\Exceptions\FileConflictException;
+use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
@@ -45,7 +46,7 @@ class CreatesNewPageSourceFileTest extends TestCase
 
     public function test_that_an_exception_is_thrown_for_invalid_page_type()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(UnsupportedPageTypeException::class);
         $this->expectExceptionMessage('The page type must be either "markdown", "blade", or "documentation"');
 
         (new CreatesNewPageSourceFile('682072b Test Page', 'invalid'));
@@ -56,8 +57,8 @@ class CreatesNewPageSourceFileTest extends TestCase
         $path = Hyde::path('_pages/foo.md');
         file_put_contents($path, 'foo');
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("File $path already exists!");
+        $this->expectException(FileConflictException::class);
+        $this->expectExceptionMessage("File already exists: $path");
         $this->expectExceptionCode(409);
 
         new CreatesNewPageSourceFile('foo');
@@ -131,12 +132,12 @@ class CreatesNewPageSourceFileTest extends TestCase
     {
         $this->assertEquals(
             Hyde::path('_pages/682072b-test-page.md'),
-            (new CreatesNewPageSourceFile('682072b Test Page'))->path
+            (new CreatesNewPageSourceFile('682072b Test Page'))->outputPath
         );
 
         $this->assertEquals(
             Hyde::path('_pages/682072b-test-page.blade.php'),
-            (new CreatesNewPageSourceFile('682072b Test Page', BladePage::class))->path
+            (new CreatesNewPageSourceFile('682072b Test Page', BladePage::class))->outputPath
         );
     }
 }

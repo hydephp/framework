@@ -2,7 +2,7 @@
 
 namespace Hyde\Framework\Actions;
 
-use Exception;
+use Hyde\Framework\Exceptions\FileConflictException;
 use Hyde\Framework\Hyde;
 use Illuminate\Support\Str;
 
@@ -95,14 +95,14 @@ class CreatesNewMarkdownPostFile
      * @param  bool  $force  Should the file be created even if a file with the same path already exists?
      * @return string|false Returns the path to the file if successful, or false if the file could not be saved.
      *
-     * @throws Exception if a file with the same slug already exists and the force flag is not set.
+     * @throws FileConflictException if a file with the same slug already exists and the force flag is not set.
      */
     public function save(bool $force = false): string|false
     {
         $path = Hyde::path("_posts/$this->slug.md");
 
         if ($force !== true && file_exists($path)) {
-            throw new Exception("File at $path already exists! ", 409);
+            throw new FileConflictException($path);
         }
 
         $arrayWithoutSlug = ((array) $this);
