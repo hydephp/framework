@@ -4,6 +4,7 @@ namespace Hyde\Framework\Actions;
 
 use Exception;
 use Hyde\Framework\Exceptions\FileConflictException;
+use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
@@ -68,7 +69,7 @@ class CreatesNewPageSourceFile
      *
      * @param  string  $type  FQDN of the page class
      *
-     * @throws Exception if the page type is not supported
+     * @throws UnsupportedPageTypeException if the page type is not supported
      */
     public function createPage(string $type): int|false
     {
@@ -83,7 +84,7 @@ class CreatesNewPageSourceFile
             return $this->createDocumentationFile();
         }
 
-        throw new Exception('The page type must be either "markdown", "blade", or "documentation"');
+        throw new UnsupportedPageTypeException('The page type must be either "markdown", "blade", or "documentation"');
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Actions;
 
-use Exception;
 use Hyde\Framework\Actions\CreatesNewPageSourceFile;
 use Hyde\Framework\Exceptions\FileConflictException;
+use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
@@ -46,7 +46,7 @@ class CreatesNewPageSourceFileTest extends TestCase
 
     public function test_that_an_exception_is_thrown_for_invalid_page_type()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(UnsupportedPageTypeException::class);
         $this->expectExceptionMessage('The page type must be either "markdown", "blade", or "documentation"');
 
         (new CreatesNewPageSourceFile('682072b Test Page', 'invalid'));
