@@ -7,7 +7,7 @@ use Exception;
 class UnsupportedPageTypeException extends Exception
 {
     protected $message = 'The page type is not supported.';
-	protected $code = 400;
+    protected $code = 400;
 
     public function __construct(?string $page = null)
     {
