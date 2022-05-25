@@ -32,13 +32,9 @@ jobs:
         run: echo "ENV=testing" > .env
       - name: Output debug information
         run: php hyde debug
+        
       - name: Run tests with output coverage reporting
-        run: vendor/bin/pest --coverage
-        env:
-          ENV: testing
-
-      - name: Run tests and save coverage to file
-        run: vendor/bin/pest --coverage-text=report.txt
+        run: vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover build/coverage/clover.xml --coverage-cobertura build/coverage/cobertura.xml --coverage-crap4j build/coverage/crap4j.xml --coverage-xml build/coverage/coverage-xml --log-junit build/junit.xml
         env:
           ENV: testing
 
@@ -47,6 +43,12 @@ jobs:
         with:
           name: "report.txt"
           path: "report.txt"
+        
+      - name: "Publish coverage report to Codecov"
+        uses: codecov/codecov-action@v3
+        with:
+          #token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./build/coverage
 
   hyde-tests:
     needs: test-coverage
