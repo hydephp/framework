@@ -80,6 +80,23 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         );
     }
 
+    // Test it generates a valid JSON 
+    public function test_it_generates_a_valid_JSON()
+    {
+        file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
+        file_put_contents(Hyde::path('_docs/bar.md'), "# Foo\n\n Hello World");
+
+
+        $this->assertEquals(
+            '[{"slug":"bar","title":"Foo"},{"slug":"foo","title":"Bar"}]',
+            (new Action())->generate()->getJson()
+        );
+
+        unlink(Hyde::path('_docs/foo.md'));
+        unlink(Hyde::path('_docs/bar.md'));
+    }
+
+
     // Test it generates a JSON file with a search index
 
     // Test it handles generation even when there are no pages
