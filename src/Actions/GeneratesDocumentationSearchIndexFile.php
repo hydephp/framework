@@ -34,13 +34,15 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
         $this->save();
     }
 
-    public function generate(): void
+    public function generate(): self
     {
         foreach ($this->getSourceFileSlugs() as $page) {
             $this->searchIndex->push(
                 $this->generatePageObject($page)
             );
         }
+
+        return $this;
     }
 
     public function generatePageObject(string $slug): object
@@ -68,8 +70,10 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
         return json_encode($this->getObject());
     }
 
-    public function save(): void
+    public function save(): self
     {
         file_put_contents(Hyde::path(static::$filePath), $this->getJson());
+        
+        return $this;
     }
 }
