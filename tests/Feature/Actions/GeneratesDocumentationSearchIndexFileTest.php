@@ -25,6 +25,42 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         parent::tearDown();
     }
 
+    // Test it generates a JSON file with a search index
+    public function test_it_generates_a_JSON_file_with_a_search_index()
+    {
+        touch(Hyde::path('_docs/foo.md'));
+        touch(Hyde::path('_docs/bar.md'));
+
+        $expected = [
+            [
+                'slug' => 'bar',
+                'title' => 'Bar',
+            ],
+            [
+                'slug' => 'foo',
+                'title' => 'Foo',
+            ],
+        ];
+
+        Action::run();
+        
+        $this->assertEquals(
+            json_encode($expected), file_get_contents(Action::$filePath)
+        );
+
+        unlink(Hyde::path('_docs/foo.md'));
+        unlink(Hyde::path('_docs/bar.md'));
+    }
+
+    // Test it handles generation even when there are no pages
+    public function test_it_handles_generation_even_when_there_are_no_pages()
+    {
+        Action::run();
+
+        $this->assertEquals(
+            '[]', file_get_contents(Action::$filePath)
+        );
+    }
 
     // Test save method saves the file to the correct location.
     public function test_save_method_saves_the_file_to_the_correct_location()
@@ -89,9 +125,4 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
         unlink(Hyde::path('_docs/bar.md'));
     }
-
-
-    // Test it generates a JSON file with a search index
-
-    // Test it handles generation even when there are no pages
 }
