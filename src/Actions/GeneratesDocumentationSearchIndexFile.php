@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 class GeneratesDocumentationSearchIndexFile implements ActionContract
 {
     public Collection $searchIndex;
-    public static string $filePath = '_site/docs/searchIndex.json';
+    public static string $filePath = '_site/docs/search.json';
 
     public static function run(): void
     {

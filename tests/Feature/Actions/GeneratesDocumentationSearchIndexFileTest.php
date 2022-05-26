@@ -64,7 +64,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
     {
         (new Action())->save();
 
-        $this->assertFileExists('_site/docs/searchIndex.json');
+        $this->assertFileExists('_site/docs/search.json');
     }
 
     public function test_generate_page_object_method_generates_a_page_object()
