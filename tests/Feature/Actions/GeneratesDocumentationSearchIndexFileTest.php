@@ -25,7 +25,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         parent::tearDown();
     }
 
-    // Test it generates a JSON file with a search index
     public function test_it_generates_a_JSON_file_with_a_search_index()
     {
         touch(Hyde::path('_docs/foo.md'));
@@ -52,7 +51,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/bar.md'));
     }
 
-    // Test it handles generation even when there are no pages
     public function test_it_handles_generation_even_when_there_are_no_pages()
     {
         Action::run();
@@ -62,7 +60,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         );
     }
 
-    // Test save method saves the file to the correct location.
     public function test_save_method_saves_the_file_to_the_correct_location()
     {
         (new Action())->save();
@@ -70,7 +67,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         $this->assertFileExists('_site/docs/searchIndex.json');
     }
 
-    // Test generatePageObject method generates a page object.
     public function test_generate_page_object_method_generates_a_page_object()
     {
         $expected = new \stdClass;
@@ -86,7 +82,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
     }
 
-    // Test getSourceFileSlugs returns valid array for source files
     public function test_get_source_file_slugs_returns_valid_array_for_source_files()
     {
         touch(Hyde::path('_docs/a.md'));
@@ -102,7 +97,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/c.md'));
     }
 
-    // Test getSourceFileSlugs returns empty array when no source files exists
     public function test_get_source_file_slugs_returns_empty_array_when_no_source_files_exists()
     {
         $this->assertEquals(
@@ -110,7 +104,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         );
     }
 
-    // Test it generates a valid JSON 
     public function test_it_generates_a_valid_JSON()
     {
         file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
