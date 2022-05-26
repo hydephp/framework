@@ -8,7 +8,9 @@ use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to run the Build Process for the DocumentationSearchIndex.
- *
+ * 
+ * @todo Add configuration option to enable/disable this feature.
+ * 
  * @see \Tests\Feature\Commands\HydeBuildSearchCommandTest
  */
 class HydeBuildSearchCommand extends Command
