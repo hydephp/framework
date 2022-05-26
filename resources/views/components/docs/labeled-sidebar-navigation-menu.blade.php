@@ -14,7 +14,7 @@
 				@else
 				<a href="{{ Hyde::pageLink($item->destination . '.html') }}">{{ $item->label }}</a>
 				@endif
-			</li role="listitem">
+			</li>
 			@endforeach
 		</ul>
 	</li>
