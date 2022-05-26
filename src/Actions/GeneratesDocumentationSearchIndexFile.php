@@ -4,6 +4,7 @@ namespace Hyde\Framework\Actions;
 
 use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\Parsers\DocumentationPageParser;
 use Illuminate\Support\Collection;
 
 /**
@@ -43,8 +44,11 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
 
     public function generatePageObject(string $slug): object
     {
+        $page = (new DocumentationPageParser($slug))->get();
+
         return (object) [
-            'slug' => $slug
+            'slug' => $page->slug,
+            'title' => $page->title,
         ];
     }
 
