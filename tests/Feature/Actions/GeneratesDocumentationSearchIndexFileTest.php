@@ -44,8 +44,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
 
         $this->assertEquals(
-            $expected,
-            (new Action())->generatePageObject('foo')
+            $expected, (new Action())->generatePageObject('foo')
         );
 
         unlink(Hyde::path('_docs/foo.md'));
@@ -59,12 +58,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         touch(Hyde::path('_docs/c.md'));
 
         $this->assertEquals(
-            [
-                'a',
-                'b',
-                'c',
-            ],
-            (new Action())->getSourceFileSlugs()
+            ['a', 'b', 'c'], (new Action())->getSourceFileSlugs()
         );
 
         unlink(Hyde::path('_docs/a.md'));
