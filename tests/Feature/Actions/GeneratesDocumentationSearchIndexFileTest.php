@@ -51,6 +51,35 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
     }
 
+    // Test getSourceFileSlugs returns valid array for source files
+    public function test_get_source_file_slugs_returns_valid_array_for_source_files()
+    {
+        touch(Hyde::path('_docs/a.md'));
+        touch(Hyde::path('_docs/b.md'));
+        touch(Hyde::path('_docs/c.md'));
+
+        $this->assertEquals(
+            [
+                'a',
+                'b',
+                'c',
+            ],
+            (new Action())->getSourceFileSlugs()
+        );
+
+        unlink(Hyde::path('_docs/a.md'));
+        unlink(Hyde::path('_docs/b.md'));
+        unlink(Hyde::path('_docs/c.md'));
+    }
+
+    // Test getSourceFileSlugs returns empty array when no source files exists
+    public function test_get_source_file_slugs_returns_empty_array_when_no_source_files_exists()
+    {
+        $this->assertEquals(
+            [], (new Action())->getSourceFileSlugs()
+        );
+    }
+
     // Test it generates a JSON file with a search index
 
     // Test it handles generation even when there are no pages

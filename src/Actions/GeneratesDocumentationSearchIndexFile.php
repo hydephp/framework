@@ -5,6 +5,7 @@ namespace Hyde\Framework\Actions;
 use Hyde\Framework\Contracts\ActionContract;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\DocumentationPageParser;
+use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Collection;
 
 /**
@@ -54,7 +55,7 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
 
     public function getSourceFileSlugs(): array
     {
-        return [];
+        return CollectionService::getDocumentationPageList();
     }
 
     public function getObject(): object
