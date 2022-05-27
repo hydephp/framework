@@ -2,15 +2,15 @@
 
 namespace Hyde\Framework\Commands;
 
-use Hyde\Framework\Hyde;
 use Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile;
+use Hyde\Framework\Hyde;
 use LaravelZero\Framework\Commands\Command;
 
 /**
  * Hyde Command to run the Build Process for the DocumentationSearchIndex.
- * 
+ *
  * @todo Add configuration option to enable/disable this feature.
- * 
+ *
  * @see \Tests\Feature\Commands\HydeBuildSearchCommandTest
  */
 class HydeBuildSearchCommand extends Command
@@ -39,7 +39,7 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
-		GeneratesDocumentationSearchIndexFile::run();
+        GeneratesDocumentationSearchIndexFile::run();
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 

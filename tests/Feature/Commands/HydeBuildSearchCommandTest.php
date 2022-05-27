@@ -10,7 +10,7 @@ use Tests\TestCase;
  */
 class HydeBuildSearchCommandTest extends TestCase
 {
-	public function test_it_creates_the_search_json_file()
+    public function test_it_creates_the_search_json_file()
     {
         unlinkIfExists(Hyde::path('_site/docs/search.json'));
         $this->artisan('build:search')
