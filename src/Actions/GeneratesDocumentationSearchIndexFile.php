@@ -104,6 +104,9 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
      */
     public function getSearchContentForDocument(DocumentationPage $document): string
     {
+        // This is compiles the Markdown body into HTML, and then strips out all
+        // HTML tags to get a plain text version of the body. This takes a long
+        // site, but is the simplest implementation I've found so far.
         return preg_replace('/<(.|\n)*?>/', ' ', Str::markdown($document->body));
     }
 }
