@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Actions;
 
-use Tests\TestCase;
 use Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile as Action;
 use Hyde\Framework\Hyde;
+use Tests\TestCase;
 
 /**
  * @covers \Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile
@@ -42,7 +42,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         ];
 
         Action::run();
-        
+
         $this->assertEquals(
             json_encode($expected), file_get_contents(Action::$filePath)
         );
@@ -70,8 +70,8 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
     public function test_generate_page_object_method_generates_a_page_object()
     {
         $expected = new \stdClass;
-        $expected->slug = "foo";
-        $expected->title = "Bar";
+        $expected->slug = 'foo';
+        $expected->title = 'Bar';
 
         file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
 
@@ -108,7 +108,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
     {
         file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
         file_put_contents(Hyde::path('_docs/bar.md'), "# Foo\n\n Hello World");
-
 
         $this->assertEquals(
             '[{"slug":"bar","title":"Foo"},{"slug":"foo","title":"Bar"}]',
