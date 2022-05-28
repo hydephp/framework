@@ -55,6 +55,7 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
             'slug' => $page->slug,
             'title' => trim($page->findTitleForDocument()),
             'content' => $this->getSearchContentForDocument($page),
+            'destination' => $this->getDestinationForSlug($page->slug),
         ];
     }
 
@@ -108,5 +109,16 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
         // HTML tags to get a plain text version of the body. This takes a long
         // site, but is the simplest implementation I've found so far.
         return preg_replace('/<(.|\n)*?>/', ' ', Str::markdown($document->body));
+    }
+
+    public function getDestinationForSlug(string $slug): string
+    {
+        if ($slug === 'index') {
+            $slug = '';
+        }
+
+        return (config('hyde.pretty_urls', false) === true)
+            ? $slug
+            : $slug.'.html';
     }
 }
