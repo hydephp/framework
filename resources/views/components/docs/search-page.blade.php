@@ -12,6 +12,9 @@
 		background-color: #333;
 		color: #fff;
 	}
+	.dark .hyde-search-context mark.search-highlight {
+		background-color: rgba(255, 255, 0, 0.75);
+	}
 </style>
 
 <div id="hyde-search">
