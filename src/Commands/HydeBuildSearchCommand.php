@@ -56,20 +56,6 @@ class HydeBuildSearchCommand extends Command
             ])->render()
         );
 
-        $this->line(' > Created <info>_site/docs/search.html</> in '.
-        $this->getExecutionTimeInMs($actionTime)."ms\n");
-
-        $actionTime = microtime(true);
-        $this->comment('Generating search widget...');
-
-        file_put_contents(Hyde::path('_site/docs/search-card.html'), 
-            view('hyde::components/docs/search-card')->render()
-        );
-
-        $this->line(' > Created <info>_site/docs/search.html</> in '.
-        $this->getExecutionTimeInMs($actionTime)."ms\n");
-
-
         return 0;
     }
 
