@@ -44,10 +44,16 @@ class HydeBuildSearchCommand extends Command
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
-        $actionTime = microtime(true);
-        $this->comment('Generating search page...');
+        $this->createSearchPage();
+  
+        return 0;
+    }
 
-        // Todo move into action which is run in the build loop
+    protected function createSearchPage(): void
+    {
+        $actionTime = microtime(true);
+
+        $this->comment('Generating search page...');
         file_put_contents(Hyde::path('_site/docs/search.html'),
         view('hyde::layouts.docs')->with([
             'page' => new DocumentationPage([], '', 'Search', 'search'),
@@ -56,7 +62,8 @@ class HydeBuildSearchCommand extends Command
             'currentPage' => 'docs/search',
         ])->render());
 
-        return 0;
+        $this->line(' > Created <info>_site/docs/search.html</> in '.
+        $this->getExecutionTimeInMs($actionTime)."ms\n");
     }
 
     protected function getExecutionTimeInMs(float $timeStart): string
