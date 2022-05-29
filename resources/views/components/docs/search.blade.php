@@ -17,8 +17,6 @@
 		z-index: 250;
 		max-height: 75vh;
 		overflow-y: hidden;
-		display: flex;
-		flex-direction: column;
 	}
 	#search-results {
 		max-height: 60vh;
