@@ -47,6 +47,7 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
         $this->comment('Generating search page...');
 
+        // Todo move into action which is run in the build loop
         file_put_contents(Hyde::path('_site/docs/search.html'),
             view('hyde::layouts/docs')->with([
                 'page' => new DocumentationPage([], '', 'Search', 'search'),
