@@ -1,7 +1,10 @@
-<noscript><style>#searchMenuButton{display:none;}</style></noscript>
+<noscript><style>#searchMenuButton,#searchMenuButtonMobile{display:none;}</style></noscript>
 
 <button id="searchMenuButton" onclick="toggleSearchMenu()" aria-label="Toggle search menu">
 	Search 
+	<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" role="presentation"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</button>
+<button id="searchMenuButtonMobile" onclick="toggleSearchMenu()" aria-label="Toggle search menu">
 	<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" role="presentation"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
 </button>
 @push('scripts')
@@ -72,12 +75,35 @@
 			display: none;
 		}
 	}
+	#searchMenuButtonMobile {
+		display: none;
+	}
 	@media (max-width: 767px)
 	{
 		#searchMenuButton {
 			display: none;
 		}
+		#searchMenuButtonMobile {
+			display: block;
+			position: fixed;
+			bottom: 1rem;
+			right: 1rem;
+			z-index: 50;
+			background: #ddd;
+			fill: #000;
+			border-radius: 50%;
+			padding: 0.5rem;
+			opacity: 0.75;
+		}
+		.dark #searchMenuButtonMobile {
+			background: #374151;
+			fill: #ddd;
+		}
+		#searchMenuButtonMobile:hover {
+			opacity: 1;
+		}
 	}
+	
 </style>
 
 <dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800">
