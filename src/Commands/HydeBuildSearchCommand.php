@@ -49,6 +49,10 @@ class HydeBuildSearchCommand extends Command
         return 0;
     }
 
+    /**
+     * @todo Add configuration option to enable/disable this feature.
+     * @todo Use the config defined output path.
+     */
     protected function createSearchPage(): void
     {
         $actionTime = microtime(true);
