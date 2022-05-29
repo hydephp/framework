@@ -72,5 +72,11 @@ function openSearchMenu() {
 	});
 	document.body.appendChild(backdrop);
 }
+
+document.addEventListener('keydown', (e) => {
+	if (e.key === 'Escape' && searchMenu.hasAttribute('open')) {
+		closeSearchMenu();
+	}
+});
 </script>
 @endpush
