@@ -74,7 +74,7 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
 
     public function getJson(): string
     {
-        return json_encode($this->getObject(), JSON_PRETTY_PRINT);
+        return json_encode($this->getObject());
     }
 
     public function save(): self
