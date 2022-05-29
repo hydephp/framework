@@ -62,6 +62,14 @@ class DocumentationSidebarService implements DocumentationSidebarServiceContract
     }
 
     /**
+     * Get the sorted sidebar created and managed by the service instance.
+     */
+    public function getSortedSidebar(): DocumentationSidebar
+    {
+        return $this->getSidebar()->sortItems();
+    }
+
+    /**
      * Add an item to the sidebar collection.
      */
     public function addItem(DocumentationSidebarItem $item): self
