@@ -70,7 +70,7 @@
 		</article>
 	</main>
 
-	@include('hyde::components.docs.search-button')
+	@include('hyde::components.docs.search')
 
     @include('hyde::layouts.scripts')
 
