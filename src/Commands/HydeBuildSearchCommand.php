@@ -54,7 +54,7 @@ class HydeBuildSearchCommand extends Command
                 'page' => new DocumentationPage([], '', 'Search', 'search'),
                 'title' => 'Search',
                 'markdown' => '<h1>Search the documentation site</h1>
-<style>#searchMenuButton{display:none;}</style>
+<style>#searchMenuButton{display:none;}#search-results{max-height:unset!important;}</style>
 '.view('hyde::components.docs.search-input')->render(),
                 'currentPage' => 'docs/search',
             ])->render()
