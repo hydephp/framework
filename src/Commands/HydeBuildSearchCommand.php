@@ -7,7 +7,6 @@ use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Services\CollectionService;
 use LaravelZero\Framework\Commands\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * Hyde Command to run the Build Process for the DocumentationSearchIndex.
@@ -42,16 +41,16 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
-        $this->line('<fg=gray> > This will take an estimated ' . round($this->guesstimateGenerationTime() / 1000) . ' seconds. Terminal may seem non-responsive.</>');
+        $this->line('<fg=gray> > This will take an estimated '.round($this->guesstimateGenerationTime() / 1000).' seconds. Terminal may seem non-responsive.</>');
         GeneratesDocumentationSearchIndexFile::run();
-        
+
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
         if (config('docs.create_search_page', true)) {
             $this->createSearchPage();
         }
-  
+
         return 0;
     }
 
