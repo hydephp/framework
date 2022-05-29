@@ -49,14 +49,13 @@ class HydeBuildSearchCommand extends Command
 
         // @todo Add Blade support for Documentation pages, and add this
         // as a publishable template. (Or add support for using Blade snippets in Markdown)
-        file_put_contents(Hyde::path('_site/docs/search.html'), 
+        file_put_contents(Hyde::path('_site/docs/search.html'),
             view('hyde::layouts/docs')->with([
                 'page' => new DocumentationPage([], '', 'Search', 'search'),
                 'title' => 'Search',
-                'markdown' => 
-'<h1>Search the documentation site</h1>
+                'markdown' => '<h1>Search the documentation site</h1>
 <style>#searchMenuButton{display:none;}</style>
-' .  view('hyde::components.docs.search-input')->render(),
+'.view('hyde::components.docs.search-input')->render(),
                 'currentPage' => 'docs/search',
             ])->render()
         );
