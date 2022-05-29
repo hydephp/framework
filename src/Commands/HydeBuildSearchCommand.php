@@ -49,7 +49,7 @@ class HydeBuildSearchCommand extends Command
 
         file_put_contents(Hyde::path('_site/docs/search.html'), 
             view('hyde::layouts/docs')->with([
-                'page' => new DocumentationPage([], ''),
+                'page' => new DocumentationPage([], '', 'Search', 'search'),
                 'title' => 'Search',
                 'markdown' => view('hyde::components/docs/search-page')->render(),
                 'currentPage' => 'docs/search',
