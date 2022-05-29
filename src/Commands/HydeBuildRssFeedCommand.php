@@ -58,7 +58,7 @@ class HydeBuildRssFeedCommand extends Command
         return true;
     }
 
-    protected function getExecutionTimeInMs(float $timeStart): float
+    protected function getExecutionTimeInMs(float $timeStart): string
     {
         return number_format(((microtime(true) - $timeStart) * 1000), 2);
     }
