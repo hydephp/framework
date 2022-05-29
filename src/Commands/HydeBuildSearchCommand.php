@@ -51,13 +51,24 @@ class HydeBuildSearchCommand extends Command
             view('hyde::layouts/docs')->with([
                 'page' => new DocumentationPage([], '', 'Search', 'search'),
                 'title' => 'Search',
-                'markdown' => view('hyde::components/docs/search-page')->render(),
+                'markdown' => view('hyde::pages/docs/search')->render(),
                 'currentPage' => 'docs/search',
             ])->render()
         );
 
         $this->line(' > Created <info>_site/docs/search.html</> in '.
         $this->getExecutionTimeInMs($actionTime)."ms\n");
+
+        $actionTime = microtime(true);
+        $this->comment('Generating search widget...');
+
+        file_put_contents(Hyde::path('_site/docs/search-card.html'), 
+            view('hyde::components/docs/search-card')->render()
+        );
+
+        $this->line(' > Created <info>_site/docs/search.html</> in '.
+        $this->getExecutionTimeInMs($actionTime)."ms\n");
+
 
         return 0;
     }
