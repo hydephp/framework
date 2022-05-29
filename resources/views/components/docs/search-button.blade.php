@@ -111,5 +111,12 @@ document.addEventListener('keydown', (e) => {
 		closeSearchMenu();
 	}
 });
+
+document.addEventListener('keypress', (e) => {
+	if (e.key === '/' && !searchMenu.hasAttribute('open')) {
+		e.preventDefault();
+		openSearchMenu();
+	}
+});
 </script>
 @endpush
