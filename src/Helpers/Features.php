@@ -47,6 +47,11 @@ class Features
         return static::enabled(static::documentationPages());
     }
 
+    public static function hasDocumentationSearch(): bool
+    {
+        return static::enabled(static::documentationSearch());
+    }
+
     public static function hasDarkmode(): bool
     {
         return static::enabled(static::darkmode());
@@ -86,6 +91,11 @@ class Features
     public static function documentationPages(): string
     {
         return 'documentation-pages';
+    }
+
+    public static function documentationSearch(): string
+    {
+        return 'documentation-search';
     }
 
     public static function darkmode(): string
