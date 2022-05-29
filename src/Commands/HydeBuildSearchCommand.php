@@ -48,13 +48,14 @@ class HydeBuildSearchCommand extends Command
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
-        $this->createSearchPage();
+        if (config('docs.create_search_page', true)) {
+            $this->createSearchPage();
+        }
   
         return 0;
     }
 
     /**
-     * @todo Add configuration option to enable/disable this feature.
      * @todo Use the config defined output path.
      */
     protected function createSearchPage(): void
