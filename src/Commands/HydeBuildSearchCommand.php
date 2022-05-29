@@ -56,7 +56,6 @@ class HydeBuildSearchCommand extends Command
             'currentPage' => 'docs/search',
         ])->render());
 
-
         return 0;
     }
 
