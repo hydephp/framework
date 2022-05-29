@@ -53,7 +53,10 @@ class HydeBuildSearchCommand extends Command
             view('hyde::layouts/docs')->with([
                 'page' => new DocumentationPage([], '', 'Search', 'search'),
                 'title' => 'Search',
-                'markdown' => view('hyde::pages/docs/search')->render(),
+                'markdown' => 
+'<h1>Search the documentation site</h1>
+<style>#searchMenuButton{display:none;}</style>
+' .  view('hyde::components.docs.search-component')->render(),
                 'currentPage' => 'docs/search',
             ])->render()
         );
