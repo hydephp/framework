@@ -17,6 +17,8 @@
 		z-index: 250;
 		max-height: 75vh;
 		overflow-y: hidden;
+		display: flex;
+		flex-direction: column;
 	}
 	#search-results {
 		max-height: 60vh;
@@ -60,10 +62,23 @@
 	.dark #searchMenuButton svg {
 		fill: white;
 	}
+	#searchMenu footer {
+		font-family: monospace;
+		margin-top: auto;
+		margin-bottom: -0.5rem;
+		line-height: 1rem;
+		text-align: center;
+	}
 </style>
 
 <dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800">
 	@include('hyde::components.docs.search-input')
+	<footer>
+		<small>
+			Press <code><kbd title="Forward slash">/</kbd></code> to open search window.
+			Use <code><kbd title="Escape key">esc</kbd></code> to close.
+		</small>
+	</footer>
 </dialog>
 
 <script>
