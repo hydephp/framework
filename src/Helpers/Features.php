@@ -57,7 +57,8 @@ class Features
 
     public static function hasDocumentationSearch(): bool
     {
-        return static::enabled(static::documentationSearch());
+        return static::enabled(static::documentationSearch())
+            && static::hasDocumentationPages();
     }
 
     public static function hasDarkmode(): bool
