@@ -50,7 +50,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
     }
 
-
     public function test_it_adds_all_files_to_search_index()
     {
         touch(Hyde::path('_docs/foo.md'));
@@ -63,7 +62,6 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/bar.md'));
         unlink(Hyde::path('_docs/baz.md'));
     }
-
 
     public function test_it_handles_generation_even_when_there_are_no_pages()
     {
@@ -126,7 +124,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         file_put_contents(Hyde::path('_docs/bar.md'), "# Foo\n\n Hello World");
 
         $this->assertEquals(
-            '[{"slug":"bar","title":"Foo","content":"Foo \n Hello World","destination":"bar.html"},' .
+            '[{"slug":"bar","title":"Foo","content":"Foo \n Hello World","destination":"bar.html"},'.
             '{"slug":"foo","title":"Bar","content":"Bar \n Hello World","destination":"foo.html"}]',
             (new Action())->generate()->getJson()
         );
