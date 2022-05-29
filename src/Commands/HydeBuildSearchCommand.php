@@ -5,6 +5,7 @@ namespace Hyde\Framework\Commands;
 use Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Services\CollectionService;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -40,14 +41,27 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
+        $this->line('<fg=gray> > This will take an estimated '.round($this->guesstimateGenerationTime() / 1000).' seconds. Terminal may seem non-responsive.</>');
         GeneratesDocumentationSearchIndexFile::run();
+
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
-        $actionTime = microtime(true);
-        $this->comment('Generating search page...');
+        if (config('docs.create_search_page', true)) {
+            $this->createSearchPage();
+        }
 
-        // Todo move into action which is run in the build loop
+        return 0;
+    }
+
+    /**
+     * @todo Use the config defined output path.
+     */
+    protected function createSearchPage(): void
+    {
+        $actionTime = microtime(true);
+
+        $this->comment('Generating search page...');
         file_put_contents(Hyde::path('_site/docs/search.html'),
         view('hyde::layouts.docs')->with([
             'page' => new DocumentationPage([], '', 'Search', 'search'),
@@ -56,7 +70,13 @@ class HydeBuildSearchCommand extends Command
             'currentPage' => 'docs/search',
         ])->render());
 
-        return 0;
+        $this->line(' > Created <info>_site/docs/search.html</> in '.
+        $this->getExecutionTimeInMs($actionTime)."ms\n");
+    }
+
+    protected function guesstimateGenerationTime(): float
+    {
+        return count(CollectionService::getDocumentationPageList()) * 52.5;
     }
 
     protected function getExecutionTimeInMs(float $timeStart): string

@@ -143,6 +143,10 @@ class HydeBuildStaticSiteCommand extends Command
         if (RssFeedService::canGenerateFeed()) {
             Artisan::call('build:rss', outputBuffer: $this->output);
         }
+
+        if (Features::hasDocumentationSearch()) {
+            Artisan::call('build:search', outputBuffer: $this->output);
+        }
     }
 
     /** @internal */

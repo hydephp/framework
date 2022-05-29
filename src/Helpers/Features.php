@@ -19,7 +19,15 @@ class Features
      */
     public static function enabled(string $feature): bool
     {
-        return in_array($feature, config('hyde.features', []));
+        return in_array($feature, config('hyde.features', [
+            static::blogPosts(),
+            static::bladePages(),
+            static::markdownPages(),
+            static::documentationPages(),
+            static::documentationSearch(),
+            static::darkmode(),
+            static::torchlight(),
+        ]));
     }
 
     /**
@@ -45,6 +53,12 @@ class Features
     public static function hasDocumentationPages(): bool
     {
         return static::enabled(static::documentationPages());
+    }
+
+    public static function hasDocumentationSearch(): bool
+    {
+        return static::enabled(static::documentationSearch())
+            && static::hasDocumentationPages();
     }
 
     public static function hasDarkmode(): bool
@@ -86,6 +100,11 @@ class Features
     public static function documentationPages(): string
     {
         return 'documentation-pages';
+    }
+
+    public static function documentationSearch(): string
+    {
+        return 'documentation-search';
     }
 
     public static function darkmode(): string
