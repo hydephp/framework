@@ -131,4 +131,22 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         unlink(Hyde::path('_docs/foo.md'));
         unlink(Hyde::path('_docs/bar.md'));
     }
+
+    public function test_get_destination_for_slug_returns_empty_string_for_index_when_pretty_url_is_enabled()
+    {
+        config(['hyde.pretty_urls' => true]);
+
+        $this->assertEquals(
+            '', (new Action())->getDestinationForSlug('index')
+        );
+    }
+
+    public function test_get_destination_for_slug_returns_pretty_url_when_enabled()
+    {
+        config(['hyde.pretty_urls' => true]);
+
+        $this->assertEquals(
+            'foo', (new Action())->getDestinationForSlug('foo')
+        );
+    }
 }
