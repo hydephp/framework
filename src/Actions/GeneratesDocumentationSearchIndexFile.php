@@ -116,12 +116,11 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
 
     public function getDestinationForSlug(string $slug): string
     {
-        if ($slug === 'index') {
+        if ($slug === 'index' && config('hyde.pretty_urls', false)) {
             $slug = '';
         }
 
         return (config('hyde.pretty_urls', false) === true)
-            ? $slug
-            : $slug.'.html';
+            ? $slug : $slug.'.html';
     }
 }
