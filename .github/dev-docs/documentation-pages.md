@@ -221,5 +221,6 @@ The search works by generating a JSON search index which the JavaScript plugin l
 Two types of search methods are added, one is a full page search screen that will saved to `docs/search.html`.
 <small><blockquote>The full page can be disabled by setting `create_search_page` to `false` in the `docs` config.</blockquote></small>
 
-A button, similar to how Algolia DocSearch works, is added to the page. Opening it will open a dialog modal
-with an integrated search screen. You can also open the dialog using the keyboard shortcut `/`.
+The second method is a button added to the documentation pages, similar to how Algolia DocSearch works.
+Opening it will open a dialog modal with an integrated search screen.
+You can also open the dialog using the keyboard shortcut `/`.
