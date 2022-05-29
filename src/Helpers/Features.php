@@ -19,7 +19,15 @@ class Features
      */
     public static function enabled(string $feature): bool
     {
-        return in_array($feature, config('hyde.features', []));
+        return in_array($feature, config('hyde.features', [
+            static::blogPosts(),
+            static::bladePages(),
+            static::markdownPages(),
+            static::documentationPages(),
+            static::documentationSearch(),
+            static::darkmode(),
+            static::torchlight(),
+        ]));
     }
 
     /**
