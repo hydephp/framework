@@ -40,7 +40,7 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
-        GeneratesDocumentationSearchIndexFile::run();
+        // GeneratesDocumentationSearchIndexFile::run();
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
@@ -49,15 +49,13 @@ class HydeBuildSearchCommand extends Command
 
         // Todo move into action which is run in the build loop
         file_put_contents(Hyde::path('_site/docs/search.html'),
-            view('hyde::layouts/docs')->with([
-                'page' => new DocumentationPage([], '', 'Search', 'search'),
-                'title' => 'Search',
-                'markdown' => '<h1>Search the documentation site</h1>
-<style>#searchMenuButton{display:none;}#search-results{max-height:unset!important;}</style>
-'.view('hyde::components.docs.search-input')->render(),
-                'currentPage' => 'docs/search',
-            ])->render()
-        );
+        view('hyde::layouts.docs')->with([
+            'page' => new DocumentationPage([], '', 'Search', 'search'),
+            'title' => 'Search',
+            'markdown' => view('hyde::pages.documentation-search')->render(),
+            'currentPage' => 'docs/search',
+        ])->render());
+
 
         return 0;
     }
