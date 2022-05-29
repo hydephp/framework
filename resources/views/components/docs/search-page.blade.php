@@ -8,6 +8,9 @@
 		background-color: #eee;
 		color: #000
 	}
+	.hyde-search-context {
+		margin-bottom: 10px;
+	}
 	.dark #search-input {
 		background-color: #333;
 		color: #fff;
