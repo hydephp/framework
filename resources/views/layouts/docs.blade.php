@@ -41,7 +41,6 @@
 					{{ config('docs.title', 'Documentation') }}
 					@endif
 				</strong>
-				@include('hyde::components.docs.search-button')
 				@include('hyde::components.navigation.theme-toggle-button')
 			</div>
 		</header>
@@ -71,8 +70,10 @@
 		</article>
 	</main>
 
+	@include('hyde::components.docs.search-button')
+
     @include('hyde::layouts.scripts')
-	
+
 	<script src="https://cdn.jsdelivr.net/npm/hydesearch@0.2.1/dist/HydeSearch.min.js" defer></script>
 
 	<script>
