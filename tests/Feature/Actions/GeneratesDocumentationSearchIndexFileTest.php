@@ -27,6 +27,9 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
 
     public function test_it_generates_a_JSON_file_with_a_search_index()
     {
+        deleteDirectory(Hyde::path('_docs'));
+        mkdir(Hyde::path('_docs'));
+
         touch(Hyde::path('_docs/foo.md'));
 
         $expected = [
