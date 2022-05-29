@@ -75,6 +75,8 @@ function openSearchMenu() {
 	createBackdrop();
 	createCloseButton();
 
+	document.getElementById('search-input').focus();
+
 	function createBackdrop() {
 		const backdrop = document.createElement('div');
 		backdrop.id = 'searchMenuBackdrop';
