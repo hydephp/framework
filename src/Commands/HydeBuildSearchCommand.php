@@ -4,6 +4,7 @@ namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile;
 use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\DocumentationPage;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -39,9 +40,21 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
-        GeneratesDocumentationSearchIndexFile::run();
+        // GeneratesDocumentationSearchIndexFile::run();
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
+
+        $actionTime = microtime(true);
+        $this->comment('Generating search page...');
+
+        // Todo move into action which is run in the build loop
+        file_put_contents(Hyde::path('_site/docs/search.html'),
+        view('hyde::layouts.docs')->with([
+            'page' => new DocumentationPage([], '', 'Search', 'search'),
+            'title' => 'Search',
+            'markdown' => view('hyde::pages.documentation-search')->render(),
+            'currentPage' => 'docs/search',
+        ])->render());
 
         return 0;
     }
