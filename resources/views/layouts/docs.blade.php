@@ -41,6 +41,7 @@
 					{{ config('docs.title', 'Documentation') }}
 					@endif
 				</strong>
+				@include('hyde::components.docs.search-button')
 				@include('hyde::components.navigation.theme-toggle-button')
 			</div>
 		</header>
