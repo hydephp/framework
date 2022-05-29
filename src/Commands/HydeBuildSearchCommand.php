@@ -40,7 +40,7 @@ class HydeBuildSearchCommand extends Command
         $actionTime = microtime(true);
 
         $this->comment('Generating documentation site search index...');
-        // GeneratesDocumentationSearchIndexFile::run();
+        GeneratesDocumentationSearchIndexFile::run();
         $this->line(' > Created <info>'.GeneratesDocumentationSearchIndexFile::$filePath.'</> in '.
             $this->getExecutionTimeInMs($actionTime)."ms\n");
 
