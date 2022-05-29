@@ -65,13 +65,8 @@ function toggleSearchMenu() {
 function closeSearchMenu() {
 	searchMenu.removeAttribute('open');
 
-	// Remove the backdrop
-	const backdrop = document.getElementById('searchMenuBackdrop');
-	backdrop.remove();
-
-	// Remove the close button
-	const closeButton = document.getElementById('searchMenuCloseButton');
-	closeButton.remove();
+	document.getElementById('searchMenuBackdrop').remove();
+	document.getElementById('searchMenuCloseButton').remove();
 }
 
 function openSearchMenu() {
