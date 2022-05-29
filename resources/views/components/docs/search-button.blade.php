@@ -18,6 +18,10 @@
 	#search-results {
 		max-height: 60vh;
 		overflow-y: auto;
+		margin-top: 1.25em;
+	}
+	#search-status {
+		margin-top: 0;
 	}
 	#searchMenu input {
 		width: 100%;
