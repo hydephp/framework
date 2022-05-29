@@ -72,6 +72,12 @@
 			display: none;
 		}
 	}
+	@media (max-width: 767px)
+	{
+		#searchMenuButton {
+			display: none;
+		}
+	}
 </style>
 
 <dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800">
