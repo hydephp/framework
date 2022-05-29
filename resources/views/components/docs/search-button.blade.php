@@ -15,7 +15,7 @@
 		max-height: 75vh;
 		overflow-y: hidden;
 	}
-	#search-results-list {
+	#search-results {
 		max-height: 60vh;
 		overflow-y: auto;
 	}
