@@ -56,7 +56,7 @@ class HydeBuildSearchCommand extends Command
                 'markdown' => 
 '<h1>Search the documentation site</h1>
 <style>#searchMenuButton{display:none;}</style>
-' .  view('hyde::components.docs.search-component')->render(),
+' .  view('hyde::components.docs.search-input')->render(),
                 'currentPage' => 'docs/search',
             ])->render()
         );

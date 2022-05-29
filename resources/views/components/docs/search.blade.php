@@ -63,7 +63,7 @@
 </style>
 
 <dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800">
-	@include('hyde::components.docs.search-component')
+	@include('hyde::components.docs.search-input')
 </dialog>
 
 <script>
