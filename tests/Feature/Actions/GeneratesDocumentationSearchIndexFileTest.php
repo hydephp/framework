@@ -28,16 +28,13 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
     public function test_it_generates_a_JSON_file_with_a_search_index()
     {
         touch(Hyde::path('_docs/foo.md'));
-        touch(Hyde::path('_docs/bar.md'));
 
         $expected = [
             [
-                'slug' => 'bar',
-                'title' => 'Bar',
-            ],
-            [
                 'slug' => 'foo',
                 'title' => 'Foo',
+                'content' => '',
+                'destination' => 'foo.html',
             ],
         ];
 
@@ -48,8 +45,22 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         );
 
         unlink(Hyde::path('_docs/foo.md'));
-        unlink(Hyde::path('_docs/bar.md'));
     }
+
+
+    public function test_it_adds_all_files_to_search_index()
+    {
+        touch(Hyde::path('_docs/foo.md'));
+        touch(Hyde::path('_docs/bar.md'));
+        touch(Hyde::path('_docs/baz.md'));
+
+        $this->assertCount(3, (new Action())->generate()->searchIndex);
+
+        unlink(Hyde::path('_docs/foo.md'));
+        unlink(Hyde::path('_docs/bar.md'));
+        unlink(Hyde::path('_docs/baz.md'));
+    }
+
 
     public function test_it_handles_generation_even_when_there_are_no_pages()
     {
@@ -72,6 +83,8 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         $expected = new \stdClass;
         $expected->slug = 'foo';
         $expected->title = 'Bar';
+        $expected->content = "Bar \n Hello World";
+        $expected->destination = 'foo.html';
 
         file_put_contents(Hyde::path('_docs/foo.md'), "# Bar\n\n Hello World");
 
@@ -110,7 +123,8 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         file_put_contents(Hyde::path('_docs/bar.md'), "# Foo\n\n Hello World");
 
         $this->assertEquals(
-            '[{"slug":"bar","title":"Foo"},{"slug":"foo","title":"Bar"}]',
+            '[{"slug":"bar","title":"Foo","content":"Foo \n Hello World","destination":"bar.html"},' .
+            '{"slug":"foo","title":"Bar","content":"Bar \n Hello World","destination":"foo.html"}]',
             (new Action())->generate()->getJson()
         );
 
