@@ -44,20 +44,11 @@ jobs:
           name: "report.txt"
           path: "report.txt"
         
-      - name: run ls
-        run: ls
-
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
         with:
           #token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./build/coverage
-
-      - name: Upload the reports as an artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: "reports"
-          path: "build"
 
   hyde-tests:
     needs: test-coverage
