@@ -46,9 +46,9 @@ jobs:
         
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
-        # with:
+        with:
           #token: ${{ secrets.CODECOV_TOKEN }}
-          # directory: ./build/coverage
+          directory: "."
 
   hyde-tests:
     needs: test-coverage
