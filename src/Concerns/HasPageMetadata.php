@@ -38,12 +38,12 @@ trait HasPageMetadata
             .'" />';
         }
 
-        if (method_exists($this, 'findTitleForDocument')) {
+        if (isset($this->title)) {
             if ($this->hasTwitterTitleInConfig()) {
-                $array[] = '<meta name="twitter:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->findTitleForDocument().'" />';
+                $array[] = '<meta name="twitter:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->title.'" />';
             }
             if ($this->hasOpenGraphTitleInConfig()) {
-                $array[] = '<meta property="og:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->findTitleForDocument().'" />';
+                $array[] = '<meta property="og:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->title.'" />';
             }
         }
 

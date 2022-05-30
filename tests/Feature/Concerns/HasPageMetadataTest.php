@@ -298,10 +298,7 @@ class HasPageMetadataTest extends TestCase
         {
             use HasPageMetadata;
 
-            public function findTitleForDocument(): string
-            {
-                return 'bar';
-            }
+            public string $title = 'bar';
         };
 
         $this->assertEquals([
