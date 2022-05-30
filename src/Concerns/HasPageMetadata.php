@@ -9,6 +9,8 @@ use Hyde\Framework\Services\RssFeedService;
 use Hyde\Framework\Services\SitemapService;
 
 /**
+ * @todo Move logic into service class to make it easier to test.
+ *
  * @see \Tests\Feature\Concerns\HasPageMetadataTest
  */
 trait HasPageMetadata
@@ -36,6 +38,15 @@ trait HasPageMetadata
             .' RSS Feed" href="'
             .Hyde::uriPath(RssFeedService::getDefaultOutputFilename())
             .'" />';
+        }
+
+        if (isset($this->title)) {
+            if ($this->hasTwitterTitleInConfig()) {
+                $array[] = '<meta name="twitter:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->title.'" />';
+            }
+            if ($this->hasOpenGraphTitleInConfig()) {
+                $array[] = '<meta property="og:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->title.'" />';
+            }
         }
 
         if ($this instanceof MarkdownPost) {
@@ -88,5 +99,15 @@ trait HasPageMetadata
         }
 
         return false;
+    }
+
+    public function hasTwitterTitleInConfig(): bool
+    {
+        return str_contains(json_encode(config('hyde.meta', [])), 'twitter:title');
+    }
+
+    public function hasOpenGraphTitleInConfig(): bool
+    {
+        return str_contains(json_encode(config('hyde.meta', [])), 'og:title');
     }
 }

@@ -232,4 +232,79 @@ class HasPageMetadataTest extends TestCase
             $page->getDynamicMetadata()
         );
     }
+
+    public function test_has_twitter_title_in_config_returns_true_when_present_in_config()
+    {
+        config(['hyde.meta' => [
+            Meta::name('twitter:title', 'foo'),
+        ]]);
+
+        $page = new class
+        {
+            use HasPageMetadata;
+        };
+
+        $this->assertTrue($page->hasTwitterTitleInConfig());
+    }
+
+    public function test_has_twitter_title_in_config_returns_false_when_not_present_in_config()
+    {
+        config(['hyde.meta' => []]);
+
+        $page = new class
+        {
+            use HasPageMetadata;
+        };
+
+        $this->assertFalse($page->hasTwitterTitleInConfig());
+    }
+
+    public function test_has_open_graph_title_in_config_returns_true_when_present_in_config()
+    {
+        config(['hyde.meta' => [
+            Meta::property('title', 'foo'),
+        ]]);
+
+        $page = new class
+        {
+            use HasPageMetadata;
+        };
+
+        $this->assertTrue($page->hasOpenGraphTitleInConfig());
+    }
+
+    public function test_has_open_graph_title_in_config_returns_false_when_not_present_in_config()
+    {
+        config(['hyde.meta' => []]);
+
+        $page = new class
+        {
+            use HasPageMetadata;
+        };
+
+        $this->assertFalse($page->hasOpenGraphTitleInConfig());
+    }
+
+    // Test meta titles can be dynamically added and override defaults
+    public function test_get_dynamic_metadata_adds_twitter_and_open_graph_title_when_conditions_are_met()
+    {
+        config(['hyde.meta' => [
+            Meta::name('twitter:title', 'foo'),
+            Meta::property('title', 'foo'),
+        ]]);
+
+        $page = new class extends AbstractPage
+        {
+            use HasPageMetadata;
+
+            public string $title = 'bar';
+        };
+
+        $this->assertEquals([
+            '<meta name="twitter:title" content="HydePHP - bar" />',
+            '<meta property="og:title" content="HydePHP - bar" />',
+        ],
+            $page->getDynamicMetadata()
+        );
+    }
 }
