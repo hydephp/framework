@@ -293,7 +293,6 @@ class HasPageMetadataTest extends TestCase
             Meta::property('title', 'foo'),
         ]]);
 
-
         $page = new class extends AbstractPage
         {
             use HasPageMetadata;

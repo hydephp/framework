@@ -10,6 +10,7 @@ use Hyde\Framework\Services\SitemapService;
 
 /**
  * @todo Move logic into service class to make it easier to test.
+ *
  * @see \Tests\Feature\Concerns\HasPageMetadataTest
  */
 trait HasPageMetadata
