@@ -34,7 +34,7 @@ jobs:
         run: php hyde debug
         
       - name: Run tests with output coverage reporting
-        run: vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover clover.xml --coverage-cobertura cobertura.xml --coverage-crap4j crap4j.xml --coverage-xml coverage-xml --log-junit build/junit.xml
+        run: vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover build/coverage/clover.xml --coverage-cobertura build/coverage/cobertura.xml --coverage-crap4j build/coverage/crap4j.xml --coverage-xml build/coverage/coverage-xml --log-junit build/junit.xml
         env:
           ENV: testing
 
@@ -44,11 +44,20 @@ jobs:
           name: "report.txt"
           path: "report.txt"
         
+      - name: run ls
+        run: ls
+
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
         with:
           #token: ${{ secrets.CODECOV_TOKEN }}
-          directory: "."
+          directory: ./build/coverage
+
+      - name: Upload the reports as an artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: "reports"
+          path: "build"
 
   hyde-tests:
     needs: test-coverage
