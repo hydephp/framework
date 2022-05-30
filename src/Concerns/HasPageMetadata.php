@@ -38,6 +38,15 @@ trait HasPageMetadata
             .'" />';
         }
 
+        if (method_exists($this, 'findTitleForDocument')) {
+            if ($this->hasTwitterTitleInConfig()) {
+                $array[] = '<meta name="twitter:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->findTitleForDocument().'" />';
+            }
+            if ($this->hasOpenGraphTitleInConfig()) {
+                $array[] = '<meta property="og:title" content="'.config('hyde.name', 'HydePHP').' - '.$this->findTitleForDocument().'" />';
+            }
+        }
+
         if ($this instanceof MarkdownPost) {
             // Temporarily merge data with GeneratesPageMetadata trait for compatibility
             $array[] = "\n<!-- Blog Post Meta Tags -->";
@@ -88,5 +97,15 @@ trait HasPageMetadata
         }
 
         return false;
+    }
+
+    public function hasTwitterTitleInConfig(): bool
+    {
+        return str_contains(json_encode(config('hyde.meta', [])), 'twitter:title');
+    }
+
+    public function hasOpenGraphTitleInConfig(): bool
+    {
+        return str_contains(json_encode(config('hyde.meta', [])), 'og:title');
     }
 }
