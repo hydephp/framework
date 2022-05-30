@@ -31,6 +31,8 @@ class GeneratesDocumentationSearchIndexFile implements ActionContract
     public function __construct()
     {
         $this->searchIndex = new Collection();
+
+        static::$filePath = '_site/'.config('docs.output_directory', 'docs').'/search.json';
     }
 
     public function execute(): void

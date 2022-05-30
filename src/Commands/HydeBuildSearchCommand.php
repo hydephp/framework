@@ -54,23 +54,20 @@ class HydeBuildSearchCommand extends Command
         return 0;
     }
 
-    /**
-     * @todo Use the config defined output path.
-     */
     protected function createSearchPage(): void
     {
         $actionTime = microtime(true);
 
         $this->comment('Generating search page...');
-        file_put_contents(Hyde::path('_site/docs/search.html'),
+        file_put_contents(Hyde::path('_site/'.config('docs.output_directory', 'docs').'/search.html'),
         view('hyde::layouts.docs')->with([
             'page' => new DocumentationPage([], '', 'Search', 'search'),
             'title' => 'Search',
             'markdown' => view('hyde::pages.documentation-search')->render(),
-            'currentPage' => 'docs/search',
+            'currentPage' => ''.config('docs.output_directory', 'docs').'/search',
         ])->render());
 
-        $this->line(' > Created <info>_site/docs/search.html</> in '.
+        $this->line(' > Created <info>_site/'.config('docs.output_directory', 'docs').'/search.html</> in '.
         $this->getExecutionTimeInMs($actionTime)."ms\n");
     }
 
