@@ -20,4 +20,4 @@ comment:
   require_changes: no
 
 fixes:
-  - "/home/runner/work/framework/::"
+  - "/home/runner/work/framework/framework/::"
