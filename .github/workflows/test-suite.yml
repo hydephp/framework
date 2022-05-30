@@ -34,7 +34,7 @@ jobs:
         run: php hyde debug
         
       - name: Run tests with output coverage reporting
-        run: vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover build/coverage/clover.xml --coverage-cobertura build/coverage/cobertura.xml --coverage-crap4j build/coverage/crap4j.xml --coverage-xml build/coverage/coverage-xml --log-junit build/junit.xml
+        run: vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover clover.xml --coverage-cobertura cobertura.xml --coverage-crap4j crap4j.xml --coverage-xml coverage-xml --log-junit build/junit.xml
         env:
           ENV: testing
 
@@ -46,9 +46,9 @@ jobs:
         
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
-        with:
+        # with:
           #token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./build/coverage
+          # directory: ./build/coverage
 
   hyde-tests:
     needs: test-coverage
