@@ -51,4 +51,11 @@ class BladeDownServiceTest extends TestCase
     {
         $this->assertEquals('Hello World!', BladeDownService::render('[Blade]:{{ "Hello World!" }}'));
     }
+
+    // Test directive is ignored if it's not at the start of a line
+    public function test_directive_is_ignored_if_it_is_not_at_the_start_of_a_line()
+    {
+        $this->assertEquals('Example: [Blade]: {{ "Hello World!" }}',
+            BladeDownService::render('Example: [Blade]: {{ "Hello World!" }}'));
+    }
 }
