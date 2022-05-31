@@ -2,7 +2,9 @@
 
 namespace Hyde\Framework\Services\Markdown\Shortcodes;
 
-class ColoredBlockquote implements \Hyde\Framework\Contracts\MarkdownShortcodeContract
+use Hyde\Framework\Contracts\MarkdownShortcodeContract;
+
+class ColoredBlockquote implements MarkdownShortcodeContract
 {
     public static function signature(): string
     {
