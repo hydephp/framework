@@ -30,11 +30,10 @@ class BladeDownService
     public function process(): self
     {
         $this->output = implode("\n", array_map(function ($line) {
-			if (str_starts_with($line, '[Blade]:')) {
-				return $this->processLine($line);
-			}
-            return $line;
-		}, explode("\n", $this->html)));
+            return str_starts_with($line, '[Blade]:')
+                ? $this->processLine($line)
+                : $line;
+        }, explode("\n", $this->html)));
 
         return $this;
     }
