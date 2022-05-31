@@ -17,5 +17,28 @@ use Hyde\Framework\Hyde;
  */
 class BladeDownService
 {
-	//
+    protected string $html;
+    protected string $output;
+
+    public function __construct(string $html)
+    {
+        $this->html = $html;
+    }
+
+    public function process(): self
+    {
+        $this->output = $this->html;
+
+        return $this;
+    }
+
+    public function get(): string
+    {
+        return $this->output;
+    }
+
+    public static function render(string $html): string
+    {
+        return (new static($html))->process()->get();
+	}
 }
