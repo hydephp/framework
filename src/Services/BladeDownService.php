@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Blade;
  * Works on a line-by-line basis by searching for a line starting with the directive.
  * The preprocessor expands the directive to an HTML comment. The post-processor parses it.
  * 
- * Note that optional supplied data is global to the entire file/page. 
- * 
  * @example: [Blade]: {{ time() }}
  * @example: [Blade]: @include('path/to/view.blade.php')
  * 
