@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Services\Markdown\Shortcodes;
 
 /**
- * @see \Tests\Unit\Markdown\Shortcodes\InfoColoredBlockquoteTest
+ * @see \Tests\Feature\ColoredBlockquoteShortcodesTest
  */
 class InfoColoredBlockquote extends AbstractColoredBlockquote
 {

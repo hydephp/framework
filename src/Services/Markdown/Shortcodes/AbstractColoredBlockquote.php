@@ -4,6 +4,9 @@ namespace Hyde\Framework\Services\Markdown\Shortcodes;
 
 use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 
+/**
+ * @see \Tests\Feature\ColoredBlockquoteShortcodesTest
+ */
 abstract class AbstractColoredBlockquote implements MarkdownShortcodeContract
 {
     protected static string $signature = '>color';
