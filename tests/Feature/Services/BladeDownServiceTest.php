@@ -46,12 +46,6 @@ class BladeDownServiceTest extends TestCase
         $this->assertEquals('Hello World!', BladeDownService::render('[blade]: {{ "Hello World!" }}'));
     }
 
-    // Test space after directive is optional
-    public function test_space_after_directive_is_optional()
-    {
-        $this->assertEquals('Hello World!', BladeDownService::render('[Blade]:{{ "Hello World!" }}'));
-    }
-
     // Test directive is ignored if it's not at the start of a line
     public function test_directive_is_ignored_if_it_is_not_at_the_start_of_a_line()
     {
