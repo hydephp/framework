@@ -12,8 +12,10 @@ use Hyde\Framework\Hyde;
  * @example: [Blade]: @include('path/to/view.blade.php')
  * @example: [Blade]: @php(echo 'Hello World!')
  * @example: [Blade]: {{ time() }}
+ * 
+ * @see \Tests\Feature\Services\BladeDownServiceTest
  */
 class BladeDownService
 {
-	
+	//
 }
