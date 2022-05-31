@@ -17,7 +17,7 @@ class BladeDownServiceTest extends TestCase
     {
         $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: {{ "Hello World!" }}'));
     }
-    
+
     // Test it renders Blade within multiline Markdown
     public function test_it_renders_blade_within_multiline_markdown()
     {
@@ -34,9 +34,9 @@ class BladeDownServiceTest extends TestCase
         file_put_contents(resource_path(
             'views/hello.blade.php'
         ), 'Hello World!');
-     
+
         $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: @include("hello")'));
-     
+
         unlink(resource_path('views/hello.blade.php'));
     }
 
@@ -65,9 +65,9 @@ class BladeDownServiceTest extends TestCase
         file_put_contents(resource_path(
             'views/hello.blade.php'
         ), 'Hello {{ $name }}!');
-     
+
         $this->assertEquals('Hello John!', BladeDownService::render('[Blade]: @include("hello", ["name" => "John"])'));
-     
+
         unlink(resource_path('views/hello.blade.php'));
     }
 }
