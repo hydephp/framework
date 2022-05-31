@@ -19,4 +19,17 @@ abstract class AbstractColoredBlockquote implements MarkdownShortcodeContract
 			? static::expand($input)
 			: $input;
 	}
+
+    protected static function expand(string $input): string
+    {
+        return sprintf('<blockquote class="%s">%s</blockquote>',
+            static::getClassNameFromSignature(static::signature()),
+            trim(substr($input, strlen(static::signature())), ' ')
+        );
+    }
+
+    protected static function getClassNameFromSignature(string $signature): string
+    {
+        return str_replace('>', '', $signature);
+    }
 }
