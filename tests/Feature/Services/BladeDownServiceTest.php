@@ -59,6 +59,12 @@ class BladeDownServiceTest extends TestCase
             BladeDownService::render('Example: [Blade]: {{ "Hello World!" }}'));
     }
 
+    // Test it renders Blade echo syntax with variables
+    public function test_it_renders_blade_echo_syntax_with_variables()
+    {
+        $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: {{ $foo }}', ['foo' => 'Hello World!']));
+    }
+
     // Test it renders Blade views with variables
     public function test_it_renders_blade_views_with_variables()
     {

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Blade;
  * The reason it's a post processor and not a pre-processor is so that it does not
  * interfere with the Markdown parser.
  * 
+ * Note that optional supplied data is global to the entire file/page. 
+ * 
  * @example: [Blade]: {{ time() }}
  * @example: [Blade]: @include('path/to/view.blade.php')
  * 
@@ -22,9 +24,12 @@ class BladeDownService
     protected string $html;
     protected string $output;
 
-    public function __construct(string $html)
+	protected array $pageData = [];
+
+    public function __construct(string $html, ?array $pageData = [])
     {
         $this->html = $html;
+		$this->pageData = $pageData;
     }
 
     public function process(): self
@@ -43,9 +48,9 @@ class BladeDownService
         return $this->output;
     }
 
-    public static function render(string $html): string
+    public static function render(string $html, ?array $pageData = []): string
     {
-        return (new static($html))->process()->get();
+        return (new static($html, $pageData))->process()->get();
 	}
 
     protected function lineStartsWithDirective(string $line): bool
@@ -55,6 +60,6 @@ class BladeDownService
 
     protected function processLine(string $line): string
     {
-        return Blade::render(substr($line, 8));
+        return Blade::render(substr($line, 8), $this->pageData);
     }
 }
