@@ -98,7 +98,7 @@ class MarkdownConverterService
     protected function runPreprocessing(): void
     {
         // Run any pre-processing actions
-        if (config('markdown.enable_blade', true)) {
+        if (config('markdown.enable_blade', false)) {
             $this->markdown = BladeDownService::preprocess($this->markdown);
         }
     }
@@ -110,7 +110,7 @@ class MarkdownConverterService
             $this->html .= $this->injectTorchlightAttribution();
         }
 
-        if (config('markdown.enable_blade', true)) {
+        if (config('markdown.enable_blade', false)) {
             $this->html = (new BladeDownService($this->html))->process()->get();
         }
     }

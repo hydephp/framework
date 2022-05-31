@@ -63,4 +63,18 @@ class MarkdownConverterServiceTest extends TestCase
         $this->assertStringContainsString('Syntax highlighting by <a href="https://torchlight.dev/" '
                 .'rel="noopener nofollow">Torchlight.dev</a>', $html);
     }
+
+    public function test_bladedown_is_not_enabled_by_default()
+    {
+        $service = new MarkdownConverterService('[Blade]: {{ "Hello World!" }}');
+        $this->assertEquals("<p>[Blade]: {{ &quot;Hello World!&quot; }}</p>\n", $service->parse());
+    }
+
+    public function test_bladedown_can_be_enabled()
+    {
+        config(['markdown.enable_blade' => true]);
+        $service = new MarkdownConverterService('[Blade]: {{ "Hello World!" }}');
+        $service->addFeature('bladedown')->parse();
+        $this->assertEquals("Hello World!\n", $service->parse());
+    }
 }
