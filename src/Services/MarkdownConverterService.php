@@ -4,6 +4,7 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
+use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
@@ -101,6 +102,8 @@ class MarkdownConverterService
         if (config('markdown.enable_blade', false)) {
             $this->markdown = BladeDownService::preprocess($this->markdown);
         }
+
+        $this->markdown = ShortcodeProcessor::process($this->markdown);
     }
 
     protected function runPostProcessing(): void
