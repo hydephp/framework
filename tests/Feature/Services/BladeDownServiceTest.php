@@ -58,4 +58,16 @@ class BladeDownServiceTest extends TestCase
         $this->assertEquals('Example: [Blade]: {{ "Hello World!" }}',
             BladeDownService::render('Example: [Blade]: {{ "Hello World!" }}'));
     }
+
+    // Test it renders Blade views with variables
+    public function test_it_renders_blade_views_with_variables()
+    {
+        file_put_contents(resource_path(
+            'views/hello.blade.php'
+        ), 'Hello {{ $name }}!');
+     
+        $this->assertEquals('Hello John!', BladeDownService::render('[Blade]: @include("hello", ["name" => "John"])'));
+     
+        unlink(resource_path('views/hello.blade.php'));
+    }
 }
