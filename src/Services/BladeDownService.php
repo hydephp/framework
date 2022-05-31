@@ -9,9 +9,8 @@ use Hyde\Framework\Hyde;
  * 
  * Works on a line-by-line basis by searching for a line starting with the directive.
  * 
- * @example: [Blade]: @include('path/to/view.blade.php')
- * @example: [Blade]: @php(echo 'Hello World!')
  * @example: [Blade]: {{ time() }}
+ * @example: [Blade]: @include('path/to/view.blade.php')
  * 
  * @see \Tests\Feature\Services\BladeDownServiceTest
  */
