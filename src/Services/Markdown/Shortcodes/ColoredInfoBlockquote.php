@@ -23,6 +23,7 @@ class ColoredInfoBlockquote implements MarkdownShortcodeContract
 
     protected static function expand(string $input): string
     {
-        return '<blockquote class="info">' . trim(substr($input, strlen(static::signature())), ' ') . '</blockquote>';
+        return sprintf('<blockquote class="info">%s</blockquote>',
+            trim(substr($input, strlen(static::signature())), ' '));
     }
 }
