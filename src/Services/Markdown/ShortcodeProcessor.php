@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Services\Markdown;
 
 use Hyde\Framework\Contracts\MarkdownProcessorContract;
+use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 
 /**
  * @see \Tests\Feature\Services\Markdown\ShortcodeProcessorTest
@@ -48,7 +49,7 @@ class ShortcodeProcessor implements MarkdownProcessorContract
         foreach (glob(__DIR__.'/shortcodes/*.php') as $file) {
             $class = 'Hyde\Framework\Services\Markdown\Shortcodes\\'. str_replace('.php', '', basename($file));
 
-            if (class_exists($class) && is_subclass_of($class, \Hyde\Framework\Contracts\MarkdownShortcodeContract::class)) {
+            if (class_exists($class) && is_subclass_of($class, MarkdownShortcodeContract::class)) {
                 $shortcodes[$class::signature()] = $class;
             }
         }
