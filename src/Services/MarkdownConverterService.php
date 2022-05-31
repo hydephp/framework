@@ -39,6 +39,8 @@ class MarkdownConverterService
     {
         $this->setupConverter();
 
+        $this->runPreprocessing();
+
         $this->html = $this->converter->convert($this->markdown);
 
         $this->runPostProcessing();
@@ -93,11 +95,23 @@ class MarkdownConverterService
         }
     }
 
+    protected function runPreprocessing(): void
+    {
+        // Run any pre-processing actions
+        if (config('markdown.enable_blade', true)) {
+            $this->markdown = BladeDownService::preprocess($this->markdown);
+        }
+    }
+
     protected function runPostProcessing(): void
     {
         // Run any post-processing actions
         if ($this->determineIfTorchlightAttributionShouldBeInjected()) {
             $this->html .= $this->injectTorchlightAttribution();
+        }
+
+        if (config('markdown.enable_blade', true)) {
+            $this->html = (new BladeDownService($this->html))->process()->get();
         }
     }
 
