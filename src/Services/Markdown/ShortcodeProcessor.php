@@ -49,7 +49,7 @@ class ShortcodeProcessor implements MarkdownProcessorContract
             $class = 'Hyde\Framework\Services\Markdown\Shortcodes\\'. str_replace('.php', '', basename($file));
 
             if (class_exists($class) && is_subclass_of($class, \Hyde\Framework\Contracts\MarkdownShortcodeContract::class)) {
-                $shortcodes[] = $class;
+                $shortcodes[$class::signature()] = $class;
             }
         }
 

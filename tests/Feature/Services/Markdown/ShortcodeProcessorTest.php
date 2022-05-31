@@ -19,6 +19,7 @@ class ShortcodeProcessorTest extends TestCase
 
         $this->assertCount(1, $shortcodes);
         $this->assertContains(ColoredInfoBlockquote::class, $shortcodes);
-        $this->assertInstanceOf(MarkdownShortcodeContract::class, new $shortcodes[0]);
+        $this->assertInstanceOf(MarkdownShortcodeContract::class,
+            new $shortcodes[ColoredInfoBlockquote::signature()]);
     }
 }
