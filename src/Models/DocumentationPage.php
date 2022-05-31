@@ -22,6 +22,6 @@ class DocumentationPage extends MarkdownDocument
 
     public function getCurrentPagePath(): string
     {
-        return  Hyde::docsDirectory().'/'.$this->slug;
+        return trim(Hyde::docsDirectory().'/'.$this->slug, '/');
     }
 }
