@@ -60,6 +60,9 @@ class ShortcodeProcessor implements MarkdownProcessorContract
     protected function resolveShortcode(string $line): string
     {
         // If line matches a shortcode directive, resolve it and return the result.
+        if (array_key_exists($signature = substr($line, 0, strpos($line, ' ')), $this->shortcodes)) {
+            return $this->shortcodes[$signature]::resolve($line);
+        }
 
         // Else, return the line as-is.
         return $line;

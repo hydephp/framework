@@ -22,4 +22,13 @@ class ShortcodeProcessorTest extends TestCase
         $this->assertInstanceOf(MarkdownShortcodeContract::class,
             new $shortcodes[ColoredInfoBlockquote::signature()]);
     }
+
+    // Test discovered shortcodes are used to process input
+    public function test_discovered_shortcodes_are_used_to_process_input()
+    {
+        $processor = new ShortcodeProcessor('>info foo');
+
+        $this->assertEquals('<blockquote class="info">foo</blockquote>',
+            $processor->processInput()->getOutput());
+    }
 }
