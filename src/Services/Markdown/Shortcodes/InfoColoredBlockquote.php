@@ -5,9 +5,9 @@ namespace Hyde\Framework\Services\Markdown\Shortcodes;
 use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 
 /**
- * @see \Tests\Unit\Markdown\Shortcodes\ColoredInfoBlockquoteTest
+ * @see \Tests\Unit\Markdown\Shortcodes\InfoColoredBlockquoteTest
  */
-class ColoredInfoBlockquote implements MarkdownShortcodeContract
+class InfoColoredBlockquote implements MarkdownShortcodeContract
 {
     public static function signature(): string
     {

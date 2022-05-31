@@ -4,7 +4,7 @@ namespace Tests\Feature\Services\Markdown;
 
 use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
-use Hyde\Framework\Services\Markdown\Shortcodes\ColoredInfoBlockquote;
+use Hyde\Framework\Services\Markdown\Shortcodes\InfoColoredBlockquote;
 use Tests\TestCase;
 
 /**
@@ -18,9 +18,9 @@ class ShortcodeProcessorTest extends TestCase
         $shortcodes = (new ShortcodeProcessor('foo'))->shortcodes;
 
         $this->assertCount(1, $shortcodes);
-        $this->assertContains(ColoredInfoBlockquote::class, $shortcodes);
+        $this->assertContains(InfoColoredBlockquote::class, $shortcodes);
         $this->assertInstanceOf(MarkdownShortcodeContract::class,
-            new $shortcodes[ColoredInfoBlockquote::signature()]);
+            new $shortcodes[InfoColoredBlockquote::signature()]);
     }
 
     // Test discovered shortcodes are used to process input
