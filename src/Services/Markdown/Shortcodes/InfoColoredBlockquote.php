@@ -7,10 +7,7 @@ namespace Hyde\Framework\Services\Markdown\Shortcodes;
  */
 class InfoColoredBlockquote extends AbstractColoredBlockquote
 {
-    public static function signature(): string
-    {
-        return '>info';
-    }
+    protected static string $signature = '>info';
 
     protected static function expand(string $input): string
     {

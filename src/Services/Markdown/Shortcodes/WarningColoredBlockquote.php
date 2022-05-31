@@ -7,10 +7,7 @@ namespace Hyde\Framework\Services\Markdown\Shortcodes;
  */
 class WarningColoredBlockquote extends AbstractColoredBlockquote
 {
-    public static function signature(): string
-    {
-        return '>warning';
-    }
+    protected static string $signature = '>warning';
 
     protected static function expand(string $input): string
     {

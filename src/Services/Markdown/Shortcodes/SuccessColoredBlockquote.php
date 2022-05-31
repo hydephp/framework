@@ -7,10 +7,7 @@ namespace Hyde\Framework\Services\Markdown\Shortcodes;
  */
 class SuccessColoredBlockquote extends AbstractColoredBlockquote
 {
-    public static function signature(): string
-    {
-        return '>success';
-    }
+    protected static string $signature = '>success';
 
     protected static function expand(string $input): string
     {
