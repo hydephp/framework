@@ -4,6 +4,9 @@ namespace Hyde\Framework\Services\Markdown;
 
 use Hyde\Framework\Contracts\MarkdownProcessorContract;
 
+/**
+ * @see \Tests\Feature\Services\Markdown\ShortcodeProcessorTest
+ */
 class ShortcodeProcessor implements MarkdownProcessorContract
 {
     protected string $input;
