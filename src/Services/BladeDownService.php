@@ -8,6 +8,8 @@ use Hyde\Framework\Hyde;
  * Markdown Post Processor to render Laravel Blade within Markdown files.
  * 
  * Works on a line-by-line basis by searching for a line starting with the directive.
+ * The reason it's a post processor and not a pre-processor is so that it does not
+ * interfere with the Markdown parser.
  * 
  * @example: [Blade]: {{ time() }}
  * @example: [Blade]: @include('path/to/view.blade.php')
