@@ -6,11 +6,10 @@ use Hyde\Framework\Hyde;
 use Illuminate\Support\Facades\Blade;
 
 /**
- * Markdown Post Processor to render Laravel Blade within Markdown files.
+ * Markdown Processor to render Laravel Blade within Markdown files.
  * 
  * Works on a line-by-line basis by searching for a line starting with the directive.
- * The reason it's a post processor and not a pre-processor is so that it does not
- * interfere with the Markdown parser.
+ * The preprocessor expands the directive to an HTML comment. The post-processor parses it.
  * 
  * Note that optional supplied data is global to the entire file/page. 
  * 
@@ -50,16 +49,28 @@ class BladeDownService
 
     public static function render(string $html, ?array $pageData = []): string
     {
-        return (new static($html, $pageData))->process()->get();
+        return (new static(static::preprocess($html), $pageData))->process()->get();
 	}
+
+	public static function preprocess(string $markdown): string
+    {
+        return implode("\n", array_map(function ($line) {
+			return str_starts_with(strtolower($line), strtolower('[Blade]:'))
+                ? '<!-- HYDE' . trim(htmlentities($line)) . ' -->'
+                : $line;
+        }, explode("\n", $markdown)));
+    }
 
     protected function lineStartsWithDirective(string $line): bool
     {
-        return str_starts_with(strtolower($line), '[blade]:');
+        return str_starts_with(strtolower($line), '<!-- hyde[blade]:');
     }
 
     protected function processLine(string $line): string
     {
-        return Blade::render(substr($line, 8), $this->pageData);
+        return Blade::render(
+			substr(substr(html_entity_decode($line), 18), 0, -4),
+			$this->pageData
+		);
     }
 }
