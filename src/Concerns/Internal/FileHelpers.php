@@ -19,8 +19,6 @@ trait FileHelpers
      *              Naming suggestion is `getDocumentationOutputPath()`.
      *              The configuration option has been renamed.
      *
-     * @todo Test and if needed add support for storing documentation files in the site root
-     *
      * @return string
      */
     public static function docsDirectory(): string
@@ -36,11 +34,11 @@ trait FileHelpers
     public static function docsIndexPath(): string|false
     {
         if (file_exists(static::path('_docs/index.md'))) {
-            return static::pageLink(static::docsDirectory().'/index.html');
+            return trim(static::pageLink(static::docsDirectory().'/index.html'), '/');
         }
 
         if (file_exists(static::path('_docs/readme.md'))) {
-            return static::pageLink(static::docsDirectory().'/readme.html');
+            return trim(static::pageLink(static::docsDirectory().'/readme.html'), '/');
         }
 
         return false;
