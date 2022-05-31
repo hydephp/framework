@@ -16,7 +16,10 @@ class ShortcodeProcessor implements MarkdownProcessorContract
 
     public function processInput(): self
     {
-        $this->output = $this->input;
+        $this->output = implode("\n", array_map(function ($line) {
+            return $line;
+        }, explode("\n", $this->input)));
+
         return $this;
     }
 
