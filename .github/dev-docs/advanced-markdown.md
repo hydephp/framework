@@ -37,11 +37,6 @@ You can pass data to includes by specifying an array to the second argument.
  [Blade]: @include("hello", ["name" => "World"])
 ```
 
-#### Limitations
-
-All shortcodes must be the first word on a new line.
-For example, using a space before the `[Blade]:` will intentionally cause it to not render.
-
 ### Enabling Blade-supported Markdown
 It's disabled by default since it allows arbitrary PHP to run, which could be a security risk,
 depending on your setup. However, if your Markdown is trusted, and you know it's safe,
@@ -51,3 +46,8 @@ you can enable it in the `config/markdown.php` file.
 // torchlight! {"lineNumbers": false}
 'enable_blade' => true,
 ```
+
+#### Limitations
+
+All shortcodes must be the first word on a new line.
+For example, using a space before the `[Blade]:` will intentionally cause it to not render.
