@@ -30,7 +30,7 @@ class BladeDownService
     public function process(): self
     {
         $this->output = implode("\n", array_map(function ($line) {
-            return str_starts_with($line, '[Blade]:')
+            return $this->lineStartsWithDirective($line)
                 ? $this->processLine($line)
                 : $line;
         }, explode("\n", $this->html)));
@@ -47,6 +47,11 @@ class BladeDownService
     {
         return (new static($html))->process()->get();
 	}
+
+    protected function lineStartsWithDirective(string $line): bool
+    {
+        return str_starts_with(strtolower($line), '[blade]:');
+    }
 
     protected function processLine(string $line): string
     {

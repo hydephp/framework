@@ -39,4 +39,10 @@ class BladeDownServiceTest extends TestCase
      
         unlink(resource_path('views/hello.blade.php'));
     }
+
+    // Test directive is case-insensitive
+    public function test_directive_is_case_insensitive()
+    {
+        $this->assertEquals('Hello World!', BladeDownService::render('[blade]: {{ "Hello World!" }}'));
+    }
 }
