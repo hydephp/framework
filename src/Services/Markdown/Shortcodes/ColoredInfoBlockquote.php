@@ -17,7 +17,12 @@ class ColoredInfoBlockquote implements MarkdownShortcodeContract
     public static function resolve(string $input): string
     {
         return str_starts_with($input, static::signature())
-            ? '<blockquote class="info">' . trim(substr($input, strlen(static::signature())), ' ') . '</blockquote>'
+            ? self::expand($input)
             : $input;
+    }
+
+    protected static function expand(string $input): string
+    {
+        return '<blockquote class="info">' . trim(substr($input, strlen(static::signature())), ' ') . '</blockquote>';
     }
 }
