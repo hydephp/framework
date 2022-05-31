@@ -17,7 +17,7 @@ class ShortcodeProcessor implements MarkdownProcessorContract
     public function processInput(): self
     {
         $this->output = implode("\n", array_map(function ($line) {
-            return $line;
+            return $this->resolveShortcode($line);
         }, explode("\n", $this->input)));
 
         return $this;
@@ -31,5 +31,13 @@ class ShortcodeProcessor implements MarkdownProcessorContract
     public static function process(string $input): string
     {
         return (new static($input))->processInput()->getOutput();
+    }
+
+    protected function resolveShortcode(string $line): string
+    {
+        // If line matches a shortcode directive, resolve it and return the result.
+
+        // Else, return the line as-is.
+        return $line;
     }
 }
