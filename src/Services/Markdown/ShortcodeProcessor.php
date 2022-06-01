@@ -7,6 +7,11 @@ use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 use Hyde\Framework\Services\Markdown\Shortcodes\AbstractColoredBlockquote;
 
 /**
+ * Handle shortcode processing for Markdown conversions.
+ *
+ * @todo Refactor shortcode manager to singleton as it does not need to be re-instantiated
+ *      for each Markdown conversion.
+ *
  * @see \Tests\Feature\Services\Markdown\ShortcodeProcessorTest
  */
 class ShortcodeProcessor implements MarkdownProcessorContract

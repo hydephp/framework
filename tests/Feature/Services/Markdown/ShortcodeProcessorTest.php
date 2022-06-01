@@ -44,4 +44,15 @@ class ShortcodeProcessorTest extends TestCase
         $this->assertEquals('<blockquote class="info">foo</blockquote>',
             ShortcodeProcessor::process('>info foo'));
     }
+
+    // Test shortcodes can be added to the processor
+    public function test_shortcodes_can_be_added_to_processor()
+    {
+        $processor = new ShortcodeProcessor('foo');
+
+        $processor->addShortcode(new InfoColoredBlockquote());
+
+        $this->assertEquals('<blockquote class="info">foo</blockquote>',
+            $processor->processInput()->getOutput());
+    }
 }
