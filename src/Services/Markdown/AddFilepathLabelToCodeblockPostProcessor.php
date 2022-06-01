@@ -9,8 +9,6 @@ class AddFilepathLabelToCodeblockPostProcessor
 {
     public static function process(string $html): string
     {
-        $withTorchlight = str_contains($html, static::$torchlightKey);
-
         $lines = explode("\n", $html);
         
         foreach ($lines as $index => $line) {
@@ -20,12 +18,11 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $codeBlockLine = $index + 1;
                 $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
                 
-                $lines[$codeBlockLine] = $withTorchlight
+                $lines[$codeBlockLine] = str_contains($html, static::$torchlightKey)
                 ? static::resolveTorchlightCodeLine($label, $lines[$codeBlockLine])
                 : static::resolveCodeLine($label, $lines[$codeBlockLine]);
             }
         }
-        // Insert the label after the '<pre><code class="language-*">' using regex
         
         return implode("\n", $lines);
     }
