@@ -4,6 +4,7 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
+use Hyde\Framework\Services\Markdown\AddFilepathLabelToCodeblockPostProcessor;
 use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
@@ -117,23 +118,12 @@ class MarkdownConverterService
             $this->html = (new BladeDownService($this->html))->process()->get();
         }
 
-        $this->html = $this->expandCodeblocksFilepathLabel($this->html);
+        $this->html = AddFilepathLabelToCodeblockPostProcessor::process($this->html);
     }
 
     // Helper to inspect the currently enabled extensions
     public function getExtensions(): array
     {
         return $this->extensions;
-    }
-
-    public function expandCodeblocksFilepathLabel(string $html): string
-    {
-        return implode("\n", array_map(function ($line) {
-            if (str_starts_with(strtolower($line), '<pre><code class="language-markdown">// filepath: ')) {
-                $line = str_replace('// Filepath: ', '<small class="filepath">', $line);
-                return $line . '</small>';
-            }
-            return $line;
-        }, explode("\n", $html)));
     }
 }
