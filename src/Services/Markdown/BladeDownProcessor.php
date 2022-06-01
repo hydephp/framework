@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Blade;
  * @example: [Blade]: {{ time() }}
  * @example: [Blade]: @include('path/to/view.blade.php')
  *
- * @see \Tests\Feature\Services\BladeDownServiceTest
+ * @see \Tests\Feature\Services\BladeDownProcessorTest
  */
-class BladeDownService
+class BladeDownProcessor
 {
     protected string $html;
     protected string $output;
