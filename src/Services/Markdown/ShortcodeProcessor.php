@@ -69,7 +69,9 @@ class ShortcodeProcessor implements MarkdownProcessorContract
         }
 
         // Register any provided shortcodes
-        $this->addShortcodesFromArray(AbstractColoredBlockquote::get());
+        $this->addShortcodesFromArray(array_merge(
+            AbstractColoredBlockquote::get(),
+        ));
     }
 
     public function addShortcodesFromArray(array $shortcodes): self
