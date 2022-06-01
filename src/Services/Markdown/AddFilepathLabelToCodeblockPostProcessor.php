@@ -5,6 +5,8 @@ namespace Hyde\Framework\Services\Markdown;
 /**
  * DOMDocument Proof of Concept
  *
+ * @note This does not work with Torchlight highlighted code blocks.
+ *
  * @todo Add ext-dom suggestion to composer.json
  * @todo Add config option to enable/disable this processor
  */
