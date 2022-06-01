@@ -4,6 +4,7 @@ namespace Hyde\Framework\Services\Markdown;
 
 use Hyde\Framework\Contracts\MarkdownProcessorContract;
 use Hyde\Framework\Contracts\MarkdownShortcodeContract;
+use Hyde\Framework\Services\Markdown\Shortcodes\AbstractColoredBlockquote;
 
 /**
  * @see \Tests\Feature\Services\Markdown\ShortcodeProcessorTest
@@ -19,7 +20,7 @@ class ShortcodeProcessor implements MarkdownProcessorContract
     {
         $this->input = $input;
 
-        $this->shortcodes = $this->discoverShortcodes();
+        $this->discoverShortcodes();
     }
 
     public function processInput(): self
@@ -41,20 +42,37 @@ class ShortcodeProcessor implements MarkdownProcessorContract
         return (new static($input))->processInput()->getOutput();
     }
 
-    protected function discoverShortcodes(): array
+    protected function discoverShortcodes(): void
     {
-        $shortcodes = [];
-
-        // Add default shortcodes @todo make this configurable
+        // Discover default shortcodes @todo make this configurable
         foreach (glob(__DIR__.'/shortcodes/*.php') as $file) {
             $class = 'Hyde\Framework\Services\Markdown\Shortcodes\\'. str_replace('.php', '', basename($file));
 
-            if (class_exists($class) && is_subclass_of($class, MarkdownShortcodeContract::class)) {
-                $shortcodes[$class::signature()] = $class;
+            if (class_exists($class)
+                && is_subclass_of($class, MarkdownShortcodeContract::class)
+                && ! str_starts_with(basename($file), 'Abstract')) {
+                $this->addShortcode(new $class());
             }
         }
 
-        return $shortcodes;
+        // Register any provided shortcodes
+        $this->addShortcodesFromArray(AbstractColoredBlockquote::get());
+    }
+
+    public function addShortcodesFromArray(array $shortcodes): self
+    {
+        foreach ($shortcodes as $shortcode) {
+            $this->addShortcode($shortcode);
+        }
+
+        return $this;
+    }
+
+    public function addShortcode(MarkdownShortcodeContract $shortcode): self
+    {
+        $this->shortcodes[$shortcode::signature()] = $shortcode;
+
+        return $this;
     }
 
     protected function resolveShortcode(string $line): string
