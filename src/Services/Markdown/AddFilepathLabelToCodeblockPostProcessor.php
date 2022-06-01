@@ -2,22 +2,34 @@
 
 namespace Hyde\Framework\Services\Markdown;
 
+/**
+ * DOMDocument Proof of Concept
+ *
+ * @todo add ext-dom suggestion to composer.json
+ */
 class AddFilepathLabelToCodeblockPostProcessor
 {
-    /**
-     * DOMDocument Proof of Concept
-     *
-     * @todo add ext-dom suggestion to composer.json
-     */
     public static function process(string $html): string
     {
+        return (new static($html))->run();
+    }
+
+    protected string $html;
+
+    public function __construct(string $html) {
+        $this->html = $html;
+
+    }
+
+    public function run(): string
+    {
         if (! extension_loaded('dom')) {
-            return $html;
+            return $this->html;
         }
 
         // Find all the code blocks
         $dom = new \DOMDocument();
-        $dom->loadHTML($html);
+        $dom->loadHTML($this->html);
         $xpath = new \DOMXPath($dom);
         // Get query matching <pre><code>
         $query = '//pre/code';
