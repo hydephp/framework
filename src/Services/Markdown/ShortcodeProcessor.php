@@ -24,9 +24,19 @@ use Hyde\Framework\Services\Markdown\Shortcodes\AbstractColoredBlockquote;
  */
 class ShortcodeProcessor implements MarkdownProcessorContract
 {
+    /**
+     * The input Markdown document body.
+     */
     protected string $input;
+
+    /**
+     * The processed Markdown document body.
+     */
     protected string $output;
 
+    /**
+     * The activated shortcode instances.
+     */
     public array $shortcodes;
 
     public function __construct(string $input)
