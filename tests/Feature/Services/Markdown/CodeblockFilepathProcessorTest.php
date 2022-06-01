@@ -10,9 +10,13 @@ use Tests\TestCase;
  */
 class CodeblockFilepathProcessorTest extends TestCase
 {
-    public function test_preprocess()
+    // Test preprocess method expands filepath
+    public function test_preprocess_expands_filepath()
     {
-        $this->markTestSkipped('TODO');
+        $markdown = "\n```php\n// filepath: foo.php\necho 'Hello World';\n```";
+        $expected = "\n<!-- HYDE[Filepath]foo.php -->\n```php\necho 'Hello World';\n```";
+
+        $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
     }
 
     public function test_process()
