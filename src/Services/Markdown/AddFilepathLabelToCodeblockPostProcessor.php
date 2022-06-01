@@ -23,16 +23,8 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
                 
                 $lines[$codeBlockLine] = $withTorchlight
-                ?  str_replace(
-                    $torchlightKey,
-                    $torchlightKey . $label,
-                    $lines[$codeBlockLine]
-                )
-                : preg_replace(
-                    '/<pre><code class="language-(.*?)">/',
-                    '<pre><code class="language-$1">' . $label,
-                    $lines[$codeBlockLine]
-                );
+                ? static::resolveTorchlightCodeLine($torchlightKey, $label, $lines[$codeBlockLine])
+                : static::resolveCodeLine($label, $lines[$codeBlockLine]);
             }
         }
         // Insert the label after the '<pre><code class="language-*">' using regex
@@ -95,5 +87,23 @@ class AddFilepathLabelToCodeblockPostProcessor
     {
         $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
         return sprintf($template, $path, $line);
+    }
+
+    protected static function resolveTorchlightCodeLine(string $torchlightKey, string $label, $lines): string|array
+    {
+        return str_replace(
+            $torchlightKey,
+            $torchlightKey . $label,
+            $lines
+        );
+    }
+
+    protected static function resolveCodeLine(string $label, $lines): string|array|null
+    {
+        return preg_replace(
+            '/<pre><code class="language-(.*?)">/',
+            '<pre><code class="language-$1">' . $label,
+            $lines
+        );
     }
 }
