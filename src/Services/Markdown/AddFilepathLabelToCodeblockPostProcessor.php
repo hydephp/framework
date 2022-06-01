@@ -18,11 +18,7 @@ class AddFilepathLabelToCodeblockPostProcessor
 
             foreach ($lines as $index => $line) {
                 if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
-                    $path = trim(
-                        str_replace('-->', '', str_replace(
-                            '<!-- HYDE[Filepath]', '', $line
-                        ))
-                    );
+                    $path = static::trimHydeDirective($line);
                     unset($lines[$index]);
                     $codeBlockLine = $index + 1;
                     $lines[$codeBlockLine] = str_replace(
@@ -40,11 +36,7 @@ class AddFilepathLabelToCodeblockPostProcessor
 
         foreach ($lines as $index => $line) {
             if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
-                $path = trim(
-                    str_replace('-->', '', str_replace(
-                        '<!-- HYDE[Filepath]', '', $line
-                    ))
-                );
+                $path = static::trimHydeDirective($line);
                 unset($lines[$index]);
 
                 $codeBlockLine = $index + 1;
@@ -106,5 +98,14 @@ class AddFilepathLabelToCodeblockPostProcessor
         }
 
         return false;
+    }
+
+    protected static function trimHydeDirective(string $line): string
+    {
+        return trim(
+            str_replace('-->', '', str_replace(
+                '<!-- HYDE[Filepath]', '', $line
+            ))
+        );
     }
 }
