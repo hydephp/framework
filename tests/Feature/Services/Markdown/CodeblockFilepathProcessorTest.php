@@ -95,6 +95,32 @@ class CodeblockFilepathProcessorTest extends TestCase
         $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::preprocess($markdown));
     }
 
+    // Test preprocess method accepts multi-line codeblocks
+    public function test_preprocess_accepts_multi_line_codeblocks()
+    {
+        $markdown = <<<MD
+        
+        ```php
+        // filepath: foo.php
+        echo 'Hello World';
+        
+        echo 'Hello World';
+        ```
+        MD;
+
+        $expected = <<<MD
+        
+        <!-- HYDE[Filepath]foo.php -->
+        ```php
+        echo 'Hello World';
+        
+        echo 'Hello World';
+        ```
+        MD;
+
+        $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::preprocess($markdown));
+    }
+
     public function test_process()
     {
         $this->markTestSkipped('TODO');
