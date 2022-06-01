@@ -22,24 +22,21 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $codeBlockLine = $index + 1;
                 $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
                 
-                if ($withTorchlight) {
-                    $lines[$codeBlockLine] = str_replace(
-                        $torchlightKey,
-                        $torchlightKey . $label,
-                        $lines[$codeBlockLine]
-                    );
-                }
-                else {
-                    // Insert the label after the '<pre><code class="language-*">' using regex
-                    $lines[$codeBlockLine] = preg_replace(
-                        '/<pre><code class="language-(.*?)">/',
-                        '<pre><code class="language-$1">' . $label,
-                        $lines[$codeBlockLine]
-                    );
-                }
+                $lines[$codeBlockLine] = $withTorchlight
+                ?  str_replace(
+                    $torchlightKey,
+                    $torchlightKey . $label,
+                    $lines[$codeBlockLine]
+                )
+                : preg_replace(
+                    '/<pre><code class="language-(.*?)">/',
+                    '<pre><code class="language-$1">' . $label,
+                    $lines[$codeBlockLine]
+                );
             }
-        } 
-
+        }
+        // Insert the label after the '<pre><code class="language-*">' using regex
+        
         return implode("\n", $lines);
     }
     
