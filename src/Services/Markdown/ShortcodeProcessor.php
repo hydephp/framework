@@ -50,9 +50,14 @@ class ShortcodeProcessor implements MarkdownProcessorContract
         return $this->output;
     }
 
+    public function run(): string
+    {
+        return $this->processInput()->getOutput();
+    }
+
     public static function process(string $input): string
     {
-        return (new static($input))->processInput()->getOutput();
+        return (new static($input))->run();
     }
 
     protected function discoverShortcodes(): void

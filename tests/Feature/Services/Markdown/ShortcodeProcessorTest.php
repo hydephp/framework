@@ -26,7 +26,7 @@ class ShortcodeProcessorTest extends TestCase
         $processor = new ShortcodeProcessor('>info foo');
 
         $this->assertEquals('<blockquote class="info">foo</blockquote>',
-            $processor->processInput()->getOutput());
+            $processor->run());
     }
 
     // Test string not matching shortcode is not modified
@@ -34,7 +34,7 @@ class ShortcodeProcessorTest extends TestCase
     {
         $processor = new ShortcodeProcessor('foo');
 
-        $this->assertEquals('foo', $processor->processInput()->getOutput());
+        $this->assertEquals('foo', $processor->run());
     }
 
     // Test the static process() shorthand method
@@ -62,6 +62,6 @@ class ShortcodeProcessorTest extends TestCase
         });
 
         $this->assertArrayHasKey('foo', $processor->shortcodes);
-        $this->assertEquals('bar', $processor->processInput()->getOutput());
+        $this->assertEquals('bar', $processor->run());
     }
 }
