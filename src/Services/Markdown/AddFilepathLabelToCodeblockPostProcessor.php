@@ -14,7 +14,33 @@ class AddFilepathLabelToCodeblockPostProcessor
 {
     public static function process(string $html): string
     {
-        return (new static($html))->run();
+        $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';
+        $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
+
+        if (! str_contains($html, $torchlightKey)) {
+            return (new static($html))->run();
+        }
+
+        $lines = explode("\n", $html);
+
+        foreach ($lines as $index => $line) {
+            if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
+                $path = trim(
+                    str_replace('-->', '', str_replace(
+                        '<!-- HYDE[Filepath]', '', $line
+                    ))
+                );
+                unset($lines[$index]);
+                $codeBlockLine = $index + 1;
+                $lines[$codeBlockLine] = str_replace(
+                    $torchlightKey,
+                    $torchlightKey . sprintf($template, $path, $lines[$codeBlockLine]),
+                     $lines[$codeBlockLine]
+                    );
+            }
+        }
+
+        return implode("\n", $lines);
     }
 
     public static function preprocess(string $markdown): string
