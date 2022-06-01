@@ -122,9 +122,6 @@ class MarkdownConverterService
 
         $this->html = CodeblockFilepathProcessor::process($this->html);
 
-        // replace all CRLF with LF
-        $this->html = str_replace(["\r\n", "\r"], "\n", $this->html);
-
         // Remove any Hyde annotations (everything between `// HYDE!` and `HYDE! //`) (must be done last)
         $this->html = preg_replace('/ \/\/ HYDE!.*HYDE! \/\//s', '', $this->html);
     }
