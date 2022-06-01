@@ -6,6 +6,13 @@ class AddFilepathLabelToCodeblockPostProcessor
 {
     public static function process(string $html): string
     {
+        // check if ext-dom extension is available
+        // @todo add ext-dom suggestion to composer.json
+        if (! extension_loaded('dom')) {
+            return $html;
+        }
+        
+
         // domdocument POC
 
         // Find all the code blocks
