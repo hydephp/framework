@@ -99,7 +99,6 @@ class MarkdownConverterService
 
     protected function runPreprocessing(): void
     {
-        // Run any pre-processing actions
         if (config('markdown.enable_blade', false)) {
             $this->markdown = BladeDownService::preprocess($this->markdown);
         }
@@ -111,7 +110,6 @@ class MarkdownConverterService
 
     protected function runPostProcessing(): void
     {
-        // Run any post-processing actions
         if ($this->determineIfTorchlightAttributionShouldBeInjected()) {
             $this->html .= $this->injectTorchlightAttribution();
         }
@@ -128,7 +126,6 @@ class MarkdownConverterService
         $this->html = preg_replace('/ \/\/ HYDE!.*HYDE! \/\//s', '', $this->html);
     }
 
-    // Helper to inspect the currently enabled extensions
     public function getExtensions(): array
     {
         return $this->extensions;
