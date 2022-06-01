@@ -72,18 +72,6 @@ class ShortcodeProcessor implements MarkdownProcessorContract
 
     protected function discoverShortcodes(): void
     {
-        // Discover default shortcodes @todo make this configurable
-        foreach (glob(__DIR__.'/shortcodes/*.php') as $file) {
-            $class = 'Hyde\Framework\Services\Markdown\Shortcodes\\'. str_replace('.php', '', basename($file));
-
-            if (class_exists($class)
-                && is_subclass_of($class, MarkdownShortcodeContract::class)
-                && ! str_starts_with(basename($file), 'Abstract')) {
-                $this->addShortcode(new $class());
-            }
-        }
-
-        // Register any provided shortcodes
         $this->addShortcodesFromArray(array_merge(
             AbstractColoredBlockquote::get(),
         ));
