@@ -25,7 +25,7 @@ class AddFilepathLabelToCodeblockPostProcessor
         '# filepath ',
         '# Filepath ',
     ];
-    
+
     protected string $html;
 
     public function __construct(string $html) {
@@ -67,6 +67,12 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $filepathLabel = $dom->createElement('small', $filepath);
                 // Add the class `filepath` to the filepath label
                 $filepathLabel->setAttribute('class', 'filepath');
+                $filepathLabel->setAttribute('title', 'Filepath');
+                // Add screen reader text
+                $screenReaderText = $dom->createElement('span', 'Filepath: ');
+                $screenReaderText->setAttribute('class', 'sr-only');
+                $filepathLabel->insertBefore($screenReaderText, $filepathLabel->firstChild);
+
 
                 // Prepend the filepath label to the first child of the code block
                 $codeBlock->insertBefore($filepathLabel, $codeBlock->firstChild);
