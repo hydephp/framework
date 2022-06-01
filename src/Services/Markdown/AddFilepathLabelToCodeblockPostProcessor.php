@@ -23,7 +23,7 @@ class AddFilepathLabelToCodeblockPostProcessor
                 : static::resolveCodeLine($label, $lines[$codeBlockLine]);
             }
         }
-        
+
         return implode("\n", $lines);
     }
     
@@ -32,7 +32,7 @@ class AddFilepathLabelToCodeblockPostProcessor
         $lines = explode("\n", $markdown);
         
         foreach ($lines as $index => $line) {
-            if (static::lineMatchesPattern($line) && ! str_contains($line, '// HYDE! {"shortcodes": false} HYDE! //')) {
+            if (static::lineMatchesPattern($line) && ! str_contains($line, '{"shortcodes": false}')) {
                 // Add the meta-block two lines before the pattern, placing it just above the code block.
                 // This prevents the meta-block from interfering with other processes.
                 $lines[$index - 2] .= "\n".'<!-- HYDE[Filepath]'.trim(str_replace(static::$patterns, '', $line)).' -->'; 
