@@ -16,6 +16,17 @@ class AddFilepathLabelToCodeblockPostProcessor
 
     protected string $html;
 
+    protected static array $patterns = [
+        '// filepath: ',
+        '// Filepath: ',
+        '# filepath: ',
+        '# Filepath: ',
+        '// filepath ',
+        '// Filepath ',
+        '# filepath ',
+        '# Filepath ',
+    ];
+
     public function __construct(string $html) {
         $this->html = $html;
 
@@ -37,30 +48,41 @@ class AddFilepathLabelToCodeblockPostProcessor
 
         // Add the filepath label to each code block
         foreach ($codeBlocks as $codeBlock) {
-            // Check if element contains the `// Filepath:` string
-            if (! str_contains(strtolower($codeBlock->textContent), '// filepath:')) {
-                continue;
+            // Get the first line (everything before the first newline in $codeBlock->textContent)
+            $firstLine = strtok($codeBlock->textContent, "\n");
+            
+            // Check if it matches any of the patterns
+            if ($this->lineMatchesPattern($firstLine)) {
+                // Get the filepath
+                $filepath = trim(str_replace(self::$patterns, '', $firstLine));
+
+                // Remove the first line of the code block text
+                $text = explode("\n", $codeBlock->textContent);
+                array_shift($text);
+                array_shift($text);
+                $codeBlock->textContent = implode("\n", $text);
+
+                // Create the filepath label `<small>$filepath<small>` element
+                $filepathLabel = $dom->createElement('small', $filepath);
+                // Add the class `filepath` to the filepath label
+                $filepathLabel->setAttribute('class', 'filepath');
+
+                // Prepend the filepath label to the first child of the code block
+                $codeBlock->insertBefore($filepathLabel, $codeBlock->firstChild);
             }
-
-            // Get the filepath which is everything after `// Filepath:` on the first line of the code block
-            $filepath = trim(explode("\n", $codeBlock->textContent)[0]);
-            $filepath = substr($filepath, strpos($filepath, ':') + 1);
-
-            // Remove the first line of the code block text
-            $text = explode("\n", $codeBlock->textContent);
-            array_shift($text);
-            array_shift($text);
-            $codeBlock->textContent = implode("\n", $text);
-
-            // Create the filepath label `<small>$filepath<small>` element
-            $filepathLabel = $dom->createElement('small', $filepath);
-            // Add the class `filepath` to the filepath label
-            $filepathLabel->setAttribute('class', 'filepath');
-
-            // Prepend the filepath label to the first child of the code block
-            $codeBlock->insertBefore($filepathLabel, $codeBlock->firstChild);
         }
 
         return $dom->saveHTML();
+    }
+
+    protected function lineMatchesPattern(string $line): bool
+    {
+        foreach (static::$patterns as $pattern) {
+            if (str_starts_with($line, $pattern)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
