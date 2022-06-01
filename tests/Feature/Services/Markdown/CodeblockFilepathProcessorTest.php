@@ -41,6 +41,29 @@ class CodeblockFilepathProcessorTest extends TestCase
         }
     }
 
+    // Test preprocess method accepts multiple languages
+    public function test_preprocess_accepts_multiple_languages()
+    {
+        $languages = [
+            'php',
+            'js',
+            'html',
+            'made-up',
+            'foo'
+        ];
+
+        foreach ($languages as $language) {
+
+            $markdown = "\n```{$language}\n// filepath: foo.{$language}\nfoo\n```";
+            $expected = "\n<!-- HYDE[Filepath]foo.{$language} -->\n```{$language}\nfoo\n```";
+
+            $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
+        }
+
+        $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
+    }
+
+
     public function test_process()
     {
         $this->markTestSkipped('TODO');
