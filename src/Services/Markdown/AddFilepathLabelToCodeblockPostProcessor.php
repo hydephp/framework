@@ -9,9 +9,7 @@ class AddFilepathLabelToCodeblockPostProcessor
 {
     public static function process(string $html): string
     {
-        $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';
-        $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
-        
+        $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';        
         if (str_contains($html, $torchlightKey)) {
             
             $lines = explode("\n", $html);
@@ -23,7 +21,7 @@ class AddFilepathLabelToCodeblockPostProcessor
                     $codeBlockLine = $index + 1;
                     $lines[$codeBlockLine] = str_replace(
                         $torchlightKey,
-                        $torchlightKey . sprintf($template, $path, $lines[$codeBlockLine]),
+                        $torchlightKey . static::resolveTemplate($path, $lines[$codeBlockLine]),
                         $lines[$codeBlockLine]
                     );
                 }
@@ -41,7 +39,7 @@ class AddFilepathLabelToCodeblockPostProcessor
                 
                 $codeBlockLine = $index + 1;
                 
-                $label = sprintf($template, $path, $lines[$codeBlockLine]);
+                $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
                 
                 // Insert the label after the '<pre><code class="language-*">' using regex
                 $lines[$codeBlockLine] = preg_replace(
@@ -105,5 +103,11 @@ class AddFilepathLabelToCodeblockPostProcessor
         return trim(str_replace('-->', '', str_replace(
             '<!-- HYDE[Filepath]', '', $line))
         );
+    }
+
+    protected static function resolveTemplate(string $path, string $line): string
+    {
+        $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
+        return sprintf($template, $path, $line);
     }
 }
