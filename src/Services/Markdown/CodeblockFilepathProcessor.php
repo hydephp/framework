@@ -2,9 +2,6 @@
 
 namespace Hyde\Framework\Services\Markdown;
 
-/**
-* @todo Add config option to enable/disable this processor
-*/
 class CodeblockFilepathProcessor
 {
     public static function process(string $html): string

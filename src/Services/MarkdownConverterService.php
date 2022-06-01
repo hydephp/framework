@@ -120,7 +120,9 @@ class MarkdownConverterService
             $this->html = (new BladeDownService($this->html))->process()->get();
         }
 
-        $this->html = CodeblockFilepathProcessor::process($this->html);
+        if (config('markdown.features.codeblock_filepaths', true)) {
+            $this->html = CodeblockFilepathProcessor::process($this->html);
+        }
 
         // Remove any Hyde annotations (everything between `// HYDE!` and `HYDE! //`) (must be done last)
         $this->html = preg_replace('/ \/\/ HYDE!.*HYDE! \/\//s', '', $this->html);
