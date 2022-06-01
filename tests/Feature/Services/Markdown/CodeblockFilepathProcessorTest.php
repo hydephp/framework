@@ -68,4 +68,10 @@ class CodeblockFilepathProcessorTest extends TestCase
     {
         $this->markTestSkipped('TODO');
     }
+
+    protected function assertEqualsIgnoringLineReturnType(string $expected, string $actual)
+    {
+        $this->assertEquals(str_replace("\r\n", "\n", $expected),
+            str_replace("\r\n", "\n", $actual));
+    }
 }
