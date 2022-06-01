@@ -10,11 +10,13 @@ class AddFilepathLabelToCodeblockPostProcessor
     public static function process(string $html): string
     {
         $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';        
-        if (str_contains($html, $torchlightKey)) {
-            
-            $lines = explode("\n", $html);
-            
-            foreach ($lines as $index => $line) {
+        $withTorchlight = str_contains($html, $torchlightKey);
+
+
+        $lines = explode("\n", $html);
+
+        foreach ($lines as $index => $line) {
+            if ($withTorchlight) {
                 if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
                     $path = static::trimHydeDirective($line);
                     unset($lines[$index]);
@@ -25,33 +27,26 @@ class AddFilepathLabelToCodeblockPostProcessor
                         $lines[$codeBlockLine]
                     );
                 }
-            }
-            
-            return implode("\n", $lines);
-        }
-        
-        $lines = explode("\n", $html);
-        
-        foreach ($lines as $index => $line) {
-            if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
-                $path = static::trimHydeDirective($line);
-                unset($lines[$index]);
-                
-                $codeBlockLine = $index + 1;
-                
-                $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
-                
-                // Insert the label after the '<pre><code class="language-*">' using regex
-                $lines[$codeBlockLine] = preg_replace(
-                    '/<pre><code class="language-(.*?)">/',
-                    '<pre><code class="language-$1">' . $label,
-                    $lines[$codeBlockLine]
-                );
+            } else {
+                if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
+                    $path = static::trimHydeDirective($line);
+                    unset($lines[$index]);
+
+                    $codeBlockLine = $index + 1;
+
+                    $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
+
+                    // Insert the label after the '<pre><code class="language-*">' using regex
+                    $lines[$codeBlockLine] = preg_replace(
+                        '/<pre><code class="language-(.*?)">/',
+                        '<pre><code class="language-$1">' . $label,
+                        $lines[$codeBlockLine]
+                    );
+                }
             }
         }
-        
+
         return implode("\n", $lines);
-        
     }
     
     public static function preprocess(string $markdown): string
