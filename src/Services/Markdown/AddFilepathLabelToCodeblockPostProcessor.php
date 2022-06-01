@@ -9,10 +9,8 @@ class AddFilepathLabelToCodeblockPostProcessor
 {
     public static function process(string $html): string
     {
-        $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';        
-        $withTorchlight = str_contains($html, $torchlightKey);
-        
-        
+        $withTorchlight = str_contains($html, static::$torchlightKey);
+
         $lines = explode("\n", $html);
         
         foreach ($lines as $index => $line) {
@@ -23,7 +21,7 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
                 
                 $lines[$codeBlockLine] = $withTorchlight
-                ? static::resolveTorchlightCodeLine($torchlightKey, $label, $lines[$codeBlockLine])
+                ? static::resolveTorchlightCodeLine($label, $lines[$codeBlockLine])
                 : static::resolveCodeLine($label, $lines[$codeBlockLine]);
             }
         }
@@ -64,7 +62,9 @@ class AddFilepathLabelToCodeblockPostProcessor
         '# filepath ',
         '# Filepath ',
     ];
-    
+
+    protected static string $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';
+
     protected static function lineMatchesPattern(string $line): bool
     {
         foreach (static::$patterns as $pattern) {
@@ -89,11 +89,11 @@ class AddFilepathLabelToCodeblockPostProcessor
         return sprintf($template, $path, $line);
     }
 
-    protected static function resolveTorchlightCodeLine(string $torchlightKey, string $label, $lines): string|array
+    protected static function resolveTorchlightCodeLine(string $label, $lines): string|array
     {
         return str_replace(
-            $torchlightKey,
-            $torchlightKey . $label,
+            static::$torchlightKey,
+            static::$torchlightKey . $label,
             $lines
         );
     }
