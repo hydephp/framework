@@ -55,7 +55,9 @@ class AddFilepathLabelToCodeblockPostProcessor
 
                 // Remove the original comment lines
                 unset($lines[$index]);
-                unset($lines[$index + 1]);
+                if (trim($lines[$index + 1]) === '') {
+                    unset($lines[$index + 1]);
+                }
             }
         }
 
