@@ -116,11 +116,24 @@ class MarkdownConverterService
         if (config('markdown.enable_blade', false)) {
             $this->html = (new BladeDownService($this->html))->process()->get();
         }
+
+        $this->html = $this->expandCodeblocksFilepathLabel($this->html);
     }
 
     // Helper to inspect the currently enabled extensions
     public function getExtensions(): array
     {
         return $this->extensions;
+    }
+
+    public function expandCodeblocksFilepathLabel(string $html): string
+    {
+        return implode("\n", array_map(function ($line) {
+            if (str_starts_with(strtolower($line), '<pre><code class="language-markdown">// filepath: ')) {
+                $line = str_replace('// Filepath: ', '<small class="filepath">', $line);
+                return $line . '</small>';
+            }
+            return $line;
+        }, explode("\n", $html)));
     }
 }
