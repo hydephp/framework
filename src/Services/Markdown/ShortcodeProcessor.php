@@ -9,6 +9,14 @@ use Hyde\Framework\Services\Markdown\Shortcodes\AbstractColoredBlockquote;
 /**
  * Handle shortcode processing for Markdown conversions.
  *
+ * The shortcode system has a few limitations, as it is meant to be simple
+ * by design so that it is easy to understand how the code works, and
+ * what each shortcode does. Shortcodes are expanded on a per-line basis,
+ * and do not support multi-line input. Shortcodes are expected to be
+ * the very first thing on a line. The signature is a static string
+ * that is used to identify the shortcode. The built-in shortcodes
+ * do not use regex, as that would make them harder to read.
+ *
  * @todo Refactor shortcode manager to singleton as it does not need to be re-instantiated
  *      for each Markdown conversion.
  *
