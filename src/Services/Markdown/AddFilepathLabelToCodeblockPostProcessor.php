@@ -11,31 +11,25 @@ class AddFilepathLabelToCodeblockPostProcessor
     {
         $torchlightKey = '<!-- Syntax highlighted by torchlight.dev -->';        
         $withTorchlight = str_contains($html, $torchlightKey);
-
-
+        
+        
         $lines = explode("\n", $html);
-
+        
         foreach ($lines as $index => $line) {
-            if ($withTorchlight) {
-                if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
-                    $path = static::trimHydeDirective($line);
-                    unset($lines[$index]);
-                    $codeBlockLine = $index + 1;
+            if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
+                $path = static::trimHydeDirective($line);
+                unset($lines[$index]);
+                $codeBlockLine = $index + 1;
+                $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
+                
+                if ($withTorchlight) {
                     $lines[$codeBlockLine] = str_replace(
                         $torchlightKey,
-                        $torchlightKey . static::resolveTemplate($path, $lines[$codeBlockLine]),
+                        $torchlightKey . $label,
                         $lines[$codeBlockLine]
                     );
                 }
-            } else {
-                if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
-                    $path = static::trimHydeDirective($line);
-                    unset($lines[$index]);
-
-                    $codeBlockLine = $index + 1;
-
-                    $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
-
+                else {
                     // Insert the label after the '<pre><code class="language-*">' using regex
                     $lines[$codeBlockLine] = preg_replace(
                         '/<pre><code class="language-(.*?)">/',
@@ -44,7 +38,7 @@ class AddFilepathLabelToCodeblockPostProcessor
                     );
                 }
             }
-        }
+        } 
 
         return implode("\n", $lines);
     }
@@ -99,7 +93,7 @@ class AddFilepathLabelToCodeblockPostProcessor
             '<!-- HYDE[Filepath]', '', $line))
         );
     }
-
+    
     protected static function resolveTemplate(string $path, string $line): string
     {
         $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
