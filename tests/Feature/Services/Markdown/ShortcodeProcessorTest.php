@@ -18,9 +18,7 @@ class ShortcodeProcessorTest extends TestCase
         $shortcodes = (new ShortcodeProcessor('foo'))->shortcodes;
 
         $this->assertCount(4, $shortcodes);
-        $this->assertContains(InfoColoredBlockquote::class, $shortcodes);
-        $this->assertInstanceOf(MarkdownShortcodeContract::class,
-            new $shortcodes[InfoColoredBlockquote::signature()]);
+        $this->assertContainsOnlyInstancesOf(MarkdownShortcodeContract::class, $shortcodes);
     }
 
     // Test discovered shortcodes are used to process input
