@@ -57,7 +57,7 @@ class AddFilepathLabelToCodeblockPostProcessor
             // Check if it matches any of the patterns
             if (static::lineMatchesPattern($firstLine)) {
                 // Get the filepath
-                $filepath = trim(str_replace(self::$patterns, '', $firstLine));
+                $filepath = trim(str_replace(static::$patterns, '', $firstLine));
 
                 // Remove the first line of the code block text
                 $codeBlock->textContent = substr($codeBlock->textContent,
