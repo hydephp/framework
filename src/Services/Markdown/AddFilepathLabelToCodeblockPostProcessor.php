@@ -52,6 +52,10 @@ class AddFilepathLabelToCodeblockPostProcessor
                 // Add the meta-block two lines before the pattern, placing it just above the code block.
                 // This prevents the meta-block from interfering with other processes.
                 $lines[$index - 2] .= "\n".'<!-- HYDE[Filepath]'.trim(str_replace(static::$patterns, '', $line)).' -->'; 
+
+                // Remove the original comment lines
+                unset($lines[$index]);
+                unset($lines[$index + 1]);
             }
         }
 
