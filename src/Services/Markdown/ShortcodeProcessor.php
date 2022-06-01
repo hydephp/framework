@@ -82,13 +82,9 @@ class ShortcodeProcessor implements MarkdownProcessorContract
 
     protected function expandShortcode(string $line): string
     {
-        // If line matches a shortcode directive, resolve it and return the result.
-        if (array_key_exists($signature = $this->discoverSignature($line), $this->shortcodes)) {
-            return $this->shortcodes[$signature]::resolve($line);
-        }
-
-        // Else, return the line as-is.
-        return $line;
+        return array_key_exists($signature = $this->discoverSignature($line), $this->shortcodes)
+            ? $this->shortcodes[$signature]::resolve($line)
+            : $line;
     }
 
     protected function discoverSignature(string $line): string
