@@ -63,6 +63,37 @@ class CodeblockFilepathProcessorTest extends TestCase
         $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
     }
 
+    // Test preprocess method accepts multiple input blocks
+    public function test_preprocess_accepts_multiple_input_blocks()
+    {
+        $markdown = <<<MD
+        
+        ```php
+        // filepath: foo.php
+        echo 'Hello World';
+        ```
+        
+        ```js
+        // filepath: bar.js
+        echo 'Hello World';
+        ```
+        MD;
+
+        $expected = <<<MD
+        
+        <!-- HYDE[Filepath]foo.php -->
+        ```php
+        echo 'Hello World';
+        ```
+        
+        <!-- HYDE[Filepath]bar.js -->
+        ```js
+        echo 'Hello World';
+        ```
+        MD;
+
+        $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::preprocess($markdown));
+    }
 
     public function test_process()
     {
