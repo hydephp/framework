@@ -25,6 +25,11 @@ class AddFilepathLabelToCodeblockPostProcessor
 
         // Add the filepath label to each code block
         foreach ($codeBlocks as $codeBlock) {
+            // Check if element contains the `// Filepath:` string
+            if (! str_contains(strtolower($codeBlock->textContent), '// filepath:')) {
+                continue;
+            }
+
             // Get the filepath which is everything after `// Filepath:` on the first line of the code block
             $filepath = trim(explode("\n", $codeBlock->textContent)[0]);
             $filepath = substr($filepath, strpos($filepath, ':') + 1);
