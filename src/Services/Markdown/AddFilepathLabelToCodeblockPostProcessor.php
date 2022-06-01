@@ -5,7 +5,8 @@ namespace Hyde\Framework\Services\Markdown;
 /**
  * DOMDocument Proof of Concept
  *
- * @todo add ext-dom suggestion to composer.json
+ * @todo Add ext-dom suggestion to composer.json
+ * @todo Add config option to enable/disable this processor
  */
 class AddFilepathLabelToCodeblockPostProcessor
 {
@@ -13,8 +14,6 @@ class AddFilepathLabelToCodeblockPostProcessor
     {
         return (new static($html))->run();
     }
-
-    protected string $html;
 
     protected static array $patterns = [
         '// filepath: ',
@@ -26,6 +25,8 @@ class AddFilepathLabelToCodeblockPostProcessor
         '# filepath ',
         '# Filepath ',
     ];
+    
+    protected string $html;
 
     public function __construct(string $html) {
         $this->html = $html;
