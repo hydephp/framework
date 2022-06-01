@@ -17,6 +17,19 @@ class AddFilepathLabelToCodeblockPostProcessor
         return (new static($html))->run();
     }
 
+    public static function preprocess(string $markdown): string
+    {
+        $lines = explode("\n", $markdown);
+
+        foreach ($lines as $index => $line) {
+            if (static::lineMatchesPattern($line)) {
+                $lines[$index - 2] .= "\n".'<!-- HYDE[Filepath]'.trim(str_replace(static::$patterns, '', $line)).' -->'; 
+            }
+        }
+
+        return implode("\n", $lines);
+    }
+
     protected static array $patterns = [
         '// filepath: ',
         '// Filepath: ',

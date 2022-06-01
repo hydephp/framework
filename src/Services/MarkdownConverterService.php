@@ -105,6 +105,8 @@ class MarkdownConverterService
         }
 
         $this->markdown = ShortcodeProcessor::process($this->markdown);
+
+        $this->markdown = AddFilepathLabelToCodeblockPostProcessor::preprocess($this->markdown);
     }
 
     protected function runPostProcessing(): void
