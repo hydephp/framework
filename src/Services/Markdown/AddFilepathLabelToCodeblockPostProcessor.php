@@ -55,7 +55,7 @@ class AddFilepathLabelToCodeblockPostProcessor
             $firstLine = strtok($codeBlock->textContent, "\n");
             
             // Check if it matches any of the patterns
-            if ($this->lineMatchesPattern($firstLine)) {
+            if (static::lineMatchesPattern($firstLine)) {
                 // Get the filepath
                 $filepath = trim(str_replace(self::$patterns, '', $firstLine));
 
@@ -81,7 +81,7 @@ class AddFilepathLabelToCodeblockPostProcessor
         return $dom->saveHTML();
     }
 
-    protected function lineMatchesPattern(string $line): bool
+    protected static function lineMatchesPattern(string $line): bool
     {
         foreach (static::$patterns as $pattern) {
             if (str_starts_with($line, $pattern)) {
