@@ -28,7 +28,7 @@ class BladeDownService
         $this->pageData = $pageData;
     }
 
-    public function process(): self
+    public function run(): self
     {
         $this->output = implode("\n", array_map(function ($line) {
             return $this->lineStartsWithDirective($line)
@@ -46,7 +46,7 @@ class BladeDownService
 
     public static function render(string $html, ?array $pageData = []): string
     {
-        return (new static(static::preprocess($html), $pageData))->process()->get();
+        return (new static(static::preprocess($html), $pageData))->run()->get();
     }
 
     public static function preprocess(string $markdown): string
