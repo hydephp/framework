@@ -50,9 +50,20 @@ class ShortcodeProcessorTest extends TestCase
     {
         $processor = new ShortcodeProcessor('foo');
 
-        $processor->addShortcode(new InfoColoredBlockquote());
+        $processor->addShortcode(new class implements MarkdownShortcodeContract {
+            public static function signature(): string
+            {
+                return 'foo';
+            }
 
-        $this->assertEquals('<blockquote class="info">foo</blockquote>',
-            $processor->processInput()->getOutput());
+            public static function resolve(string $input): string
+            {
+                return 'bar';
+            }
+        });
+
+        $this->assertArrayHasKey('foo', $processor->shortcodes);
+
+        $this->assertEquals('bar', $processor->processInput()->getOutput());
     }
 }
