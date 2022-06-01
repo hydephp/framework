@@ -22,6 +22,20 @@ class BladeDownService
 
     protected array $pageData = [];
 
+    public static function render(string $html, ?array $pageData = []): string
+    {
+        return (new static(static::preprocess($html), $pageData))->run()->get();
+    }
+
+    public static function preprocess(string $markdown): string
+    {
+        return implode("\n", array_map(function ($line) {
+            return str_starts_with(strtolower($line), strtolower('[Blade]:'))
+                ? '<!-- HYDE'.trim(htmlentities($line)).' -->'
+                : $line;
+        }, explode("\n", $markdown)));
+    }
+
     public function __construct(string $html, ?array $pageData = [])
     {
         $this->html = $html;
@@ -42,20 +56,6 @@ class BladeDownService
     public function get(): string
     {
         return $this->output;
-    }
-
-    public static function render(string $html, ?array $pageData = []): string
-    {
-        return (new static(static::preprocess($html), $pageData))->run()->get();
-    }
-
-    public static function preprocess(string $markdown): string
-    {
-        return implode("\n", array_map(function ($line) {
-            return str_starts_with(strtolower($line), strtolower('[Blade]:'))
-                ? '<!-- HYDE'.trim(htmlentities($line)).' -->'
-                : $line;
-        }, explode("\n", $markdown)));
     }
 
     protected function lineStartsWithDirective(string $line): bool
