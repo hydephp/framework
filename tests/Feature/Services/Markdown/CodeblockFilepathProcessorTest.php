@@ -121,6 +121,30 @@ class CodeblockFilepathProcessorTest extends TestCase
         $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::preprocess($markdown));
     }
 
+    // Test space after filepath is optional
+    public function test_space_after_filepath_is_optional()
+    {
+        $markdown = <<<MD
+        
+        ```php
+        // filepath: foo.php
+        
+        echo 'Hello World';
+        ```
+        MD;
+
+        $expected = <<<MD
+        
+        ```php
+        // filepath: foo.php
+        echo 'Hello World';
+        ```
+        MD;
+
+        $this->assertEqualsIgnoringLineReturnType(CodeblockFilepathProcessor::preprocess($expected),
+            CodeblockFilepathProcessor::preprocess($markdown));
+    }
+
     public function test_process()
     {
         $this->markTestSkipped('TODO');
