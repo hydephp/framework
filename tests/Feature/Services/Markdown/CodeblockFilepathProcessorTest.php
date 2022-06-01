@@ -10,12 +10,12 @@ use Tests\TestCase;
  */
 class CodeblockFilepathProcessorTest extends TestCase
 {
-    public function test_process()
+    public function test_preprocess()
     {
         $this->markTestSkipped('TODO');
     }
 
-    public function test_preprocess()
+    public function test_process()
     {
         $this->markTestSkipped('TODO');
     }

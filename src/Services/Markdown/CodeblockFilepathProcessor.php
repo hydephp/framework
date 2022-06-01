@@ -7,6 +7,30 @@ namespace Hyde\Framework\Services\Markdown;
  */
 class CodeblockFilepathProcessor
 {
+    public static function preprocess(string $markdown): string
+    {
+        $lines = explode("\n", $markdown);
+
+        foreach ($lines as $index => $line) {
+            if (static::lineMatchesPattern($line) && ! str_contains($line, '{"shortcodes": false}')) {
+                // Add the meta-block two lines before the pattern, placing it just above the code block.
+                // This prevents the meta-block from interfering with other processes.
+                $lines[$index - 2] .= sprintf("\n<!-- HYDE[Filepath]%s -->",
+                    trim(str_replace(static::$patterns, '', $line))
+                );
+
+                // Remove the original comment lines
+                unset($lines[$index]);
+                // Only unset the next line if it's empty
+                if (trim($lines[$index + 1]) === '') {
+                    unset($lines[$index + 1]);
+                }
+            }
+        }
+
+        return implode("\n", $lines);
+    }
+
     public static function process(string $html): string
     {
         $lines = explode("\n", $html);
@@ -26,31 +50,7 @@ class CodeblockFilepathProcessor
 
         return implode("\n", $lines);
     }
-    
-    public static function preprocess(string $markdown): string
-    {
-        $lines = explode("\n", $markdown);
-        
-        foreach ($lines as $index => $line) {
-            if (static::lineMatchesPattern($line) && ! str_contains($line, '{"shortcodes": false}')) {
-                // Add the meta-block two lines before the pattern, placing it just above the code block.
-                // This prevents the meta-block from interfering with other processes.
-                $lines[$index - 2] .= sprintf("\n<!-- HYDE[Filepath]%s -->",
-                    trim(str_replace(static::$patterns, '', $line))
-                );
-                
-                // Remove the original comment lines
-                unset($lines[$index]);
-                // Only unset the next line if it's empty
-                if (trim($lines[$index + 1]) === '') {
-                    unset($lines[$index + 1]);
-                }
-            }
-        }
-        
-        return implode("\n", $lines);
-    }
-    
+
     protected static array $patterns = [
         '// filepath: ',
         '// Filepath: ',
