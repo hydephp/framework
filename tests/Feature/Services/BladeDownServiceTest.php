@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Services;
 
-use Hyde\Framework\Services\BladeDownService;
+use Hyde\Framework\Services\Markdown\BladeDownService;
 use Tests\TestCase;
 
 /**
  * Class BladeDownServiceTest.
  *
- * @covers \Hyde\Framework\Services\BladeDownService
+ * @covers \Hyde\Framework\Services\Markdown\BladeDownService
  */
 class BladeDownServiceTest extends TestCase
 {

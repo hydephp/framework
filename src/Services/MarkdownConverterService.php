@@ -4,6 +4,7 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
+use Hyde\Framework\Services\Markdown\BladeDownService;
 use Hyde\Framework\Services\Markdown\CodeblockFilepathProcessor;
 use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
 use League\CommonMark\CommonMarkConverter;

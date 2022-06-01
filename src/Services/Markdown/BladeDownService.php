@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Services;
+namespace Hyde\Framework\Services\Markdown;
 
 use Illuminate\Support\Facades\Blade;
 
