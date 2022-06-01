@@ -58,10 +58,8 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $filepath = trim(str_replace(self::$patterns, '', $firstLine));
 
                 // Remove the first line of the code block text
-                $text = explode("\n", $codeBlock->textContent);
-                array_shift($text);
-                array_shift($text);
-                $codeBlock->textContent = implode("\n", $text);
+                $codeBlock->textContent = substr($codeBlock->textContent,
+                    strpos($codeBlock->textContent, "\n") + 2);
 
                 // Create the filepath label `<small>$filepath<small>` element
                 $filepathLabel = $dom->createElement('small', $filepath);
@@ -72,7 +70,6 @@ class AddFilepathLabelToCodeblockPostProcessor
                 $screenReaderText = $dom->createElement('span', 'Filepath: ');
                 $screenReaderText->setAttribute('class', 'sr-only');
                 $filepathLabel->insertBefore($screenReaderText, $filepathLabel->firstChild);
-
 
                 // Prepend the filepath label to the first child of the code block
                 $codeBlock->insertBefore($filepathLabel, $codeBlock->firstChild);
