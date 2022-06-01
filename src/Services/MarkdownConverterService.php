@@ -4,7 +4,7 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
-use Hyde\Framework\Services\Markdown\AddFilepathLabelToCodeblockPostProcessor;
+use Hyde\Framework\Services\Markdown\CodeblockFilepathProcessor;
 use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
@@ -106,7 +106,7 @@ class MarkdownConverterService
 
         $this->markdown = ShortcodeProcessor::process($this->markdown);
 
-        $this->markdown = AddFilepathLabelToCodeblockPostProcessor::preprocess($this->markdown);
+        $this->markdown = CodeblockFilepathProcessor::preprocess($this->markdown);
     }
 
     protected function runPostProcessing(): void
@@ -120,7 +120,7 @@ class MarkdownConverterService
             $this->html = (new BladeDownService($this->html))->process()->get();
         }
 
-        $this->html = AddFilepathLabelToCodeblockPostProcessor::process($this->html);
+        $this->html = CodeblockFilepathProcessor::process($this->html);
 
         // replace all CRLF with LF
         $this->html = str_replace(["\r\n", "\r"], "\n", $this->html);
