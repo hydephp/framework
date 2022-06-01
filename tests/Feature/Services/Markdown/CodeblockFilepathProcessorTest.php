@@ -19,6 +19,28 @@ class CodeblockFilepathProcessorTest extends TestCase
         $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
     }
 
+    // Test preprocess method accepts multiple filepath formats
+    public function test_preprocess_accepts_multiple_filepath_formats()
+    {
+        $patterns = [
+            '// filepath: ',
+            '// Filepath: ',
+            '# filepath: ',
+            '# Filepath: ',
+            '// filepath ',
+            '// Filepath ',
+            '# filepath ',
+            '# Filepath ',
+        ];
+
+        foreach ($patterns as $pattern) {
+            $markdown = "\n```php\n{$pattern}foo.php\necho 'Hello World';\n```";
+            $expected = "\n<!-- HYDE[Filepath]foo.php -->\n```php\necho 'Hello World';\n```";
+
+            $this->assertEquals($expected, CodeblockFilepathProcessor::preprocess($markdown));
+        }
+    }
+
     public function test_process()
     {
         $this->markTestSkipped('TODO');
