@@ -4,7 +4,6 @@ namespace Tests\Feature\Services\Markdown;
 
 use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
-use Hyde\Framework\Services\Markdown\Shortcodes\InfoColoredBlockquote;
 use Tests\TestCase;
 
 /**
@@ -63,7 +62,6 @@ class ShortcodeProcessorTest extends TestCase
         });
 
         $this->assertArrayHasKey('foo', $processor->shortcodes);
-
         $this->assertEquals('bar', $processor->processInput()->getOutput());
     }
 }
