@@ -29,4 +29,11 @@ class ShortcodeProcessorTest extends TestCase
         $this->assertEquals('<blockquote class="info">foo</blockquote>',
             $processor->processInput()->getOutput());
     }
+
+    // Test the static process() shorthand method
+    public function test_process_static_shorthand()
+    {
+        $this->assertEquals('<blockquote class="info">foo</blockquote>',
+            ShortcodeProcessor::process('>info foo'));
+    }
 }
