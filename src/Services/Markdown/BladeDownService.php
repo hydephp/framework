@@ -36,6 +36,11 @@ class BladeDownService
         }, explode("\n", $markdown)));
     }
 
+    public static function process(string $html, ?array $pageData = []): string
+    {
+        return (new static($html, $pageData))->run()->get();
+    }
+
     public function __construct(string $html, ?array $pageData = [])
     {
         $this->html = $html;
