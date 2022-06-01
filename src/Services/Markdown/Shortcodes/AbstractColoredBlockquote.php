@@ -35,4 +35,26 @@ abstract class AbstractColoredBlockquote implements MarkdownShortcodeContract
     {
         return str_replace('>', '', $signature);
     }
+
+    public static function get(): array
+    {
+        return [
+            new class extends AbstractColoredBlockquote
+            {
+                protected static string $signature = '>danger';
+            },
+            new class extends AbstractColoredBlockquote
+            {
+                protected static string $signature = '>info';
+            },
+            new class extends AbstractColoredBlockquote
+            {
+                protected static string $signature = '>success';
+            },
+            new class extends AbstractColoredBlockquote
+            {
+                protected static string $signature = '>warning';
+            }
+        ];
+    }
 }
