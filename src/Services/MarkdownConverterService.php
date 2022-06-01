@@ -116,7 +116,7 @@ class MarkdownConverterService
         }
 
         if (config('markdown.enable_blade', false)) {
-            $this->html = (new BladeDownService($this->html))->process()->get();
+            $this->html = BladeDownService::process($this->html);
         }
 
         if (config('markdown.features.codeblock_filepaths', true)) {
