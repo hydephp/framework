@@ -46,6 +46,9 @@ class HydeSmartDocs
     {
         $this->tokenize();
 
+        $this->addDynamicHeaderContent();
+        $this->addDynamicFooterContent();
+
         return $this;
     }
 
@@ -60,6 +63,22 @@ class HydeSmartDocs
 
         $this->header = $parts[0];
         $this->body = $parts[1] ?? '';
+
+        return $this;
+    }
+
+    protected function addDynamicHeaderContent(): self
+    {
+        // Hook to add dynamic content to the header.
+        // This is where we can add TOC, breadcrumbs, etc.
+
+        return $this;
+    }
+
+    protected function addDynamicFooterContent(): self
+    {
+        // Hook to add dynamic content to the footer.
+        // This is where we can add copyright, attributions, info, etc.
 
         return $this;
     }
