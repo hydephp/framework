@@ -44,7 +44,22 @@ class HydeSmartDocs
     /** @internal */
     public function process(): self
     {
-        //
+        $this->tokenize();
+
+        return $this;
+    }
+
+    protected function tokenize(): self
+    {
+        // The HTML content is expected to be two parts. To create semantic HTML,
+        // we need to split the content into header and body. We do this by
+        // extracting the first <h1> tag and everything before it.
+
+        // Split the HTML content by the first newline
+        $parts = explode("\n", $this->html, 2);
+
+        $this->header = $parts[0];
+        $this->body = $parts[1] ?? '';
 
         return $this;
     }
