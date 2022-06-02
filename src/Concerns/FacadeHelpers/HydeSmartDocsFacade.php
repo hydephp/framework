@@ -2,6 +2,7 @@
 
 namespace Hyde\Framework\Concerns\FacadeHelpers;
 
+use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Models\DocumentationPage;
 
 /**
@@ -18,5 +19,10 @@ trait HydeSmartDocsFacade
     public static function enabled(): bool
     {
         return config('docs.smart_docs', true);
+    }
+
+    public function hasTorchlight(): bool
+    {
+        return Features::hasTorchlight() && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
     }
 }
