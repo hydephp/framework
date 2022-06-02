@@ -24,4 +24,14 @@ class DocumentationPage extends MarkdownDocument
     {
         return trim(Hyde::docsDirectory().'/'.$this->slug, '/');
     }
+
+    /** @internal */
+    public function getOnlineSourcePath(): string|false
+    {
+        if (config('docs.source_file_location_base', null) === null) {
+            return false;
+        }
+
+        return trim(config('docs.source_file_location_base'), '/').'/'.$this->slug.'.md';
+    }
 }
