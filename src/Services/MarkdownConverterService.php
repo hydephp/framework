@@ -75,7 +75,7 @@ class MarkdownConverterService
                     'id_prefix' => '',
                     'fragment_prefix' => '',
                     'symbol' => '#',
-                    'insert' => 'after'
+                    'insert' => 'after',
                 ],
             ], $this->config);
         }
