@@ -8,5 +8,8 @@ namespace Hyde\Framework\Services;
  */
 class HydeSmartDocs
 {
-
+    public static function isEnabled(): bool
+    {
+        return config('docs.smart_docs', true);
+    }
 }
