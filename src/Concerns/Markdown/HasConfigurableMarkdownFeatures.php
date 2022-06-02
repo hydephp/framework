@@ -58,12 +58,16 @@ trait HasConfigurableMarkdownFeatures
             return true;
         }
 
-        if (isset($this->sourceModel) &&
-            ($this->sourceModel === DocumentationPage::class && Markdown::hasTableOfContents())) {
+        if ($this->isDocumentationPage() && Markdown::hasTableOfContents()) {
             return true;
         }
 
         return false;
+    }
+
+    public function isDocumentationPage(): bool
+    {
+        return isset($this->sourceModel) && $this->sourceModel === DocumentationPage::class;
     }
 
     public function canEnableTorchlight(): bool
