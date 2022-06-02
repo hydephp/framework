@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Hyde\Framework\Helpers\Features;
+use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
@@ -57,6 +58,8 @@ class DarkmodeFeatureTest extends TestCase
             Features::darkmode(),
         ]);
 
+        view()->share('page', new DocumentationPage([], ''));
+
         $view = view('hyde::layouts/docs')->with([
             'title' => 'foo',
             'markdown' => 'foo',
@@ -88,6 +91,8 @@ class DarkmodeFeatureTest extends TestCase
         Config::set('hyde.features', [
             Features::documentationPages(),
         ]);
+
+        view()->share('page', new DocumentationPage([], ''));
 
         $view = view('hyde::layouts/docs')->with([
             'title' => 'foo',
