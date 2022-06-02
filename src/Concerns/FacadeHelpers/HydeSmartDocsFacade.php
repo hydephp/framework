@@ -8,7 +8,7 @@ trait HydeSmartDocsFacade
 {
     public static function create(DocumentationPage $page, string $html): static
     {
-        return new static($page, $html);
+        return (new static($page, $html))->process();
     }
 
     public static function isEnabled(): bool

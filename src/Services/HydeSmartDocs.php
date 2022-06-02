@@ -36,4 +36,12 @@ class HydeSmartDocs
     {
         return '';
     }
+
+    /** @internal */
+    public function process(): self
+    {
+        //
+
+        return $this;
+    }
 }
