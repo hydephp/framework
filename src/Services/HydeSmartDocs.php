@@ -2,14 +2,23 @@
 
 namespace Hyde\Framework\Services;
 
+use Hyde\Framework\Concerns\FacadeHelpers\HydeSmartDocsFacade;
+use Hyde\Framework\Models\DocumentationPage;
+
 /**
  * Class to make Hyde documentation pages smarter,
  * allowing for rich and dynamic content.
  */
 class HydeSmartDocs
 {
-    public static function isEnabled(): bool
+    use HydeSmartDocsFacade;
+
+    protected DocumentationPage $page;
+    protected string $html;
+
+    public function __construct(DocumentationPage $page, string $html)
     {
-        return config('docs.smart_docs', true);
+        $this->page = $page;
+        $this->html = $html;
     }
 }
