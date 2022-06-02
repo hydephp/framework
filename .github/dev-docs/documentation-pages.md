@@ -244,7 +244,7 @@ Let's take a practical example for how HydePHP.com uses this feature.
 ```php
 // Filepath: config/docs.php
 
-'source_file_location_base' => 'https://github.com/hydephp/docs/blob/master/',
+'source_file_location_base' => 'https://github.com/hydephp/docs/blob/master',
 ```
 
 #### Changing the button text
