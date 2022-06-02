@@ -255,22 +255,3 @@ Changing the label is easy, just change the following config setting:
 // Filepath: config/docs.php
 'edit_source_link_text' => 'Edit Source on GitHub',
 ```
-
-#### How to find the base for a GitHub repository
-
-Using the same repository as the one used above as an example,
-open any of the files on the GitHub website, for example `quickstart.md`.
-
-Then, remove the filename and extension, as Hyde will add those back in
-automatically for each page.
-
-```
-So, for instance, replace the following:
-
-https://github.com/hydephp/docs/blob/master/quickstart.md
-
-With this:
-https://github.com/hydephp/docs/blob/master/
-
-Or, if you want to take users to the edit page directly:
-https://github.com/hydephp/docs/edit/master/
