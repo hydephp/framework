@@ -67,6 +67,15 @@
 			<section id="document-main-content" itemprop="articleBody">
 				{!! $markdown !!}
 			</section>
+			@if($page->getOnlineSourcePath() !== false)
+				<footer>
+					<p class="text-right">
+						<a href="{{ $page->getOnlineSourcePath() }}">
+							{{ config('docs.edit_source_link_text', 'Edit page') }}
+						</a>
+					</p>
+				</footer>
+			@endif
 		</article>
 	</main>
 
