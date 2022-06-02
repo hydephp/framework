@@ -160,6 +160,21 @@ class CodeblockFilepathProcessorTest extends TestCase
         $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::process($html));
     }
 
+    // Test processor expands filepath directive in Torchlight codeblock
+    public function test_processor_expands_filepath_directive_in_torchlight_codeblock()
+    {
+        $html = <<<HTML
+        <!-- HYDE[Filepath]foo.html -->
+        <pre><code class="torchlight"><!-- Syntax highlighted by torchlight.dev --><div class="line"><span class="line-number">1</span>&nbsp;</div></code></pre>
+        HTML;
+
+        $expected = <<<HTML
+        <pre><code class="torchlight"><!-- Syntax highlighted by torchlight.dev --><small class="filepath"><span class="sr-only">Filepath: </span>foo.html</small><div class="line"><span class="line-number">1</span>&nbsp;</div></code></pre>
+        HTML;
+
+        $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::process($html));
+    }
+
     protected function assertEqualsIgnoringLineReturnType(string $expected, string $actual)
     {
         $this->assertEquals(str_replace("\r\n", "\n", $expected),
