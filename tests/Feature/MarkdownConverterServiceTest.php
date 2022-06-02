@@ -22,14 +22,14 @@ class MarkdownConverterServiceTest extends TestCase
 
     public function test_service_can_parse_markdown_to_html_with_permalinks()
     {
-        $markdown = '# Hello World!';
+        $markdown = '## Hello World!';
 
         $html = (new MarkdownConverterService($markdown))->withPermalinks()->parse();
 
         $this->assertIsString($html);
         $this->assertEquals(
-            '<h1>Hello World!<a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" '.
-            'title="Permalink">#</a></h1>'."\n",
+            '<h2>Hello World!<a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" '.
+            'title="Permalink">#</a></h2>'."\n",
             $html
         );
     }
