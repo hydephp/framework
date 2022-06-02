@@ -11,7 +11,7 @@ trait HydeSmartDocsFacade
         return (new static($page, $html))->process();
     }
 
-    public static function isEnabled(): bool
+    public static function enabled(): bool
     {
         return config('docs.smart_docs', true);
     }
