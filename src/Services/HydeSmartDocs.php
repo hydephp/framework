@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 /**
  * Class to make Hyde documentation pages smarter,
  * by dynamically enriching them with semantic HTML.
+ *
+ * @experimental 🧪 Subject to change without notice.
  */
 class HydeSmartDocs
 {
