@@ -62,20 +62,20 @@
 		</footer>
 	</aside>
 	<main id="content">
+		@php
+		$document = \Hyde\Framework\Services\HydeSmartDocs::create($page, $markdown);
+		@endphp
 		<article id="document" itemscope itemtype="https://schema.org/Article" @class(['mx-auto lg:ml-8 prose dark:prose-invert
-			max-w-3xl', 'torchlight-enabled'=> Hyde\Framework\Helpers\Features::hasTorchlight()])>
+			max-w-3xl', 'torchlight-enabled'=> $document->hasTorchlight()])>
+			<header id="document-header">
+				{!! $document->renderHeader() !!}
+			</header>
 			<section id="document-main-content" itemprop="articleBody">
-				{!! $markdown !!}
+				{!! $document->renderBody() !!}
 			</section>
-			@if($page->getOnlineSourcePath() !== false)
-				<footer>
-					<p class="text-right">
-						<a href="{{ $page->getOnlineSourcePath() }}">
-							{{ config('docs.edit_source_link_text', 'Edit page') }}
-						</a>
-					</p>
-				</footer>
-			@endif
+			<footer id="document-footer">
+				{!! $document->renderFooter() !!}
+			</footer>
 		</article>
 	</main>
 

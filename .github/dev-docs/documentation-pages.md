@@ -244,7 +244,7 @@ Let's take a practical example for how HydePHP.com uses this feature.
 ```php
 // Filepath: config/docs.php
 
-'source_file_location_base' => 'https://github.com/hydephp/docs/blob/master',
+'source_file_location_base' => 'https://github.com/hydephp/docs/blob/master/',
 ```
 
 #### Changing the button text
@@ -254,4 +254,24 @@ Changing the label is easy, just change the following config setting:
 ```php
 // Filepath: config/docs.php
 'edit_source_link_text' => 'Edit Source on GitHub',
+```
+
+#### Changing the position
+
+By default the button will be shown in both the documentation page footer.
+You can change this by setting the following config setting to `'header'`, `'footer'`, or `'both'`
+
+```php
+// Filepath: config/docs.php
+'edit_source_link_position' => 'header',
+```
+
+#### Adding a button icon
+
+This is not included out of the box, but is easy to add with some CSS!
+Just target the `.edit-page-link` class.
+
+```css
+// filepath e.g. app.css
+.edit-page-link::before {content: "✏ "}
 ```
