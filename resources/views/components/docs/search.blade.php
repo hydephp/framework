@@ -7,7 +7,7 @@
 </button>
 @push('scripts')
 	
-<dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800">
+<dialog id="searchMenu" class="prose dark:prose-invert bg-gray-100 dark:bg-gray-800 fixed">
 	@include('hyde::components.docs.search-input')
 	<footer>
 		<small>
@@ -59,6 +59,7 @@ function openSearchMenu() {
 	function createCloseButton() {
 		const closeButton = document.createElement('button');
 		closeButton.id = 'searchMenuCloseButton';
+		closeButton.classList.add('fixed');
 		closeButton.setAttribute('aria-label', 'Close search menu');
 		closeButton.addEventListener('click', () => {
 			closeSearchMenu();
