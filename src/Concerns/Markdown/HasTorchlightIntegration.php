@@ -14,7 +14,8 @@ trait HasTorchlightIntegration
 
     protected function determineIfTorchlightAttributionShouldBeInjected(): bool
     {
-        return config('torchlight.attribution.enabled', true)
+        return ! $this->isDocumentationPage()
+            && config('torchlight.attribution.enabled', true)
             && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
     }
 
