@@ -62,7 +62,8 @@ class HydeSmartDocs
         $parts = explode("\n", $this->html, 2);
 
         $this->header = $parts[0];
-        $this->body = $parts[1] ?? '';
+        $this->body = $parts[1];
+        $this->footer = '';
 
         return $this;
     }
