@@ -76,6 +76,7 @@ class MarkdownConverterService
                     'fragment_prefix' => '',
                     'symbol' => '#',
                     'insert' => 'after',
+                    'min_heading_level' => 2,
                 ],
             ], $this->config);
         }
