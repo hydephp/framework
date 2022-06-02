@@ -224,3 +224,53 @@ Two types of search methods are added, one is a full page search screen that wil
 The second method is a button added to the documentation pages, similar to how Algolia DocSearch works.
 Opening it will open a dialog modal with an integrated search screen.
 You can also open the dialog using the keyboard shortcut `/`.
+
+### Automatic "Edit Page" button
+
+#### Introduction
+
+Added in v0.31, Hyde can automatically add links to documentation pages that takes the user
+to a GitHub page (or similar) to edit the page. This makes it great for open-source projects
+looking to allow others to contribute to the documentation in a quick and easy manner.
+
+The feature is automatically enabled when you specify a base URL in the Docs configuration file.
+Hyde expects this to be a GitHub path, but it will probably work with other methods as well,
+if not, please send a PR and/or create an issue on the [GitHub repository](https://github.com/hydephp/framework)!
+
+#### Example configuration
+
+Let's take a practical example for how HydePHP.com uses this feature.
+
+```php
+// Filepath: config/docs.php
+
+'source_file_location_base' => 'https://github.com/hydephp/docs/blob/master/',
+```
+
+#### Changing the button text
+
+Changing the label is easy, just change the following config setting:
+
+```php
+// Filepath: config/docs.php
+'edit_source_link_text' => 'Edit Source on GitHub',
+```
+
+#### How to find the base for a GitHub repository
+
+Using the same repository as the one used above as an example,
+open any of the files on the GitHub website, for example `quickstart.md`.
+
+Then, remove the filename and extension, as Hyde will add those back in
+automatically for each page.
+
+```
+So, for instance, replace the following:
+
+https://github.com/hydephp/docs/blob/master/quickstart.md
+
+With this:
+https://github.com/hydephp/docs/blob/master/
+
+Or, if you want to take users to the edit page directly:
+https://github.com/hydephp/docs/edit/master/
