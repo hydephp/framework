@@ -28,8 +28,8 @@ class MarkdownConverterServiceTest extends TestCase
 
         $this->assertIsString($html);
         $this->assertEquals(
-            '<h1><a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" '.
-            'title="Permalink"></a>Hello World!</h1>'."\n",
+            '<h1>Hello World!<a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" '.
+            'title="Permalink">#</a></h1>'."\n",
             $html
         );
     }
