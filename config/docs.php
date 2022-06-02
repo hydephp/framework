@@ -52,9 +52,9 @@ return [
     | By adding a base URL here, Hyde will use it to create "edit source" links
     | to your documentation pages. Hyde expects this to be a GitHub path, but
     | it will probably work with other methods as well, if not, send a PR!
-    | 
+    |
     | You can also change the link text with the `edit_source_link_text` setting.
-    | 
+    |
     | Example: https://github.com/hydephp/docs/blob/master
     |          Do not specify the filename or extension, Hyde will do that for you.
     | Setting the setting to null will disable the feature.
