@@ -74,7 +74,7 @@ class HydeSmartDocs
         // Hook to add dynamic content to the header.
         // This is where we can add TOC, breadcrumbs, etc.
 
-        if ($this->page->getOnlineSourcePath() !== false) {
+        if ($this->canRenderSourceLink('header')) {
             $this->header .= $this->renderSourceLink();
         }
 
@@ -93,7 +93,7 @@ class HydeSmartDocs
             ));
         }
 
-        if ($this->page->getOnlineSourcePath() !== false) {
+        if ($this->canRenderSourceLink('footer')) {
             $this->footer .= $this->renderSourceLink();
         }
 

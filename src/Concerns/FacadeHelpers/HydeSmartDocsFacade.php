@@ -25,4 +25,12 @@ trait HydeSmartDocsFacade
     {
         return Features::hasTorchlight() && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
     }
+
+    protected function canRenderSourceLink(string $inPosition): bool
+    {
+        $config = config('docs.edit_source_link_position', 'both');
+        $positions = $config === 'both' ? ['header', 'footer'] : [$config];
+
+        return ($this->page->getOnlineSourcePath() !== false) && in_array($inPosition, $positions);
+    }
 }
