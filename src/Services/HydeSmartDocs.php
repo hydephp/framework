@@ -7,7 +7,7 @@ use Hyde\Framework\Models\DocumentationPage;
 
 /**
  * Class to make Hyde documentation pages smarter,
- * allowing for rich and dynamic content.
+ * by dynamically enriching them with semantic HTML.
  */
 class HydeSmartDocs
 {
