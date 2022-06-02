@@ -4,6 +4,7 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\FacadeHelpers\HydeSmartDocsFacade;
 use Hyde\Framework\Models\DocumentationPage;
+use Illuminate\Support\Str;
 
 /**
  * Class to make Hyde documentation pages smarter,
@@ -80,6 +81,13 @@ class HydeSmartDocs
     {
         // Hook to add dynamic content to the footer.
         // This is where we can add copyright, attributions, info, etc.
+
+        if (config('torchlight.attribution.enabled', true) && $this->hasTorchlight()) {
+            $this->footer .= Str::markdown(config(
+                'torchlight.attribution.markdown',
+                'Syntax highlighted by torchlight.dev'
+            ));
+        }
 
         return $this;
     }
