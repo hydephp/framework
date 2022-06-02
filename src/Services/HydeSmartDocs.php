@@ -21,4 +21,19 @@ class HydeSmartDocs
         $this->page = $page;
         $this->html = $html;
     }
+
+    public function renderHeader(): string
+    {
+        return '';
+    }
+
+    public function renderBody(): string
+    {
+        return '';
+    }
+
+    public function renderFooter(): string
+    {
+        return '';
+    }
 }
