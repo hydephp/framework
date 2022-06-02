@@ -16,11 +16,6 @@ trait HydeSmartDocsFacade
         return (new static($page, $html))->process();
     }
 
-    public static function enabled(): bool
-    {
-        return config('docs.smart_docs', true);
-    }
-
     public function hasTorchlight(): bool
     {
         return Features::hasTorchlight() && str_contains($this->html, 'Syntax highlighted by torchlight.dev');
