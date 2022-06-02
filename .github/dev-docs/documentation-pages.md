@@ -275,5 +275,3 @@ Just target the `.edit-page-link` class.
 // filepath e.g. app.css
 .edit-page-link::before {content: "✏ "}
 ```
-
-[Blade]: <style>.edit-page-link::before { content: "✏ " }</style>
