@@ -16,6 +16,10 @@ class HydeSmartDocs
     protected DocumentationPage $page;
     protected string $html;
 
+    protected string $header;
+    protected string $body;
+    protected string $footer;
+
     public function __construct(DocumentationPage $page, string $html)
     {
         $this->page = $page;
@@ -24,17 +28,17 @@ class HydeSmartDocs
 
     public function renderHeader(): string
     {
-        return '';
+        return $this->header;
     }
 
     public function renderBody(): string
     {
-        return '';
+        return $this->body;
     }
 
     public function renderFooter(): string
     {
-        return '';
+        return $this->footer;
     }
 
     /** @internal */
