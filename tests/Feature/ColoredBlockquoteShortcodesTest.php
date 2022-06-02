@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 /**
  * Class ColoredBlockquoteShortcodesTest.
- * 
+ *
  * @covers \Hyde\Framework\Services\Markdown\Shortcodes\AbstractColoredBlockquote
  */
 class ColoredBlockquoteShortcodesTest extends TestCase

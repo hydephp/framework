@@ -49,11 +49,10 @@ class CodeblockFilepathProcessorTest extends TestCase
             'js',
             'html',
             'made-up',
-            'foo'
+            'foo',
         ];
 
         foreach ($languages as $language) {
-
             $markdown = "\n```{$language}\n// filepath: foo.{$language}\nfoo\n```";
             $expected = "\n<!-- HYDE[Filepath]foo.{$language} -->\n```{$language}\nfoo\n```";
 
@@ -66,7 +65,7 @@ class CodeblockFilepathProcessorTest extends TestCase
     // Test preprocess method accepts multiple input blocks
     public function test_preprocess_accepts_multiple_input_blocks()
     {
-        $markdown = <<<MD
+        $markdown = <<<'MD'
         
         ```php
         // filepath: foo.php
@@ -79,7 +78,7 @@ class CodeblockFilepathProcessorTest extends TestCase
         ```
         MD;
 
-        $expected = <<<MD
+        $expected = <<<'MD'
         
         <!-- HYDE[Filepath]foo.php -->
         ```php
@@ -98,7 +97,7 @@ class CodeblockFilepathProcessorTest extends TestCase
     // Test preprocess method accepts multi-line codeblocks
     public function test_preprocess_accepts_multi_line_codeblocks()
     {
-        $markdown = <<<MD
+        $markdown = <<<'MD'
         
         ```php
         // filepath: foo.php
@@ -108,7 +107,7 @@ class CodeblockFilepathProcessorTest extends TestCase
         ```
         MD;
 
-        $expected = <<<MD
+        $expected = <<<'MD'
         
         <!-- HYDE[Filepath]foo.php -->
         ```php
@@ -124,7 +123,7 @@ class CodeblockFilepathProcessorTest extends TestCase
     // Test space after filepath is optional
     public function test_space_after_filepath_is_optional()
     {
-        $markdown = <<<MD
+        $markdown = <<<'MD'
         
         ```php
         // filepath: foo.php
@@ -133,7 +132,7 @@ class CodeblockFilepathProcessorTest extends TestCase
         ```
         MD;
 
-        $expected = <<<MD
+        $expected = <<<'MD'
         
         ```php
         // filepath: foo.php
@@ -148,12 +147,12 @@ class CodeblockFilepathProcessorTest extends TestCase
     // Test processor expands filepath directive in standard codeblock
     public function test_processor_expands_filepath_directive_in_standard_codeblock()
     {
-        $html = <<<HTML
+        $html = <<<'HTML'
         <!-- HYDE[Filepath]foo.html -->
         <pre><code class="language-html"></code></pre>
         HTML;
 
-        $expected = <<<HTML
+        $expected = <<<'HTML'
         <pre><code class="language-html"><small class="filepath"><span class="sr-only">Filepath: </span>foo.html</small></code></pre>
         HTML;
 
@@ -163,12 +162,12 @@ class CodeblockFilepathProcessorTest extends TestCase
     // Test processor expands filepath directive in Torchlight codeblock
     public function test_processor_expands_filepath_directive_in_torchlight_codeblock()
     {
-        $html = <<<HTML
+        $html = <<<'HTML'
         <!-- HYDE[Filepath]foo.html -->
         <pre><code class="torchlight"><!-- Syntax highlighted by torchlight.dev --><div class="line"><span class="line-number">1</span>&nbsp;</div></code></pre>
         HTML;
 
-        $expected = <<<HTML
+        $expected = <<<'HTML'
         <pre><code class="torchlight"><!-- Syntax highlighted by torchlight.dev --><small class="filepath"><span class="sr-only">Filepath: </span>foo.html</small><div class="line"><span class="line-number">1</span>&nbsp;</div></code></pre>
         HTML;
 

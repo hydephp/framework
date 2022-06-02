@@ -34,14 +34,14 @@ class CodeblockFilepathProcessor
     public static function process(string $html): string
     {
         $lines = explode("\n", $html);
-        
+
         foreach ($lines as $index => $line) {
             if (str_starts_with($line, '<!-- HYDE[Filepath]')) {
                 $path = static::trimHydeDirective($line);
                 unset($lines[$index]);
                 $codeBlockLine = $index + 1;
                 $label = static::resolveTemplate($path, $lines[$codeBlockLine]);
-                
+
                 $lines[$codeBlockLine] = str_contains($html, static::$torchlightKey)
                 ? static::resolveTorchlightCodeLine($label, $lines[$codeBlockLine])
                 : static::resolveCodeLine($label, $lines[$codeBlockLine]);
@@ -71,20 +71,21 @@ class CodeblockFilepathProcessor
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     protected static function trimHydeDirective(string $line): string
     {
         return trim(str_replace('-->', '', str_replace(
             '<!-- HYDE[Filepath]', '', $line))
         );
     }
-    
+
     protected static function resolveTemplate(string $path, string $line): string
     {
         $template = '<small class="filepath"><span class="sr-only">Filepath: </span>%s</small>';
+
         return sprintf($template, $path, $line);
     }
 
@@ -92,7 +93,7 @@ class CodeblockFilepathProcessor
     {
         return str_replace(
             static::$torchlightKey,
-            static::$torchlightKey . $label,
+            static::$torchlightKey.$label,
             $lines
         );
     }
@@ -101,7 +102,7 @@ class CodeblockFilepathProcessor
     {
         return preg_replace(
             '/<pre><code class="language-(.*?)">/',
-            '<pre><code class="language-$1">' . $label,
+            '<pre><code class="language-$1">'.$label,
             $lines
         );
     }

@@ -49,7 +49,8 @@ class ShortcodeProcessorTest extends TestCase
     {
         $processor = new ShortcodeProcessor('foo');
 
-        $processor->addShortcode(new class implements MarkdownShortcodeContract {
+        $processor->addShortcode(new class implements MarkdownShortcodeContract
+        {
             public static function signature(): string
             {
                 return 'foo';

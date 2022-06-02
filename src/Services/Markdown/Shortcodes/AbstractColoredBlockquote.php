@@ -10,18 +10,18 @@ use Hyde\Framework\Contracts\MarkdownShortcodeContract;
 abstract class AbstractColoredBlockquote implements MarkdownShortcodeContract
 {
     protected static string $signature = '>color';
-	
-	public static function signature(): string
+
+    public static function signature(): string
     {
         return static::$signature;
     }
 
-	public static function resolve(string $input): string
-	{
-		return str_starts_with($input, static::signature())
-			? static::expand($input)
-			: $input;
-	}
+    public static function resolve(string $input): string
+    {
+        return str_starts_with($input, static::signature())
+            ? static::expand($input)
+            : $input;
+    }
 
     protected static function expand(string $input): string
     {
@@ -54,7 +54,7 @@ abstract class AbstractColoredBlockquote implements MarkdownShortcodeContract
             new class extends AbstractColoredBlockquote
             {
                 protected static string $signature = '>warning';
-            }
+            },
         ];
     }
 }
