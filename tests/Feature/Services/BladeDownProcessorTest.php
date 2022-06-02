@@ -2,20 +2,20 @@
 
 namespace Tests\Feature\Services;
 
-use Hyde\Framework\Services\BladeDownService;
+use Hyde\Framework\Services\Markdown\BladeDownProcessor;
 use Tests\TestCase;
 
 /**
- * Class BladeDownServiceTest.
+ * Class BladeDownProcessorTest.
  *
- * @covers \Hyde\Framework\Services\BladeDownService
+ * @covers \Hyde\Framework\Services\Markdown\BladeDownProcessor
  */
-class BladeDownServiceTest extends TestCase
+class BladeDownProcessorTest extends TestCase
 {
     // Test it renders Blade echo syntax
     public function test_it_renders_blade_echo_syntax()
     {
-        $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: {{ "Hello World!" }}'));
+        $this->assertEquals('Hello World!', BladeDownProcessor::render('[Blade]: {{ "Hello World!" }}'));
     }
 
     // Test it renders Blade within multiline Markdown
@@ -24,7 +24,7 @@ class BladeDownServiceTest extends TestCase
         $this->assertEquals(
             "Foo\nHello World!\nBar",
 
-            BladeDownService::render("Foo\n[Blade]: {{ 'Hello World!' }}\nBar")
+            BladeDownProcessor::render("Foo\n[Blade]: {{ 'Hello World!' }}\nBar")
         );
     }
 
@@ -35,7 +35,7 @@ class BladeDownServiceTest extends TestCase
             'views/hello.blade.php'
         ), 'Hello World!');
 
-        $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: @include("hello")'));
+        $this->assertEquals('Hello World!', BladeDownProcessor::render('[Blade]: @include("hello")'));
 
         unlink(resource_path('views/hello.blade.php'));
     }
@@ -43,20 +43,20 @@ class BladeDownServiceTest extends TestCase
     // Test directive is case-insensitive
     public function test_directive_is_case_insensitive()
     {
-        $this->assertEquals('Hello World!', BladeDownService::render('[blade]: {{ "Hello World!" }}'));
+        $this->assertEquals('Hello World!', BladeDownProcessor::render('[blade]: {{ "Hello World!" }}'));
     }
 
     // Test directive is ignored if it's not at the start of a line
     public function test_directive_is_ignored_if_it_is_not_at_the_start_of_a_line()
     {
         $this->assertEquals('Example: [Blade]: {{ "Hello World!" }}',
-            BladeDownService::render('Example: [Blade]: {{ "Hello World!" }}'));
+            BladeDownProcessor::render('Example: [Blade]: {{ "Hello World!" }}'));
     }
 
     // Test it renders Blade echo syntax with variables
     public function test_it_renders_blade_echo_syntax_with_variables()
     {
-        $this->assertEquals('Hello World!', BladeDownService::render('[Blade]: {{ $foo }}', ['foo' => 'Hello World!']));
+        $this->assertEquals('Hello World!', BladeDownProcessor::render('[Blade]: {{ $foo }}', ['foo' => 'Hello World!']));
     }
 
     // Test it renders Blade views with variables
@@ -66,7 +66,7 @@ class BladeDownServiceTest extends TestCase
             'views/hello.blade.php'
         ), 'Hello {{ $name }}!');
 
-        $this->assertEquals('Hello John!', BladeDownService::render('[Blade]: @include("hello", ["name" => "John"])'));
+        $this->assertEquals('Hello John!', BladeDownProcessor::render('[Blade]: @include("hello", ["name" => "John"])'));
 
         unlink(resource_path('views/hello.blade.php'));
     }

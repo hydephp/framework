@@ -4,6 +4,9 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
 use Hyde\Framework\Concerns\Markdown\HasTorchlightIntegration;
+use Hyde\Framework\Services\Markdown\BladeDownProcessor;
+use Hyde\Framework\Services\Markdown\CodeblockFilepathProcessor;
+use Hyde\Framework\Services\Markdown\ShortcodeProcessor;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use Torchlight\Commonmark\V2\TorchlightExtension;
@@ -97,25 +100,33 @@ class MarkdownConverterService
 
     protected function runPreprocessing(): void
     {
-        // Run any pre-processing actions
         if (config('markdown.enable_blade', false)) {
-            $this->markdown = BladeDownService::preprocess($this->markdown);
+            $this->markdown = BladeDownProcessor::preprocess($this->markdown);
         }
+
+        $this->markdown = ShortcodeProcessor::process($this->markdown);
+
+        $this->markdown = CodeblockFilepathProcessor::preprocess($this->markdown);
     }
 
     protected function runPostProcessing(): void
     {
-        // Run any post-processing actions
         if ($this->determineIfTorchlightAttributionShouldBeInjected()) {
             $this->html .= $this->injectTorchlightAttribution();
         }
 
         if (config('markdown.enable_blade', false)) {
-            $this->html = (new BladeDownService($this->html))->process()->get();
+            $this->html = BladeDownProcessor::process($this->html);
         }
+
+        if (config('markdown.features.codeblock_filepaths', true)) {
+            $this->html = CodeblockFilepathProcessor::process($this->html);
+        }
+
+        // Remove any Hyde annotations (everything between `// HYDE!` and `HYDE! //`) (must be done last)
+        $this->html = preg_replace('/ \/\/ HYDE!.*HYDE! \/\//s', '', $this->html);
     }
 
-    // Helper to inspect the currently enabled extensions
     public function getExtensions(): array
     {
         return $this->extensions;

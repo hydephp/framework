@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Framework\Services;
+namespace Hyde\Framework\Services\Markdown;
 
 use Illuminate\Support\Facades\Blade;
 
@@ -13,14 +13,33 @@ use Illuminate\Support\Facades\Blade;
  * @example: [Blade]: {{ time() }}
  * @example: [Blade]: @include('path/to/view.blade.php')
  *
- * @see \Tests\Feature\Services\BladeDownServiceTest
+ * @see \Tests\Feature\Services\BladeDownProcessorTest
  */
-class BladeDownService
+class BladeDownProcessor
 {
     protected string $html;
     protected string $output;
 
     protected array $pageData = [];
+
+    public static function render(string $html, ?array $pageData = []): string
+    {
+        return (new static(static::preprocess($html), $pageData))->run()->get();
+    }
+
+    public static function preprocess(string $markdown): string
+    {
+        return implode("\n", array_map(function ($line) {
+            return str_starts_with(strtolower($line), strtolower('[Blade]:'))
+                ? '<!-- HYDE'.trim(htmlentities($line)).' -->'
+                : $line;
+        }, explode("\n", $markdown)));
+    }
+
+    public static function process(string $html, ?array $pageData = []): string
+    {
+        return (new static($html, $pageData))->run()->get();
+    }
 
     public function __construct(string $html, ?array $pageData = [])
     {
@@ -28,7 +47,7 @@ class BladeDownService
         $this->pageData = $pageData;
     }
 
-    public function process(): self
+    public function run(): self
     {
         $this->output = implode("\n", array_map(function ($line) {
             return $this->lineStartsWithDirective($line)
@@ -42,20 +61,6 @@ class BladeDownService
     public function get(): string
     {
         return $this->output;
-    }
-
-    public static function render(string $html, ?array $pageData = []): string
-    {
-        return (new static(static::preprocess($html), $pageData))->process()->get();
-    }
-
-    public static function preprocess(string $markdown): string
-    {
-        return implode("\n", array_map(function ($line) {
-            return str_starts_with(strtolower($line), strtolower('[Blade]:'))
-                ? '<!-- HYDE'.trim(htmlentities($line)).' -->'
-                : $line;
-        }, explode("\n", $markdown)));
     }
 
     protected function lineStartsWithDirective(string $line): bool
