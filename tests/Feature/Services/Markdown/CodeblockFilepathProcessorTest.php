@@ -145,9 +145,19 @@ class CodeblockFilepathProcessorTest extends TestCase
             CodeblockFilepathProcessor::preprocess($markdown));
     }
 
-    public function test_process()
+    // Test processor expands filepath directive in standard codeblock
+    public function test_processor_expands_filepath_directive_in_standard_codeblock()
     {
-        $this->markTestSkipped('TODO');
+        $html = <<<HTML
+        <!-- HYDE[Filepath]foo.html -->
+        <pre><code class="language-html"></code></pre>
+        HTML;
+
+        $expected = <<<HTML
+        <pre><code class="language-html"><small class="filepath"><span class="sr-only">Filepath: </span>foo.html</small></code></pre>
+        HTML;
+
+        $this->assertEqualsIgnoringLineReturnType($expected, CodeblockFilepathProcessor::process($html));
     }
 
     protected function assertEqualsIgnoringLineReturnType(string $expected, string $actual)
