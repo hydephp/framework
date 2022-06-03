@@ -11,3 +11,6 @@ phpdoc.dist.xml
 api-docs
 
 phpstan.phar
+
+.github/dev-docs/README.markdown
+.github/dev-docs/.github/
