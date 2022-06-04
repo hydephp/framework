@@ -2,7 +2,7 @@
 /** @var \Hyde\Framework\Models\MarkdownPost $post */
 @endphp
 
-<article class="mt-4 mb-8" itemscope itemtype="https://schema.org/Article">
+<article class="mt-4 mb-8" itemscope itemtype="http://schema.org/Article">
     <meta itemprop="identifier" content="{{ $post->slug }}">
 @if(Hyde::uriPath())
     <meta itemprop="url" content="{{ Hyde::uriPath('posts/' . $post->slug) }}">
@@ -24,7 +24,7 @@
 		</span>
 @endisset
 @isset($post->author)
-		<span itemprop="author" itemscope itemtype="https://schema.org/Person">
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<span class="opacity-75">by</span>
 			<span itemprop="name">
 				{{ $post->author->name ?? $post->author->username }}

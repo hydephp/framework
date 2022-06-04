@@ -65,7 +65,7 @@
 		@php
 		$document = \Hyde\Framework\Services\HydeSmartDocs::create($page, $markdown);
 		@endphp
-		<article id="document" itemscope itemtype="https://schema.org/Article" @class(['mx-auto lg:ml-8 prose dark:prose-invert
+		<article id="document" itemscope itemtype="http://schema.org/Article" @class(['mx-auto lg:ml-8 prose dark:prose-invert
 			max-w-3xl', 'torchlight-enabled'=> $document->hasTorchlight()])>
 			<header id="document-header">
 				{!! $document->renderHeader() !!}
