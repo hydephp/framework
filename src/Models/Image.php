@@ -179,6 +179,7 @@ class Image
             $metadata['name'] = $this->title;
         }
 
+        $metadata['url'] = $this->getSource();
         $metadata['contentUrl'] = $this->getSource();
 
         return $metadata;
