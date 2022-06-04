@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Commands;
 
-use Hyde\Framework\Hyde;
 use Tests\TestCase;
 
 /**
