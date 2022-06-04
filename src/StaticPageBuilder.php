@@ -73,12 +73,15 @@ class StaticPageBuilder
      *
      * @param  string  $location  of the output file relative to the site output directory
      * @param  string  $contents  to save to the file
+     * @return string the path to the saved file (since v0.32.x)
      */
-    private function save(string $location, string $contents): bool|int
+    private function save(string $location, string $contents): string
     {
         $path = Hyde::getSiteOutputPath("$location.html");
 
-        return file_put_contents($path, $contents);
+        file_put_contents($path, $contents);
+
+        return $path;
     }
 
     /**
