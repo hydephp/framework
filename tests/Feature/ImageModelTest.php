@@ -67,7 +67,7 @@ class ImageModelTest extends TestCase
         $string = $image->getImageAuthorAttributionString();
         $this->assertStringContainsString('itemprop="creator"', $string);
         $this->assertStringContainsString('itemprop="url"', $string);
-        $this->assertStringContainsString('itemtype="https://schema.org/Person"', $string);
+        $this->assertStringContainsString('itemtype="http://schema.org/Person"', $string);
         $this->assertStringContainsString('<span itemprop="name">John Doe</span>', $string);
         $this->assertStringContainsString('<a href="https://example.com/"', $string);
 
@@ -75,7 +75,7 @@ class ImageModelTest extends TestCase
         $image = new Image(['author' => 'John Doe']);
         $string = $image->getImageAuthorAttributionString();
         $this->assertStringContainsString('itemprop="creator"', $string);
-        $this->assertStringContainsString('itemtype="https://schema.org/Person"', $string);
+        $this->assertStringContainsString('itemtype="http://schema.org/Person"', $string);
         $this->assertStringContainsString('<span itemprop="name">John Doe</span>', $string);
 
         // Test with nothing set
