@@ -137,6 +137,9 @@ class RssFeedService
 
     public static function canGenerateFeed(): bool
     {
-        return (Hyde::uriPath() !== false) && config('hyde.generate_rss_feed', true) && Features::hasBlogPosts();
+        return (Hyde::uriPath() !== false)
+            && config('hyde.generate_rss_feed', true)
+            && Features::hasBlogPosts()
+            && extension_loaded('simplexml');
     }
 }
