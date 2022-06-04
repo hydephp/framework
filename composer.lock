@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1754929065e59a1d3d19bec6c02eaf8e",
+    "content-hash": "65fd766b1d591d3027de18f71be117fe",
     "packages": [
         {
             "name": "brick/math",
@@ -5848,55 +5848,6 @@
     ],
     "packages-dev": [
         {
-            "name": "desilva/microserve",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/caendesilva/microserve.git",
-                "reference": "2a55037f67578c2c9a30108a7b68051236a6b2d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/caendesilva/microserve/zipball/2a55037f67578c2c9a30108a7b68051236a6b2d6",
-                "reference": "2a55037f67578c2c9a30108a7b68051236a6b2d6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Desilva\\Microserve\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Caen De Silva",
-                    "email": "caen@desilva.se",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Lightweight API for creating PHP application servers",
-            "homepage": "https://github.com/caendesilva/microserve",
-            "keywords": [
-                "desilva",
-                "microserve"
-            ],
-            "support": {
-                "issues": "https://github.com/caendesilva/microserve/issues",
-                "source": "https://github.com/caendesilva/microserve/tree/v1.0.0"
-            },
-            "time": "2022-06-04T12:07:54+00:00"
-        },
-        {
             "name": "doctrine/instantiator",
             "version": "1.4.1",
             "source": {
@@ -5965,54 +5916,6 @@
                 }
             ],
             "time": "2022-03-03T08:28:38+00:00"
-        },
-        {
-            "name": "hyde/realtime-compiler",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hydephp/realtime-compiler.git",
-                "reference": "65b153a09c324b6ecf1fcc6315c476805b70c62d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hydephp/realtime-compiler/zipball/65b153a09c324b6ecf1fcc6315c476805b70c62d",
-                "reference": "65b153a09c324b6ecf1fcc6315c476805b70c62d",
-                "shasum": ""
-            },
-            "require": {
-                "desilva/microserve": "^1.0"
-            },
-            "require-dev": {
-                "hyde/framework": "dev-master"
-            },
-            "suggest": {
-                "hyde/framework": ">=v0.32.0-beta"
-            },
-            "bin": [
-                "bin/server.php"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Hyde\\RealtimeCompiler\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Caen De Silva",
-                    "email": "caen@desilva.se"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/hydephp/realtime-compiler/issues",
-                "source": "https://github.com/hydephp/realtime-compiler/tree/v2.0.0"
-            },
-            "time": "2022-06-04T13:54:44+00:00"
         },
         {
             "name": "myclabs/deep-copy",
