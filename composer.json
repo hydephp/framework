@@ -21,6 +21,7 @@
     "require": {
         "php": "^8.0",
         "illuminate/support": "^9.5",
+        "illuminate/view": "^9.0",
         "symfony/yaml": "^6.0",
         "laravel-zero/framework": "^9.1",
         "league/commonmark": "^2.2",
