@@ -1,4 +1,4 @@
-<figure aria-label="Cover image" role="doc-cover" itemprop="image" itemscope itemtype="http://schema.org/ImageObject"> 
+<figure aria-label="Cover image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject" role="doc-cover">
     <img src="{{ $page->image->getSource() }}" alt="{{ $page->image->description ?? '' }}" title="{{ $page->image->title ?? '' }}" itemprop="image" class="mb-0"> 
     <figcaption aria-label="Image caption" itemprop="caption"> 
         {!! $page->image->getFluentAttribution() !!} 
