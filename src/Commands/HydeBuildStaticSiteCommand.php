@@ -12,6 +12,7 @@ use Hyde\Framework\Models\BladePage;
 use Hyde\Framework\Models\DocumentationPage;
 use Hyde\Framework\Models\MarkdownPage;
 use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\Services\RssFeedService;
 use Hyde\Framework\Services\SitemapService;
@@ -136,15 +137,15 @@ class HydeBuildStaticSiteCommand extends Command
             $this->runNodeCommand('npm run prod', 'Building frontend assets for production!');
         }
 
-        if (SitemapService::canGenerateSitemap()) {
+        if ($this->canGenerateSitemap()) {
             Artisan::call('build:sitemap', outputBuffer: $this->output);
         }
 
-        if (RssFeedService::canGenerateFeed()) {
+        if ($this->canGenerateFeed()) {
             Artisan::call('build:rss', outputBuffer: $this->output);
         }
 
-        if (Features::hasDocumentationSearch()) {
+        if ($this->canGenerateSearch()) {
             Artisan::call('build:search', outputBuffer: $this->output);
         }
     }
@@ -155,14 +156,14 @@ class HydeBuildStaticSiteCommand extends Command
         $time_end = microtime(true);
         $execution_time = ($time_end - $time_start);
         $this->info('All done! Finished in '.number_format(
-            $execution_time,
-            2
-        ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
+                $execution_time,
+                2
+            ).' seconds. ('.number_format(($execution_time * 1000), 2).'ms)');
 
         $this->info('Congratulations! 🎉 Your static site has been built!');
         $this->line(
             'Your new homepage is stored here -> '.
-                DiscoveryService::createClickableFilepath(Hyde::getSiteOutputPath('index.html'))
+            DiscoveryService::createClickableFilepath(Hyde::getSiteOutputPath('index.html'))
         );
     }
 
@@ -205,5 +206,21 @@ class HydeBuildStaticSiteCommand extends Command
         $this->line(
             $output ?? '<fg=red>Could not '.($actionMessage ?? 'run script').'! Is NPM installed?</>'
         );
+    }
+
+    protected function canGenerateSitemap(): bool
+    {
+        return SitemapService::canGenerateSitemap();
+    }
+
+    protected function canGenerateFeed(): bool
+    {
+        return RssFeedService::canGenerateFeed();
+    }
+
+    protected function canGenerateSearch(): bool
+    {
+        return Features::hasDocumentationSearch()
+            && count(CollectionService::getDocumentationPageList()) > 0;
     }
 }
