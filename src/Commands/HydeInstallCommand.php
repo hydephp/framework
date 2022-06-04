@@ -4,6 +4,7 @@ namespace Hyde\Framework\Commands;
 
 use Hyde\Framework\Concerns\Commands\AsksToRebuildSite;
 use Hyde\Framework\Hyde;
+use Illuminate\Support\Facades\Cache;
 use LaravelZero\Framework\Commands\Command;
 
 /**
@@ -148,14 +149,11 @@ class HydeInstallCommand extends Command
 
     protected function markInstalled(): void
     {
-        if (! is_dir(Hyde::path('.cache/hyde'))) {
-            mkdir(Hyde::path('.cache/hyde'), recursive: true);
-        }
-        touch(Hyde::path('.cache/hyde/installed'));
+        Cache::forever('hyde.installed', true);
     }
 
     protected function isInstalled(): bool
     {
-        return file_exists(Hyde::path('.cache/hyde/installed'));
+        return Cache::get('hyde.installed', false) === true;
     }
 }

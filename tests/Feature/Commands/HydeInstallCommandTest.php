@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\Commands;
 
-use Hyde\Framework\Commands\HydeInstallCommand;
 use Hyde\Framework\Hyde;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 /**
@@ -111,21 +110,6 @@ class HydeInstallCommandTest extends TestCase
             ->expectsQuestion('Which homepage do you want to publish?', 'default')
             ->expectsQuestion('Would you like to rebuild the site?', false)
             ->assertExitCode(0);
-    }
-
-    public function test_mark_installed_creates_cache_directory_if_it_doesnt_exist()
-    {
-        File::deleteDirectory(Hyde::path('.cache/hyde'));
-        $this->assertDirectoryDoesNotExist(Hyde::path('.cache/hyde'));
-        $mock = new class extends HydeInstallCommand
-        {
-            public function test()
-            {
-                $this->markInstalled();
-            }
-        };
-        $mock->test();
-        $this->assertDirectoryExists(Hyde::path('.cache/hyde'));
     }
 
     public function test_mark_installed_option_marks_site_as_installed()
