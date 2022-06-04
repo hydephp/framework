@@ -150,6 +150,8 @@ class ImageModelTest extends TestCase
         $this->assertEquals([
             'text' => 'foo',
             'name' => 'bar',
+            'url' => null,
+            'contentUrl' => null,
         ], $image->getMetadataArray());
     }
 }
