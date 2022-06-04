@@ -129,6 +129,8 @@ class BuildStaticSiteCommandTest extends TestCase
         config(['hyde.site_url' => 'https://example.com']);
         config(['hyde.generate_rss_feed' => true]);
 
+        touch(Hyde::path('_posts/foo.md'));
+
         $this->artisan('build')
             ->expectsOutput('Generating RSS feed...')
             ->assertExitCode(0);
