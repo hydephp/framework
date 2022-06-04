@@ -128,3 +128,9 @@ jobs:
       
       - name: Run the script
         run: php purge-camo-cache.php 
+
+  validate-composer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
