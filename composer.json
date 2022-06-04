@@ -29,7 +29,8 @@
       "ext-simplexml": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.0"
+        "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.0",
+        "hyde/realtime-compiler": "^2.0"
     },
     "suggest": {
         "hyde/hyde" : "The Framework package contains the Hyde Core. To create your site you should use the Hyde/Hyde project."

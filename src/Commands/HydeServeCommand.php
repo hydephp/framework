@@ -33,11 +33,11 @@ class HydeServeCommand extends Command
     {
         $this->line('<info>Starting the server...</info> Press Ctrl+C to stop');
 
-        $this->warn('This feature is experimental. Please report any issues on GitHub.');
+        $this->warn('Running experimental HydeRC 2.0. Please report any issues on GitHub.');
 
         $port = $this->option('port');
         $host = $this->option('host');
-        $command = "php -S $host:$port ".Hyde::path('vendor/hyde/realtime-compiler/server.php');
+        $command = "php -S $host:$port ".Hyde::path('vendor/hyde/realtime-compiler/bin/server.php');
         if (app()->environment('testing')) {
             $command = 'echo '.$command;
         }
