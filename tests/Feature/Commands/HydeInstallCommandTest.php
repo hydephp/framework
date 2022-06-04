@@ -3,7 +3,6 @@
 namespace Tests\Feature\Commands;
 
 use Hyde\Framework\Hyde;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 /**
