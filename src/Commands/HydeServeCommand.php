@@ -31,12 +31,6 @@ class HydeServeCommand extends Command
      */
     public function handle(): int
     {
-        if (! $this->canRunServer()) {
-            $this->error('Could not start the server.');
-
-            return 1;
-        }
-
         $this->line('<info>Starting the server...</info> Press Ctrl+C to stop');
 
         $this->warn('This feature is experimental. Please report any issues on GitHub.');
@@ -50,21 +44,5 @@ class HydeServeCommand extends Command
         passthru($command);
 
         return 0;
-    }
-
-    /**
-     * Check if the server can be started.
-     *
-     * @return bool
-     */
-    protected function canRunServer(): bool
-    {
-        if (! file_exists(Hyde::path('vendor/hyde/realtime-compiler/server.php'))) {
-            $this->warn('The realtime compiler extension is not installed.');
-
-            return false;
-        }
-
-        return true;
     }
 }
