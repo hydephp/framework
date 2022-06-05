@@ -54,7 +54,7 @@ class Hyde
     }
 
     /**
-     * @deprecated v0.34.x Use MarkdownPost::latest() instead.
+     * @deprecated v0.34.x Use MarkdownPost::getLatestPosts() instead.
      */
     public static function getLatestPosts(): Collection
     {

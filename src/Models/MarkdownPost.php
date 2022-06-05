@@ -52,7 +52,7 @@ class MarkdownPost extends MarkdownDocument
         return $this->matter['description'] ?? substr($this->body, 0, 125).'...';
     }
 
-    public static function latest(): Collection
+    public static function getLatestPosts(): Collection
     {
         return static::all()->sortByDesc('matter.date');
     }
