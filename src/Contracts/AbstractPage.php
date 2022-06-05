@@ -10,7 +10,7 @@ use Hyde\Framework\Concerns\HasPageMetadata;
  *
  * Markdown-based Pages should extend MarkdownDocument.
  */
-abstract class AbstractPage
+abstract class AbstractPage implements PageContract
 {
     use HasPageMetadata;
 
