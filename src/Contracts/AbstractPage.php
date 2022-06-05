@@ -3,6 +3,8 @@
 namespace Hyde\Framework\Contracts;
 
 use Hyde\Framework\Concerns\HasPageMetadata;
+use Hyde\Framework\Services\CollectionService;
+use Illuminate\Support\Collection;
 
 /**
  * To ensure compatability with the Hyde Framework,
@@ -10,7 +12,7 @@ use Hyde\Framework\Concerns\HasPageMetadata;
  *
  * Markdown-based Pages should extend MarkdownDocument.
  */
-abstract class AbstractPage
+abstract class AbstractPage implements PageContract
 {
     use HasPageMetadata;
 
@@ -23,5 +25,16 @@ abstract class AbstractPage
     public function getCurrentPagePath(): string
     {
         return $this->slug;
+    }
+
+    public static function all(): Collection
+    {
+        $collection = new Collection();
+
+        foreach (CollectionService::getSourceFileListForModel(static::class) as $filepath) {
+            $collection->push((new static::$parserClass(basename($filepath, static::$fileExtension)))->get());
+        }
+
+        return $collection;
     }
 }

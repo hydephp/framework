@@ -10,9 +10,7 @@
     </header>
 
     <div class="max-w-3xl mx-auto">
-        @foreach(Hyde::getLatestPosts() as $post)
-        @include('hyde::components.article-excerpt')
-        @endforeach
+        @include('hyde::components.blog-post-feed')
     </div>
 </main>
 
