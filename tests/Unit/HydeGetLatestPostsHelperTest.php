@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 /**
+ * @deprecated as parent method is deprecated
  * @covers \Hyde\Framework\Hyde::getLatestPosts
  */
 class HydeGetLatestPostsHelperTest extends TestCase

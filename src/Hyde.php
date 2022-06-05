@@ -53,6 +53,9 @@ class Hyde
         return Str::title(str_replace('-', ' ', ($slug)));
     }
 
+    /**
+     * @deprecated v0.34.x Use MarkdownPost::latest() instead.
+     */
     public static function getLatestPosts(): Collection
     {
         $collection = new Collection();
