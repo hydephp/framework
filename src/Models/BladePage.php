@@ -3,7 +3,6 @@
 namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Contracts\AbstractPage;
-use Illuminate\Support\Collection;
 
 /**
  * A basic wrapper for the custom Blade View compiler.
