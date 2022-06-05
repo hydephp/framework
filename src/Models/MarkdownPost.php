@@ -8,6 +8,7 @@ use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
+use Illuminate\Support\Collection;
 
 class MarkdownPost extends MarkdownDocument
 {
@@ -49,5 +50,10 @@ class MarkdownPost extends MarkdownDocument
     public function getPostDescription(): string
     {
         return $this->matter['description'] ?? substr($this->body, 0, 125).'...';
+    }
+
+    public static function latest(): Collection
+    {
+        return static::all()->sortByDesc('matter.date');
     }
 }
