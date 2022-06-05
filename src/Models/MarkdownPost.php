@@ -57,7 +57,7 @@ class MarkdownPost extends MarkdownDocument
     {
         $collection = new Collection();
 
-        foreach (CollectionService::getMarkdownPostList() as $filepath) {
+        foreach (CollectionService::getSourceFileListForModel(static::class) as $filepath) {
             $collection->push((new MarkdownPostParser(basename($filepath, static::$fileExtension)))->get());
         }
 
