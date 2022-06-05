@@ -11,8 +11,7 @@ use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Contracts\PageContract::all
- * @covers \Hyde\Framework\Concerns\AbstractPage::all
+ * @see \Hyde\Framework\Concerns\AbstractPage::all()
  */
 class PageModelGetHelperTest extends TestCase
 {

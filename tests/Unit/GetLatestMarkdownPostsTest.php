@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 /**
- * @covers \Hyde\Framework\Models\MarkdownPost::latest
+ * @see \Hyde\Framework\Models\MarkdownPost::latest()
  */
 class GetLatestMarkdownPostsTest extends TestCase
 {
