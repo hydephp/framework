@@ -8,6 +8,7 @@ use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
+use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Collection;
 
 class MarkdownPost extends MarkdownDocument
@@ -54,7 +55,12 @@ class MarkdownPost extends MarkdownDocument
 
     public static function all(): Collection
     {
-        // TODO: Implement all() method.
-        return new Collection();
+        $collection = new Collection();
+
+        foreach (CollectionService::getMarkdownPostList() as $filepath) {
+            $collection->push((new MarkdownPostParser(basename($filepath, '.md')))->get());
+        }
+
+        return $collection;
     }
 }
