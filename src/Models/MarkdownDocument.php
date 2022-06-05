@@ -4,7 +4,6 @@ namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Concerns\HasDynamicTitle;
 use Hyde\Framework\Contracts\AbstractPage;
-use Illuminate\Support\Collection;
 
 /**
  * The base class for all Markdown-based Page Models.
