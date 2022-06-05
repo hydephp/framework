@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Contracts\AbstractPage;
+use Illuminate\Support\Collection;
 
 /**
  * A basic wrapper for the custom Blade View compiler.
@@ -52,5 +53,11 @@ class BladePage extends AbstractPage
     public function getCurrentPagePath(): string
     {
         return $this->view;
+    }
+
+    public static function all(): Collection
+    {
+        // TODO: Implement all() method.
+        return new Collection();
     }
 }

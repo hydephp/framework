@@ -4,6 +4,7 @@ namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Concerns\HasDynamicTitle;
 use Hyde\Framework\Contracts\AbstractPage;
+use Illuminate\Support\Collection;
 
 /**
  * The base class for all Markdown-based Page Models.
@@ -36,5 +37,11 @@ class MarkdownDocument extends AbstractPage
         $this->body = $body;
         $this->title = $title;
         $this->slug = $slug;
+    }
+
+    public static function all(): Collection
+    {
+        // TODO: Implement all() method.
+        return new Collection();
     }
 }
