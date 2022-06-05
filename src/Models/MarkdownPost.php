@@ -8,8 +8,6 @@ use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
-use Hyde\Framework\Services\CollectionService;
-use Illuminate\Support\Collection;
 
 class MarkdownPost extends MarkdownDocument
 {
@@ -51,16 +49,5 @@ class MarkdownPost extends MarkdownDocument
     public function getPostDescription(): string
     {
         return $this->matter['description'] ?? substr($this->body, 0, 125).'...';
-    }
-
-    public static function all(): Collection
-    {
-        $collection = new Collection();
-
-        foreach (CollectionService::getSourceFileListForModel(static::class) as $filepath) {
-            $collection->push((new static::$parserClass(basename($filepath, static::$fileExtension)))->get());
-        }
-
-        return $collection;
     }
 }

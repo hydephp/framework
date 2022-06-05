@@ -54,10 +54,4 @@ class BladePage extends AbstractPage
     {
         return $this->view;
     }
-
-    public static function all(): Collection
-    {
-        // TODO: Implement all() method.
-        return new Collection();
-    }
 }

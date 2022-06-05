@@ -38,10 +38,4 @@ class MarkdownDocument extends AbstractPage
         $this->title = $title;
         $this->slug = $slug;
     }
-
-    public static function all(): Collection
-    {
-        // TODO: Implement all() method.
-        return new Collection();
-    }
 }
