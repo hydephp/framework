@@ -67,7 +67,15 @@ class Hyde
         return $collection->sortByDesc('matter.date');
     }
 
+/**
+     * @deprecated v0.34.x Use Hyde::hasFeature() instead.
+     */
     public static function features(string $feature): bool
+    {
+        return static::hasFeature($feature);
+    }
+
+    public static function hasFeature(string $feature): bool
     {
         return Features::enabled($feature);
     }
