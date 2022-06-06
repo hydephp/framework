@@ -49,6 +49,13 @@ jobs:
         with:
           #token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./build/coverage
+          verbose: true
+      
+      - name: Upload all reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: "reports"
+          path: "build"
 
   hyde-tests:
     needs: test-coverage
