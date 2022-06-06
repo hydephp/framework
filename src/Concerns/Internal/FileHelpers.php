@@ -106,7 +106,7 @@ trait FileHelpers
      * @see \Tests\Unit\FileHelperRelativeLinkTest
      *
      * @param  string  $destination  relative to output directory on compiled site
-     * @param  string  $current  the current URI path relative to the same root
+     * @param  string  $current  the current URI path relative to the site root
      * @return string
      */
     public static function relativeLink(string $destination, string $current = ''): string
@@ -119,6 +119,18 @@ trait FileHelpers
         $route .= static::pageLink($destination);
 
         return str_replace('//', '/', $route);
+    }
+
+    /**
+     * Gets a relative link to the given image stored in the _site/media folder.
+     */
+    public static function image(string $name, string $current = ''): string
+    {
+        if (str_starts_with($name, 'http')) {
+            return $name;
+        }
+
+        return static::relativeLink('media/'.basename($name), $current);
     }
 
     /**

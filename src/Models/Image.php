@@ -100,6 +100,11 @@ class Image
         return $this->uri ?? $this->path ?? null;
     }
 
+    public function getLink(?string $currentPage = ''): string
+    {
+        return Hyde::image($this->getSource() ?? '', $currentPage);
+    }
+
     public function getContentLength(): int
     {
         return (new FindsContentLengthForImageObject($this))->execute();
