@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Models;
 
 use Hyde\Framework\Actions\FindsContentLengthForImageObject;
+use Hyde\Framework\Hyde;
 
 /**
  * Holds the information for an image.
