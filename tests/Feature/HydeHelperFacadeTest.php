@@ -27,4 +27,12 @@ class HydeHelperFacadeTest extends TestCase
             Hyde::features()->hasBlogPosts()
         );
     }
+
+    // Test Hyde::hasFeature() shorthand calls the static method on Features::class
+    public function testHydeHasFeatureShorthandCallsStaticMethodOnFeaturesClass()
+    {
+        $this->assertTrue(
+            Hyde::hasFeature('blog-posts')
+        );
+    }
 }
