@@ -122,6 +122,18 @@ trait FileHelpers
     }
 
     /**
+     * Gets a relative link to the given image stored in the _site/media folder.
+     */
+    public static function image(string $name, string $current = ''): string
+    {
+        if (str_starts_with($name, 'http')) {
+            return $name;
+        }
+
+        return static::relativeLink('media/'.basename($name), $current);
+    }
+
+    /**
      * Return a qualified URI path, if SITE_URL is set in .env, else return false.
      *
      * @param  string|null  $path  optional relative path suffix. Omit to return base url.
