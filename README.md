@@ -11,7 +11,7 @@
 ## About
 
 HydePHP is a content-first Laravel-powered Static Site Builder that allows you to create static HTML pages, blog posts, and documentation sites using Markdown.
-Hyde is all about letting you get started quickly, while giving you the power and freedom of doing things the way you want to.
+Hyde is all about letting you get started quickly by giving you a full-featured frontend starter kit, while also giving you the power and freedom of doing things the way you want to.
 
 Markdown purist? That's all you need. Blade artisan? Go for it.
 Hyde comes with hand-crafted frontend templates so you can focus on your content.
@@ -19,9 +19,13 @@ You don't _need_ to customize anything. But you _can_ customize everything.
 
 > Note: This repository contains the core code of the Hyde framework. If you want to build an application using Hyde, visit the [main Hyde repository](https://github.com/hydephp/hyde) which also serves as a template to get started quickly.
 
+### Links & Media
+
+Hyde has already been featured in the [Laravel News Podcast](https://laravel-news.com/podcast/836911) and in the [Symfony Station Communique](https://www.symfonystation.com/Symfony-Station-Communique-13-May-2022). You can find several tutorials on [DEV Community](https://dev.to/t/hydephp) and learn much more on the [HydePHP website](https://hydephp.com) and [Official documentation](https://hydephp.com/docs).
+
 ### Repositories
 
-- [HydePHP/Framework](https://github.com/hydephp/framework) - The core project containing the brains of Hyde and is not intended to be used as a standalone. Use together with Hyde/Hyde. <i>Equivalent to Laravel/Framework</i>
+- [HydePHP/Framework](https://github.com/hydephp/framework) - The core project contains the brains of Hyde and is not intended to be used as a standalone. Use together with Hyde/Hyde. <i>Equivalent to Laravel/Framework</i>
 - [HydePHP/Hyde](https://github.com/hydephp/hyde) - The Hyde project repo. This is the repository you should start with if you want to build an application using Hyde. This repo is what the installer uses. <i>Equivalent to Laravel/Laravel</i>
 - [HydePHP/Hydefront](https://github.com/hydephp/hydefront) - The Hyde frontend assets. Extracted from the HydePHP/Framework repo to improve testing and allow for easier deployment using a CDN.
 
@@ -58,6 +62,6 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 ### Attributions
 
-- The Hyde core is built with [Laravel Zero](https://laravel-zero.com/) which is based on [Laravel](https://laravel.com/)
+- The HydeCLI and core internals is built with [Laravel Zero](https://laravel-zero.com/) which is based on [Laravel](https://laravel.com/)
 
 > Please see the respective authors' repositories for their license files
