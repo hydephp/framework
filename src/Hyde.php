@@ -7,6 +7,7 @@ use Hyde\Framework\Concerns\Internal\AssetManager;
 use Hyde\Framework\Concerns\Internal\FileHelpers;
 use Hyde\Framework\Concerns\Internal\FluentPathHelpers;
 use Hyde\Framework\Helpers\Features;
+use Hyde\Framework\Helpers\HydeHelperFacade;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
 use Hyde\Framework\Services\CollectionService;
 use Illuminate\Support\Collection;
@@ -26,6 +27,7 @@ class Hyde
     use FileHelpers;
     use AssetManager;
     use FluentPathHelpers;
+    use HydeHelperFacade;
 
     protected static string $basePath;
 
@@ -67,7 +69,7 @@ class Hyde
         return $collection->sortByDesc('matter.date');
     }
 
-    public static function features(string $feature): bool
+    public static function hasFeature(string $feature): bool
     {
         return Features::enabled($feature);
     }

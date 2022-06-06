@@ -1,0 +1,16 @@
+<?php
+
+namespace Hyde\Framework\Helpers;
+
+/**
+ * Provides convenient access to Hyde helpers, through the main Hyde facade.
+ *
+ * @see \Tests\Feature\HydeHelperFacadeTest
+ */
+trait HydeHelperFacade
+{
+    public static function features(): Features
+    {
+        return (new Features);
+    }
+}
