@@ -68,9 +68,4 @@ class Hyde
 
         return $collection->sortByDesc('matter.date');
     }
-
-    public static function hasFeature(string $feature): bool
-    {
-        return Features::enabled($feature);
-    }
 }

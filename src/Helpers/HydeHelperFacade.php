@@ -13,4 +13,9 @@ trait HydeHelperFacade
     {
         return (new Features);
     }
+
+	public static function hasFeature(string $feature): bool
+    {
+        return Features::enabled($feature);
+    }
 }
