@@ -99,8 +99,10 @@ class RssFeedService
     protected function getDescription(): string
     {
         return static::xmlEscape(
-            config('hyde.rss_description',
-                static::getTitle().' RSS Feed')
+            config(
+                'hyde.rss_description',
+                static::getTitle().' RSS Feed'
+            )
         );
     }
 
@@ -120,7 +122,8 @@ class RssFeedService
     {
         return static::xmlEscape(
             rtrim(
-                config('hyde.site_url') ?? 'http://localhost', '/'
+                config('hyde.site_url') ?? 'http://localhost',
+                '/'
             )
         );
     }
