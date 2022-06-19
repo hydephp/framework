@@ -33,7 +33,7 @@ jobs:
         run: "cd hyde && composer require hyde/framework:dev-master"
 
       - name: Copy over test files
-        run: rm -rf .hyde/tests/Hyde && cp -r ./tests/. ./hyde/tests
+        run: rm -rf ./hyde/tests/Hyde && cp -r ./tests/. ./hyde/tests
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
