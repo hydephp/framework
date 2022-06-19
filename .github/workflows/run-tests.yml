@@ -32,8 +32,15 @@ jobs:
         if: github.event_name == 'push'
         run: "cd hyde && composer require hyde/framework:dev-master"
 
+      - name: Remove Hyde tests (Unix)
+        if: os != 'windows-latest'
+        run: rm -rf ./hyde/tests/Hyde
+      - name: Remove Hyde tests (Windows)
+        if: os == 'windows-latest'
+        run: rmdir ./hyde/tests/Hyde
+
       - name: Copy over test files
-        run: rm -rf ./hyde/tests/Hyde && cp -r ./tests/. ./hyde/tests
+        run: cp -r ./tests/. ./hyde/tests
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
