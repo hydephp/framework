@@ -26,7 +26,9 @@ jobs:
         run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Copy over test files
-        run: cp -r ./tests/. ./hyde/tests
+        run: |
+          rm -rf ./hyde/tests && mkdir ./hyde/tests
+          cp -r ./tests/. ./hyde/tests
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
