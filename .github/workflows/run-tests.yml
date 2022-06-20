@@ -23,15 +23,16 @@ jobs:
           extensions: fileinfo
       - name: Install Hyde
         run: git clone -b develop https://github.com/hydephp/hyde.git
-      - name: Install Dependencies
-        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
+   
       - name: Set Framework version to dev-github.base_ref
         if: github.event_name != 'push'
         run: "cd hyde && composer require hyde/framework:dev-${{ github.base_ref }}"
       - name: Set Framework version to dev-master
         if: github.event_name == 'push'
         run: "cd hyde && composer require hyde/framework:dev-master"
+
+      - name: Install Dependencies
+        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Remove Hyde tests (Unix)
         if: matrix.os != 'windows-latest'
