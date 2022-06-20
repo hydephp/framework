@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Testing\Framework\Feature\Actions;
+namespace Hyde\Framework\Testing\Feature\Actions;
 
 use Hyde\Framework\Actions\GeneratesDocumentationSearchIndexFile as Action;
 use Hyde\Framework\Hyde;
@@ -25,7 +25,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_it_generates_a_JSON_file_with_a_search_index()
+    public function test_it_generates_a_json_file_with_a_search_index()
     {
         deleteDirectory(Hyde::path('_docs'));
         mkdir(Hyde::path('_docs'));

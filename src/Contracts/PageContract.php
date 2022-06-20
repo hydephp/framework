@@ -11,7 +11,27 @@ interface PageContract
      *
      * @return \Illuminate\Support\Collection<\Hyde\Framework\Contracts\PageContract>
      *
-     * @see \Tests\Unit\PageModelGetHelperTest
+     * @see \Hyde\Framework\Testing\Unit\PageModelGetHelperTest
      */
     public static function all(): Collection;
+
+    /**
+     * Get an array of all the source file slugs for the model.
+     * Essentially an alias of CollectionService::getAbstractPageList().
+     *
+     * @return array<string>
+     *
+     * @see \Hyde\Framework\Testing\Unit\PageModelGetAllFilesHelperTest
+     */
+    public static function files(): array;
+
+    /**
+     * Parse a source file slug into a page model.
+     *
+     * @param  string  $slug
+     * @return \Hyde\Framework\Contracts\AbstractPage
+     *
+     * @see \Hyde\Framework\Testing\Unit\PageModelParseHelperTest
+     */
+    public static function parse(string $slug): AbstractPage;
 }

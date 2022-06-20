@@ -8,7 +8,7 @@ use Hyde\Framework\Exceptions\CouldNotParseDateStringException;
 /**
  * Parse a date string and create normalized formats.
  *
- * @see \Tests\Unit\DateStringTest
+ * @see \Hyde\Framework\Testing\Unit\DateStringTest
  */
 class DateString
 {

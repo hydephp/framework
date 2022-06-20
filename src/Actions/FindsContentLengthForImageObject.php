@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @see \Tests\Feature\FindsContentLengthForImageObjectTest
+ * @see \Hyde\Framework\Testing\Feature\FindsContentLengthForImageObjectTest
  */
 class FindsContentLengthForImageObject implements ActionContract
 {

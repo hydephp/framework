@@ -11,7 +11,7 @@ use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 
 /**
- * @see \Tests\Feature\Services\SitemapServiceTest
+ * @see \Hyde\Framework\Testing\Feature\Services\SitemapServiceTest
  * @see https://www.sitemaps.org/protocol.html
  */
 class SitemapService
@@ -51,7 +51,7 @@ class SitemapService
         if (Features::hasDocumentationPages()) {
             $this->addPageModelUrls(
                 DocumentationPage::class,
-                Hyde::docsDirectory().'/'
+                Hyde::getDocumentationOutputDirectory().'/'
             );
         }
 

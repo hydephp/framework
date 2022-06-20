@@ -7,8 +7,8 @@ use Hyde\Framework\Hyde;
 /**
  * Helper methods to interact with the filecache.
  *
- * @see \Tests\Feature\Services\FileCacheServiceTest
- * @see \Tests\Unit\FileCacheServiceUnixsumMethodTest
+ * @see \Hyde\Framework\Testing\Feature\Services\FileCacheServiceTest
+ * @see \Hyde\Framework\Testing\Unit\FileCacheServiceUnixsumMethodTest
  */
 class FileCacheService
 {

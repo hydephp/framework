@@ -8,7 +8,7 @@ use Hyde\Framework\Models\MarkdownPost;
 use SimpleXMLElement;
 
 /**
- * @see \Tests\Feature\Services\RssFeedServiceTest
+ * @see \Hyde\Framework\Testing\Feature\Services\RssFeedServiceTest
  * @see https://validator.w3.org/feed/docs/rss2.html
  */
 class RssFeedService
@@ -30,7 +30,7 @@ class RssFeedService
     public function generate(): self
     {
         /** @var MarkdownPost $post */
-        foreach (Hyde::getLatestPosts() as $post) {
+        foreach (MarkdownPost::getLatestPosts() as $post) {
             $this->addItem($post);
         }
 

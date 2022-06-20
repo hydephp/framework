@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Concerns;
 
 /**
- * @see \Tests\Unit\InteractsWithDirectoriesConcernTest
+ * @see \Hyde\Framework\Testing\Unit\InteractsWithDirectoriesConcernTest
  */
 trait InteractsWithDirectories
 {

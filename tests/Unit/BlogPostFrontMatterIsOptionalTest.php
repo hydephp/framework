@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Testing\Framework\Unit;
+namespace Hyde\Framework\Testing\Unit;
 
 use Hyde\Framework\Hyde;
 use Hyde\Testing\TestCase;
@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class BlogPostFrontMatterIsOptionalTest extends TestCase
 {
-    // Test blog posts can be created without having any front matter
-    public function testBlogPostCanBeCreatedWithoutFrontMatter()
+    public function test_blog_post_can_be_created_without_front_matter()
     {
         file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
@@ -21,14 +20,13 @@ class BlogPostFrontMatterIsOptionalTest extends TestCase
         unlink(Hyde::path('_site/posts/test-post.html'));
     }
 
-    // Test blog post feed can be rendered when having post without front matter
-    public function testBlogPostFeedCanBeRenderedWhenPostHasNoFrontMatter()
+    public function test_blog_post_feed_can_be_rendered_when_post_has_no_front_matter()
     {
         file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
         // Create a temporary page to test the feed
         file_put_contents(Hyde::path('_pages/feed-test.blade.php'),
-            '@foreach(Hyde::getLatestPosts() as $post)
+            '@foreach(\Hyde\Framework\Models\MarkdownPost::getLatestPosts() as $post)
 				@include(\'hyde::components.article-excerpt\')
 			@endforeach'
         );

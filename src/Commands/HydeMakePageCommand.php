@@ -12,7 +12,7 @@ use LaravelZero\Framework\Commands\Command;
 /**
  * Hyde Command to scaffold a new Markdown or Blade page file.
  *
- * @see \Tests\Feature\Commands\HydeMakePageCommandTest
+ * @see \Hyde\Framework\Testing\Feature\Commands\HydeMakePageCommandTest
  */
 class HydeMakePageCommand extends Command
 {
@@ -100,6 +100,6 @@ class HydeMakePageCommand extends Command
             return;
         }
 
-        throw new UnsupportedPageTypeException("Invalid page type: $type", 400);
+        throw new UnsupportedPageTypeException("Invalid page type: $type");
     }
 }

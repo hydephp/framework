@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyde\Testing\Framework\Feature\Concerns;
+namespace Hyde\Framework\Testing\Feature\Concerns;
 
 use Hyde\Framework\Concerns\HasPageMetadata;
 use Hyde\Framework\Contracts\AbstractPage;
@@ -10,7 +10,7 @@ use Hyde\Testing\TestCase;
 /**
  * @covers \Hyde\Framework\Concerns\HasPageMetadata
  *
- * @see \Hyde\Testing\Framework\Unit\HasPageMetadataRssFeedLinkTest
+ * @see \Hyde\Framework\Testing\Unit\HasPageMetadataRssFeedLinkTest
  */
 class HasPageMetadataTest extends TestCase
 {
@@ -285,7 +285,6 @@ class HasPageMetadataTest extends TestCase
         $this->assertFalse($page->hasOpenGraphTitleInConfig());
     }
 
-    // Test meta titles can be dynamically added and override defaults
     public function test_get_dynamic_metadata_adds_twitter_and_open_graph_title_when_conditions_are_met()
     {
         config(['hyde.meta' => [
