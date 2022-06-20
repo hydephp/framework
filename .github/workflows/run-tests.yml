@@ -22,7 +22,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: fileinfo
       - name: Install Hyde
-        run: git clone https://github.com/hydephp/hyde.git
+        run: git clone -b develop https://github.com/hydephp/hyde.git
       - name: Install Dependencies
         run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
