@@ -27,8 +27,7 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
 
     public function test_it_generates_a_json_file_with_a_search_index()
     {
-        deleteDirectory(Hyde::path('_docs'));
-        mkdir(Hyde::path('_docs'));
+        $this->resetDocs();
 
         touch(Hyde::path('_docs/foo.md'));
 
@@ -149,5 +148,16 @@ class GeneratesDocumentationSearchIndexFileTest extends TestCase
         $this->assertEquals(
             'foo', (new Action())->getDestinationForSlug('foo')
         );
+    }
+
+    public function test_excluded_pages_are_not_present_in_the_search_index()
+    {
+        touch(Hyde::path('_docs/excluded.md'));
+        config(['docs.exclude_from_search' => ['excluded']]);
+
+        $this->assertNotContains('excluded', (new Action())->getSourceFileSlugs());
+        $this->assertStringNotContainsString('excluded', (new Action())->generate()->getJson());
+
+        unlink(Hyde::path('_docs/excluded.md'));
     }
 }
