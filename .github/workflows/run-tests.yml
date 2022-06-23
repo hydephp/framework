@@ -13,6 +13,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         php: [8.0, 8.1]
+        dependency-version: [prefer-lowest, prefer-stable]
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -32,7 +34,7 @@ jobs:
         run: "cd hyde && composer require hyde/framework:dev-master"
 
       - name: Install Dependencies
-        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --${{ matrix.dependency-version }} --prefer-dist
 
       - name: Remove Hyde tests (Unix)
         if: matrix.os != 'windows-latest'
