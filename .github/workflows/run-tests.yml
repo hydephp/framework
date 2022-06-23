@@ -34,7 +34,9 @@ jobs:
         run: "cd hyde && composer require hyde/framework:dev-master"
 
       - name: Install Dependencies
-        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --${{ matrix.dependency-version }} --prefer-dist
+        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Set dependency version
+        run: cd hyde && composer update --${{ matrix.dependency-version }}
 
       - name: Remove Hyde tests (Unix)
         if: matrix.os != 'windows-latest'
