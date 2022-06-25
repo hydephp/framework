@@ -57,10 +57,18 @@ class HydeServiceProvider extends ServiceProvider
 
         $this->discoverBladeViewsIn('_pages');
 
-        $this->storeCompiledSiteIn(config(
-            'hyde.site_output_path',
-            Hyde::path('_site')
-        ));
+        /** @deprecated v0.43.0-beta and is used here as a fallback for compatibility */
+        if (config('hyde.output_directory') === null) {
+            $this->storeCompiledSiteIn(config(
+                'hyde.site_output_path',
+                Hyde::path('_site')
+            ));
+        } else {
+            // Newer version which is safer.
+            $this->storeCompiledSiteIn(Hyde::path(config(
+                trim('hyde.output_directory', '_site'), '/\\')
+            ));
+        }
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
@@ -80,6 +88,8 @@ class HydeServiceProvider extends ServiceProvider
 
             Commands\HydePackageDiscoverCommand::class,
         ]);
+
+        $this->registerModuleServiceProviders();
     }
 
     /**
@@ -127,5 +137,15 @@ class HydeServiceProvider extends ServiceProvider
     protected function storeCompiledSiteIn(string $directory): void
     {
         StaticPageBuilder::$outputPath = $directory;
+    }
+
+    /**
+     * Register module service providers.
+     *
+     * @todo Make modules configurable.
+     */
+    protected function registerModuleServiceProviders(): void
+    {
+        $this->app->register(Modules\DataCollections\DataCollectionServiceProvider::class);
     }
 }
