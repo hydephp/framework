@@ -22,7 +22,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: fileinfo
       - name: Install Hyde
-        run: git clone -b develop https://github.com/hydephp/hyde.git
+        run: git clone -b master https://github.com/hydephp/hyde.git
    
       - name: Set Framework version to dev-github.base_ref
         if: github.event_name != 'push'
