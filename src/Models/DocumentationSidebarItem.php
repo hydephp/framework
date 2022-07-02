@@ -10,6 +10,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
  * Object containing information for a sidebar item.
  *
  * @see \Hyde\Framework\Testing\Feature\Services\DocumentationSidebarServiceTest
+ * @phpstan-consistent-constructor
  */
 class DocumentationSidebarItem
 {
@@ -55,7 +56,7 @@ class DocumentationSidebarItem
         )->matter();
 
         return new static(
-            $matter['label'] ?? Hyde::titleFromSlug($documentationPageSlug),
+            $matter['label'] ?? Hyde::makeTitle($documentationPageSlug),
             $documentationPageSlug,
             $matter['priority'] ?? null,
             $matter['category'] ?? null,

@@ -1,16 +1,17 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Models\Pages;
 
 use Hyde\Framework\Concerns\GeneratesPageMetadata;
 use Hyde\Framework\Concerns\HasAuthor;
 use Hyde\Framework\Concerns\HasDateString;
 use Hyde\Framework\Concerns\HasFeaturedImage;
+use Hyde\Framework\Contracts\AbstractMarkdownPage;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\MarkdownPostParser;
 use Illuminate\Support\Collection;
 
-class MarkdownPost extends MarkdownDocument
+class MarkdownPost extends AbstractMarkdownPage
 {
     use HasAuthor;
     use GeneratesPageMetadata;
@@ -20,11 +21,10 @@ class MarkdownPost extends MarkdownDocument
     public ?string $category;
 
     public static string $sourceDirectory = '_posts';
+    public static string $outputDirectory = 'posts';
+
     public static string $parserClass = MarkdownPostParser::class;
 
-    /**
-     * @throws \Hyde\Framework\Exceptions\CouldNotParseDateStringException
-     */
     public function __construct(array $matter = [], string $body = '', string $title = '', string $slug = '')
     {
         parent::__construct($matter, $body, $title, $slug);
@@ -35,11 +35,6 @@ class MarkdownPost extends MarkdownDocument
         $this->constructFeaturedImage();
 
         $this->category = $this->matter['category'] ?? null;
-    }
-
-    public function getCurrentPagePath(): string
-    {
-        return 'posts/'.$this->slug;
     }
 
     public function getCanonicalLink(): string

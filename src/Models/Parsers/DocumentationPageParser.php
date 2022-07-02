@@ -4,7 +4,7 @@ namespace Hyde\Framework\Models\Parsers;
 
 use Hyde\Framework\Contracts\AbstractPageParser;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
 use Hyde\Framework\Services\MarkdownFileService;
 
 class DocumentationPageParser extends AbstractPageParser
@@ -12,7 +12,8 @@ class DocumentationPageParser extends AbstractPageParser
     protected string $pageModel = DocumentationPage::class;
     protected string $slug;
 
-    public string $title;
+    /** @deprecated v0.44.x (handled in constructor) */
+    public string $title = '';
     public string $body;
 
     public function execute(): void
@@ -20,8 +21,6 @@ class DocumentationPageParser extends AbstractPageParser
         $document = (new MarkdownFileService(
             Hyde::getDocumentationPagePath("/$this->slug.md")
         ))->get();
-
-        $this->title = $document->findTitleForDocument();
 
         $this->body = $document->body;
     }

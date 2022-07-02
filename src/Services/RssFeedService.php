@@ -4,12 +4,13 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use SimpleXMLElement;
 
 /**
  * @see \Hyde\Framework\Testing\Feature\Services\RssFeedServiceTest
  * @see https://validator.w3.org/feed/docs/rss2.html
+ * @phpstan-consistent-constructor
  */
 class RssFeedService
 {

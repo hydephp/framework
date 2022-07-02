@@ -1,16 +1,19 @@
 <?php
 
-namespace Hyde\Framework\Models;
+namespace Hyde\Framework\Models\Pages;
 
 use Hyde\Framework\Concerns\HasTableOfContents;
+use Hyde\Framework\Contracts\AbstractMarkdownPage;
 use Hyde\Framework\Hyde;
 use Hyde\Framework\Models\Parsers\DocumentationPageParser;
 
-class DocumentationPage extends MarkdownDocument
+class DocumentationPage extends AbstractMarkdownPage
 {
     use HasTableOfContents;
 
     public static string $sourceDirectory = '_docs';
+    public static string $outputDirectory = 'docs';
+
     public static string $parserClass = DocumentationPageParser::class;
 
     public function __construct(array $matter = [], string $body = '', string $title = '', string $slug = '')
@@ -18,11 +21,6 @@ class DocumentationPage extends MarkdownDocument
         parent::__construct($matter, $body, $title, $slug);
 
         $this->constructTableOfContents();
-    }
-
-    public function getCurrentPagePath(): string
-    {
-        return trim(Hyde::getDocumentationOutputDirectory().'/'.$this->slug, '/');
     }
 
     /** @internal */
@@ -36,7 +34,8 @@ class DocumentationPage extends MarkdownDocument
     }
 
     /**
-     * @since v0.39.x (replaces `Hyde::docsDirectory()`)
+     * @since 0.39.x (replaces `Hyde::docsDirectory()`)
+     * @deprecated v0.44.x (handled in the page model property `outputDirectory`)
      */
     public static function getDocumentationOutputPath(): string
     {

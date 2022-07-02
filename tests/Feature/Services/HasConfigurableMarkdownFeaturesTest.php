@@ -3,7 +3,7 @@
 namespace Hyde\Framework\Testing\Feature\Services;
 
 use Hyde\Framework\Concerns\Markdown\HasConfigurableMarkdownFeatures;
-use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 
@@ -14,7 +14,7 @@ class HasConfigurableMarkdownFeaturesTest extends TestCase
 {
     use HasConfigurableMarkdownFeatures;
 
-    private string $sourceModel;
+    protected string $sourceModel;
 
     public function test_has_features_array()
     {

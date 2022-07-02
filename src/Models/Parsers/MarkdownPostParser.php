@@ -4,7 +4,7 @@ namespace Hyde\Framework\Models\Parsers;
 
 use Hyde\Framework\Contracts\AbstractPageParser;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use Hyde\Framework\Services\MarkdownFileService;
 
 class MarkdownPostParser extends AbstractPageParser
@@ -12,7 +12,8 @@ class MarkdownPostParser extends AbstractPageParser
     protected string $pageModel = MarkdownPost::class;
     protected string $slug;
 
-    public string $title;
+    /** @deprecated v0.44.x (handled in constructor) */
+    public string $title = '';
     public string $body;
     public array $matter;
 
@@ -25,8 +26,6 @@ class MarkdownPostParser extends AbstractPageParser
         $this->matter = array_merge($document->matter, [
             'slug' => $this->slug,
         ]);
-
-        $this->title = $document->findTitleForDocument();
 
         $this->body = $document->body;
     }

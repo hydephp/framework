@@ -8,10 +8,10 @@ use Hyde\Framework\Concerns\Internal\BuildActionRunner;
 use Hyde\Framework\Concerns\Internal\TransfersMediaAssetsForBuildCommands;
 use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\DocumentationPage;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use Hyde\Framework\Services\BuildHookService;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Framework\Services\DiscoveryService;
@@ -66,7 +66,7 @@ class HydeBuildStaticSiteCommand extends Command
 
         $this->runPreBuildActions();
 
-        $this->purge();
+        $this->cleanOutputDirectory();
 
         $this->transferMediaAssets();
 
@@ -171,10 +171,20 @@ class HydeBuildStaticSiteCommand extends Command
      *
      * @return void
      */
-    public function purge(): void
+    public function cleanOutputDirectory(): void
     {
-        $this->warn('Removing all files from build directory.');
-        File::cleanDirectory(Hyde::getSiteOutputPath());
+        if (config('hyde.empty_output_directory', true)) {
+            $this->warn('Removing all files from build directory.');
+            if (! in_array(basename(Hyde::getSiteOutputPath()), config('hyde.safe_output_directories', ['_site', 'docs', 'build']))) {
+                if (! $this->confirm('The configured output directory ('.Hyde::getSiteOutputPath().') is potentially unsafe to empty. Are you sure you want to continue?')) {
+                    $this->info('Output directory will not be emptied.');
+
+                    return;
+                }
+            }
+            array_map('unlink', glob(Hyde::getSiteOutputPath('*.{html,json}'), GLOB_BRACE));
+            File::cleanDirectory(Hyde::getSiteOutputPath('media'));
+        }
     }
 
     /** @internal */
@@ -184,7 +194,7 @@ class HydeBuildStaticSiteCommand extends Command
     }
 
     /* @internal */
-    private function runNodeCommand(string $command, string $message, ?string $actionMessage = null): void
+    protected function runNodeCommand(string $command, string $message, ?string $actionMessage = null): void
     {
         $this->info($message.' This may take a second.');
 

@@ -7,7 +7,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * @see \Hyde\Framework\Testing\Modules\DataCollections\DataCollectionTest\DataCollectionTest
+ * @see \Hyde\Framework\Testing\Feature\DataCollectionTest
  */
 class DataCollectionServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,8 @@ class DataCollectionServiceProvider extends ServiceProvider
     {
         // Register the class alias
         AliasLoader::getInstance()->alias(
-            'MarkdownCollection', Facades\MarkdownCollection::class
+            'MarkdownCollection',
+            Facades\MarkdownCollection::class
         );
     }
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Generates Laravel Collections from static data files,
  * such as Markdown components and YAML files.
  *
- * @see \Hyde\Framework\Testing\Modules\DataCollections\DataCollectionTest\DataCollectionTest
+ * @see \Hyde\Framework\Testing\Feature\DataCollectionTest
  */
 class DataCollection extends Collection
 {
@@ -41,7 +41,7 @@ class DataCollection extends Collection
     public function getMarkdownFiles(): array
     {
         return glob(Hyde::path(
-            static::$sourceDirectory.'/'.$this->key.'/*'.MarkdownDocument::$fileExtension
+            static::$sourceDirectory.'/'.$this->key.'/*.md'
         ));
     }
 

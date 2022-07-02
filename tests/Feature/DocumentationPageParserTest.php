@@ -4,7 +4,7 @@ namespace Hyde\Framework\Testing\Feature;
 
 use Exception;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\DocumentationPage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
 use Hyde\Framework\Models\Parsers\DocumentationPageParser;
 use Hyde\Framework\Services\CollectionService;
 use Hyde\Testing\TestCase;
@@ -43,8 +43,9 @@ class DocumentationPageParserTest extends TestCase
     public function test_title_was_inferred_from_heading()
     {
         $parser = new DocumentationPageParser('phpunit-test');
-        $this->assertIsString($parser->title);
-        $this->assertEquals('PHPUnit Test File', $parser->title);
+        $object = $parser->get();
+        $this->assertIsString($object->title);
+        $this->assertEquals('PHPUnit Test File', $object->title);
     }
 
     public function test_parser_contains_body_text()
@@ -74,5 +75,11 @@ class DocumentationPageParserTest extends TestCase
         $this->assertEquals('PHPUnit Test File', $object->title);
         $this->assertEquals("# PHPUnit Test File \n Hello World!", $object->body);
         $this->assertEquals('phpunit-test', $object->slug);
+    }
+
+    public function test_cleanup()
+    {
+        unlink(Hyde::path('_docs/phpunit-test.md'));
+        $this->assertTrue(true);
     }
 }

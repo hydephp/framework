@@ -2,13 +2,12 @@
 
 namespace Hyde\Framework;
 
-use Composer\InstalledVersions;
 use Hyde\Framework\Concerns\RegistersDefaultDirectories;
 use Hyde\Framework\Contracts\AssetServiceContract;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\DocumentationPage;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use Hyde\Framework\Services\AssetService;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,49 +25,27 @@ class HydeServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        /**
-         * @deprecated
-         */
-        $this->app->bind(
-            'hyde.version',
-            function () {
-                return InstalledVersions::getPrettyVersion('hyde/hyde') ?: 'unreleased';
-            }
-        );
-
-        /**
-         * @deprecated
-         */
-        $this->app->bind(
-            'framework.version',
-            function () {
-                return InstalledVersions::getPrettyVersion('hyde/framework') ?: 'unreleased';
-            }
-        );
-
         $this->app->singleton(AssetServiceContract::class, AssetService::class);
 
-        $this->registerDefaultDirectories([
+        $this->registerSourceDirectories([
             BladePage::class => '_pages',
             MarkdownPage::class => '_pages',
             MarkdownPost::class => '_posts',
             DocumentationPage::class => '_docs',
         ]);
 
+        $this->registerOutputDirectories([
+            BladePage::class => '',
+            MarkdownPage::class => '',
+            MarkdownPost::class => 'posts',
+            DocumentationPage::class => config('docs.output_directory', 'docs'),
+        ]);
+
         $this->discoverBladeViewsIn('_pages');
 
-        /** @deprecated v0.43.0-beta and is used here as a fallback for compatibility */
-        if (config('hyde.output_directory') === null) {
-            $this->storeCompiledSiteIn(config(
-                'hyde.site_output_path',
-                Hyde::path('_site')
-            ));
-        } else {
-            // Newer version which is safer.
-            $this->storeCompiledSiteIn(Hyde::path(config(
-                trim('hyde.output_directory', '_site'), '/\\')
-            ));
-        }
+        $this->storeCompiledSiteIn(Hyde::path(
+            trim(config('hyde.output_directory', '_site'), '/\\')
+        ));
 
         $this->commands([
             Commands\HydePublishHomepageCommand::class,
@@ -114,8 +91,12 @@ class HydeServiceProvider extends ServiceProvider
         ], 'hyde-components');
 
         $this->publishes([
-            __DIR__.'/../_pages/404.blade.php' => resource_path('views/pages/404.blade.php'),
+            Hyde::vendorPath('resources/views/pages/404.blade.php') => Hyde::path('_pages/404.blade.php'),
         ], 'hyde-page-404');
+
+        $this->publishes([
+            Hyde::vendorPath('resources/views/homepages/welcome.blade.php') => Hyde::path('_pages/index.blade.php'),
+        ], 'hyde-welcome-page');
     }
 
     /**

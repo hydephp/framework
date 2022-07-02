@@ -4,15 +4,16 @@ namespace Hyde\Framework\Services;
 
 use Hyde\Framework\Helpers\Features;
 use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\DocumentationPage;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use SimpleXMLElement;
 
 /**
  * @see \Hyde\Framework\Testing\Feature\Services\SitemapServiceTest
  * @see https://www.sitemaps.org/protocol.html
+ * @phpstan-consistent-constructor
  */
 class SitemapService
 {
@@ -84,7 +85,7 @@ class SitemapService
     {
         return date('c', filemtime(
             /** @var \Hyde\Framework\Contracts\AbstractPage $pageClass */
-            Hyde::path($pageClass::$sourceDirectory.DIRECTORY_SEPARATOR.$slug.$pageClass::$fileExtension)
+            Hyde::path($pageClass::getSourceDirectory().DIRECTORY_SEPARATOR.$slug.$pageClass::getFileExtension())
         ));
     }
 

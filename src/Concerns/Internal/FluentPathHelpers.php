@@ -2,10 +2,10 @@
 
 namespace Hyde\Framework\Concerns\Internal;
 
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\DocumentationPage;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use Hyde\Framework\Services\DiscoveryService;
 use Hyde\Framework\StaticPageBuilder;
 
@@ -19,7 +19,7 @@ use Hyde\Framework\StaticPageBuilder;
  * Hyde::path('_pages/foo') becomes Hyde::getBladePagePath('foo')
  *
  * @see \Hyde\Framework\Hyde
- * @see \Hyde\Framework\Testing\Unit\FluentPathHelpersTest
+ * @see \Hyde\Framework\Testing\Feature\FluentPathHelpersTest
  */
 trait FluentPathHelpers
 {

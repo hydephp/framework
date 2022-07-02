@@ -4,11 +4,11 @@ namespace Hyde\Framework;
 
 use Hyde\Framework\Actions\MarkdownConverter;
 use Hyde\Framework\Concerns\InteractsWithDirectories;
-use Hyde\Framework\Models\BladePage;
-use Hyde\Framework\Models\DocumentationPage;
-use Hyde\Framework\Models\MarkdownDocument;
-use Hyde\Framework\Models\MarkdownPage;
-use Hyde\Framework\Models\MarkdownPost;
+use Hyde\Framework\Contracts\PageContract;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 
 /**
  * Converts a Page Model into a static HTML page.
@@ -25,10 +25,10 @@ class StaticPageBuilder
     /**
      * Construct the class.
      *
-     * @param  MarkdownDocument|BladePage  $page  the Page to compile into HTML
+     * @param  PageContract  $page  the Page to compile into HTML
      * @param  bool  $selfInvoke  if set to true the class will invoke when constructed
      */
-    public function __construct(protected MarkdownDocument|BladePage $page, bool $selfInvoke = false)
+    public function __construct(protected PageContract $page, bool $selfInvoke = false)
     {
         if ($selfInvoke) {
             $this->__invoke();
@@ -46,36 +46,34 @@ class StaticPageBuilder
         view()->share('currentPage', $this->page->getCurrentPagePath());
 
         $this->needsDirectory(static::$outputPath);
-        $this->needsDirectory(Hyde::getSiteOutputPath('posts'));
-        $this->needsDirectory(Hyde::getSiteOutputPath(Hyde::getDocumentationOutputDirectory()));
+        $this->needsDirectory(Hyde::getSiteOutputPath($this->page::getOutputDirectory()));
 
         if ($this->page instanceof BladePage) {
-            return $this->save($this->page->view, $this->compileView());
+            return $this->save($this->compileView());
         }
 
         if ($this->page instanceof MarkdownPost) {
-            return $this->save('posts/'.$this->page->slug, $this->compilePost());
+            return $this->save($this->compilePost());
         }
 
         if ($this->page instanceof MarkdownPage) {
-            return $this->save($this->page->slug, $this->compilePage());
+            return $this->save($this->compilePage());
         }
 
         if ($this->page instanceof DocumentationPage) {
-            return $this->save(Hyde::getDocumentationOutputDirectory().'/'.$this->page->slug, $this->compileDocs());
+            return $this->save($this->compileDocs());
         }
     }
 
     /**
      * Save the compiled HTML to file.
      *
-     * @param  string  $location  of the output file relative to the site output directory
      * @param  string  $contents  to save to the file
      * @return string the path to the saved file (since v0.32.x)
      */
-    private function save(string $location, string $contents): string
+    protected function save(string $contents): string
     {
-        $path = Hyde::getSiteOutputPath("$location.html");
+        $path = Hyde::getSiteOutputPath($this->page->getOutputPath());
 
         file_put_contents($path, $contents);
 
@@ -87,7 +85,7 @@ class StaticPageBuilder
      *
      * @return string
      */
-    private function compileView(): string
+    protected function compileView(): string
     {
         return view($this->page->view)->render();
     }
@@ -97,7 +95,7 @@ class StaticPageBuilder
      *
      * @return string
      */
-    private function compilePost(): string
+    protected function compilePost(): string
     {
         return view('hyde::layouts/post')->with([
             'title' => $this->page->title,
@@ -110,7 +108,7 @@ class StaticPageBuilder
      *
      * @return string
      */
-    private function compilePage(): string
+    protected function compilePage(): string
     {
         return view('hyde::layouts/page')->with([
             'title' => $this->page->title,
@@ -123,7 +121,7 @@ class StaticPageBuilder
      *
      * @return string
      */
-    private function compileDocs(): string
+    protected function compileDocs(): string
     {
         return view('hyde::layouts/docs')->with([
             'title' => $this->page->title,
