@@ -19,8 +19,8 @@ use Illuminate\Support\Collection;
  * This is not a router in the traditional sense that it decides where to go.
  * Instead, it creates a pre-generated object encapsulating the Hyde autodiscovery.
  *
- * If successful, this will not only let us emulate Laravel route helpers, but also
- * serve as the canonical source of truth for the Hyde autodiscovery process.
+ * This not only let us emulate Laravel route helpers, but also serve as the
+ * canonical source of truth for the vital HydePHP autodiscovery process.
  *
  * The routes defined can then also be used to power the RealtimeCompiler without
  * having to reverse-engineer the source file mapping.
@@ -28,7 +28,7 @@ use Illuminate\Support\Collection;
  * Routes cannot be added manually, instead the route index is created using the
  * exact same rules as the current autodiscovery process and compiled file output.
  *
- * The route index shall serve as a multidimensional mapping allowing you to
+ * The route index serves as a multidimensional mapping allowing you to
  * determine where a source file will be compiled to, and where a compiled
  * file was generated from.
  *
@@ -55,8 +55,9 @@ class Router implements RouterContract
     }
 
     /** @inheritDoc */
-    public static function getInstance(): static
+    public static function getInstance(): self
     {
+        // This creates a singleton pattern. When testing we always create a new instance.
         if (static::$instance === null || app()->environment('testing')) {
             static::$instance = new self();
         }
@@ -73,6 +74,7 @@ class Router implements RouterContract
     /** @inheritDoc */
     public function getRoutesForModel(string $pageClass): Collection
     {
+        // Return a new filtered collection with only routes that are for the given page class.
         return $this->routes->filter(function (RouteContract $route) use ($pageClass) {
             return $route->getSourceModel() instanceof $pageClass;
         });
@@ -80,6 +82,7 @@ class Router implements RouterContract
 
     protected function discover(PageContract $page): self
     {
+        // Create a new route for the given page, and add it to the index.
         $route = new Route($page);
         $this->routes->put($route->getRouteKey(), $route);
 
