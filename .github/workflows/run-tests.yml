@@ -32,7 +32,7 @@ jobs:
         run: "cd hyde && composer require hyde/framework:dev-master"
 
       - name: Install Dependencies
-        run: cd hyde && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: cd hyde && composer require hyde/testing --dev --no-install && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
