@@ -40,7 +40,7 @@ jobs:
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-        run: cd hyde && vendor/bin/pest --testdox-text testdox.txt
+        run: cd hyde && vendor/bin/pest --coverage --coverage-xml build/coverage/coverage-xml --testdox-text testdox.txt
         env:
           ENV: testing
 
