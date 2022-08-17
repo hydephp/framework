@@ -21,6 +21,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: fileinfo
+          coverage: xdebug
       - name: Install Hyde
         run: git clone -b master https://github.com/hydephp/hyde.git
 
@@ -50,8 +51,14 @@ jobs:
           curl https://gist.githubusercontent.com/caendesilva/d76fc6d73cb488863a8f6fda18a7c8c4/raw/24257c1f3ec4ce8a2c16601bbfa33f054f873be9/ping-openanalytics-testrunner.php -o ping.php
           php ping.php "Framework CI Matrix" ${{ secrets.OPENANALYTICS_TOKEN }}
 
+      - name: Check the build/coverage folder
+        run: ls ./build/coverage
+
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
         with:
           directory: ./build/coverage
           functionalities: network
+
+      - name: Check the contents of coverage folder
+        run: cat ./build/coverage/coverage-xml
