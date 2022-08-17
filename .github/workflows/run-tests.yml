@@ -55,9 +55,3 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           functionalities: network
-
-      - name: Check the build/coverage folder
-        run: ls build/coverage
-
-      - name: Check the contents of coverage folder
-        run: cat build/coverage/coverage-xml
