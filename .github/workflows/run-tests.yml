@@ -41,7 +41,7 @@ jobs:
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-        run: cd hyde && vendor/bin/pest --coverage --coverage-xml build/coverage/coverage-xml --testdox-text testdox.txt
+        run: cd hyde && vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover build/coverage/clover.xml --coverage-cobertura build/coverage/cobertura.xml --coverage-crap4j build/coverage/crap4j.xml --coverage-xml build/coverage/coverage-xml --log-junit build/junit.xml --testdox-text testdox.txt
         env:
           ENV: testing
 
@@ -54,7 +54,6 @@ jobs:
       - name: "Publish coverage report to Codecov"
         uses: codecov/codecov-action@v3
         with:
-          directory: ./build/coverage
           functionalities: network
 
       - name: Check the build/coverage folder
