@@ -21,9 +21,10 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: fileinfo
+          coverage: xdebug
       - name: Install Hyde
         run: git clone -b master https://github.com/hydephp/hyde.git
-   
+
       - name: Set Framework version to dev-github.base_ref
         if: github.event_name != 'push'
         run: "cd hyde && composer require hyde/framework:dev-master"
@@ -40,7 +41,7 @@ jobs:
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-        run: cd hyde && vendor/bin/pest --testdox-text testdox.txt
+        run: cd hyde && vendor/bin/pest --coverage --coverage-text=report.txt --colors=always --coverage-clover build/coverage/clover.xml --coverage-cobertura build/coverage/cobertura.xml --coverage-crap4j build/coverage/crap4j.xml --coverage-xml build/coverage/coverage-xml --log-junit build/junit.xml --testdox-text testdox.txt
         env:
           ENV: testing
 
@@ -49,3 +50,8 @@ jobs:
           cd hyde
           curl https://gist.githubusercontent.com/caendesilva/d76fc6d73cb488863a8f6fda18a7c8c4/raw/24257c1f3ec4ce8a2c16601bbfa33f054f873be9/ping-openanalytics-testrunner.php -o ping.php
           php ping.php "Framework CI Matrix" ${{ secrets.OPENANALYTICS_TOKEN }}
+
+      - name: "Publish coverage report to Codecov"
+        uses: codecov/codecov-action@v3
+        with:
+          functionalities: network
