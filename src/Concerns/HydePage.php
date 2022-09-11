@@ -3,6 +3,7 @@
 namespace Hyde\Framework\Concerns;
 
 use Hyde\Framework\Actions\SourceFileParser;
+use Hyde\Framework\Concerns\Internal\ConstructsPageSchemas;
 use Hyde\Framework\Contracts\CompilableContract;
 use Hyde\Framework\Contracts\FrontMatter\PageSchema;
 use Hyde\Framework\Contracts\RouteContract;
@@ -12,6 +13,7 @@ use Hyde\Framework\Models\FrontMatter;
 use Hyde\Framework\Models\Metadata\Metadata;
 use Hyde\Framework\Models\Route;
 use Hyde\Framework\Services\DiscoveryService;
+use Illuminate\Support\Arr;
 
 /**
  * To ensure compatibility with the Hyde Framework, all page models should extend this class.
@@ -44,8 +46,8 @@ abstract class HydePage implements CompilableContract, PageSchema
     public Metadata $metadata;
 
     public string $title;
-    public ?array $navigation = null;
     public ?string $canonicalUrl = null;
+    public ?array $navigation = null;
 
     public function __construct(string $identifier = '', FrontMatter|array $matter = [])
     {
@@ -222,11 +224,10 @@ abstract class HydePage implements CompilableContract, PageSchema
      */
     public function get(string $key = null, mixed $default = null): mixed
     {
-        if ($key !== null && property_exists($this, $key) && isset($this->$key)) {
-            return $this->$key;
-        }
-
-        return $this->matter($key, $default);
+        return Arr::get(array_filter(array_merge(
+            $this->matter->toArray(),
+            (array) $this,
+        )), $key, $default);
     }
 
     /**
