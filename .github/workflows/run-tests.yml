@@ -25,15 +25,12 @@ jobs:
       - name: Install Hyde
         run: git clone -b master https://github.com/hydephp/hyde.git
 
-      - name: Set Framework version to dev-github.base_ref
-        if: github.event_name != 'push'
-        run: "cd hyde && composer require hyde/framework:dev-master --no-install"
-      - name: Set Framework version to dev-master
-        if: github.event_name == 'push'
-        run: "cd hyde && composer require hyde/framework:dev-master --no-install"
-
       - name: Install Dependencies
-        run: cd hyde && composer require hyde/testing:dev-master --dev --no-install && composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: |
+          cd hyde
+          composer require hyde/framework:dev-master --no-install
+          composer require hyde/testing:dev-master --dev --no-install
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
