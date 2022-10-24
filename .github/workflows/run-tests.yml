@@ -30,6 +30,7 @@ jobs:
           cd hyde
           composer require hyde/framework:dev-master --no-install
           composer require hyde/testing:dev-master --dev --no-install
+          rm composer.lock
           composer install
 
       - name: Copy over test files
