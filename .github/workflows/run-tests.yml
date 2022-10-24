@@ -30,7 +30,7 @@ jobs:
           cd hyde
           composer require hyde/framework:dev-master --no-install
           composer require hyde/testing:dev-master --dev --no-install
-          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          composer install
 
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
