@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Foundation;
+namespace Hyde\Framework\Foundation;
 
 use Hyde\Framework\Exceptions\BaseUrlNotSetException;
-use Hyde\Pages\DocumentationPage;
+use Hyde\Framework\HydeKernel;
+use Hyde\Framework\Models\Pages\DocumentationPage;
 
 /**
  * Contains helpers and logic for resolving web paths for compiled files.

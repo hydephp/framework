@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Foundation\HydeKernel;
-use Hyde\Hyde;
+use Hyde\Framework\Hyde;
+use Hyde\Framework\HydeKernel;
 use Hyde\Testing\TestCase;
 
 /**
  * Class HydePathHelperTest.
  *
- * @covers \Hyde\Foundation\HydeKernel::path
+ * @covers \Hyde\Framework\HydeKernel::path
  */
 class HydePathHelperTest extends TestCase
 {

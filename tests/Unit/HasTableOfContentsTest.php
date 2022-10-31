@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Markdown\Models\Markdown;
-use Hyde\Pages\DocumentationPage;
+use Hyde\Framework\Models\Markdown\Markdown;
+use Hyde\Framework\Models\Pages\DocumentationPage;
 use Hyde\Testing\TestCase;
 
 /**
  * Class HasTableOfContentsTest.
  *
- * @covers \Hyde\Pages\DocumentationPage
+ * @covers \Hyde\Framework\Models\Pages\DocumentationPage
  *
  * @see \Hyde\Framework\Testing\Feature\Actions\GeneratesSidebarTableOfContentsTest
  */

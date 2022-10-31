@@ -10,13 +10,15 @@ class EnsureCommandsFollowNamingConventionTest extends TestCase
 {
     public function test_ensure_commands_follow_naming_convention()
     {
-        $files = glob('vendor/hyde/framework/src/Console/Commands/*.php');
+        $files = glob('vendor/hyde/framework/src/Commands/*.php');
 
-        $this->assertNotEmpty($files, 'No commands found.');
+        if (empty($files)) {
+            $this->markTestSkipped('No commands found.');
+        }
 
         foreach ($files as $filepath) {
             $filename = basename($filepath, '.php');
-            $this->assertStringStartsNotWith('Hyde', $filename);
+            $this->assertStringStartsWith('Hyde', $filename);
             $this->assertStringEndsWith('Command', $filename);
         }
     }

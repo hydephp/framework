@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Hyde;
+use Hyde\Framework\Hyde;
 use Hyde\Testing\TestCase;
 
 /**
  * Class HydeGetBasePathHasFallbackTest.
  *
- * @covers \Hyde\Foundation\HydeKernel::getBasePath
+ * @covers \Hyde\Framework\HydeKernel::getBasePath
  */
 class HydeGetBasePathHasFallbackTest extends TestCase
 {

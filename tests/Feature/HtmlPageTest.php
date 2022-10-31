@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Pages\HtmlPage;
+use Hyde\Framework\Models\Pages\HtmlPage;
 use Hyde\Testing\TestCase;
 
 /**
- * @covers \Hyde\Pages\HtmlPage
+ * @covers \Hyde\Framework\Models\Pages\HtmlPage
  */
 class HtmlPageTest extends TestCase
 {

@@ -4,7 +4,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Hyde\\": "src/"
+            "Hyde\\Framework\\": "src/"
         },
         "files": [
             "src/helpers.php"

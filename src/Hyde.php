@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Hyde;
+namespace Hyde\Framework;
 
-use Hyde\Facades\Features;
-use Hyde\Foundation\FileCollection;
-use Hyde\Foundation\HydeKernel;
-use Hyde\Foundation\PageCollection;
-use Hyde\Foundation\RouteCollection;
-use Hyde\Pages\Concerns\HydePage;
-use Hyde\Support\Models\Route;
+use Hyde\Framework\Concerns\HydePage;
+use Hyde\Framework\Foundation\FileCollection;
+use Hyde\Framework\Foundation\PageCollection;
+use Hyde\Framework\Foundation\RouteCollection;
+use Hyde\Framework\Helpers\Features;
+use Hyde\Framework\Models\Support\Route;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * General facade for Hyde services.
  *
- * @see \Hyde\Foundation\HydeKernel
+ * @see \Hyde\Framework\HydeKernel
  *
  * @author  Caen De Silva <caen@desilva.se>
  * @copyright 2022 Caen De Silva
@@ -54,9 +53,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static void shareViewData(HydePage $page)
  * @method static array toArray()
  * @method static void boot()
- *
- * @see \Hyde\Foundation\Concerns\ForwardsFilesystem
- * @see \Hyde\Foundation\Concerns\ForwardsHyperlinks
  */
 class Hyde extends Facade
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Hyde;
+use Hyde\Framework\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Artisan;
 
@@ -27,8 +27,10 @@ class BlogPostFrontMatterIsOptionalTest extends TestCase
         file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
         // Create a temporary page to test the feed
-        copy(Hyde::vendorPath('resources/views/components/blog-post-feed.blade.php'),
-            Hyde::path('_pages/feed-test.blade.php')
+        file_put_contents(Hyde::path('_pages/feed-test.blade.php'),
+            '@foreach(\Hyde\Framework\Models\Pages\MarkdownPost::getLatestPosts() as $post)
+				@include(\'hyde::components.article-excerpt\')
+			@endforeach'
         );
 
         Artisan::call('rebuild _pages/feed-test.blade.php');

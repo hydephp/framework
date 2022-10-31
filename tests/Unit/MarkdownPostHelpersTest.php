@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Pages\MarkdownPost;
+use Hyde\Framework\Models\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
 
 /**
- * @see \Hyde\Pages\MarkdownPost
+ * @see \Hyde\Framework\Models\Pages\MarkdownPost
  */
 class MarkdownPostHelpersTest extends TestCase
 {

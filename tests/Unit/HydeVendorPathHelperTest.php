@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Foundation\HydeKernel;
-use Hyde\Hyde;
+use Hyde\Framework\Hyde;
+use Hyde\Framework\HydeKernel;
 use Hyde\Testing\TestCase;
 
 class HydeVendorPathHelperTest extends TestCase

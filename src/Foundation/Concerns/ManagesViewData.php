@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Foundation\Concerns;
+namespace Hyde\Framework\Foundation\Concerns;
 
-use Hyde\Pages\Concerns\HydePage;
-use Hyde\Support\Models\Route;
+use Hyde\Framework\Concerns\HydePage;
+use Hyde\Framework\Models\Support\Route;
 use Illuminate\Support\Facades\View;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Foundation\HydeKernel
+ * @see \Hyde\Framework\HydeKernel
  */
 trait ManagesViewData
 {
     /**
      * Share data for the page being rendered.
      *
-     * @param  \Hyde\Pages\Concerns\HydePage  $page
+     * @param  \Hyde\Framework\Concerns\HydePage  $page
      */
     public function shareViewData(HydePage $page): void
     {
@@ -40,7 +40,7 @@ trait ManagesViewData
     /**
      * Get the route for the page being rendered.
      *
-     * @return \Hyde\Support\Models\Route|null
+     * @return \Hyde\Framework\Models\Support\Route|null
      */
     public function currentRoute(): ?Route
     {

@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Foundation;
+namespace Hyde\Framework\Foundation;
 
-use Hyde\Facades\Site;
+use Hyde\Framework\Hyde;
+use Hyde\Framework\HydeKernel;
+use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Framework\Models\Pages\DocumentationPage;
+use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Framework\Models\Pages\MarkdownPost;
+use Hyde\Framework\Models\Support\Site;
 use Hyde\Framework\Services\DiscoveryService;
-use Hyde\Hyde;
-use Hyde\Pages\BladePage;
-use Hyde\Pages\DocumentationPage;
-use Hyde\Pages\MarkdownPage;
-use Hyde\Pages\MarkdownPost;
 
 /**
  * File helper methods, bound to the HydeKernel instance, and is an integral part of the framework.

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Facades\Features;
+use Hyde\Framework\Helpers\Features;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 
 /**
- * @covers \Hyde\Facades\Features
+ * @covers \Hyde\Framework\Helpers\Features
  */
 class ConfigurableFeaturesTest extends TestCase
 {
@@ -70,42 +70,5 @@ class ConfigurableFeaturesTest extends TestCase
             $this->assertIsBool($enabled);
             $this->assertStringStartsNotWith('has', $feature);
         }
-    }
-
-    public function test_features_can_be_mocked()
-    {
-        Features::mock('darkmode', true);
-        $this->assertTrue(Features::hasDarkmode());
-
-        Features::mock('darkmode', false);
-        $this->assertFalse(Features::hasDarkmode());
-    }
-
-    public function test_dynamic_features_can_be_mocked()
-    {
-        Features::mock('rss', true);
-        $this->assertTrue(Features::rss());
-
-        Features::mock('rss', false);
-        $this->assertFalse(Features::rss());
-    }
-
-    public function test_multiple_features_can_be_mocked()
-    {
-        Features::mock([
-            'rss' => true,
-            'darkmode' => true,
-        ]);
-
-        $this->assertTrue(Features::rss());
-        $this->assertTrue(Features::hasDarkmode());
-
-        Features::mock([
-            'rss' => false,
-            'darkmode' => false,
-        ]);
-
-        $this->assertFalse(Features::rss());
-        $this->assertFalse(Features::hasDarkmode());
     }
 }

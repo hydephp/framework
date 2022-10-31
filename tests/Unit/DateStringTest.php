@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Hyde\Framework\Testing\Unit;
 
 use DateTime;
-use Hyde\Support\Models\DateString;
+use Hyde\Framework\Models\Support\DateString;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Hyde\Support\Models\DateString
+ * @covers \Hyde\Framework\Models\Support\DateString
  */
 class DateStringTest extends TestCase
 {

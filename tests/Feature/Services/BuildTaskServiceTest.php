@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Services;
 
-use Hyde\Framework\Features\BuildTasks\BuildTask;
+use Hyde\Framework\Concerns\AbstractBuildTask;
+use Hyde\Framework\Hyde;
 use Hyde\Framework\Services\BuildTaskService;
-use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\File;
 
 /**
  * @covers \Hyde\Framework\Services\BuildTaskService
- * @covers \Hyde\Framework\Features\BuildTasks\BuildTask
- * @covers \Hyde\Framework\Features\BuildTasks\PostBuildTasks\GenerateSitemap
- * @covers \Hyde\Framework\Features\BuildTasks\PostBuildTasks\GenerateRssFeed
- * @covers \Hyde\Framework\Features\BuildTasks\PostBuildTasks\GenerateSearch
+ * @covers \Hyde\Framework\Concerns\AbstractBuildTask
+ * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateSitemap
+ * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateRssFeed
+ * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateSearch
  *
  * @backupStaticAttributes enabled
  */
 class BuildTaskServiceTest extends TestCase
 {
     /**
-     * @covers \Hyde\Console\Commands\BuildSiteCommand::runPostBuildActions
+     * @covers \Hyde\Framework\Commands\HydeBuildSiteCommand::runPostBuildActions
      */
     public function test_build_command_can_run_post_build_tasks()
     {
@@ -85,7 +85,7 @@ class BuildTaskServiceTest extends TestCase
         $service = $this->makeService();
         $service->runPostBuildTasks();
 
-        $this->expectOutputString('BuildTask');
+        $this->expectOutputString('AbstractBuildTask');
     }
 
     /**
@@ -98,7 +98,7 @@ class BuildTaskServiceTest extends TestCase
         $service = $this->makeService();
         $return = $service->run(get_class($task));
 
-        $this->expectOutputString('BuildTask');
+        $this->expectOutputString('AbstractBuildTask');
 
         $this->assertSame($service, $return);
     }
@@ -113,7 +113,7 @@ class BuildTaskServiceTest extends TestCase
         $service = $this->makeService();
         $return = $service->runIf(get_class($task), true);
 
-        $this->expectOutputString('BuildTask');
+        $this->expectOutputString('AbstractBuildTask');
 
         $this->assertSame($service, $return);
     }
@@ -145,7 +145,7 @@ class BuildTaskServiceTest extends TestCase
             return true;
         });
 
-        $this->expectOutputString('BuildTask');
+        $this->expectOutputString('AbstractBuildTask');
 
         $this->assertSame($service, $return);
     }
@@ -169,7 +169,7 @@ class BuildTaskServiceTest extends TestCase
 
     public function test_exception_handler_shows_error_message_and_exits_with_code_1_without_throwing_exception()
     {
-        $return = (new class extends BuildTask
+        $return = (new class extends AbstractBuildTask
         {
             public function run(): void
             {
@@ -196,9 +196,9 @@ class BuildTaskServiceTest extends TestCase
 
 namespace App\Actions;
 
-use Hyde\Framework\Features\BuildTasks\BuildTask;
+use Hyde\Framework\Concerns\AbstractBuildTask;
 
-class FooBuildTask extends BuildTask {
+class FooBuildTask extends AbstractBuildTask {
     public function run(): void {
         echo "FooBuildTask";
     }
@@ -216,13 +216,13 @@ class FooBuildTask extends BuildTask {
         return new BuildTaskService();
     }
 
-    protected function makeTask(): BuildTask
+    protected function makeTask(): AbstractBuildTask
     {
-        return new class extends BuildTask
+        return new class extends AbstractBuildTask
         {
             public function run(): void
             {
-                echo 'BuildTask';
+                echo 'AbstractBuildTask';
             }
         };
     }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Foundation\Concerns;
+namespace Hyde\Framework\Foundation\Concerns;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Foundation\HydeKernel
+ * @see \Hyde\Framework\HydeKernel
  */
 trait ForwardsHyperlinks
 {

@@ -4,15 +4,32 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Facades\Site;
-use Hyde\Framework\Features\Metadata\GlobalMetadataBag;
+use Hyde\Framework\Models\Support\Site;
+use Hyde\Framework\Modules\Metadata\GlobalMetadataBag;
 use Hyde\Testing\TestCase;
 
 /**
- * @covers \Hyde\Facades\Site
+ * @covers \Hyde\Framework\Models\Support\Site
  */
 class SiteTest extends TestCase
 {
+    public function testConstruct()
+    {
+        $site = new Site();
+
+        $this->assertNotNull($site->name);
+        $this->assertNotNull($site->language);
+        $this->assertNotNull($site->url);
+
+        $this->assertEquals(config('site.name'), $site->name);
+        $this->assertEquals(config('site.language'), $site->language);
+        $this->assertEquals(config('site.url'), $site->url);
+
+        $this->assertSame(Site::name(), $site->name);
+        $this->assertSame(Site::language(), $site->language);
+        $this->assertSame(Site::url(), $site->url);
+    }
+
     public function testUrl()
     {
         $this->assertSame('http://localhost', Site::url());

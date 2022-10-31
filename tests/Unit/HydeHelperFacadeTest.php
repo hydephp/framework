@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Facades\Features;
-use Hyde\Hyde;
+use Hyde\Framework\Helpers\Features;
+use Hyde\Framework\Hyde;
 use Hyde\Testing\TestCase;
 
 /**
- * @covers \Hyde\Foundation\HydeKernel
+ * @covers \Hyde\Framework\HydeKernel
  */
 class HydeHelperFacadeTest extends TestCase
 {

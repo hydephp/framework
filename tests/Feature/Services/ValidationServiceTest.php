@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Services;
 
+use Hyde\Framework\Hyde;
+use Hyde\Framework\Models\Support\ValidationResult;
 use Hyde\Framework\Services\ValidationService;
-use Hyde\Hyde;
-use Hyde\Support\Models\ValidationResult;
 use Hyde\Testing\TestCase;
 
 /**
  * Class ValidationServiceTest.
  *
  * @covers \Hyde\Framework\Services\ValidationService
- * @covers \Hyde\Support\Models\ValidationResult
+ * @covers \Hyde\Framework\Models\Support\ValidationResult
  *
- * @see \Hyde\Framework\Testing\Feature\Commands\ValidateCommandTest
+ * @see \Hyde\Framework\Testing\Feature\Commands\HydeValidateCommandTest
  */
 class ValidationServiceTest extends TestCase
 {

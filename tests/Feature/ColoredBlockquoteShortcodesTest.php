@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Markdown\Processing\ColoredBlockquotes;
+use Hyde\Framework\Modules\Markdown\Shortcodes\ColoredBlockquotes;
 use Hyde\Testing\TestCase;
 
 /**
  * Class ColoredBlockquoteShortcodesTest.
  *
- * @covers \Hyde\Markdown\Processing\ColoredBlockquotes
+ * @covers \Hyde\Framework\Modules\Markdown\Shortcodes\ColoredBlockquotes
  */
 class ColoredBlockquoteShortcodesTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Foundation;
+namespace Hyde\Framework\Foundation;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\PackageManifest;

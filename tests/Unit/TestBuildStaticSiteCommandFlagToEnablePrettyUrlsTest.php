@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Hyde;
+use Hyde\Framework\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\File;
 

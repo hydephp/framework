@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Hyde\Foundation\HydeKernel;
+use Hyde\Framework\HydeKernel;
 
 if (! function_exists('hyde')) {
     /**
      * Get the available HydeKernel instance.
      *
-     * @return \Hyde\Foundation\HydeKernel
+     * @return \Hyde\Framework\HydeKernel
      */
     function hyde(): HydeKernel
     {
