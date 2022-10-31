@@ -23,7 +23,7 @@ jobs:
           extensions: fileinfo
           coverage: xdebug
       - name: Install Hyde
-        run: git clone -b ${{ github.ref_name }} https://github.com/hydephp/hyde.git
+        run: git clone -b master https://github.com/hydephp/hyde.git
 
       - name: Install Dependencies
         run: |
