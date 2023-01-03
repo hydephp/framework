@@ -25,10 +25,17 @@ jobs:
       - name: Install Hyde
         run: git clone -b master https://github.com/hydephp/hyde.git
 
+      - name: Require latest master version
+        if: github.ref == 'refs/heads/master'
+        run: composer require hyde/framework:dev-master --no-install
+
+      - name: Require latest development version
+        if: github.ref == 'refs/heads/develop'
+        run: composer require hyde/framework:dev-develop --no-install
+
       - name: Install Dependencies
         run: |
           cd hyde
-          composer require hyde/framework:dev-master --no-install
           composer require hyde/testing:dev-master --dev --no-install
           composer install
 
