@@ -22,8 +22,14 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: fileinfo
           coverage: xdebug
-      - name: Install Hyde
+
+      - name: Install Hyde (master)
+        if: github.ref == 'refs/heads/master'
         run: git clone -b master https://github.com/hydephp/hyde.git
+
+      - name: Install Hyde (develop)
+        if: github.ref == 'refs/heads/develop'
+        run: git clone -b develop https://github.com/hydephp/hyde.git
 
       - name: Require latest master version
         if: github.ref == 'refs/heads/master'
