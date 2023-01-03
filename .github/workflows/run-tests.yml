@@ -27,11 +27,11 @@ jobs:
 
       - name: Require latest master version
         if: github.ref == 'refs/heads/master'
-        run: composer require hyde/framework:dev-master --no-install
+        run: cd hyde && composer require hyde/framework:dev-master --no-install
 
       - name: Require latest development version
         if: github.ref == 'refs/heads/develop'
-        run: composer require hyde/framework:dev-develop --no-install
+        run: cd hyde && composer require hyde/framework:dev-develop --no-install
 
       - name: Install Dependencies
         run: |
