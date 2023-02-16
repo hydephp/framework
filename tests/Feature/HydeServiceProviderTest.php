@@ -5,34 +5,31 @@ declare(strict_types=1);
 namespace Hyde\Framework\Testing\Feature;
 
 use function app;
-use function array_filter;
 use function array_map;
-use function array_values;
 use function basename;
 use function config;
 use function get_class;
-use function get_declared_classes;
 use function glob;
+use Hyde\Console\ConsoleServiceProvider;
 use Hyde\Facades\Site;
-use Hyde\Framework\Features\DataCollections\DataCollectionServiceProvider;
 use Hyde\Framework\HydeServiceProvider;
 use Hyde\Framework\Services\AssetService;
+use Hyde\Foundation\HydeCoreExtension;
 use Hyde\Hyde;
 use Hyde\Pages\BladePage;
-use Hyde\Pages\Contracts\DynamicPage;
 use Hyde\Pages\DocumentationPage;
 use Hyde\Pages\HtmlPage;
 use Hyde\Pages\MarkdownPage;
 use Hyde\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Artisan;
-use function is_subclass_of;
 use function method_exists;
-use function str_starts_with;
 
 /**
  * @covers \Hyde\Framework\HydeServiceProvider
  * @covers \Hyde\Framework\Concerns\RegistersFileLocations
+ * @covers \Hyde\Foundation\Providers\ConfigurationServiceProvider
+ * @covers \Hyde\Foundation\Providers\ViewServiceProvider
  */
 class HydeServiceProviderTest extends TestCase
 {
@@ -60,18 +57,9 @@ class HydeServiceProviderTest extends TestCase
         $this->assertTrue(method_exists($this->provider, 'boot'));
     }
 
-    public function test_provider_applies_yaml_configuration_when_present()
-    {
-        $this->assertEquals('HydePHP', config('site.name'));
-        $this->file('hyde.yml', 'name: Foo');
-        $this->provider->register();
-        $this->assertEquals('Foo', config('site.name'));
-    }
-
     public function test_provider_registers_asset_service_contract()
     {
         $this->assertTrue($this->app->bound(AssetService::class));
-        $this->assertInstanceOf(AssetService::class, $this->app->make(AssetService::class));
         $this->assertInstanceOf(AssetService::class, $this->app->make(AssetService::class));
     }
 
@@ -143,26 +131,27 @@ class HydeServiceProviderTest extends TestCase
         $this->assertSame('foo', Hyde::getSourceRoot());
     }
 
-    public function test_provider_registers_configured_documentation_output_directory()
-    {
-        $this->assertEquals('docs', DocumentationPage::outputDirectory());
-
-        config(['docs.output_directory' => 'foo']);
-
-        $this->provider->register();
-
-        $this->assertEquals('foo', DocumentationPage::outputDirectory());
-    }
-
     public function test_provider_registers_site_output_directory()
     {
-        $this->assertEquals('_site', Site::$outputPath);
+        $this->assertEquals('_site', Site::getOutputDirectory());
 
-        config(['site.output_directory' => 'foo']);
+        config(['hyde.output_directory' => 'foo']);
 
         $this->provider->register();
 
-        $this->assertEquals('foo', Site::$outputPath);
+        $this->assertEquals('foo', Site::getOutputDirectory());
+    }
+
+    public function test_provider_registers_media_directory()
+    {
+        $this->assertEquals('_media', Hyde::getMediaDirectory());
+
+        config(['hyde.media_directory' => 'foo']);
+
+        $this->provider->register();
+
+        $this->assertEquals('foo', Hyde::getMediaDirectory());
+        $this->assertEquals('foo', Hyde::getMediaOutputDirectory());
     }
 
     public function test_provider_registers_blade_view_discovery_location_for_configured_blade_view_path()
@@ -172,7 +161,7 @@ class HydeServiceProviderTest extends TestCase
 
         $this->provider->register();
 
-        $this->assertEquals([Hyde::path('_pages')], config('view.paths'));
+        $this->assertEquals([realpath(Hyde::path('_pages'))], config('view.paths'));
     }
 
     public function test_blade_view_locations_are_only_registered_once_per_key()
@@ -183,7 +172,7 @@ class HydeServiceProviderTest extends TestCase
         $this->provider->register();
         $this->provider->register();
 
-        $this->assertEquals([Hyde::path('_pages')], config('view.paths'));
+        $this->assertEquals([realpath(Hyde::path('_pages'))], config('view.paths'));
     }
 
     public function test_provider_registers_console_commands()
@@ -207,13 +196,13 @@ class HydeServiceProviderTest extends TestCase
     {
         $this->provider->register();
 
-        $this->assertArrayHasKey(DataCollectionServiceProvider::class, $this->app->getLoadedProviders());
+        $this->assertArrayHasKey(ConsoleServiceProvider::class, $this->app->getLoadedProviders());
     }
 
     public function test_provider_registers_all_page_model_source_paths()
     {
         // Find all classes in the Hyde\Pages namespace that are not abstract
-        $pages = $this->getDeclaredPages();
+        $pages = HydeCoreExtension::getPageClasses();
 
         // Assert we are testing all page models
         $this->assertEquals([
@@ -238,7 +227,7 @@ class HydeServiceProviderTest extends TestCase
 
     public function test_provider_registers_all_page_model_output_paths()
     {
-        $pages = $this->getDeclaredPages();
+        $pages = HydeCoreExtension::getPageClasses();
 
         /** @var \Hyde\Pages\Concerns\HydePage|string $page */
         foreach ($pages as $page) {
@@ -252,12 +241,79 @@ class HydeServiceProviderTest extends TestCase
         }
     }
 
-    protected function getDeclaredPages(): array
+    public function test_provider_registers_source_directories_using_options_in_configuration()
     {
-        return array_values(array_filter(get_declared_classes(), function ($class) {
-            return str_starts_with($class, 'Hyde\Pages')
-                && (! str_starts_with($class, 'Hyde\Pages\Concerns')
-                    && ! is_subclass_of($class, DynamicPage::class));
-        }));
+        config(['hyde.source_directories' => [
+            HtmlPage::class => 'foo',
+            BladePage::class => 'foo',
+            MarkdownPage::class => 'foo',
+            MarkdownPost::class => 'foo',
+            DocumentationPage::class => 'foo',
+        ]]);
+
+        $this->provider->register();
+
+        $this->assertEquals('foo', HtmlPage::$sourceDirectory);
+        $this->assertEquals('foo', BladePage::$sourceDirectory);
+        $this->assertEquals('foo', MarkdownPage::$sourceDirectory);
+        $this->assertEquals('foo', MarkdownPost::$sourceDirectory);
+        $this->assertEquals('foo', DocumentationPage::$sourceDirectory);
+    }
+
+    public function test_source_directories_can_be_set_using_kebab_case_class_names()
+    {
+        config(['hyde.source_directories' => [
+            'html-page' => 'foo',
+            'blade-page' => 'foo',
+            'markdown-page' => 'foo',
+            'markdown-post' => 'foo',
+            'documentation-page' => 'foo',
+        ]]);
+
+        $this->provider->register();
+
+        $this->assertEquals('foo', HtmlPage::$sourceDirectory);
+        $this->assertEquals('foo', BladePage::$sourceDirectory);
+        $this->assertEquals('foo', MarkdownPage::$sourceDirectory);
+        $this->assertEquals('foo', MarkdownPost::$sourceDirectory);
+        $this->assertEquals('foo', DocumentationPage::$sourceDirectory);
+    }
+
+    public function test_provider_registers_output_directories_using_options_in_configuration()
+    {
+        config(['hyde.output_directories' => [
+            HtmlPage::class => 'foo',
+            BladePage::class => 'foo',
+            MarkdownPage::class => 'foo',
+            MarkdownPost::class => 'foo',
+            DocumentationPage::class => 'foo',
+        ]]);
+
+        $this->provider->register();
+
+        $this->assertEquals('foo', HtmlPage::$outputDirectory);
+        $this->assertEquals('foo', BladePage::$outputDirectory);
+        $this->assertEquals('foo', MarkdownPage::$outputDirectory);
+        $this->assertEquals('foo', MarkdownPost::$outputDirectory);
+        $this->assertEquals('foo', DocumentationPage::$outputDirectory);
+    }
+
+    public function test_output_directories_can_be_set_using_kebab_case_class_names()
+    {
+        config(['hyde.output_directories' => [
+            'html-page' => 'foo',
+            'blade-page' => 'foo',
+            'markdown-page' => 'foo',
+            'markdown-post' => 'foo',
+            'documentation-page' => 'foo',
+        ]]);
+
+        $this->provider->register();
+
+        $this->assertEquals('foo', HtmlPage::$outputDirectory);
+        $this->assertEquals('foo', BladePage::$outputDirectory);
+        $this->assertEquals('foo', MarkdownPage::$outputDirectory);
+        $this->assertEquals('foo', MarkdownPost::$outputDirectory);
+        $this->assertEquals('foo', DocumentationPage::$outputDirectory);
     }
 }

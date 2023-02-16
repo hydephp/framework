@@ -9,6 +9,8 @@ use Hyde\Testing\TestCase;
 
 /**
  * Test that the framework configuration files are matching the published ones.
+ *
+ * @see \Hyde\Framework\Testing\Unit\ConfigFileTest
  */
 class HydeConfigFilesAreMatchingTest extends TestCase
 {
@@ -17,14 +19,6 @@ class HydeConfigFilesAreMatchingTest extends TestCase
         $this->assertFileEqualsIgnoringNewlineType(
             Hyde::path('config/hyde.php'),
             Hyde::vendorPath('config/hyde.php')
-        );
-    }
-
-    public function test_site_config_files_are_matching()
-    {
-        $this->assertFileEqualsIgnoringNewlineType(
-            Hyde::path('config/site.php'),
-            Hyde::vendorPath('config/site.php')
         );
     }
 

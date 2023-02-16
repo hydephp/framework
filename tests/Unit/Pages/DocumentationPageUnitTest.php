@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Pages;
 
-use Hyde\Foundation\PageCollection;
+use Hyde\Foundation\Kernel\PageCollection;
 use Hyde\Framework\Factories\Concerns\CoreDataObject;
 use Hyde\Framework\Features\Metadata\PageMetadataBag;
 use Hyde\Hyde;
@@ -28,6 +28,11 @@ class DocumentationPageUnitTest extends BaseMarkdownPageUnitTest
     public function testOutputDirectory()
     {
         $this->assertSame('docs', DocumentationPage::outputDirectory());
+    }
+
+    public function testBaseRouteKey()
+    {
+        $this->assertSame('docs', DocumentationPage::baseRouteKey());
     }
 
     public function testFileExtension()

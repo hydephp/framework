@@ -16,7 +16,7 @@ use function str_starts_with;
 /**
  * Allows features to be enabled and disabled in a simple object-oriented manner.
  *
- * @todo Split facade logic to service/manager class.
+ * @todo Split facade logic to service/manager class. (Initial and mock data could be set with boot/set methods)
  *
  * @see \Hyde\Framework\Testing\Feature\ConfigurableFeaturesTest
  *
@@ -33,22 +33,9 @@ class Features implements SerializableContract
      */
     public static function enabled(string $feature): bool
     {
-        return static::resolveMockedInstance($feature) ?? in_array($feature, config('hyde.features', [
-            // Page Modules
-            static::htmlPages(),
-            static::markdownPosts(),
-            static::bladePages(),
-            static::markdownPages(),
-            static::documentationPages(),
-            // static::dataCollections(),
-
-            // Frontend Features
-            static::darkmode(),
-            static::documentationSearch(),
-
-            // Integrations
-            static::torchlight(),
-        ]));
+        return static::resolveMockedInstance($feature) ?? in_array(
+            $feature, config('hyde.features', static::getDefaultOptions())
+        );
     }
 
     // ================================================
@@ -78,11 +65,6 @@ class Features implements SerializableContract
     public static function hasDocumentationPages(): bool
     {
         return static::enabled(static::documentationPages());
-    }
-
-    public static function hasDataCollections(): bool
-    {
-        return static::enabled(static::dataCollections());
     }
 
     public static function hasDocumentationSearch(): bool
@@ -142,11 +124,6 @@ class Features implements SerializableContract
         return 'documentation-search';
     }
 
-    public static function dataCollections(): string
-    {
-        return 'data-collections';
-    }
-
     public static function darkmode(): string
     {
         return 'darkmode';
@@ -166,7 +143,7 @@ class Features implements SerializableContract
     public static function sitemap(): bool
     {
         return static::resolveMockedInstance('sitemap') ?? Hyde::hasSiteUrl()
-            && config('site.generate_sitemap', true)
+            && config('hyde.generate_sitemap', true)
             && extension_loaded('simplexml');
     }
 
@@ -194,5 +171,24 @@ class Features implements SerializableContract
             ->mapWithKeys(fn (string $method): array => [
                 Str::kebab(substr($method, 3)) => (static::{$method}()),
             ])->toArray();
+    }
+
+    protected static function getDefaultOptions(): array
+    {
+        return [
+            // Page Modules
+            static::htmlPages(),
+            static::markdownPosts(),
+            static::bladePages(),
+            static::markdownPages(),
+            static::documentationPages(),
+
+            // Frontend Features
+            static::darkmode(),
+            static::documentationSearch(),
+
+            // Integrations
+            static::torchlight(),
+        ];
     }
 }

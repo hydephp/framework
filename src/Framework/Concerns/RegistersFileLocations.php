@@ -7,6 +7,7 @@ namespace Hyde\Framework\Concerns;
 use Hyde\Facades\Site;
 use Hyde\Hyde;
 use Hyde\Pages\Concerns\HydePage;
+use Illuminate\Support\Str;
 
 /**
  * This trait registers the file paths for important Hyde locations.
@@ -68,12 +69,37 @@ trait RegistersFileLocations
     }
 
     /**
-     * The relative path to the directory when the compiled site is stored.
+     * @param  string  $directory  The relative path to the directory when the compiled site is stored.
      *
      * Warning! This directory is emptied when compiling the site.
      */
     protected function storeCompiledSiteIn(string $directory): void
     {
-        Site::$outputPath = unslash($directory);
+        Site::setOutputDirectory($directory);
+    }
+
+    /**
+     * @param  string  $directory  The relative path to the directory used for storing media files.
+     */
+    protected function useMediaDirectory(string $directory): void
+    {
+        Hyde::setMediaDirectory($directory);
+    }
+
+    protected function getSourceDirectoryConfiguration(string $class, string $default): string
+    {
+        return $this->getPageConfiguration('source_directories', $class, $default);
+    }
+
+    protected function getOutputDirectoryConfiguration(string $class, string $default): string
+    {
+        return $this->getPageConfiguration('output_directories', $class, $default);
+    }
+
+    private function getPageConfiguration(string $option, string $class, string $default): string
+    {
+        return config("hyde.$option.".Str::kebab(class_basename($class))) /** @experimental Support for using kebab-case class names */
+            ?? config("hyde.$option.$class")
+            ?? $default;
     }
 }

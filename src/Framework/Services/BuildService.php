@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Services;
 
-use function collect;
 use Hyde\Facades\Site;
-use Hyde\Foundation\RouteCollection;
+use Hyde\Foundation\Kernel\RouteCollection;
 use Hyde\Framework\Actions\StaticPageBuilder;
 use Hyde\Framework\Concerns\InteractsWithDirectories;
 use Hyde\Hyde;
@@ -16,6 +15,7 @@ use Illuminate\Console\Concerns\InteractsWithIO;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use function collect;
 
 /**
  * Moves logic from the build command to a service.
@@ -53,18 +53,18 @@ class BuildService
 
             if ($this->isItSafeToCleanOutputDirectory()) {
                 array_map('unlink', glob(Hyde::sitePath('*.{html,json}'), GLOB_BRACE));
-                File::cleanDirectory(Hyde::sitePath('media'));
+                File::cleanDirectory(Hyde::siteMediaPath());
             }
         }
     }
 
     public function transferMediaAssets(): void
     {
-        $this->needsDirectory(Hyde::sitePath('media'));
+        $this->needsDirectory(Hyde::siteMediaPath());
 
         $this->comment('Transferring Media Assets...');
         $this->withProgressBar(DiscoveryService::getMediaAssetFiles(), function (string $filepath): void {
-            $sitePath = Hyde::sitePath('media/'.unslash(Str::after($filepath, Hyde::path('_media'))));
+            $sitePath = Hyde::siteMediaPath(Str::after($filepath, Hyde::mediaPath()));
             $this->needsParentDirectory($sitePath);
             copy($filepath, $sitePath);
         });
@@ -114,7 +114,7 @@ class BuildService
         return $this->confirm(sprintf(
             'The configured output directory (%s) is potentially unsafe to empty. '.
             'Are you sure you want to continue?',
-            Site::$outputPath
+            Site::getOutputDirectory()
         ));
     }
 

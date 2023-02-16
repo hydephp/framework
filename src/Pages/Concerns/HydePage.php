@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hyde\Pages\Concerns;
 
 use Hyde\Foundation\Facades;
-use Hyde\Foundation\PageCollection;
+use Hyde\Foundation\Kernel\PageCollection;
 use Hyde\Framework\Actions\SourceFileParser;
 use Hyde\Framework\Concerns\InteractsWithFrontMatter;
 use Hyde\Framework\Factories\Concerns\HasFactory;
@@ -73,6 +73,13 @@ abstract class HydePage implements PageSchema
         $this->metadata = new PageMetadataBag($this);
     }
 
+    // Section: State
+
+    public static function isDiscoverable(): bool
+    {
+        return isset(static::$sourceDirectory, static::$outputDirectory, static::$fileExtension) && filled(static::$sourceDirectory);
+    }
+
     // Section: Query
 
     /**
@@ -114,11 +121,11 @@ abstract class HydePage implements PageSchema
     /**
      * Get a collection of all pages, parsed into page models.
      *
-     * @return \Hyde\Foundation\PageCollection<\Hyde\Pages\Concerns\HydePage>
+     * @return \Hyde\Foundation\Kernel\PageCollection<\Hyde\Pages\Concerns\HydePage>
      */
     public static function all(): PageCollection
     {
-        return Facades\PageCollection::getPages(static::class);
+        return Facades\Pages::getPages(static::class);
     }
 
     // Section: Filesystem
@@ -172,6 +179,14 @@ abstract class HydePage implements PageSchema
     }
 
     /**
+     * Get the route key base for the page model.
+     */
+    public static function baseRouteKey(): string
+    {
+        return static::outputDirectory();
+    }
+
+    /**
      * Compile the page into static HTML.
      *
      * @return string The compiled HTML for the page.
@@ -205,7 +220,9 @@ abstract class HydePage implements PageSchema
      *
      * For example, if the compiled page will be saved to _site/docs/index.html,
      * then this method will return 'docs/index'. Route keys are used to
-     * identify pages, similar to how named routes work in Laravel.
+     * identify pages, similar to how named routes work in Laravel,
+     * only that here the name is not just arbitrary,
+     * but also defines the output location.
      *
      * @return string The page's route key.
      */
@@ -267,7 +284,7 @@ abstract class HydePage implements PageSchema
      */
     public function htmlTitle(): string
     {
-        return config('site.name', 'HydePHP').' - '.$this->title;
+        return config('hyde.name', 'HydePHP').' - '.$this->title;
     }
 
     public function metadata(): PageMetadataBag

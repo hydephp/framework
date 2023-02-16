@@ -39,7 +39,7 @@ class RouteListCommand extends Command
         foreach (Hyde::routes() as $route) {
             $routes[] = [
                 $this->formatPageType($route->getPageClass()),
-                $this->formatSourcePath($route->getSourcePath()),
+                $this->formatSourcePath($route->getSourcePath(), $route->getPageClass()),
                 $this->formatOutputPath($route->getOutputPath()),
                 $route->getRouteKey(),
             ];
@@ -53,8 +53,13 @@ class RouteListCommand extends Command
         return str_starts_with($class, 'Hyde') ? class_basename($class) : $class;
     }
 
-    protected function formatSourcePath(string $path): string
+    /** @param  class-string<\Hyde\Pages\Concerns\HydePage>  $class */
+    protected function formatSourcePath(string $path, string $class): string
     {
+        if (! $class::isDiscoverable()) {
+            return '<fg=yellow>dynamic</>';
+        }
+
         return $this->clickablePathLink(static::createClickableFilepath(Hyde::path($path)), $path);
     }
 

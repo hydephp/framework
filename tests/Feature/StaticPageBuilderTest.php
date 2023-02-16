@@ -132,7 +132,7 @@ class StaticPageBuilderTest extends TestCase
     {
         $page = DocumentationPage::make('foo');
 
-        Config::set('docs.output_directory', 'docs/foo');
+        Config::set('hyde.output_directories.documentation-page', 'docs/foo');
         (new HydeServiceProvider($this->app))->register(); // Re-register the service provider to pick up the new config.
 
         new StaticPageBuilder($page, true);
@@ -144,7 +144,7 @@ class StaticPageBuilderTest extends TestCase
 
     public function test_site_directory_can_be_customized()
     {
-        Site::$outputPath = 'foo';
+        Site::setOutputDirectory('foo');
 
         new StaticPageBuilder(MarkdownPage::make('foo'), true);
 
@@ -156,7 +156,7 @@ class StaticPageBuilderTest extends TestCase
 
     public function test_site_directory_can_be_customized_with_nested_pages()
     {
-        Site::$outputPath = 'foo';
+        Site::setOutputDirectory('foo');
 
         new StaticPageBuilder(MarkdownPost::make('foo'), true);
 

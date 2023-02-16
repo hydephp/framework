@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Hyde\Foundation\Concerns;
 
-use Hyde\Foundation\FileCollection;
-use Hyde\Foundation\PageCollection;
-use Hyde\Foundation\RouteCollection;
+use Hyde\Foundation\Kernel\FileCollection;
+use Hyde\Foundation\Kernel\PageCollection;
+use Hyde\Foundation\Kernel\RouteCollection;
 
 /**
  * When creating a HydePHP extension, you should create a class that extends this one.
@@ -32,7 +32,7 @@ use Hyde\Foundation\RouteCollection;
 abstract class HydeExtension
 {
     /**
-     * If your extension adds new page classes, you should register them here.
+     * If your extension adds new discoverable page classes, you should register them here.
      *
      * Hyde will then automatically discover source files for the new page class,
      * generate routes, and compile the pages during the build process.

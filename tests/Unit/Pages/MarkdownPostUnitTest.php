@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Pages;
 
-use Hyde\Foundation\PageCollection;
+use Hyde\Foundation\Kernel\PageCollection;
 use Hyde\Framework\Factories\Concerns\CoreDataObject;
 use Hyde\Framework\Features\Metadata\PageMetadataBag;
 use Hyde\Hyde;
@@ -33,6 +33,14 @@ class MarkdownPostUnitTest extends BaseMarkdownPageUnitTest
         $this->assertSame(
             'posts',
             MarkdownPost::outputDirectory()
+        );
+    }
+
+    public function testBaseRouteKey()
+    {
+        $this->assertSame(
+            'posts',
+            MarkdownPost::baseRouteKey()
         );
     }
 

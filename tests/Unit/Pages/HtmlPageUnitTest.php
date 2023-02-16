@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Pages;
 
-use Hyde\Foundation\PageCollection;
+use Hyde\Foundation\Kernel\PageCollection;
 use Hyde\Framework\Factories\Concerns\CoreDataObject;
 use Hyde\Framework\Features\Metadata\PageMetadataBag;
 use Hyde\Hyde;
@@ -32,6 +32,14 @@ class HtmlPageUnitTest extends BaseHydePageUnitTest
         $this->assertSame(
             '',
             HtmlPage::outputDirectory()
+        );
+    }
+
+    public function testBaseRouteKey()
+    {
+        $this->assertSame(
+            '',
+            HtmlPage::baseRouteKey()
         );
     }
 

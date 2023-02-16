@@ -8,6 +8,8 @@ use Closure;
 use Hyde\Console\Concerns\Command;
 use Hyde\Hyde;
 use Hyde\Testing\TestCase;
+use Mockery;
+use RuntimeException;
 use Symfony\Component\Console\Style\OutputStyle;
 
 /**
@@ -37,12 +39,12 @@ class CommandTest extends TestCase
     {
         $command = new MockableTestCommand();
         $command->closure = function (Command $command) {
-            $command->infoComment('foo', 'bar');
+            $command->infoComment('foo [bar]');
         };
 
         $output = $this->mock(OutputStyle::class);
         $output->shouldReceive('writeln')->once()->withArgs(function (string $message): bool {
-            return $message === '<info>foo</info> [<comment>bar</comment>]';
+            return $message === '<info>foo </info>[<comment>bar</comment>]<info></info>';
         });
 
         $command->setMockedOutput($output);
@@ -53,12 +55,28 @@ class CommandTest extends TestCase
     {
         $command = new MockableTestCommand();
         $command->closure = function (Command $command) {
-            $command->infoComment('foo', 'bar', 'baz');
+            $command->infoComment('foo [bar] baz');
         };
 
         $output = $this->mock(OutputStyle::class);
         $output->shouldReceive('writeln')->once()->withArgs(function (string $message): bool {
-            return $message === '<info>foo</info> [<comment>bar</comment>] <info>baz</info>';
+            return $message === '<info>foo </info>[<comment>bar</comment>]<info> baz</info>';
+        });
+
+        $command->setMockedOutput($output);
+        $command->handle();
+    }
+
+    public function testInfoCommentWithExtraInfoAndComments()
+    {
+        $command = new MockableTestCommand();
+        $command->closure = function (Command $command) {
+            $command->infoComment('foo [bar] baz [qux]');
+        };
+
+        $output = $this->mock(OutputStyle::class);
+        $output->shouldReceive('writeln')->once()->withArgs(function (string $message): bool {
+            return $message === '<info>foo </info>[<comment>bar</comment>]<info> baz </info>[<comment>qux</comment>]<info></info>';
         });
 
         $command->setMockedOutput($output);
@@ -106,6 +124,46 @@ class CommandTest extends TestCase
         $command->setMockedOutput($output);
         $command->handle();
     }
+
+    public function testHandleCallsBaseSafeHandle()
+    {
+        $this->assertSame(0, (new TestCommand())->handle());
+    }
+
+    public function testHandleCallsChildSafeHandle()
+    {
+        $this->assertSame(1, (new SafeHandleTestCommand())->handle());
+    }
+
+    public function testSafeHandleException()
+    {
+        $command = new SafeThrowingTestCommand();
+        $output = Mockery::mock(\Illuminate\Console\OutputStyle::class);
+        $output->shouldReceive('writeln')->once()->withArgs(function (string $message) {
+            return str_starts_with($message, '<error>Error: This is a test at '.__FILE__.':');
+        });
+        $command->setOutput($output);
+
+        $code = $command->handle();
+
+        $this->assertSame(1, $code);
+    }
+
+    public function testCanEnableThrowOnException()
+    {
+        $this->throwOnConsoleException();
+        $command = new SafeThrowingTestCommand();
+
+        $output = Mockery::mock(\Illuminate\Console\OutputStyle::class);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('This is a test');
+
+        $command->setOutput($output);
+        $code = $command->handle();
+
+        $this->assertSame(1, $code);
+    }
 }
 
 class MockableTestCommand extends Command
@@ -122,5 +180,26 @@ class MockableTestCommand extends Command
     public function setMockedOutput($output)
     {
         $this->output = $output;
+    }
+}
+
+class TestCommand extends Command
+{
+    //
+}
+
+class SafeHandleTestCommand extends Command
+{
+    public function safeHandle(): int
+    {
+        return 1;
+    }
+}
+
+class SafeThrowingTestCommand extends Command
+{
+    public function safeHandle(): int
+    {
+        throw new RuntimeException('This is a test');
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Pages;
 
-use Hyde\Foundation\PageCollection;
+use Hyde\Foundation\Kernel\PageCollection;
 use Hyde\Framework\Factories\Concerns\CoreDataObject;
 use Hyde\Framework\Features\Metadata\PageMetadataBag;
 use Hyde\Hyde;
@@ -27,6 +27,11 @@ class BladePageUnitTest extends BaseHydePageUnitTest
     public function testOutputDirectory()
     {
         $this->assertSame('', BladePage::outputDirectory());
+    }
+
+    public function testBaseRouteKey()
+    {
+        $this->assertSame('', BladePage::baseRouteKey());
     }
 
     public function testFileExtension()

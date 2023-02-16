@@ -32,7 +32,7 @@ class DocumentationPageTest extends TestCase
         $page = DocumentationPage::make('foo');
         $this->assertEquals('docs/foo', $page->getRouteKey());
 
-        config(['docs.output_directory' => 'documentation/latest/']);
+        config(['hyde.output_directories.documentation-page' => 'documentation/latest/']);
         (new HydeServiceProvider($this->app))->register();
         $this->assertEquals('documentation/latest/foo', $page->getRouteKey());
     }
@@ -68,7 +68,7 @@ class DocumentationPageTest extends TestCase
 
     public function test_can_get_documentation_output_path_with_custom_output_directory()
     {
-        config(['docs.output_directory' => 'foo']);
+        config(['hyde.output_directories.documentation-page' => 'foo']);
         (new HydeServiceProvider($this->app))->register();
         $this->assertEquals('foo', DocumentationPage::outputDirectory());
     }
@@ -84,7 +84,7 @@ class DocumentationPageTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            config(['docs.output_directory' => $test]);
+            config(['hyde.output_directories.documentation-page' => $test]);
             (new HydeServiceProvider($this->app))->register();
             $this->assertEquals('foo', DocumentationPage::outputDirectory());
         }
@@ -121,7 +121,7 @@ class DocumentationPageTest extends TestCase
 
     public function test_home_method_finds_docs_index_for_custom_output_directory()
     {
-        config(['docs.output_directory' => 'foo']);
+        config(['hyde.output_directories.documentation-page' => 'foo']);
         (new HydeServiceProvider($this->app))->register();
         mkdir(Hyde::path('foo'));
         Hyde::touch('_docs/index.md');
@@ -133,7 +133,7 @@ class DocumentationPageTest extends TestCase
 
     public function test_home_method_finds_docs_index_for_custom_nested_output_directory()
     {
-        config(['docs.output_directory' => 'foo/bar']);
+        config(['hyde.output_directories.documentation-page' => 'foo/bar']);
         (new HydeServiceProvider($this->app))->register();
         mkdir(Hyde::path('foo'));
         mkdir(Hyde::path('foo/bar'));
@@ -142,6 +142,19 @@ class DocumentationPageTest extends TestCase
         $this->assertEquals(Route::get('foo/bar/index'), DocumentationPage::home());
         Hyde::unlink('_docs/index.md');
         File::deleteDirectory(Hyde::path('foo'));
+    }
+
+    public function test_home_route_name_method_returns_output_directory_slash_index()
+    {
+        $this->assertSame('docs/index', DocumentationPage::homeRouteName());
+    }
+
+    public function test_home_route_name_method_returns_customized_output_directory_slash_index()
+    {
+        config(['hyde.output_directories.documentation-page' => 'foo/bar']);
+        (new HydeServiceProvider($this->app))->register();
+
+        $this->assertSame('foo/bar/index', DocumentationPage::homeRouteName());
     }
 
     public function test_has_table_of_contents()

@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Factories;
 
-use Hyde\Framework\Concerns\InteractsWithFrontMatter;
 use Hyde\Framework\Features\Blogging\Models\FeaturedImage;
 use Hyde\Framework\Features\Blogging\Models\LocalFeaturedImage;
 use Hyde\Framework\Features\Blogging\Models\RemoteFeaturedImage;
 use Hyde\Hyde;
 use Hyde\Markdown\Contracts\FrontMatter\SubSchemas\FeaturedImageSchema;
 use Hyde\Markdown\Models\FrontMatter;
+use Illuminate\Support\Str;
 use function is_string;
 use RuntimeException;
 use function str_starts_with;
 
 class FeaturedImageFactory extends Concerns\PageDataFactory implements FeaturedImageSchema
 {
-    use InteractsWithFrontMatter;
-
     final public const SCHEMA = FeaturedImageSchema::FEATURED_IMAGE_SCHEMA;
 
     protected readonly string $source;
@@ -64,29 +62,29 @@ class FeaturedImageFactory extends Concerns\PageDataFactory implements FeaturedI
     {
         $data = (new static($matter))->toArray();
 
-        if (str_starts_with((string) $data['source'], '_media')) {
-            return new LocalFeaturedImage(...$data);
+        if (self::isRemote($matter)) {
+            return new RemoteFeaturedImage(...$data);
         }
 
-        return new RemoteFeaturedImage(...$data);
+        return new LocalFeaturedImage(...$data);
     }
 
     protected function makeSource(): string
     {
-        if (is_string($this->matter('image'))) {
-            if (str_starts_with($this->matter('image'), 'http')) {
-                return $this->matter('image');
+        if (is_string($this->getStringMatter('image'))) {
+            if (str_starts_with($this->getStringMatter('image'), 'http')) {
+                return $this->getStringMatter('image');
             }
 
-            return self::normalizeLocalImagePath($this->matter('image'));
+            return self::normalizeLocalImagePath($this->getStringMatter('image'));
         }
 
-        if ($this->matter('image.url') !== null) {
-            return $this->matter('image.url');
+        if ($this->getStringMatter('image.url') !== null) {
+            return $this->getStringMatter('image.url');
         }
 
-        if ($this->matter('image.path') !== null) {
-            return $this->normalizeLocalImagePath($this->matter('image.path'));
+        if ($this->getStringMatter('image.path') !== null) {
+            return $this->normalizeLocalImagePath($this->getStringMatter('image.path'));
         }
 
         // Todo, we might want to add a note about which file caused the error.
@@ -96,51 +94,60 @@ class FeaturedImageFactory extends Concerns\PageDataFactory implements FeaturedI
 
     protected function makeAltText(): ?string
     {
-        return $this->matter('image.description');
+        return $this->getStringMatter('image.description');
     }
 
     protected function makeTitleText(): ?string
     {
-        return $this->matter('image.title');
+        return $this->getStringMatter('image.title');
     }
 
     protected function makeAuthorName(): ?string
     {
-        return $this->matter('image.author');
+        return $this->getStringMatter('image.author');
     }
 
     protected function makeAuthorUrl(): ?string
     {
-        return $this->matter('image.attributionUrl');
+        return $this->getStringMatter('image.attributionUrl');
     }
 
     protected function makeCopyrightText(): ?string
     {
-        return $this->matter('image.copyright');
+        return $this->getStringMatter('image.copyright');
     }
 
     protected function makeLicenseName(): ?string
     {
-        return $this->matter('image.license');
+        return $this->getStringMatter('image.license');
     }
 
     protected function makeLicenseUrl(): ?string
     {
-        return $this->matter('image.licenseUrl');
+        return $this->getStringMatter('image.licenseUrl');
     }
 
     protected static function normalizeLocalImagePath(string $path): string
     {
         $path = Hyde::pathToRelative($path);
 
-        if (str_starts_with($path, '_media/')) {
-            return $path;
+        $path = Str::after($path, Hyde::getMediaDirectory());
+        $path = Str::after($path, Hyde::getMediaOutputDirectory());
+
+        return unslash($path);
+    }
+
+    protected static function isRemote(FrontMatter $matter): bool
+    {
+        if (is_string($matter->get('image')) && str_starts_with($matter->get('image'), 'http')) {
+            return true;
         }
 
-        if (str_starts_with($path, 'media/')) {
-            return '_'.$path;
-        }
+        return $matter->get('image.url') !== null;
+    }
 
-        return '_media/'.$path;
+    protected function getStringMatter(string $key): ?string
+    {
+        return is_string($this->matter->get($key)) ? $this->matter->get($key) : null;
     }
 }

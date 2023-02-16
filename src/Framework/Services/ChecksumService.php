@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Services;
 
-use function file_get_contents;
+use Hyde\Facades\Filesystem;
 use function glob;
 use Hyde\Hyde;
 use function in_array;
@@ -13,6 +13,8 @@ use function str_replace;
 use function unslash;
 
 /**
+ * @internal This class may be refactored to better suit its intended purpose.
+ *
  * Helper methods to interact with the virtual filecache that is used to compare
  * published Blade views with the original Blade views in the Hyde Framework
  * so the user can be warned before overwriting their customizations.
@@ -21,6 +23,11 @@ use function unslash;
  */
 class ChecksumService
 {
+    /**
+     * @deprecated Will be renamed to getViewFileCache or similar
+     *
+     * @return array<string, array{unixsum: string}>
+     */
     public static function getFilecache(): array
     {
         $filecache = [];
@@ -68,12 +75,9 @@ class ChecksumService
 
     /**
      * Shorthand for {@see static::unixsum()} but loads a file.
-     *
-     * Note that unlink most filesystem methods, the file path is expected
-     * to be absolute as the file might not be in the project directory.
      */
     public static function unixsumFile(string $file): string
     {
-        return static::unixsum(file_get_contents($file));
+        return static::unixsum(Filesystem::getContents($file));
     }
 }

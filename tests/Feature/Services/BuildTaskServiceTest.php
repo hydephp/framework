@@ -27,7 +27,7 @@ class BuildTaskServiceTest extends TestCase
      */
     public function test_build_command_can_run_post_build_tasks()
     {
-        config(['site.url' => 'foo']);
+        config(['hyde.url' => 'foo']);
 
         $this->artisan('build')
             ->expectsOutputToContain('Generating sitemap')
@@ -186,7 +186,7 @@ class BuildTaskServiceTest extends TestCase
         File::makeDirectory(Hyde::path('app/Actions'));
         Hyde::touch('app/Actions/FooBuildTask.php');
 
-        $this->assertEquals(['App\Actions\FooBuildTask'], BuildTaskService::findTasksInAppDirectory());
+        $this->assertEquals(['App\Actions\FooBuildTask'], (new BuildTaskService())->getPostBuildTasks());
         File::deleteDirectory(Hyde::path('app/Actions'));
     }
 

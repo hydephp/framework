@@ -6,7 +6,6 @@ namespace Hyde\Facades;
 
 use Hyde\Foundation\HydeKernel;
 use Hyde\Framework\Concerns\Internal\ForwardsIlluminateFilesystem;
-use Hyde\Support\Contracts\FilesystemContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
@@ -16,11 +15,11 @@ use Illuminate\Support\Facades\File;
  * For maximum compatability and interoperability, all path references in HydePHP are relative to the root of the project.
  * The helpers here will then prepend the project root to the path before actually interacting with the filesystem.
  *
- * @see \Hyde\Foundation\Filesystem
+ * @see \Hyde\Foundation\Kernel\Filesystem
  * @see \Illuminate\Filesystem\Filesystem
  * @see \Hyde\Framework\Testing\Feature\FilesystemFacadeTest
  */
-class Filesystem implements FilesystemContract
+class Filesystem
 {
     use ForwardsIlluminateFilesystem;
 

@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Hyde\Foundation\Concerns;
 
-use BadMethodCallException;
 use Hyde\Foundation\HydeKernel;
-use Hyde\Pages\Concerns\HydePage;
-use Hyde\Pages\Contracts\DynamicPage;
-use function in_array;
-use InvalidArgumentException;
-use function is_subclass_of;
+use function ltrim;
+use function rtrim;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
@@ -29,19 +25,14 @@ trait ManagesHydeKernel
         static::$instance = $instance;
     }
 
-    public function setBasePath(string $basePath): void
-    {
-        $this->basePath = rtrim($basePath, '/\\');
-    }
-
     public function getBasePath(): string
     {
         return $this->basePath;
     }
 
-    public function setSourceRoot(string $sourceRoot): void
+    public function setBasePath(string $basePath): void
     {
-        $this->sourceRoot = rtrim($sourceRoot, '/\\');
+        $this->basePath = rtrim($basePath, '/\\');
     }
 
     public function getSourceRoot(): string
@@ -49,60 +40,38 @@ trait ManagesHydeKernel
         return $this->sourceRoot;
     }
 
-    /**
-     * Developer Information.
-     *
-     * @experimental This feature is experimental and may change substantially before the 1.0.0 release.
-     *
-     * @deprecated This feature may be replaced by the {@see \Hyde\Foundation\Concerns\HydeExtension} system.
-     *
-     * If you are a package developer, and want a custom page class to be discovered,
-     * you'll need to register it sometime before the boot process, before discovery is run.
-     * Typically, you would do this by calling this method in the register method of a service provider.
-     * Hyde will then automatically discover source files for the new page class, and compile them during the build process.
-     *
-     * @param  class-string<\Hyde\Pages\Concerns\HydePage>  $pageClass
-     */
-    public function registerPageClass(string $pageClass): void
+    public function setSourceRoot(string $sourceRoot): void
     {
-        if ($this->booted) {
-            // We throw an exception here to prevent the developer from registering a page class after the Kernel has been booted.
-            // The reason we do this is because at this point all the source files have already been discovered and parsed.
-            // If we allowed new classes after this point, we would have to reboot everything which adds complexity.
-
-            throw new BadMethodCallException('Cannot register a page class after the Kernel has been booted.');
-        }
-
-        if (! is_subclass_of($pageClass, HydePage::class)) {
-            throw new InvalidArgumentException('The specified class must be a subclass of HydePage.');
-        }
-
-        if (is_subclass_of($pageClass, DynamicPage::class)) {
-            throw new InvalidArgumentException('The specified class must not be a subclass of DynamicPage.');
-        }
-
-        if (! in_array($pageClass, $this->pageClasses, true)) {
-            $this->pageClasses[] = $pageClass;
-        }
+        $this->sourceRoot = $this->normalizeSourcePath($sourceRoot);
     }
 
-    /** @return array<class-string<\Hyde\Pages\Concerns\HydePage>> */
-    public function getRegisteredPageClasses(): array
+    public function getOutputDirectory(): string
     {
-        return $this->pageClasses;
+        return $this->outputDirectory;
     }
 
-    /** @param class-string<\Hyde\Foundation\Concerns\HydeExtension>  $extension */
-    public function registerExtension(string $extension): void
+    public function setOutputDirectory(string $outputDirectory): void
     {
-        if (! in_array($extension, $this->extensions, true)) {
-            $this->extensions[] = $extension;
-        }
+        $this->outputDirectory = $this->normalizeSourcePath($outputDirectory);
     }
 
-    /** @return array<class-string<\Hyde\Foundation\Concerns\HydeExtension>> */
-    public function getRegisteredExtensions(): array
+    public function getMediaDirectory(): string
     {
-        return $this->extensions;
+        return $this->mediaDirectory;
+    }
+
+    public function setMediaDirectory(string $mediaDirectory): void
+    {
+        $this->mediaDirectory = $this->normalizeSourcePath($mediaDirectory);
+    }
+
+    public function getMediaOutputDirectory(): string
+    {
+        return ltrim($this->getMediaDirectory(), '_');
+    }
+
+    protected function normalizeSourcePath(string $outputDirectory): string
+    {
+        return $this->pathToRelative(rtrim($outputDirectory, '/\\'));
     }
 }

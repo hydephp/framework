@@ -7,7 +7,7 @@ namespace Hyde\Framework\Services;
 use function class_exists;
 use function config;
 use function glob;
-use Hyde\Foundation\Facades\FileCollection;
+use Hyde\Foundation\Facades\Files;
 use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Hyde;
 use Hyde\Pages\BladePage;
@@ -74,7 +74,7 @@ class DiscoveryService
             throw new UnsupportedPageTypeException($model);
         }
 
-        return FileCollection::getSourceFiles($model)->flatten()->map(function (SourceFile $file) use ($model): string {
+        return Files::getSourceFiles($model)->flatten()->map(function (SourceFile $file) use ($model): string {
             return static::pathToIdentifier($model, $file->withoutDirectoryPrefix());
         })->toArray();
     }
@@ -120,7 +120,7 @@ class DiscoveryService
 
     protected static function getMediaGlobPattern(): string
     {
-        return sprintf('_media/{*,**/*,**/*/*}.{%s}', static::parseConfiguredMediaExtensions(
+        return sprintf(Hyde::getMediaDirectory().'/{*,**/*,**/*/*}.{%s}', static::parseConfiguredMediaExtensions(
             config('hyde.media_extensions', self::DEFAULT_MEDIA_EXTENSIONS)
         ));
     }

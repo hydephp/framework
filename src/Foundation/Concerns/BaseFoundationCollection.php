@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 /**
  * Base class for the kernel auto-discovery collections.
  *
- * @see \Hyde\Foundation\FileCollection
- * @see \Hyde\Foundation\PageCollection
- * @see \Hyde\Foundation\RouteCollection
+ * @see \Hyde\Foundation\Kernel\FileCollection
+ * @see \Hyde\Foundation\Kernel\PageCollection
+ * @see \Hyde\Foundation\Kernel\RouteCollection
  * @see \Hyde\Framework\Testing\Unit\BaseFoundationCollectionTest
  */
 abstract class BaseFoundationCollection extends Collection
@@ -22,9 +22,16 @@ abstract class BaseFoundationCollection extends Collection
 
     abstract protected function runDiscovery(): self;
 
-    public static function boot(HydeKernel $kernel): static
+    abstract protected function runExtensionCallbacks(): self;
+
+    public static function init(HydeKernel $kernel): static
     {
-        return (new static())->setKernel($kernel)->runDiscovery();
+        return (new static())->setKernel($kernel);
+    }
+
+    public function boot(): static
+    {
+        return $this->runDiscovery();
     }
 
     protected function __construct(array|Arrayable|null $items = [])

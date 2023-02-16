@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Hyde\Foundation;
 
 use Hyde\Facades\Features;
+use Hyde\Foundation\Kernel\FileCollection;
+use Hyde\Foundation\Kernel\Filesystem;
+use Hyde\Foundation\Kernel\Hyperlinks;
+use Hyde\Foundation\Kernel\PageCollection;
+use Hyde\Foundation\Kernel\RouteCollection;
 use Hyde\Support\Concerns\Serializable;
 use Hyde\Support\Contracts\SerializableContract;
 use Illuminate\Support\Traits\Macroable;
@@ -37,16 +42,21 @@ class HydeKernel implements SerializableContract
     use Concerns\ForwardsHyperlinks;
     use Concerns\ForwardsFilesystem;
     use Concerns\ManagesHydeKernel;
+    use Concerns\ManagesExtensions;
     use Concerns\ManagesViewData;
     use Concerns\BootsHydeKernel;
 
     use Serializable;
     use Macroable;
 
-    protected static HydeKernel $instance;
+    final public const VERSION = '1.0.0-dev';
+
+    protected static self $instance;
 
     protected string $basePath;
-    protected string $sourceRoot;
+    protected string $sourceRoot = '';
+    protected string $outputDirectory = '_site';
+    protected string $mediaDirectory = '_media';
 
     protected Filesystem $filesystem;
     protected Hyperlinks $hyperlinks;
@@ -56,16 +66,14 @@ class HydeKernel implements SerializableContract
     protected RouteCollection $routes;
 
     protected bool $booted = false;
-    protected array $pageClasses = [];
 
-    protected array $extensions = [];
+    protected array $extensions = [
+        HydeCoreExtension::class,
+    ];
 
-    final public const VERSION = '1.0.0-dev';
-
-    public function __construct(?string $basePath = null, string $sourceRoot = '')
+    public function __construct(?string $basePath = null)
     {
         $this->setBasePath($basePath ?? getcwd());
-        $this->setSourceRoot($sourceRoot);
         $this->filesystem = new Filesystem($this);
         $this->hyperlinks = new Hyperlinks($this);
     }
@@ -85,14 +93,15 @@ class HydeKernel implements SerializableContract
         return Features::enabled($feature);
     }
 
-    /**
-     * @inheritDoc
-     * @psalm-return array{basePath: string, features: \Hyde\Facades\Features, pages: \Hyde\Foundation\PageCollection, routes: \Hyde\Foundation\RouteCollection}
-     */
+    /** @inheritDoc */
     public function toArray(): array
     {
         return [
             'basePath' => $this->basePath,
+            'sourceRoot' => $this->sourceRoot,
+            'outputDirectory' => $this->outputDirectory,
+            'mediaDirectory' => $this->mediaDirectory,
+            'extensions' => $this->extensions,
             'features' => $this->features(),
             'files' => $this->files(),
             'pages' => $this->pages(),

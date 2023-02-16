@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
+use Hyde\Foundation\HydeCoreExtension;
 use Hyde\Framework\Exceptions\FileNotFoundException;
 use Hyde\Hyde;
 use Hyde\Markdown\Models\Markdown;
@@ -83,6 +84,19 @@ class HydePageTest extends TestCase
             Hyde::path('source/hello-world'),
             TestPage::path('hello-world')
         );
+    }
+
+    public function testBaseRouteKey()
+    {
+        $this->assertSame(
+            TestPage::outputDirectory(),
+            TestPage::baseRouteKey()
+        );
+    }
+
+    public function testIsDiscoverable()
+    {
+        $this->assertTrue(TestPage::isDiscoverable());
     }
 
     public function testGetSourcePath()
@@ -433,12 +447,12 @@ class HydePageTest extends TestCase
 
     public function test_abstract_markdown_page_has_markdown_document_property()
     {
-        $this->assertClassHasAttribute('markdown', BaseMarkdownPage::class);
+        $this->assertTrue(property_exists(BaseMarkdownPage::class, 'markdown'));
     }
 
     public function test_abstract_markdown_page_has_file_extension_property()
     {
-        $this->assertClassHasAttribute('fileExtension', BaseMarkdownPage::class);
+        $this->assertTrue(property_exists(BaseMarkdownPage::class, 'fileExtension'));
     }
 
     public function test_abstract_markdown_page_file_extension_property_is_set_to_md()
@@ -522,7 +536,7 @@ class HydePageTest extends TestCase
 
     public function test_html_title_uses_configured_site_name()
     {
-        config(['site.name' => 'Foo Bar']);
+        config(['hyde.name' => 'Foo Bar']);
         $this->assertEquals('Foo Bar - Foo', (new MarkdownPage('Foo'))->htmlTitle());
     }
 
@@ -717,7 +731,7 @@ class HydePageTest extends TestCase
 
     public function test_get_canonical_url_returns_url_for_top_level_page()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $page = new MarkdownPage('foo');
 
         $this->assertEquals('https://example.com/foo.html', $page->canonicalUrl);
@@ -725,8 +739,8 @@ class HydePageTest extends TestCase
 
     public function test_get_canonical_url_returns_pretty_url_for_top_level_page()
     {
-        config(['site.url' => 'https://example.com']);
-        config(['site.pretty_urls' => true]);
+        config(['hyde.url' => 'https://example.com']);
+        config(['hyde.pretty_urls' => true]);
         $page = new MarkdownPage('foo');
 
         $this->assertEquals('https://example.com/foo', $page->canonicalUrl);
@@ -734,7 +748,7 @@ class HydePageTest extends TestCase
 
     public function test_get_canonical_url_returns_url_for_nested_page()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $page = new MarkdownPage('foo/bar');
 
         $this->assertEquals('https://example.com/foo/bar.html', $page->canonicalUrl);
@@ -742,7 +756,7 @@ class HydePageTest extends TestCase
 
     public function test_get_canonical_url_returns_url_for_deeply_nested_page()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $page = new MarkdownPage('foo/bar/baz');
 
         $this->assertEquals('https://example.com/foo/bar/baz.html', $page->canonicalUrl);
@@ -750,7 +764,7 @@ class HydePageTest extends TestCase
 
     public function test_canonical_url_is_not_set_when_identifier_is_null()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $page = new MarkdownPage();
         $this->assertNull($page->canonicalUrl);
         $this->assertStringNotContainsString(
@@ -761,7 +775,7 @@ class HydePageTest extends TestCase
 
     public function test_canonical_url_is_not_set_when_site_url_is_null()
     {
-        config(['site.url' => null]);
+        config(['hyde.url' => null]);
         $page = new MarkdownPage('foo');
         $this->assertNull($page->canonicalUrl);
         $this->assertStringNotContainsString(
@@ -772,7 +786,7 @@ class HydePageTest extends TestCase
 
     public function test_custom_canonical_link_can_be_set_in_front_matter()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $page = MarkdownPage::make(matter: ['canonicalUrl' => 'foo/bar']);
         $this->assertEquals('foo/bar', $page->canonicalUrl);
         $this->assertStringContainsString(
@@ -942,7 +956,7 @@ class HydePageTest extends TestCase
 
     public function testGetLinkWithPrettyUrls()
     {
-        config(['site.pretty_urls' => true]);
+        config(['hyde.pretty_urls' => true]);
         $this->assertEquals('output/hello-world',
             (new TestPage('hello-world'))->getLink()
         );
@@ -1024,6 +1038,34 @@ class HydePageTest extends TestCase
         $this->assertEquals('foo', $page->navigationMenuGroup());
     }
 
+    public function test_is_discoverable_method_returns_true_for_discoverable_pages()
+    {
+        $this->assertTrue(DiscoverablePage::isDiscoverable());
+    }
+
+    public function test_is_discoverable_method_returns_false_for_non_discoverable_pages()
+    {
+        $this->assertFalse(NonDiscoverablePage::isDiscoverable());
+    }
+
+    public function test_is_discoverable_method_requires_all_required_data_to_be_present()
+    {
+        $this->assertFalse(PartiallyDiscoverablePage::isDiscoverable());
+    }
+
+    public function test_is_discoverable_method_requires_source_directory_to_be_filled()
+    {
+        $this->assertFalse(DiscoverablePageWithInvalidSourceDirectory::isDiscoverable());
+    }
+
+    public function test_all_core_extension_pages_are_discoverable()
+    {
+        /** @var class-string<HydePage> $page */
+        foreach (HydeCoreExtension::getPageClasses() as $page) {
+            $this->assertTrue($page::isDiscoverable());
+        }
+    }
+
     protected function assertSameIgnoringDirSeparatorType(string $expected, string $actual): void
     {
         $this->assertSame(
@@ -1048,6 +1090,54 @@ class TestPage extends HydePage
     public static string $outputDirectory = 'output';
     public static string $fileExtension = '.md';
     public static string $template = 'template';
+
+    public function compile(): string
+    {
+        return '';
+    }
+}
+
+class DiscoverablePage extends HydePage
+{
+    public static string $sourceDirectory = 'foo';
+    public static string $outputDirectory = '';
+    public static string $fileExtension = '';
+
+    public function compile(): string
+    {
+        return '';
+    }
+}
+
+class NonDiscoverablePage extends HydePage
+{
+    public static string $sourceDirectory;
+    public static string $outputDirectory;
+    public static string $fileExtension;
+
+    public function compile(): string
+    {
+        return '';
+    }
+}
+
+class PartiallyDiscoverablePage extends HydePage
+{
+    public static string $sourceDirectory = 'foo';
+    public static string $outputDirectory;
+    public static string $fileExtension;
+
+    public function compile(): string
+    {
+        return '';
+    }
+}
+
+class DiscoverablePageWithInvalidSourceDirectory extends HydePage
+{
+    public static string $sourceDirectory = '';
+    public static string $outputDirectory = '';
+    public static string $fileExtension = '';
 
     public function compile(): string
     {
