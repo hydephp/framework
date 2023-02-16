@@ -46,6 +46,9 @@ jobs:
 
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
+          
+      - name: Download test runner configuration
+        run: curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
