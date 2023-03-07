@@ -21,6 +21,9 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: fileinfo, zip
+          
+      - name: Echo GitHub ref
+        run: echo ${{ github.ref }}
 
       - name: Install Hyde (master)
         if: "github.ref != 'refs/heads/develop'"
