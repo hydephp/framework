@@ -23,7 +23,7 @@ jobs:
           extensions: fileinfo, zip
 
       - name: Install Hyde (master)
-        if: "! github.ref == 'refs/heads/develop'"
+        if: "github.ref != 'refs/heads/develop'"
         run: git clone -b master https://github.com/hydephp/hyde.git
 
       - name: Install Hyde (develop)
@@ -31,7 +31,7 @@ jobs:
         run: git clone -b develop https://github.com/hydephp/hyde.git
 
       - name: Require latest master version
-        if: "! github.ref == 'refs/heads/develop'"
+        if: "github.ref != 'refs/heads/develop'"
         run: cd hyde && composer require hyde/framework:dev-master --no-install
 
       - name: Require latest development version
