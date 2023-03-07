@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Framework\Foundation\Concerns;
+namespace Hyde\Foundation\Concerns;
 
-use Hyde\Framework\Foundation\FileCollection;
-use Hyde\Framework\Foundation\PageCollection;
-use Hyde\Framework\Foundation\RouteCollection;
+use Hyde\Foundation\Kernel\FileCollection;
+use Hyde\Foundation\Kernel\PageCollection;
+use Hyde\Foundation\Kernel\RouteCollection;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Framework\HydeKernel
+ * @see \Hyde\Foundation\HydeKernel
  */
 trait HandlesFoundationCollections
 {
+    /**  @return \Hyde\Foundation\Kernel\FileCollection<string, \Hyde\Support\Filesystem\ProjectFile> */
     public function files(): FileCollection
     {
         $this->needsToBeBooted();
@@ -22,6 +23,7 @@ trait HandlesFoundationCollections
         return $this->files;
     }
 
+    /** @return \Hyde\Foundation\Kernel\PageCollection<string, \Hyde\Pages\Concerns\HydePage> */
     public function pages(): PageCollection
     {
         $this->needsToBeBooted();
@@ -29,6 +31,7 @@ trait HandlesFoundationCollections
         return $this->pages;
     }
 
+    /** @return \Hyde\Foundation\Kernel\RouteCollection<string, \Hyde\Support\Models\Route> */
     public function routes(): RouteCollection
     {
         $this->needsToBeBooted();

@@ -6,7 +6,7 @@ namespace Hyde\Framework\Testing\Unit;
 
 use Hyde\Framework\Concerns\ValidatesExistence;
 use Hyde\Framework\Exceptions\FileNotFoundException;
-use Hyde\Framework\Models\Pages\BladePage;
+use Hyde\Pages\BladePage;
 use Hyde\Testing\TestCase;
 
 /**
@@ -17,12 +17,9 @@ class ValidatesExistenceTest extends TestCase
 {
     public function test_validate_existence_does_nothing_if_file_exists()
     {
-        $class = new class
-        {
-            use ValidatesExistence;
-        };
+        $class = new ValidatesExistenceTestClass();
 
-        $class->validateExistence(BladePage::class, 'index');
+        $class->run(BladePage::class, 'index');
 
         $this->assertTrue(true);
     }
@@ -31,11 +28,18 @@ class ValidatesExistenceTest extends TestCase
     {
         $this->expectException(FileNotFoundException::class);
 
-        $class = new class
-        {
-            use ValidatesExistence;
-        };
+        $class = new ValidatesExistenceTestClass();
 
-        $class->validateExistence(BladePage::class, 'not-found');
+        $class->run(BladePage::class, 'not-found');
+    }
+}
+
+class ValidatesExistenceTestClass
+{
+    use ValidatesExistence;
+
+    public function run(...$args): void
+    {
+        $this->validateExistence(...$args);
     }
 }

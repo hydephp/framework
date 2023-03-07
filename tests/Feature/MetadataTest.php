@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Concerns\HydePage;
-use Hyde\Framework\Helpers\Meta;
-use Hyde\Framework\Models\Pages\MarkdownPage;
-use Hyde\Framework\Models\Pages\MarkdownPost;
-use Hyde\Framework\Modules\Metadata\MetadataBag;
-use Hyde\Framework\Modules\Metadata\Models\LinkElement;
-use Hyde\Framework\Modules\Metadata\Models\MetadataElement;
-use Hyde\Framework\Modules\Metadata\Models\OpenGraphElement;
+use Hyde\Facades\Meta;
+use Hyde\Framework\Features\Metadata\Elements\LinkElement;
+use Hyde\Framework\Features\Metadata\Elements\MetadataElement;
+use Hyde\Framework\Features\Metadata\Elements\OpenGraphElement;
+use Hyde\Framework\Features\Metadata\MetadataBag;
+use Hyde\Hyde;
+use Hyde\Pages\Concerns\HydePage;
+use Hyde\Pages\MarkdownPage;
+use Hyde\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
 
 /**
- * @covers \Hyde\Framework\Modules\Metadata\MetadataBag
- * @covers \Hyde\Framework\Modules\Metadata\PageMetadataBag
- * @covers \Hyde\Framework\Modules\Metadata\GlobalMetadataBag
- * @covers \Hyde\Framework\Modules\Metadata\Models\LinkElement
- * @covers \Hyde\Framework\Modules\Metadata\Models\MetadataElement
- * @covers \Hyde\Framework\Modules\Metadata\Models\OpenGraphElement
+ * @covers \Hyde\Framework\Features\Metadata\MetadataBag
+ * @covers \Hyde\Framework\Features\Metadata\PageMetadataBag
+ * @covers \Hyde\Framework\Features\Metadata\GlobalMetadataBag
+ * @covers \Hyde\Framework\Features\Metadata\Elements\LinkElement
+ * @covers \Hyde\Framework\Features\Metadata\Elements\MetadataElement
+ * @covers \Hyde\Framework\Features\Metadata\Elements\OpenGraphElement
  */
 class MetadataTest extends TestCase
 {
@@ -28,10 +29,10 @@ class MetadataTest extends TestCase
     {
         parent::setUp();
 
-        config(['site.url' => null]);
+        config(['hyde.url' => null]);
         config(['hyde.meta' => []]);
         config(['hyde.generate_rss_feed' => false]);
-        config(['site.generate_sitemap' => false]);
+        config(['hyde.generate_sitemap' => false]);
     }
 
     protected function assertPageHasMetadata(HydePage $page, string $metadata)
@@ -92,8 +93,8 @@ class MetadataTest extends TestCase
         $page->metadata->add(Meta::link('foo', 'bar'));
 
         $this->assertEquals([
-            'foo' => Meta::link('foo', 'bar'),
-        ], $page->metadata->links);
+            'links:foo' => Meta::link('foo', 'bar'),
+        ], $page->metadata->get());
     }
 
     public function test_metadata_item_can_be_added()
@@ -102,8 +103,8 @@ class MetadataTest extends TestCase
         $page->metadata->add(Meta::name('foo', 'bar'));
 
         $this->assertEquals([
-            'foo' => Meta::name('foo', 'bar'),
-        ], $page->metadata->metadata);
+            'metadata:foo' => Meta::name('foo', 'bar'),
+        ], $page->metadata->get());
     }
 
     public function test_open_graph_item_can_be_added()
@@ -112,8 +113,8 @@ class MetadataTest extends TestCase
         $page->metadata->add(Meta::property('foo', 'bar'));
 
         $this->assertEquals([
-            'foo' => Meta::property('foo', 'bar'),
-        ], $page->metadata->properties);
+            'properties:foo' => Meta::property('foo', 'bar'),
+        ], $page->metadata->get());
     }
 
     public function test_generic_item_can_be_added()
@@ -122,8 +123,8 @@ class MetadataTest extends TestCase
         $page->metadata->add('foo');
 
         $this->assertEquals([
-            'foo',
-        ], $page->metadata->generics);
+            'generics:0' => 'foo',
+        ], $page->metadata->get());
     }
 
     public function test_multiple_items_can_be_accessed_with_get_method()
@@ -149,8 +150,8 @@ class MetadataTest extends TestCase
         $page->metadata->add(Meta::link('foo', 'baz'));
 
         $this->assertEquals([
-            'foo' => Meta::link('foo', 'baz'),
-        ], $page->metadata->links);
+            'links:foo' => Meta::link('foo', 'baz'),
+        ], $page->metadata->get());
     }
 
     public function test_render_returns_html_string_of_imploded_metadata_arrays()
@@ -197,7 +198,7 @@ class MetadataTest extends TestCase
 
     public function test_does_not_add_canonical_link_when_base_url_is_not_set()
     {
-        config(['site.url' => null]);
+        config(['hyde.url' => null]);
         $page = MarkdownPage::make('bar');
 
         $this->assertStringNotContainsString('<link rel="canonical"', $page->metadata->render());
@@ -205,7 +206,7 @@ class MetadataTest extends TestCase
 
     public function test_does_not_add_canonical_link_when_identifier_is_not_set()
     {
-        config(['site.url' => 'foo']);
+        config(['hyde.url' => 'foo']);
         $page = MarkdownPage::make();
 
         $this->assertStringNotContainsString('<link rel="canonical"', $page->metadata->render());
@@ -213,7 +214,7 @@ class MetadataTest extends TestCase
 
     public function test_adds_canonical_link_when_base_url_and_identifier_is_set()
     {
-        config(['site.url' => 'foo']);
+        config(['hyde.url' => 'foo']);
         $page = MarkdownPage::make('bar');
 
         $this->assertStringContainsString('<link rel="canonical" href="foo/bar.html">', $page->metadata->render());
@@ -221,8 +222,8 @@ class MetadataTest extends TestCase
 
     public function test_canonical_link_uses_clean_url_setting()
     {
-        config(['site.url' => 'foo']);
-        config(['site.pretty_urls' => true]);
+        config(['hyde.url' => 'foo']);
+        config(['hyde.pretty_urls' => true]);
         $page = MarkdownPage::make('bar');
 
         $this->assertStringContainsString('<link rel="canonical" href="foo/bar">', $page->metadata->render());
@@ -230,7 +231,7 @@ class MetadataTest extends TestCase
 
     public function test_can_override_canonical_link_with_front_matter()
     {
-        config(['site.url' => 'foo']);
+        config(['hyde.url' => 'foo']);
         $page = MarkdownPage::make('bar', [
             'canonicalUrl' => 'canonical',
         ]);
@@ -377,11 +378,50 @@ class MetadataTest extends TestCase
         $this->assertPageHasMetadata($page, '<meta property="og:image" content="../media/foo.jpg">');
     }
 
+    public function test_dynamic_post_meta_properties_contains_image_link_that_is_always_relative_for_nested_posts()
+    {
+        $page = MarkdownPost::make('foo/bar', matter: [
+            'image' => 'foo.jpg',
+        ]);
+
+        $this->assertPageHasMetadata($page, '<meta property="og:image" content="../../media/foo.jpg">');
+    }
+
+    public function test_dynamic_post_meta_properties_contains_image_link_that_is_always_relative_for_nested_output_directories()
+    {
+        MarkdownPost::setOutputDirectory('_posts/foo');
+        $page = MarkdownPost::make(matter: [
+            'image' => 'foo.jpg',
+        ]);
+
+        $this->assertPageHasMetadata($page, '<meta property="og:image" content="../../media/foo.jpg">');
+    }
+
+    public function test_dynamic_post_meta_properties_contains_image_link_that_is_always_relative_for_nested_posts_and_nested_output_directories()
+    {
+        MarkdownPost::setOutputDirectory('_posts/foo');
+        $page = MarkdownPost::make('bar/baz', matter: [
+            'image' => 'foo.jpg',
+        ]);
+
+        $this->assertPageHasMetadata($page, '<meta property="og:image" content="../../../media/foo.jpg">');
+    }
+
+    public function test_dynamic_post_meta_properties_contains_image_link_that_uses_the_configured_media_directory()
+    {
+        Hyde::setMediaDirectory('assets');
+        $page = MarkdownPost::make(matter: [
+            'image' => 'foo.jpg',
+        ]);
+
+        $this->assertPageHasMetadata($page, '<meta property="og:image" content="../assets/foo.jpg">');
+    }
+
     public function test_dynamic_post_meta_properties_contains_image_metadata_when_featured_image_set_to_array_with_path()
     {
         $page = MarkdownPost::make(matter: [
             'image' => [
-                'path' => 'foo.jpg',
+                'source' => 'foo.jpg',
             ],
         ]);
 
@@ -392,7 +432,7 @@ class MetadataTest extends TestCase
     {
         $page = MarkdownPost::make(matter: [
             'image' => [
-                'url' => 'https://example.com/foo.jpg',
+                'source' => 'https://example.com/foo.jpg',
             ],
         ]);
 

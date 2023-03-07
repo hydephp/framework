@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Helpers\Meta;
-use Hyde\Framework\Modules\Metadata\GlobalMetadataBag;
+use Hyde\Facades\Meta;
+use Hyde\Framework\Features\Metadata\GlobalMetadataBag;
 use Hyde\Testing\TestCase;
 
 /**
- * @covers \Hyde\Framework\Helpers\Meta
+ * @covers \Hyde\Facades\Meta
  */
 class MetadataHelperTest extends TestCase
 {
@@ -18,7 +18,7 @@ class MetadataHelperTest extends TestCase
         parent::setUp();
 
         config(['hyde.meta' => []]);
-        config(['site.url' => null]);
+        config(['hyde.url' => null]);
     }
 
     public function test_name_method_returns_a_valid_html_meta_string()

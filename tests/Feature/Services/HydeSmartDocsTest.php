@@ -4,88 +4,70 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Services;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Markdown\Markdown;
-use Hyde\Framework\Models\Pages\DocumentationPage;
-use Hyde\Framework\Services\SemanticDocumentationArticle;
+use function app;
+use function config;
+use Hyde\Framework\Features\Documentation\SemanticDocumentationArticle;
+use Hyde\Pages\DocumentationPage;
 use Hyde\Testing\TestCase;
+use Illuminate\Support\HtmlString;
+use function str_replace;
+use function view;
 
 /**
- * @covers \Hyde\Framework\Services\SemanticDocumentationArticle
+ * @covers \Hyde\Framework\Features\Documentation\SemanticDocumentationArticle
  */
 class HydeSmartDocsTest extends TestCase
 {
-    protected DocumentationPage $mock;
-    protected string $html;
-
-    protected function setUp(): void
+    public function test_class_tokenizes_document()
     {
-        parent::setUp();
+        $article = $this->makeArticle("# Header Content \n\n Body Content");
 
-        file_put_contents(Hyde::path('_docs/foo.md'), "# Foo\n\nHello world.");
-        $this->mock = DocumentationPage::parse('foo');
-        $this->html = Markdown::render($this->mock->markdown->body);
+        $this->assertEquals('<h1>Header Content</h1>', $article->renderHeader());
+        $this->assertEquals('<p>Body Content</p>', $article->renderBody());
     }
 
-    protected function tearDown(): void
+    public function test_class_can_handle_document_with_no_header()
     {
-        parent::tearDown();
+        $article = $this->makeArticle('Body Content');
 
-        unlink(Hyde::path('_docs/foo.md'));
+        $this->assertEquals('', $article->renderHeader());
+        $this->assertEquals('<p>Body Content</p>', $article->renderBody());
     }
 
-    protected function assertEqualsIgnoringNewlines(string $expected, string $actual): void
+    public function test_class_can_handle_document_with_only_header()
     {
-        $this->assertEquals(
-            str_replace(["\n", "\r"], '', $expected),
-            str_replace(["\n", "\r"], '', $actual)
-        );
+        $article = $this->makeArticle('# Header Content');
+
+        $this->assertEquals('<h1>Header Content</h1>', $article->renderHeader());
+        $this->assertEquals('', $article->renderBody());
     }
 
-    protected function assertEqualsIgnoringNewlinesAndIndentation(string $expected, string $actual): void
+    public function test_class_can_handle_empty_document()
     {
-        $this->assertEquals(
-            str_replace(["\n", "\r", '    '], '', $expected),
-            str_replace(["\n", "\r", '    '], '', $actual)
-        );
-    }
+        $article = $this->makeArticle('');
 
-    protected function mockTorchlight(): void
-    {
-        app()->bind('env', function () {
-            return 'production';
-        });
-        config(['torchlight.token' => '12345']);
+        $this->assertEquals('', $article->renderHeader());
+        $this->assertEquals('', $article->renderBody());
     }
 
     public function test_create_helper_creates_new_instance_and_processes_it()
     {
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
+        $article = $this->makeArticle();
 
-        $this->assertInstanceOf(SemanticDocumentationArticle::class, $page);
+        $this->assertInstanceOf(SemanticDocumentationArticle::class, $article);
 
-        $this->assertEqualsIgnoringNewlines('<p>Hello world.</p>', $page->renderBody());
-    }
-
-    public function test_instance_can_be_constructed_directly_with_same_result_as_facade()
-    {
-        $class = new SemanticDocumentationArticle($this->mock, $this->html);
-        $facade = SemanticDocumentationArticle::create($this->mock, $this->html);
-
-        // Baseline since we manually need to call the process method
-        $this->assertNotEquals($class, $facade);
-
-        $class->process();
-
-        // Now they should be the equal
-        $this->assertEquals($class, $facade);
+        $this->assertSame(
+            '<p>Hello world.</p>',
+            $article->renderBody()->toHtml()
+        );
     }
 
     public function test_render_header_returns_the_extracted_header()
     {
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
-
-        $this->assertEqualsIgnoringNewlines('<h1>Foo</h1>', $page->renderHeader());
+        $this->assertSame(
+            '<h1>Foo</h1>',
+            $this->makeArticle()->renderHeader()->toHtml()
+        );
     }
 
     public function test_render_header_returns_the_extracted_header_with_varying_newlines()
@@ -97,16 +79,19 @@ class HydeSmartDocsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $page = SemanticDocumentationArticle::create($this->mock, Markdown::render($test));
-            $this->assertEqualsIgnoringNewlines('<h1>Foo</h1>', $page->renderHeader());
+            $this->assertSame(
+                '<h1>Foo</h1>',
+                $this->makeArticle($test)->renderHeader()->toHtml()
+            );
         }
     }
 
     public function test_render_body_returns_the_extracted_body()
     {
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
-
-        $this->assertEqualsIgnoringNewlines('<p>Hello world.</p>', $page->renderBody());
+        $this->assertSame(
+            '<p>Hello world.</p>',
+            $this->makeArticle()->renderBody()->toHtml()
+        );
     }
 
     public function test_render_body_returns_the_extracted_body_with_varying_newlines()
@@ -118,62 +103,128 @@ class HydeSmartDocsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $page = SemanticDocumentationArticle::create($this->mock, Markdown::render($test));
-            $this->assertEqualsIgnoringNewlines('<p>Hello world.</p>', $page->renderBody());
+            $this->assertSame(
+                '<p>Hello world.</p>',
+                $this->makeArticle($test)->renderBody()->toHtml()
+            );
         }
     }
 
     public function test_render_footer_is_empty_by_default()
     {
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
-
-        $this->assertEqualsIgnoringNewlines('', $page->renderFooter());
+        $this->assertSame(
+            '',
+            $this->makeArticle()->renderFooter()->toHtml()
+        );
     }
 
     public function test_add_dynamic_header_content_adds_source_link_when_conditions_are_met()
     {
         config(['docs.source_file_location_base' => 'https://example.com/']);
         config(['docs.edit_source_link_position' => 'header']);
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
 
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>', $page->renderHeader());
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>
+        HTML, $this->makeArticle()->renderHeader());
     }
 
     public function test_edit_source_link_is_added_to_footer_when_conditions_are_met()
     {
         config(['docs.source_file_location_base' => 'https://example.com/']);
         config(['docs.edit_source_link_position' => 'footer']);
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
 
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>', $page->renderFooter());
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>
+        HTML, $this->makeArticle()->renderFooter());
     }
 
     public function test_edit_source_link_can_be_added_to_both_header_and_footer()
     {
         config(['docs.source_file_location_base' => 'https://example.com/']);
         config(['docs.edit_source_link_position' => 'both']);
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
 
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>', $page->renderHeader());
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>', $page->renderFooter());
+        $article = $this->makeArticle();
+
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>
+        HTML, $article->renderHeader());
+
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <p class="edit-page-link"><a href="https://example.com/foo.md">Edit Source</a></p>
+        HTML, $article->renderFooter());
     }
 
-    public function test_edit_source_link_text_can_be_customized()
+    public function test_edit_source_link_text_can_be_customized_in_header()
     {
         config(['docs.source_file_location_base' => 'https://example.com/']);
         config(['docs.edit_source_link_position' => 'both']);
         config(['docs.edit_source_link_text' => 'Go to Source']);
-        $page = SemanticDocumentationArticle::create($this->mock, $this->html);
 
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Go to Source</a></p>', $page->renderHeader());
-        $this->assertEqualsIgnoringNewlinesAndIndentation('<p class="edit-page-link"><a href="https://example.com/foo.md">Go to Source</a></p>', $page->renderFooter());
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <h1>Foo</h1><p class="edit-page-link"><a href="https://example.com/foo.md">Go to Source</a></p>
+        HTML, $this->makeArticle()->renderHeader());
+    }
+
+    public function test_edit_source_link_text_can_be_customized_in_footer()
+    {
+        config(['docs.source_file_location_base' => 'https://example.com/']);
+        config(['docs.edit_source_link_position' => 'both']);
+        config(['docs.edit_source_link_text' => 'Go to Source']);
+
+        $this->assertEqualsIgnoringNewlinesAndIndentation(<<<'HTML'
+            <p class="edit-page-link"><a href="https://example.com/foo.md">Go to Source</a></p>
+        HTML, $this->makeArticle()->renderFooter());
     }
 
     public function test_add_dynamic_footer_content_adds_torchlight_attribution_when_conditions_are_met()
     {
-        $this->mockTorchlight();
-        $page = SemanticDocumentationArticle::create($this->mock, 'Syntax highlighted by torchlight.dev');
+        app()->bind('env', fn () => 'production');
+        config(['torchlight.token' => '12345']);
 
-        $this->assertStringContainsString('Syntax highlighting by <a href="https://torchlight.dev/"', $page->renderFooter());
+        $this->assertStringContainsString('Syntax highlighting by <a href="https://torchlight.dev/"',
+            $this->makeArticle('Syntax highlighted by torchlight.dev')->renderFooter()->toHtml()
+        );
+    }
+
+    public function test_the_documentation_article_view()
+    {
+        $rendered = view('hyde::components.docs.documentation-article', [
+            'page' => $this->makePage(),
+        ])->render();
+
+        $this->assertStringContainsString('<h1>Foo</h1>', $rendered);
+        $this->assertStringContainsString('<p>Hello world.</p>', $rendered);
+    }
+
+    protected function makeArticle(string $sourceFileContents = "# Foo\n\nHello world."): SemanticDocumentationArticle
+    {
+        $this->file('_docs/foo.md', $sourceFileContents);
+
+        return SemanticDocumentationArticle::make(DocumentationPage::parse('foo'));
+    }
+
+    protected function makePage(string $sourceFileContents = "# Foo\n\nHello world."): DocumentationPage
+    {
+        $this->file('_docs/foo.md', $sourceFileContents);
+
+        return DocumentationPage::parse('foo');
+    }
+
+    protected function assertEqualsIgnoringNewlinesAndIndentation(string $expected, HtmlString $actual): void
+    {
+        $this->assertEquals(
+            $this->stripNewlinesAndIndentation($expected),
+            $this->stripNewlinesAndIndentation($actual->toHtml()),
+        );
+    }
+
+    protected function stripNewlinesAndIndentation(string $string): string
+    {
+        return str_replace(["\r", "\n"], '', $this->stripIndentation($string));
+    }
+
+    protected function stripIndentation(string $string): string
+    {
+        return str_replace('    ', '', $string);
     }
 }

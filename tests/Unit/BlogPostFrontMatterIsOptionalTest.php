@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Hyde;
+use Hyde\Facades\Filesystem;
+use Hyde\Framework\Actions\StaticPageBuilder;
+use Hyde\Hyde;
+use Hyde\Pages\BladePage;
+use Hyde\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
-use Illuminate\Support\Facades\Artisan;
 
 class BlogPostFrontMatterIsOptionalTest extends TestCase
 {
@@ -14,12 +17,12 @@ class BlogPostFrontMatterIsOptionalTest extends TestCase
     {
         file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
-        Artisan::call('rebuild _posts/test-post.md');
+        StaticPageBuilder::handle(MarkdownPost::get('test-post'));
 
         $this->assertFileExists(Hyde::path('_site/posts/test-post.html'));
 
-        unlink(Hyde::path('_posts/test-post.md'));
-        unlink(Hyde::path('_site/posts/test-post.html'));
+        Filesystem::unlink('_posts/test-post.md');
+        Filesystem::unlink('_site/posts/test-post.html');
     }
 
     public function test_blog_post_feed_can_be_rendered_when_post_has_no_front_matter()
@@ -27,18 +30,16 @@ class BlogPostFrontMatterIsOptionalTest extends TestCase
         file_put_contents(Hyde::path('_posts/test-post.md'), '# My New Post');
 
         // Create a temporary page to test the feed
-        file_put_contents(Hyde::path('_pages/feed-test.blade.php'),
-            '@foreach(\Hyde\Framework\Models\Pages\MarkdownPost::getLatestPosts() as $post)
-				@include(\'hyde::components.article-excerpt\')
-			@endforeach'
+        copy(Hyde::vendorPath('resources/views/components/blog-post-feed.blade.php'),
+            Hyde::path('_pages/feed-test.blade.php')
         );
 
-        Artisan::call('rebuild _pages/feed-test.blade.php');
+        StaticPageBuilder::handle(BladePage::get('feed-test'));
 
         $this->assertFileExists(Hyde::path('_site/feed-test.html'));
 
-        unlink(Hyde::path('_posts/test-post.md'));
-        unlink(Hyde::path('_pages/feed-test.blade.php'));
-        unlink(Hyde::path('_site/feed-test.html'));
+        Filesystem::unlink('_posts/test-post.md');
+        Filesystem::unlink('_pages/feed-test.blade.php');
+        Filesystem::unlink('_site/feed-test.html');
     }
 }

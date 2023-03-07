@@ -6,8 +6,18 @@ namespace Hyde\Framework\Testing\Feature\Commands;
 
 use Hyde\Testing\TestCase;
 
+/**
+ * @covers \Hyde\Console\Commands\DebugCommand
+ */
 class DebugCommandTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->bind('git.version', fn () => 'foo');
+    }
+
     public function test_debug_command_can_run()
     {
         $this->artisan('debug')->assertExitCode(0);

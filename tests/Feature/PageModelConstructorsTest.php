@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Pages\DocumentationPage;
-use Hyde\Framework\Models\Pages\MarkdownPage;
+use Hyde\Facades\Filesystem;
+use Hyde\Hyde;
+use Hyde\Pages\DocumentationPage;
+use Hyde\Pages\MarkdownPage;
 use Hyde\Testing\TestCase;
 
 /**
  * Test the constructor actions and schema constructors for page models.
  *
- * @covers \Hyde\Framework\Actions\Constructors\FindsTitleForPage
- * @covers \Hyde\Framework\Actions\Constructors\FindsNavigationDataForPage
- * @covers \Hyde\Framework\Concerns\Internal\ConstructsPageSchemas
+ * @covers \Hyde\Framework\Factories\Concerns\HasFactory
+ * @covers \Hyde\Framework\Factories\NavigationDataFactory
+ * @covers \Hyde\Framework\Factories\FeaturedImageFactory
+ * @covers \Hyde\Framework\Factories\HydePageDataFactory
+ * @covers \Hyde\Framework\Factories\BlogPostDataFactory
  */
 class PageModelConstructorsTest extends TestCase
 {
@@ -54,11 +57,11 @@ class PageModelConstructorsTest extends TestCase
         mkdir(Hyde::path('_docs/foo'));
         touch(Hyde::path('_docs/foo/bar.md'));
 
-        /** @var DocumentationPage $page */
+        /** @var \Hyde\Pages\DocumentationPage $page */
         $page = DocumentationPage::parse('foo/bar');
         $this->assertEquals('foo', $page->navigationMenuGroup());
 
-        unlink(Hyde::path('_docs/foo/bar.md'));
+        Filesystem::unlink('_docs/foo/bar.md');
         rmdir(Hyde::path('_docs/foo'));
     }
 }

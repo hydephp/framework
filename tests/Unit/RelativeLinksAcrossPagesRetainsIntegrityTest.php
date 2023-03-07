@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
+use Hyde\Facades\Filesystem;
+use Hyde\Framework\Actions\CreatesNewMarkdownPostFile;
+use Hyde\Framework\Services\BuildService;
+use Illuminate\Console\OutputStyle;
+use Mockery;
+use Symfony\Component\Console\Formatter\OutputFormatterInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
+use function config;
 use Hyde\Framework\Concerns\InteractsWithDirectories;
-use Hyde\Framework\Hyde;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\File;
 
@@ -17,26 +25,26 @@ class RelativeLinksAcrossPagesRetainsIntegrityTest extends TestCase
     {
         parent::setUp();
 
-        config(['hyde.cache_busting' => false]);
+        config(['hyde.enable_cache_busting' => false]);
+        config(['hyde.navigation.subdirectories' => 'flat']);
 
         $this->needsDirectory('_pages/nested');
         $this->file('_pages/root.md');
         $this->file('_pages/root1.md');
-        Hyde::touch('_pages/nested/level1.md');
-        Hyde::touch('_pages/nested/level1b.md');
+        Filesystem::touch('_pages/nested/level1.md');
+        Filesystem::touch('_pages/nested/level1b.md');
 
         $this->file('_docs/index.md');
         $this->file('_docs/docs.md');
 
-        $this->mockConsoleOutput = false;
-        $this->artisan('make:post -n');
+        (new CreatesNewMarkdownPostFile('My New Post', null, null, null))->save();
     }
 
     protected function tearDown(): void
     {
         File::deleteDirectory(Hyde::path('_pages/nested'));
-        Hyde::unlink('_site/root.html');
-        Hyde::unlink('_site/root1.html');
+        Filesystem::unlink('_site/root.html');
+        Filesystem::unlink('_site/root1.html');
         $this->resetSite();
         $this->resetPosts();
 
@@ -60,7 +68,30 @@ class RelativeLinksAcrossPagesRetainsIntegrityTest extends TestCase
 
     public function test_relative_links_across_pages_retains_integrity()
     {
-        $this->artisan('build');
+        $service = new BuildService(Mockery::mock(OutputStyle::class, [
+            'getFormatter' => Mockery::mock(OutputFormatterInterface::class, [
+                'hasStyle' => false,
+                'setStyle' => null,
+            ]),
+            'createProgressBar' => new ProgressBar(Mockery::mock(OutputStyle::class, [
+                'isDecorated' => false,
+                'getVerbosity' => 0,
+                'write' => null,
+                'getFormatter' => Mockery::mock(OutputFormatterInterface::class, [
+                    'hasStyle' => false,
+                    'setStyle' => null,
+                    'isDecorated' => false,
+                    'setDecorated' => null,
+                    'format' => null,
+                ]),
+            ])),
+            'writeln' => null,
+            'newLine' => null,
+            'write' => null,
+        ]));
+
+        $service->transferMediaAssets();
+        $service->compileStaticPages();
 
         $this->assertSee('root', [
             '<link rel="stylesheet" href="media/app.css">',

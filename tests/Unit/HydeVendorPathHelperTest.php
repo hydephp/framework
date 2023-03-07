@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\HydeKernel;
+use Hyde\Foundation\HydeKernel;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 
 class HydeVendorPathHelperTest extends TestCase
@@ -30,5 +30,12 @@ class HydeVendorPathHelperTest extends TestCase
         $this->assertDirectoryExists(Hyde::vendorPath());
         $this->assertFileExists(Hyde::vendorPath().'/composer.json');
         $this->assertStringContainsString('"name": "hyde/framework",', file_get_contents(Hyde::vendorPath().'/composer.json'));
+    }
+
+    public function test_can_specify_which_hyde_package_to_use()
+    {
+        $this->assertDirectoryExists(Hyde::vendorPath(package: 'realtime-compiler'));
+        $this->assertFileExists(Hyde::vendorPath('composer.json', 'realtime-compiler'));
+        $this->assertStringContainsString('"name": "hyde/realtime-compiler",', file_get_contents(Hyde::vendorPath('composer.json', 'realtime-compiler')));
     }
 }

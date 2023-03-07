@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Services;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Support\ValidationResult;
+use Hyde\Facades\Filesystem;
 use Hyde\Framework\Services\ValidationService;
+use Hyde\Hyde;
+use Hyde\Support\Models\ValidationResult;
 use Hyde\Testing\TestCase;
 
 /**
  * Class ValidationServiceTest.
  *
  * @covers \Hyde\Framework\Services\ValidationService
- * @covers \Hyde\Framework\Models\Support\ValidationResult
+ * @covers \Hyde\Support\Models\ValidationResult
  *
- * @see \Hyde\Framework\Testing\Feature\Commands\HydeValidateCommandTest
+ * @see \Hyde\Framework\Testing\Feature\Commands\ValidateCommandTest
  */
 class ValidationServiceTest extends TestCase
 {
@@ -113,20 +114,19 @@ class ValidationServiceTest extends TestCase
     public function test_check_site_has_an_app_css_stylesheet_can_fail()
     {
         rename(Hyde::path('_media/app.css'), Hyde::path('_media/app.css.bak'));
-        unlinkIfExists(Hyde::path('_site/media/app.css'));
         $this->test('check_site_has_an_app_css_stylesheet', 2);
         rename(Hyde::path('_media/app.css.bak'), Hyde::path('_media/app.css'));
     }
 
     public function test_check_site_has_a_base_url_set_can_pass()
     {
-        config(['site.url' => 'https://example.com']);
+        config(['hyde.url' => 'https://example.com']);
         $this->test('check_site_has_a_base_url_set', 0);
     }
 
     public function test_check_site_has_a_base_url_set_can_fail()
     {
-        config(['site.url' => null]);
+        config(['hyde.url' => null]);
         $this->test('check_site_has_a_base_url_set', 2);
     }
 
@@ -155,9 +155,9 @@ class ValidationServiceTest extends TestCase
 
     public function test_check_for_conflicts_between_blade_and_markdown_pages_can_fail()
     {
-        Hyde::touch(('_pages/index.md'));
+        Filesystem::touch('_pages/index.md');
         $this->test('check_for_conflicts_between_blade_and_markdown_pages', 2);
-        unlink(Hyde::path('_pages/index.md'));
+        Filesystem::unlink('_pages/index.md');
     }
 
     // Some unit tests
@@ -165,25 +165,24 @@ class ValidationServiceTest extends TestCase
     public function test_validation_result_message_returns_message()
     {
         $result = new ValidationResult();
-        $result->message = 'foo';
-        $this->assertEquals('foo', $result->message());
+        $this->assertEquals('Generic check', $result->message());
     }
 
     public function test_validation_result_passed_returns_true_when_passed_is_true()
     {
         $result = new ValidationResult();
-        $result->passed = true;
+        $result->pass();
         $this->assertTrue($result->passed());
-        $result->passed = false;
+        $result->fail();
         $this->assertFalse($result->passed());
     }
 
     public function test_validation_result_failed_returns_true_when_passed_is_false()
     {
         $result = new ValidationResult();
-        $result->passed = true;
+        $result->pass();
         $this->assertFalse($result->failed());
-        $result->passed = false;
+        $result->fail();
         $this->assertTrue($result->failed());
     }
 
@@ -191,17 +190,15 @@ class ValidationServiceTest extends TestCase
     {
         $result = new ValidationResult();
         $this->assertFalse($result->skipped());
-        $result->skipped = true;
+        $result->skip();
         $this->assertTrue($result->skipped());
-        $result->skipped = false;
-        $this->assertFalse($result->skipped());
     }
 
     public function test_validation_result_tip_returns_message_when_set()
     {
         $result = new ValidationResult();
         $this->assertFalse($result->tip());
-        $result->tip = 'foo';
+        $result->withTip('foo');
         $this->assertEquals('foo', $result->tip());
     }
 }

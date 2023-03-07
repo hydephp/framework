@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Markdown\FrontMatter;
-use Hyde\Framework\Models\Markdown\Markdown;
-use Hyde\Framework\Models\Markdown\MarkdownDocument;
+use Hyde\Facades\Filesystem;
+use Hyde\Markdown\Models\FrontMatter;
+use Hyde\Markdown\Models\Markdown;
+use Hyde\Markdown\Models\MarkdownDocument;
 use Hyde\Testing\TestCase;
+use Illuminate\Support\HtmlString;
 
 /**
- * @covers \Hyde\Framework\Models\Markdown\MarkdownDocument
- * @covers \Hyde\Framework\Models\Markdown\Markdown
+ * @covers \Hyde\Markdown\Models\MarkdownDocument
+ * @covers \Hyde\Markdown\Models\Markdown
  */
 class MarkdownDocumentTest extends TestCase
 {
@@ -40,10 +41,17 @@ class MarkdownDocumentTest extends TestCase
         $this->assertEquals('Hello, world!', (string) $document);
     }
 
-    public function test_render_method_returns_rendered_html()
+    public function test_compile_method_returns_rendered_html()
     {
         $document = new MarkdownDocument([], 'Hello, world!');
         $this->assertEquals("<p>Hello, world!</p>\n", $document->markdown->compile());
+    }
+
+    public function test_to_html_method_returns_rendered_as_html_string()
+    {
+        $document = new MarkdownDocument([], 'Hello, world!');
+        $this->assertInstanceOf(HtmlString::class, $document->markdown->toHtml());
+        $this->assertEquals("<p>Hello, world!</p>\n", (string) $document->markdown->toHtml());
     }
 
     public function test_parse_method_parses_a_file_using_the_markdown_file_service()
@@ -53,7 +61,7 @@ class MarkdownDocumentTest extends TestCase
         $this->assertInstanceOf(MarkdownDocument::class, $document);
         $this->assertEquals('Hello, world!', $document->markdown()->body());
         $this->assertEquals(FrontMatter::fromArray(['foo' => 'bar']), $document->matter());
-        unlink(Hyde::path('_pages/foo.md'));
+        Filesystem::unlink('_pages/foo.md');
     }
 
     public function test_to_array_method_returns_array_markdown_body_lines()
@@ -68,6 +76,24 @@ class MarkdownDocumentTest extends TestCase
         $markdown = Markdown::fromFile('_pages/foo.md');
         $this->assertInstanceOf(Markdown::class, $markdown);
         $this->assertEquals('Hello, world!', $markdown->body());
-        unlink(Hyde::path('_pages/foo.md'));
+        Filesystem::unlink('_pages/foo.md');
+    }
+
+    public function end_of_markdown_body_is_trimmed()
+    {
+        $markdown = new Markdown("Hello, world!\n\r\t   ");
+        $this->assertEquals('Hello, world!', $markdown->body());
+    }
+
+    public function test_carriage_returns_are_normalized()
+    {
+        $markdown = new Markdown("foo\rbar");
+        $this->assertEquals("foo\rbar", $markdown->body());
+
+        $markdown = new Markdown("foo\r\nbar");
+        $this->assertEquals("foo\nbar", $markdown->body());
+
+        $markdown = new Markdown("foo\nbar");
+        $this->assertEquals("foo\nbar", $markdown->body());
     }
 }

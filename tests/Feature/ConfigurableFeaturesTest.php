@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Helpers\Features;
+use Hyde\Facades\Features;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 
 /**
- * @covers \Hyde\Framework\Helpers\Features
+ * @covers \Hyde\Facades\Features
  */
 class ConfigurableFeaturesTest extends TestCase
 {
@@ -43,20 +43,20 @@ class ConfigurableFeaturesTest extends TestCase
 
     public function test_can_generate_sitemap_helper_returns_true_if_hyde_has_base_url()
     {
-        config(['site.url' => 'foo']);
+        config(['hyde.url' => 'foo']);
         $this->assertTrue(Features::sitemap());
     }
 
     public function test_can_generate_sitemap_helper_returns_false_if_hyde_does_not_have_base_url()
     {
-        config(['site.url' => '']);
+        config(['hyde.url' => '']);
         $this->assertFalse(Features::sitemap());
     }
 
     public function test_can_generate_sitemap_helper_returns_false_if_sitemaps_are_disabled_in_config()
     {
-        config(['site.url' => 'foo']);
-        config(['site.generate_sitemap' => false]);
+        config(['hyde.url' => 'foo']);
+        config(['hyde.generate_sitemap' => false]);
         $this->assertFalse(Features::sitemap());
     }
 
@@ -70,5 +70,58 @@ class ConfigurableFeaturesTest extends TestCase
             $this->assertIsBool($enabled);
             $this->assertStringStartsNotWith('has', $feature);
         }
+    }
+
+    public function test_to_array_method_contains_all_settings()
+    {
+        $array = (new Features)->toArray();
+
+        $this->assertArrayHasKey('html-pages', $array);
+        $this->assertArrayHasKey('markdown-posts', $array);
+        $this->assertArrayHasKey('blade-pages', $array);
+        $this->assertArrayHasKey('markdown-pages', $array);
+        $this->assertArrayHasKey('documentation-pages', $array);
+        $this->assertArrayHasKey('darkmode', $array);
+        $this->assertArrayHasKey('documentation-search', $array);
+        $this->assertArrayHasKey('torchlight', $array);
+
+        $this->assertCount(8, $array);
+    }
+
+    public function test_features_can_be_mocked()
+    {
+        Features::mock('darkmode', true);
+        $this->assertTrue(Features::hasDarkmode());
+
+        Features::mock('darkmode', false);
+        $this->assertFalse(Features::hasDarkmode());
+    }
+
+    public function test_dynamic_features_can_be_mocked()
+    {
+        Features::mock('rss', true);
+        $this->assertTrue(Features::rss());
+
+        Features::mock('rss', false);
+        $this->assertFalse(Features::rss());
+    }
+
+    public function test_multiple_features_can_be_mocked()
+    {
+        Features::mock([
+            'rss' => true,
+            'darkmode' => true,
+        ]);
+
+        $this->assertTrue(Features::rss());
+        $this->assertTrue(Features::hasDarkmode());
+
+        Features::mock([
+            'rss' => false,
+            'darkmode' => false,
+        ]);
+
+        $this->assertFalse(Features::rss());
+        $this->assertFalse(Features::hasDarkmode());
     }
 }

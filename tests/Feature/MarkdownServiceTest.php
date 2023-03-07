@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Models\Pages\DocumentationPage;
 use Hyde\Framework\Services\MarkdownService;
+use Hyde\Pages\DocumentationPage;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 
@@ -190,10 +190,9 @@ class MarkdownServiceTest extends TestCase
 
     public function test_method_can_enable_permalinks_is_automatically_for_documentation_pages()
     {
-        $service = $this->makeService();
+        $service = new MarkdownServiceTestClass(pageClass: DocumentationPage::class);
 
         Config::set('docs.table_of_contents.enabled', true);
-        $service->sourceModel = DocumentationPage::class;
 
         $this->assertTrue($service->canEnablePermalinks());
     }
@@ -220,16 +219,83 @@ class MarkdownServiceTest extends TestCase
         $this->assertFalse($service->canEnableTorchlight());
     }
 
-    protected function makeService()
+    public function test_stripIndentation_method_with_unindented_markdown()
     {
-        return new class extends MarkdownService
-        {
-            public array $features = [];
+        $service = $this->makeService();
 
-            public function __construct(string $markdown = '', ?string $sourceModel = null)
-            {
-                parent::__construct($markdown, $sourceModel);
-            }
-        };
+        $markdown = "foo\nbar\nbaz";
+        $this->assertSame($markdown, $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_indented_markdown()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\n  bar\n  baz";
+        $this->assertSame("foo\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+
+        $markdown = "  foo\n  bar\n  baz";
+        $this->assertSame("foo\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+
+        $markdown = "    foo\n    bar\n    baz";
+        $this->assertSame("foo\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_tab_indented_markdown()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\n\tbar\n\tbaz";
+        $this->assertSame("foo\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_carriage_return_line_feed()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\r\n  bar\r\n  baz";
+        $this->assertSame("foo\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_code_indentation()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\n    bar\n        baz";
+        $this->assertSame("foo\nbar\n    baz", $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_empty_newlines()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\n\n  bar\n  baz";
+        $this->assertSame("foo\n\nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+
+        $markdown = "foo\n   \n  bar\n  baz";
+        $this->assertSame("foo\n   \nbar\nbaz", $service->normalizeIndentationLevel($markdown));
+    }
+
+    public function test_stripIndentation_method_with_trailing_newline()
+    {
+        $service = $this->makeService();
+
+        $markdown = "foo\n  bar\n  baz\n";
+        $this->assertSame("foo\nbar\nbaz\n", $service->normalizeIndentationLevel($markdown));
+    }
+
+    protected function makeService(): MarkdownServiceTestClass
+    {
+        return new MarkdownServiceTestClass();
+    }
+}
+
+class MarkdownServiceTestClass extends MarkdownService
+{
+    public array $features = [];
+
+    public function __construct(string $markdown = '', ?string $pageClass = null)
+    {
+        parent::__construct($markdown, $pageClass);
     }
 }

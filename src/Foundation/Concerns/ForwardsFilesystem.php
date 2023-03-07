@@ -2,68 +2,50 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Framework\Foundation\Concerns;
+namespace Hyde\Foundation\Concerns;
+
+use Hyde\Foundation\Kernel\Filesystem;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Framework\HydeKernel
+ * @see \Hyde\Foundation\HydeKernel
  */
 trait ForwardsFilesystem
 {
+    public function filesystem(): Filesystem
+    {
+        return $this->filesystem;
+    }
+
     public function path(string $path = ''): string
     {
         return $this->filesystem->path($path);
     }
 
-    public function vendorPath(string $path = ''): string
+    public function vendorPath(string $path = '', string $package = 'framework'): string
     {
-        return $this->filesystem->vendorPath($path);
+        return $this->filesystem->vendorPath($path, $package);
     }
 
-    public function copy(string $from, string $to): bool
+    public function mediaPath(string $path = ''): string
     {
-        return $this->filesystem->copy($from, $to);
-    }
-
-    public function touch(string|array $path): bool
-    {
-        return $this->filesystem->touch($path);
-    }
-
-    public function unlink(string|array $path): bool
-    {
-        return $this->filesystem->unlink($path);
-    }
-
-    public function getModelSourcePath(string $model, string $path = ''): string
-    {
-        return $this->filesystem->getModelSourcePath($model, $path);
-    }
-
-    public function getBladePagePath(string $path = ''): string
-    {
-        return $this->filesystem->getBladePagePath($path);
-    }
-
-    public function getMarkdownPagePath(string $path = ''): string
-    {
-        return $this->filesystem->getMarkdownPagePath($path);
-    }
-
-    public function getMarkdownPostPath(string $path = ''): string
-    {
-        return $this->filesystem->getMarkdownPostPath($path);
-    }
-
-    public function getDocumentationPagePath(string $path = ''): string
-    {
-        return $this->filesystem->getDocumentationPagePath($path);
+        return $this->filesystem->mediaPath($path);
     }
 
     public function sitePath(string $path = ''): string
     {
         return $this->filesystem->sitePath($path);
+    }
+
+    public function siteMediaPath(string $path = ''): string
+    {
+        return $this->filesystem->siteMediaPath($path);
+    }
+
+    public function pathToAbsolute(string|array $path): string|array
+    {
+        return $this->filesystem->pathToAbsolute($path);
     }
 
     public function pathToRelative(string $path): string

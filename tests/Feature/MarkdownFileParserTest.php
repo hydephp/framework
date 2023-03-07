@@ -4,31 +4,37 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
+use Hyde\Hyde;
+use Hyde\Facades\Filesystem;
 use Hyde\Framework\Actions\MarkdownFileParser;
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Markdown\FrontMatter;
-use Hyde\Framework\Models\Markdown\MarkdownDocument;
-use Hyde\Testing\TestCase;
+use Hyde\Markdown\Models\FrontMatter;
+use Hyde\Markdown\Models\MarkdownDocument;
+use Hyde\Testing\UnitTestCase;
 
-class MarkdownFileParserTest extends TestCase
+class MarkdownFileParserTest extends UnitTestCase
 {
+    protected static bool $needsKernel = true;
+
     protected function makeTestPost(): void
     {
-        file_put_contents(Hyde::path('_posts/test-post.md'), '---
-title: My New Post
-category: blog
-author: Mr. Hyde
----
-
-# My New Post
-
-This is a post stub used in the automated tests
-');
+        Filesystem::putContents('_posts/test-post.md', <<<'MD'
+            ---
+            title: My New Post
+            category: blog
+            author: Mr. Hyde
+            ---
+            
+            # My New Post
+            
+            This is a post stub used in the automated tests
+            
+            MD
+        );
     }
 
     protected function tearDown(): void
     {
-        unlink(Hyde::path('_posts/test-post.md'));
+        Filesystem::unlink('_posts/test-post.md');
 
         parent::tearDown();
     }
@@ -37,7 +43,7 @@ This is a post stub used in the automated tests
     {
         file_put_contents(Hyde::path('_posts/test-post.md'), 'Foo bar');
 
-        $document = (new MarkdownFileParser(('_posts/test-post.md')))->get();
+        $document = MarkdownFileParser::parse('_posts/test-post.md');
         $this->assertInstanceOf(MarkdownDocument::class, $document);
 
         $this->assertEquals('Foo bar', $document->markdown);
@@ -47,7 +53,7 @@ This is a post stub used in the automated tests
     {
         $this->makeTestPost();
 
-        $document = (new MarkdownFileParser(('_posts/test-post.md')))->get();
+        $document = MarkdownFileParser::parse('_posts/test-post.md');
         $this->assertInstanceOf(MarkdownDocument::class, $document);
 
         $this->assertEquals(FrontMatter::fromArray([
@@ -56,9 +62,13 @@ This is a post stub used in the automated tests
             'author' => 'Mr. Hyde',
         ]), $document->matter);
 
-        $this->assertEquals(
-            '# My New PostThis is a post stub used in the automated tests',
-            str_replace(["\n", "\r"], '', (string) $document->markdown)
+        $this->assertSame(
+            <<<'MARKDOWN'
+            # My New Post
+            
+            This is a post stub used in the automated tests
+            MARKDOWN,
+            (string) $document->markdown
         );
     }
 
@@ -66,33 +76,9 @@ This is a post stub used in the automated tests
     {
         $this->makeTestPost();
 
-        $post = (new MarkdownFileParser(('_posts/test-post.md')))->get();
-        $this->assertEquals('My New Post', $post->matter('title'));
-        $this->assertEquals('Mr. Hyde', $post->matter('author'));
-        $this->assertEquals('blog', $post->matter('category'));
-    }
-
-    public function test_parsed_front_matter_does_not_contain_slug_key()
-    {
-        file_put_contents(Hyde::path('_posts/test-post.md'), "---\nslug: foo\n---\n");
-
-        $post = (new MarkdownFileParser(('_posts/test-post.md')))->get();
-        $this->assertNull($post->matter('slug'));
-        $this->assertEquals(FrontMatter::fromArray([]), $post->matter);
-    }
-
-    public function test_static_parse_shorthand()
-    {
-        $this->makeTestPost();
-
-        $post = MarkdownFileParser::parse(('_posts/test-post.md'));
-        $this->assertEquals('My New Post', $post->matter('title'));
-        $this->assertEquals('Mr. Hyde', $post->matter('author'));
-        $this->assertEquals('blog', $post->matter('category'));
-
-        $this->assertEquals(
-            '# My New PostThis is a post stub used in the automated tests',
-            str_replace(["\n", "\r"], '', (string) $post->markdown)
-        );
+        $post = MarkdownFileParser::parse('_posts/test-post.md');
+        $this->assertSame('My New Post', $post->matter('title'));
+        $this->assertSame('Mr. Hyde', $post->matter('author'));
+        $this->assertSame('blog', $post->matter('category'));
     }
 }

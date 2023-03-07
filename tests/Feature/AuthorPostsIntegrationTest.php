@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
+use Hyde\Facades\Author;
+use Hyde\Facades\Filesystem;
 use Hyde\Framework\Actions\CreatesNewMarkdownPostFile;
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Support\Author;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 
@@ -22,7 +23,7 @@ class AuthorPostsIntegrationTest extends TestCase
     {
         parent::setUp();
 
-        Config::set('authors', []);
+        Config::set('hyde.authors', []);
     }
 
     /**
@@ -58,8 +59,8 @@ class AuthorPostsIntegrationTest extends TestCase
         );
 
         // Remove the test files
-        unlink(Hyde::path('_posts/test-2dcbb2c-post-with-undefined-author.md'));
-        unlink(Hyde::path('_site/posts/test-2dcbb2c-post-with-undefined-author.html'));
+        Filesystem::unlink('_posts/test-2dcbb2c-post-with-undefined-author.md');
+        Filesystem::unlink('_site/posts/test-2dcbb2c-post-with-undefined-author.html');
     }
 
     /**
@@ -78,8 +79,8 @@ class AuthorPostsIntegrationTest extends TestCase
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
 
-        Config::set('authors', [
-            Author::create('test_named_author', 'Test Author'),
+        Config::set('hyde.authors', [
+            Author::create('test_named_author', 'Test Author', null),
         ]);
 
         // Check that the post was created
@@ -96,8 +97,8 @@ class AuthorPostsIntegrationTest extends TestCase
         );
 
         // Remove the test files
-        unlink(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
-        unlink(Hyde::path('_site/posts/test-2dcbb2c-post-with-defined-author-with-name.html'));
+        Filesystem::unlink('_posts/test-2dcbb2c-post-with-defined-author-with-name.md');
+        Filesystem::unlink('_site/posts/test-2dcbb2c-post-with-defined-author-with-name.html');
     }
 
     /**
@@ -116,7 +117,7 @@ class AuthorPostsIntegrationTest extends TestCase
         // Check that the post was created
         $this->assertFileExists(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
 
-        Config::set('authors', [
+        Config::set('hyde.authors', [
             Author::create('test_author_with_website', 'Test Author', 'https://example.org'),
         ]);
 
@@ -140,7 +141,7 @@ class AuthorPostsIntegrationTest extends TestCase
         );
 
         // Remove the test files
-        unlink(Hyde::path('_posts/test-2dcbb2c-post-with-defined-author-with-name.md'));
-        unlink(Hyde::path('_site/posts/test-2dcbb2c-post-with-defined-author-with-name.html'));
+        Filesystem::unlink('_posts/test-2dcbb2c-post-with-defined-author-with-name.md');
+        Filesystem::unlink('_site/posts/test-2dcbb2c-post-with-defined-author-with-name.html');
     }
 }

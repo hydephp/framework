@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
+use Hyde\Facades\Filesystem;
 use Hyde\Framework\Actions\StaticPageBuilder;
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Pages\BladePage;
-use Hyde\Framework\Models\Pages\DocumentationPage;
-use Hyde\Framework\Models\Pages\MarkdownPage;
-use Hyde\Framework\Models\Pages\MarkdownPost;
+use Hyde\Hyde;
+use Hyde\Pages\BladePage;
+use Hyde\Pages\DocumentationPage;
+use Hyde\Pages\MarkdownPage;
+use Hyde\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -36,65 +37,53 @@ class SourceFilesInCustomDirectoriesCanBeCompiledTest extends TestCase
     public function test_markdown_posts_in_changed_directory_can_be_compiled()
     {
         mkdir(Hyde::path('testSourceDir/blog'));
-        Hyde::touch(('testSourceDir/blog/test.md'));
+        Filesystem::touch('testSourceDir/blog/test.md');
 
-        MarkdownPost::$sourceDirectory = 'testSourceDir/blog';
+        MarkdownPost::setSourceDirectory('testSourceDir/blog');
 
-        new StaticPageBuilder(
-            MarkdownPost::parse('test'),
-            true
-        );
+        StaticPageBuilder::handle(MarkdownPost::parse('test'));
 
         $this->assertFileExists(Hyde::path('_site/posts/test.html'));
-        unlink(Hyde::path('_site/posts/test.html'));
+        Filesystem::unlink('_site/posts/test.html');
     }
 
     public function test_markdown_pages_in_changed_directory_can_be_compiled()
     {
         mkdir(Hyde::path('testSourceDir/pages'));
-        Hyde::touch(('testSourceDir/pages/test.md'));
+        Filesystem::touch('testSourceDir/pages/test.md');
 
-        MarkdownPage::$sourceDirectory = 'testSourceDir/pages';
+        MarkdownPage::setSourceDirectory('testSourceDir/pages');
 
-        new StaticPageBuilder(
-            MarkdownPage::parse('test'),
-            true
-        );
+        StaticPageBuilder::handle(MarkdownPage::parse('test'));
 
         $this->assertFileExists(Hyde::path('_site/test.html'));
-        unlink(Hyde::path('_site/test.html'));
+        Filesystem::unlink('_site/test.html');
     }
 
     public function test_documentation_pages_in_changed_directory_can_be_compiled()
     {
         mkdir(Hyde::path('testSourceDir/documentation'));
-        Hyde::touch(('testSourceDir/documentation/test.md'));
+        Filesystem::touch('testSourceDir/documentation/test.md');
 
-        DocumentationPage::$sourceDirectory = 'testSourceDir/documentation';
+        DocumentationPage::setSourceDirectory('testSourceDir/documentation');
 
-        new StaticPageBuilder(
-            DocumentationPage::parse('test'),
-            true
-        );
+        StaticPageBuilder::handle(DocumentationPage::parse('test'));
 
         $this->assertFileExists(Hyde::path('_site/docs/test.html'));
-        unlink(Hyde::path('_site/docs/test.html'));
+        Filesystem::unlink('_site/docs/test.html');
     }
 
     public function test_blade_pages_in_changed_directory_can_be_compiled()
     {
         mkdir(Hyde::path('testSourceDir/blade'));
-        Hyde::touch(('testSourceDir/blade/test.blade.php'));
+        Filesystem::touch('testSourceDir/blade/test.blade.php');
 
-        BladePage::$sourceDirectory = 'testSourceDir/blade';
+        BladePage::setSourceDirectory('testSourceDir/blade');
         Config::set('view.paths', ['testSourceDir/blade']);
 
-        new StaticPageBuilder(
-            BladePage::parse('test'),
-            true
-        );
+        StaticPageBuilder::handle(BladePage::parse('test'));
 
         $this->assertFileExists(Hyde::path('_site/test.html'));
-        unlink(Hyde::path('_site/test.html'));
+        Filesystem::unlink('_site/test.html');
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Models\Markdown\FrontMatter;
-use Hyde\Testing\TestCase;
+use Hyde\Markdown\Models\FrontMatter;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Hyde\Framework\Models\Markdown\FrontMatter
+ * @covers \Hyde\Markdown\Models\FrontMatter
  */
 class FrontMatterModelTest extends TestCase
 {
@@ -27,14 +27,14 @@ class FrontMatterModelTest extends TestCase
     public function test_constructor_arguments_are_assigned()
     {
         $matter = new FrontMatter(['foo' => 'bar']);
-        $this->assertEquals(['foo' => 'bar'], $matter->data);
+        $this->assertEquals(['foo' => 'bar'], $matter->toArray());
     }
 
     public function test_static_from_array_method_creates_new_front_matter_model()
     {
         $matter = FrontMatter::fromArray(['foo' => 'bar']);
         $this->assertInstanceOf(FrontMatter::class, $matter);
-        $this->assertEquals(['foo' => 'bar'], $matter->data);
+        $this->assertEquals(['foo' => 'bar'], $matter->toArray());
     }
 
     public function test_to_string_magic_method_converts_model_array_into_yaml_front_matter()
@@ -55,16 +55,16 @@ class FrontMatterModelTest extends TestCase
         $this->assertNull($matter->foo);
     }
 
-    public function test_get_method_returns_empty_array_if_document_has_no_matter()
+    public function test_get_method_returns_data_when_no_argument_is_specified()
     {
         $matter = new FrontMatter();
-        $this->assertEquals([], $matter->get());
+        $this->assertSame([], $matter->get());
     }
 
-    public function test_get_method_returns_document_front_matter_array_if_no_arguments_are_specified()
+    public function test_get_method_returns_data_when_no_argument_is_specified_with_data()
     {
         $matter = new FrontMatter(['foo' => 'bar']);
-        $this->assertEquals(['foo' => 'bar'], $matter->get());
+        $this->assertSame(['foo' => 'bar'], $matter->get());
     }
 
     public function test_get_method_returns_null_if_specified_front_matter_key_does_not_exist()

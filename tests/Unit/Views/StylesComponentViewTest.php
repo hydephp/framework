@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Views;
 
-use Hyde\Framework\Helpers\Asset;
-use Hyde\Framework\Hyde;
+use Hyde\Facades\Filesystem;
+use function config;
+use Hyde\Facades\Asset;
+use Hyde\Hyde;
+use Hyde\Support\Facades\Render;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Blade;
 
@@ -18,8 +21,8 @@ class StylesComponentViewTest extends TestCase
 
     protected function renderTestView(): string
     {
-        config(['hyde.cache_busting' => false]);
-        view()->share('currentPage', $this->mockCurrentPage ?? '');
+        config(['hyde.enable_cache_busting' => false]);
+        $this->mockCurrentPage($this->mockCurrentPage ?? '');
 
         return Blade::render(file_get_contents(
             Hyde::vendorPath('resources/views/layouts/styles.blade.php')
@@ -56,17 +59,23 @@ class StylesComponentViewTest extends TestCase
 
     public function test_styles_can_be_pushed_to_the_component_styles_stack()
     {
-        view()->share('currentPage', '');
+        Render::share('currentPage', '');
 
         $this->assertStringContainsString('foo bar',
              Blade::render('
                 @push("styles")
                 foo bar
                 @endpush
-                
+
                 @include("hyde::layouts.styles")'
              )
         );
+    }
+
+    public function test_component_renders_tailwind_play_cdn_link_when_enabled_in_config()
+    {
+        config(['hyde.use_play_cdn' => true]);
+        $this->assertStringContainsString('<script src="https://cdn.tailwindcss.com?plugins=typography"></script>', $this->renderTestView());
     }
 
     public function test_component_renders_app_cdn_link_when_enabled_in_config()
@@ -83,8 +92,8 @@ class StylesComponentViewTest extends TestCase
 
     public function test_component_does_not_render_cdn_link_when_a_local_file_exists()
     {
-        Hyde::touch(('_media/hyde.css'));
+        Filesystem::touch('_media/hyde.css');
         $this->assertStringNotContainsString('https://cdn.jsdelivr.net/npm/hydefront', $this->renderTestView());
-        unlink(Hyde::path('_media/hyde.css'));
+        Filesystem::unlink('_media/hyde.css');
     }
 }

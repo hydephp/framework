@@ -1,8 +1,5 @@
-@php
-    /** @var \Hyde\Framework\Models\Pages\MarkdownPost $post */
-@endphp
-
-<article class="mt-4 mb-8" itemscope itemtype="http://schema.org/Article">
+@php /** @var \Hyde\Pages\MarkdownPost $post */ @endphp
+<article class="mt-4 mb-8" itemscope itemtype="https://schema.org/Article">
     <meta itemprop="identifier" content="{{ $post->identifier }}">
     @if(Hyde::hasSiteUrl())
         <meta itemprop="url" content="{{ Hyde::url('posts/' . $post->identifier) }}">
@@ -11,7 +8,7 @@
     <header>
         <a href="posts/{{ Hyde::formatLink($post->identifier . '.html') }}" class="block w-fit">
             <h2 class="text-2xl font-bold text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white transition-colors duration-75">
-                {{ $post->get('title') ?? $post->title }}
+                {{ $post->data('title') ?? $post->title }}
             </h2>
         </a>
     </header>
@@ -24,7 +21,7 @@
 		</span>
         @endisset
         @isset($post->author)
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
 			<span class="opacity-75">by</span>
 			<span itemprop="name">
 				{{ $post->author->name ?? $post->author->username }}
@@ -33,10 +30,10 @@
         @endisset
     </footer>
 
-    @if($post->get('description') !== null)
+    @if($post->data('description') !== null)
         <section role="doc-abstract" aria-label="Excerpt">
             <p class="leading-relaxed my-1">
-                {{ $post->get('description') }}
+                {{ $post->data('description') }}
             </p>
         </section>
     @endisset

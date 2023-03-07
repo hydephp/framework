@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Views;
 
-use Hyde\Framework\Hyde;
-use Hyde\Framework\Models\Pages\MarkdownPost;
+use Hyde\Hyde;
+use Hyde\Pages\MarkdownPost;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\Blade;
 
@@ -24,7 +24,7 @@ class ArticleExcerptViewTest extends TestCase
     public function test_component_can_be_rendered()
     {
         $view = $this->renderTestView(MarkdownPost::make());
-        $this->assertStringContainsString('http://schema.org/Article', $view);
+        $this->assertStringContainsString('https://schema.org/Article', $view);
     }
 
     public function test_component_renders_post_data()

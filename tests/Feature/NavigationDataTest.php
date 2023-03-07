@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature;
 
-use Hyde\Framework\Contracts\FrontMatter\Support\NavigationSchema;
-use Hyde\Framework\Models\Navigation\NavigationData;
-use Hyde\Testing\TestCase;
+use Hyde\Framework\Features\Navigation\NavigationData;
+use Hyde\Markdown\Contracts\FrontMatter\SubSchemas\NavigationSchema;
+use Hyde\Testing\UnitTestCase;
+use ReflectionClass;
 
 /**
- * @covers \Hyde\Framework\Models\Navigation\NavigationData
+ * @covers \Hyde\Framework\Features\Navigation\NavigationData
  */
-class NavigationDataTest extends TestCase
+class NavigationDataTest extends UnitTestCase
 {
     protected array $array = [
         'label' => 'label',
-        'group' => 'group',
-        'hidden' => true,
         'priority' => 1,
+        'hidden' => true,
+        'group' => 'group',
     ];
 
     public function testClassMatchesSchema()
@@ -30,7 +31,7 @@ class NavigationDataTest extends TestCase
 
     public function test__construct()
     {
-        $navigationData = new NavigationData('label', 'group', true, 1);
+        $navigationData = new NavigationData('label', 1, true, 'group');
 
         $this->assertEquals('label', $navigationData->label);
         $this->assertEquals('group', $navigationData->group);
@@ -42,7 +43,7 @@ class NavigationDataTest extends TestCase
     {
         $navigationData = NavigationData::make($this->array);
 
-        $this->assertEquals($navigationData, new NavigationData('label', 'group', true, 1));
+        $this->assertEquals($navigationData, new NavigationData('label', 1, true, 'group'));
     }
 
     public function testToArray()
@@ -57,7 +58,7 @@ class NavigationDataTest extends TestCase
 
     protected function getImplementedSchema(string $class): array
     {
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
 
         $schema = [];
         foreach (get_class_vars($class) as $name => $void) {

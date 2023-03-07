@@ -2,29 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Framework\Foundation\Concerns;
+namespace Hyde\Foundation\Concerns;
 
-use Hyde\Framework\Foundation\FileCollection;
-use Hyde\Framework\Foundation\PageCollection;
-use Hyde\Framework\Foundation\RouteCollection;
-use Hyde\Framework\HydeKernel;
+use Hyde\Foundation\HydeKernel;
+use function ltrim;
+use function rtrim;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Framework\HydeKernel
+ * @see \Hyde\Foundation\HydeKernel
  */
 trait ManagesHydeKernel
 {
-    public function boot(): void
-    {
-        $this->booted = true;
-
-        $this->files = FileCollection::boot($this);
-        $this->pages = PageCollection::boot($this);
-        $this->routes = RouteCollection::boot($this);
-    }
-
     public static function getInstance(): HydeKernel
     {
         return static::$instance;
@@ -35,13 +25,53 @@ trait ManagesHydeKernel
         static::$instance = $instance;
     }
 
+    public function getBasePath(): string
+    {
+        return $this->basePath;
+    }
+
     public function setBasePath(string $basePath): void
     {
         $this->basePath = rtrim($basePath, '/\\');
     }
 
-    public function getBasePath(): string
+    public function getSourceRoot(): string
     {
-        return $this->basePath;
+        return $this->sourceRoot;
+    }
+
+    public function setSourceRoot(string $sourceRoot): void
+    {
+        $this->sourceRoot = $this->normalizeSourcePath($sourceRoot);
+    }
+
+    public function getOutputDirectory(): string
+    {
+        return $this->outputDirectory;
+    }
+
+    public function setOutputDirectory(string $outputDirectory): void
+    {
+        $this->outputDirectory = $this->normalizeSourcePath($outputDirectory);
+    }
+
+    public function getMediaDirectory(): string
+    {
+        return $this->mediaDirectory;
+    }
+
+    public function setMediaDirectory(string $mediaDirectory): void
+    {
+        $this->mediaDirectory = $this->normalizeSourcePath($mediaDirectory);
+    }
+
+    public function getMediaOutputDirectory(): string
+    {
+        return ltrim($this->getMediaDirectory(), '_');
+    }
+
+    protected function normalizeSourcePath(string $outputDirectory): string
+    {
+        return $this->pathToRelative(rtrim($outputDirectory, '/\\'));
     }
 }

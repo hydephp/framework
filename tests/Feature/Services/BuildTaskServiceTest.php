@@ -4,31 +4,34 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Services;
 
-use Hyde\Framework\Concerns\AbstractBuildTask;
-use Hyde\Framework\Hyde;
+use Exception;
+use Hyde\Framework\Features\BuildTasks\BuildTask;
+use Hyde\Framework\Features\BuildTasks\PostBuildTask;
 use Hyde\Framework\Services\BuildTaskService;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 use Illuminate\Support\Facades\File;
 
 /**
  * @covers \Hyde\Framework\Services\BuildTaskService
- * @covers \Hyde\Framework\Concerns\AbstractBuildTask
+ * @covers \Hyde\Framework\Features\BuildTasks\BuildTask
+ * @covers \Hyde\Framework\Features\BuildTasks\PreBuildTask
+ * @covers \Hyde\Framework\Features\BuildTasks\PostBuildTask
  * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateSitemap
  * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateRssFeed
  * @covers \Hyde\Framework\Actions\PostBuildTasks\GenerateSearch
  *
- * @backupStaticAttributes enabled
+ * @see \Hyde\Framework\Testing\Unit\BuildTaskServiceUnitTest
  */
 class BuildTaskServiceTest extends TestCase
 {
     /**
-     * @covers \Hyde\Framework\Commands\HydeBuildSiteCommand::runPostBuildActions
+     * @covers \Hyde\Console\Commands\BuildSiteCommand::runPostBuildActions
      */
-    public function test_build_command_can_run_post_build_tasks()
+    public function test_build_command_can_run_build_tasks()
     {
-        config(['site.url' => 'foo']);
-
         $this->artisan('build')
+            ->expectsOutputToContain('Removing all files from build directory')
             ->expectsOutputToContain('Generating sitemap')
             ->expectsOutputToContain('Created _site/sitemap.xml')
             ->assertExitCode(0);
@@ -36,194 +39,120 @@ class BuildTaskServiceTest extends TestCase
         File::cleanDirectory(Hyde::path('_site'));
     }
 
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runPostBuildTasks
-     */
     public function test_run_post_build_tasks_runs_configured_tasks_does_nothing_if_no_tasks_are_configured()
     {
-        BuildTaskService::$postBuildTasks = [];
-
         $service = $this->makeService();
         $service->runPostBuildTasks();
 
         $this->expectOutputString('');
     }
 
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::getPostBuildTasks
-     */
     public function test_get_post_build_tasks_returns_array_merged_with_config()
     {
-        BuildTaskService::$postBuildTasks = ['foo'];
-        config(['hyde.post_build_tasks' => ['bar']]);
+        config(['hyde.build_tasks' => [SecondBuildTask::class]]);
 
         $service = $this->makeService();
-        $this->assertEquals(['bar', 'foo'], $service->getPostBuildTasks());
+        $tasks = $service->getRegisteredTasks();
+
+        $this->assertEquals(1, count(array_keys($tasks, SecondBuildTask::class)));
     }
 
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::getPostBuildTasks
-     */
     public function test_get_post_build_tasks_merges_duplicate_keys()
     {
-        BuildTaskService::$postBuildTasks = ['foo'];
-        config(['hyde.post_build_tasks' => ['foo']]);
+        app(BuildTaskService::class)->registerTask(TestBuildTask::class);
+        config(['hyde.build_tasks' => [TestBuildTask::class]]);
 
         $service = $this->makeService();
-        $this->assertEquals(['foo'], $service->getPostBuildTasks());
+        $tasks = $service->getRegisteredTasks();
+
+        $this->assertEquals(1, count(array_keys($tasks, TestBuildTask::class)));
     }
 
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runPostBuildTasks
-     */
     public function test_run_post_build_tasks_runs_configured_tasks()
     {
         $task = $this->makeTask();
 
-        BuildTaskService::$postBuildTasks = [get_class($task)];
+        app(BuildTaskService::class)->registerTask(get_class($task));
 
         $service = $this->makeService();
         $service->runPostBuildTasks();
 
-        $this->expectOutputString('AbstractBuildTask');
-    }
-
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::run
-     */
-    public function test_run_method_runs_task_by_class_name_input_and_returns_self()
-    {
-        $task = $this->makeTask();
-
-        $service = $this->makeService();
-        $return = $service->run(get_class($task));
-
-        $this->expectOutputString('AbstractBuildTask');
-
-        $this->assertSame($service, $return);
-    }
-
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runIf
-     */
-    public function test_run_if_runs_task_if_supplied_boolean_is_true()
-    {
-        $task = $this->makeTask();
-
-        $service = $this->makeService();
-        $return = $service->runIf(get_class($task), true);
-
-        $this->expectOutputString('AbstractBuildTask');
-
-        $this->assertSame($service, $return);
-    }
-
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runIf
-     */
-    public function test_run_if_does_not_run_task_if_supplied_boolean_is_false()
-    {
-        $task = $this->makeTask();
-
-        $service = $this->makeService();
-        $return = $service->runIf(get_class($task), false);
-
-        $this->expectOutputString('');
-
-        $this->assertSame($service, $return);
-    }
-
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runIf
-     */
-    public function test_run_if_runs_task_if_supplied_callable_returns_true()
-    {
-        $task = $this->makeTask();
-
-        $service = $this->makeService();
-        $return = $service->runIf(get_class($task), function () {
-            return true;
-        });
-
-        $this->expectOutputString('AbstractBuildTask');
-
-        $this->assertSame($service, $return);
-    }
-
-    /**
-     * @covers \Hyde\Framework\Services\BuildTaskService::runIf
-     */
-    public function test_run_if_does_not_run_task_if_supplied_callable_returns_false()
-    {
-        $task = $this->makeTask();
-
-        $service = $this->makeService();
-        $return = $service->runIf(get_class($task), function () {
-            return false;
-        });
-
-        $this->expectOutputString('');
-
-        $this->assertSame($service, $return);
+        $this->expectOutputString('BuildTask');
     }
 
     public function test_exception_handler_shows_error_message_and_exits_with_code_1_without_throwing_exception()
     {
-        $return = (new class extends AbstractBuildTask
+        $return = (new class extends BuildTask
         {
-            public function run(): void
+            public function handle(): void
             {
-                throw new \Exception('foo', 1);
+                throw new Exception('foo', 1);
             }
-        })->handle();
+        })->run();
 
         $this->assertEquals(1, $return);
     }
 
     public function test_find_tasks_in_app_directory_method_discovers_tasks_in_app_directory()
     {
-        File::makeDirectory(Hyde::path('app/Actions'));
-        Hyde::touch('app/Actions/FooBuildTask.php');
+        $this->directory('app/Actions');
+        $this->file('app/Actions/FooBuildTask.php', $this->classFileStub());
 
-        $this->assertEquals(['App\Actions\FooBuildTask'], BuildTaskService::findTasksInAppDirectory());
-        File::deleteDirectory(Hyde::path('app/Actions'));
+        $this->assertContains('App\Actions\FooBuildTask', (new BuildTaskService())->getRegisteredTasks());
     }
 
     public function test_automatically_discovered_tasks_can_be_executed()
     {
-        File::makeDirectory(Hyde::path('app/Actions'));
-        File::put(Hyde::path('app/Actions/FooBuildTask.php'), '<?php
-
-namespace App\Actions;
-
-use Hyde\Framework\Concerns\AbstractBuildTask;
-
-class FooBuildTask extends AbstractBuildTask {
-    public function run(): void {
-        echo "FooBuildTask";
-    }
-}');
+        $this->directory('app/Actions');
+        $this->file('app/Actions/FooBuildTask.php', $this->classFileStub());
 
         $service = $this->makeService();
         $service->runPostBuildTasks();
 
         $this->expectOutputString('FooBuildTask');
-        File::deleteDirectory(Hyde::path('app/Actions'));
     }
 
     protected function makeService(): BuildTaskService
     {
-        return new BuildTaskService();
+        return app(BuildTaskService::class);
     }
 
-    protected function makeTask(): AbstractBuildTask
+    protected function makeTask(): BuildTask
     {
-        return new class extends AbstractBuildTask
-        {
-            public function run(): void
-            {
-                echo 'AbstractBuildTask';
+        return new TestBuildTask();
+    }
+
+    protected function classFileStub(): string
+    {
+        return <<<'PHP'
+        <?php
+        
+        namespace App\Actions;
+        
+        use Hyde\Framework\Features\BuildTasks\PostBuildTask;
+        
+        class FooBuildTask extends PostBuildTask {
+            public function handle(): void {
+                echo "FooBuildTask";
             }
-        };
+        }
+
+        PHP;
+    }
+}
+
+class TestBuildTask extends PostBuildTask
+{
+    public function handle(): void
+    {
+        echo 'BuildTask';
+    }
+}
+
+class SecondBuildTask extends PostBuildTask
+{
+    public function handle(): void
+    {
+        echo 'SecondBuildTask';
     }
 }

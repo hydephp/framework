@@ -4,93 +4,194 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Concerns\HydePage;
-use Hyde\Framework\Models\Navigation\NavItem;
-use Hyde\Framework\Models\Support\Route;
-use Hyde\Testing\TestCase;
+use Hyde\Foundation\Facades\Routes;
+use Hyde\Framework\Exceptions\RouteNotFoundException;
+use Hyde\Framework\Features\Navigation\NavItem;
+use Hyde\Pages\InMemoryPage;
+use Hyde\Pages\MarkdownPage;
+use Hyde\Support\Facades\Render;
+use Hyde\Support\Models\RenderData;
+use Hyde\Support\Models\Route;
+use Hyde\Testing\UnitTestCase;
+use Mockery;
 
 /**
  * This unit test covers the basics of the NavItem class.
  * For the full feature test, see the NavigationMenuTest class.
  *
- * @covers \Hyde\Framework\Models\Navigation\NavItem
+ * @covers \Hyde\Framework\Features\Navigation\NavItem
+ *
+ * @see \Hyde\Framework\Testing\Unit\NavItemIsCurrentHelperTest
  */
-class NavItemTest extends TestCase
+class NavItemTest extends UnitTestCase
 {
+    public static function setUpBeforeClass(): void
+    {
+        self::$hasSetUpKernel = false;
+
+        self::needsKernel();
+        self::mockConfig();
+    }
+
+    protected function setUp(): void
+    {
+        Render::swap(new RenderData());
+    }
+
     public function test__construct()
     {
-        $route = $this->createMock(Route::class);
-        $route->method('getSourceModel')->willReturn($this->createMock(HydePage::class));
-        $route->method('getLink')->willReturn('/');
+        $route = new Route(new MarkdownPage());
+        $item = new NavItem($route, 'Test', 500);
 
-        $item = new NavItem($route, 'Test', 500, true);
+        $this->assertSame($route->getLink(), $item->destination);
+    }
 
-        $this->assertSame($route, $item->route);
-        $this->assertSame('Test', $item->label);
-        $this->assertSame(500, $item->priority);
-        $this->assertTrue($item->hidden);
+    public function testGetDestination()
+    {
+        $navItem = new NavItem(new Route(new InMemoryPage('foo')), 'Page', 500);
+        $this->assertSame('foo.html', $navItem->getDestination());
+    }
+
+    public function testGetLabel()
+    {
+        $navItem = new NavItem(new Route(new InMemoryPage('foo')), 'Page', 500);
+        $this->assertSame('Page', $navItem->getLabel());
+    }
+
+    public function testGetPriority()
+    {
+        $navItem = new NavItem(new Route(new InMemoryPage('foo')), 'Page', 500);
+        $this->assertSame(500, $navItem->getPriority());
+    }
+
+    public function testGetGroup()
+    {
+        $navItem = new NavItem(new Route(new InMemoryPage('foo')), 'Page', 500);
+        $this->assertNull($navItem->getGroup());
     }
 
     public function testFromRoute()
     {
-        $route = Route::get('index');
+        $route = new Route(new MarkdownPage());
         $item = NavItem::fromRoute($route);
 
-        $this->assertSame($route, $item->route);
-        $this->assertSame('Home', $item->label);
-        $this->assertSame(0, $item->priority);
-        $this->assertFalse($item->hidden);
-    }
-
-    public function testResolveLink()
-    {
-        $route = Route::get('index');
-        $item = NavItem::fromRoute($route);
-
-        $this->assertSame('index.html', $item->resolveLink());
+        $this->assertSame($route->getLink(), $item->destination);
     }
 
     public function test__toString()
     {
-        $route = Route::get('index');
-        $item = NavItem::fromRoute($route);
+        Render::shouldReceive('getCurrentPage')->once()->andReturn('index');
 
-        $this->assertSame('index.html', (string) $item);
+        $this->assertSame('index.html', (string) NavItem::fromRoute(Routes::get('index')));
     }
 
-    public function testToLink()
+    public function testForLink()
     {
-        $item = NavItem::toLink('foo', 'bar', 10);
+        $item = NavItem::forLink('foo', 'bar');
 
-        $this->assertSame('foo', $item->href);
+        $this->assertSame('foo', $item->destination);
         $this->assertSame('bar', $item->label);
-        $this->assertSame(10, $item->priority);
-        $this->assertFalse($item->hidden);
+        $this->assertSame(500, $item->priority);
     }
 
-    public function testToRoute()
+    public function testForLinkWithCustomPriority()
     {
-        $route = Route::get('index');
-        $item = NavItem::toRoute($route, 'foo', 10);
+        $this->assertSame(100, NavItem::forLink('foo', 'bar', 100)->priority);
+    }
 
-        $this->assertSame($route, $item->route);
+    public function testForRoute()
+    {
+        $route = Routes::get('404');
+        $item = NavItem::forRoute($route, 'foo');
+
+        $this->assertSame($route->getLink(), $item->destination);
         $this->assertSame('foo', $item->label);
-        $this->assertSame(10, $item->priority);
-        $this->assertFalse($item->hidden);
+        $this->assertSame(999, $item->priority);
     }
 
-    public function testIsCurrentRoute()
+    public function testForIndexRoute()
     {
-        $route = Route::get('index');
-        $item = NavItem::fromRoute($route);
+        $route = Routes::get('index');
+        $item = NavItem::forRoute($route, 'foo');
 
-        $this->assertTrue($item->isCurrent($route->getSourceModel()));
+        $this->assertSame($route->getLink(), $item->destination);
+        $this->assertSame('foo', $item->label);
+        $this->assertSame(0, $item->priority);
     }
 
-    public function testIsCurrentLink()
+    public function testForRouteWithRouteKey()
     {
-        $item = NavItem::toLink('index.html', 'Home');
+        $this->assertEquals(
+            NavItem::forRoute(Routes::get('index'), 'foo'),
+            NavItem::forRoute('index', 'foo')
+        );
+    }
 
-        $this->assertTrue($item->isCurrent(Route::get('index')->getSourceModel()));
+    public function testForRouteWithMissingRouteKey()
+    {
+        $this->expectException(RouteNotFoundException::class);
+        NavItem::forRoute('foo', 'foo');
+    }
+
+    public function testForRouteWithCustomPriority()
+    {
+        $this->assertSame(100, NavItem::forRoute(Routes::get('index'), 'foo', 100)->priority);
+    }
+
+    public function testRouteBasedNavItemDestinationsAreResolvedRelatively()
+    {
+        Render::swap(Mockery::mock(RenderData::class, [
+            'getCurrentRoute' => (new Route(new InMemoryPage('foo'))),
+            'getCurrentPage' => 'foo',
+        ]));
+
+        $this->assertSame('foo.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo'))));
+        $this->assertSame('foo/bar.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo/bar'))));
+
+        Render::swap(Mockery::mock(RenderData::class, [
+            'getCurrentRoute' => (new Route(new InMemoryPage('foo/bar'))),
+            'getCurrentPage' => 'foo/bar',
+        ]));
+
+        $this->assertSame('../foo.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo'))));
+        $this->assertSame('../foo/bar.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo/bar'))));
+
+        Render::swap(Mockery::mock(RenderData::class, [
+            'getCurrentRoute' => (new Route(new InMemoryPage('foo/bar/baz'))),
+            'getCurrentPage' => 'foo/bar/baz',
+        ]));
+
+        $this->assertSame('../../foo.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo'))));
+        $this->assertSame('../../foo/bar.html', (string) NavItem::fromRoute(new Route(new InMemoryPage('foo/bar'))));
+    }
+
+    public function testIsCurrent()
+    {
+        Render::swap(Mockery::mock(RenderData::class, [
+            'getCurrentRoute' => (new Route(new InMemoryPage('foo'))),
+            'getCurrentPage' => 'foo',
+        ]));
+        $this->assertTrue(NavItem::fromRoute(new Route(new InMemoryPage('foo')))->isCurrent());
+        $this->assertFalse(NavItem::fromRoute(new Route(new InMemoryPage('bar')))->isCurrent());
+    }
+
+    public function testGetGroupWithNoGroup()
+    {
+        $this->assertNull((new NavItem(new Route(new MarkdownPage()), 'Test', 500))->getGroup());
+    }
+
+    public function testGetGroupWithGroup()
+    {
+        $this->assertSame('foo', (new NavItem(new Route(new MarkdownPage()), 'Test', 500, 'foo'))->getGroup());
+    }
+
+    public function testGetGroupFromRouteWithGroup()
+    {
+        $this->assertSame('foo', NavItem::fromRoute(new Route(new MarkdownPage(matter: ['navigation.group' => 'foo'])))->getGroup());
+    }
+
+    public function testGetGroupForRouteWithGroup()
+    {
+        $this->assertSame('foo', NavItem::forRoute(new Route(new MarkdownPage(matter: ['navigation.group' => 'foo'])), 'foo')->getGroup());
     }
 }

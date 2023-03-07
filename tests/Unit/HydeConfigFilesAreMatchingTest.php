@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Framework\Hyde;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
-use PHPUnit\Framework\Constraint\IsEqual;
 
 /**
  * Test that the framework configuration files are matching the published ones.
+ *
+ * @see \Hyde\Framework\Testing\Unit\ConfigFileTest
  */
 class HydeConfigFilesAreMatchingTest extends TestCase
 {
@@ -18,14 +19,6 @@ class HydeConfigFilesAreMatchingTest extends TestCase
         $this->assertFileEqualsIgnoringNewlineType(
             Hyde::path('config/hyde.php'),
             Hyde::vendorPath('config/hyde.php')
-        );
-    }
-
-    public function test_site_config_files_are_matching()
-    {
-        $this->assertFileEqualsIgnoringNewlineType(
-            Hyde::path('config/site.php'),
-            Hyde::vendorPath('config/site.php')
         );
     }
 
@@ -45,13 +38,11 @@ class HydeConfigFilesAreMatchingTest extends TestCase
         );
     }
 
-    protected function assertFileEqualsIgnoringNewlineType(string $expected, string $actual, string $message = ''): void
+    protected function assertFileEqualsIgnoringNewlineType(string $expected, string $actual): void
     {
-        static::assertFileExists($expected, $message);
-        static::assertFileExists($actual, $message);
+        static::assertFileExists($expected);
+        static::assertFileExists($actual);
 
-        $constraint = new IsEqual(str_replace("\r", '', file_get_contents($expected)));
-
-        static::assertThat(str_replace("\r", '', file_get_contents($actual)), $constraint, $message);
+        $this->assertSame(file_get_contents($expected), file_get_contents($actual));
     }
 }

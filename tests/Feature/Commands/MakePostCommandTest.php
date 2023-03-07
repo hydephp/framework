@@ -4,37 +4,16 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Feature\Commands;
 
-use Hyde\Framework\Hyde;
+use Hyde\Facades\Filesystem;
+use Hyde\Hyde;
 use Hyde\Testing\TestCase;
 
 class MakePostCommandTest extends TestCase
 {
-    /**
-     * Get the path of the test Markdown file.
-     *
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return Hyde::path('_posts/test-post.md');
-    }
-
-    /**
-     * Clean up after tests by removing the created file.
-     *
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        unlinkIfExists($this->getPath());
-
-        parent::tearDown();
-    }
-
     public function test_command_has_expected_output_and_creates_valid_file()
     {
         // Assert that no old file exists which would cause issues
-        $this->assertFileDoesNotExist($this->getPath());
+        $this->assertFileDoesNotExist(Hyde::path('_posts/test-post.md'));
 
         $this->artisan('make:post')
             ->expectsQuestion('What is the title of the post?', 'Test Post')
@@ -42,20 +21,30 @@ class MakePostCommandTest extends TestCase
             ->expectsQuestion('What is your (the author\'s) name?', 'PHPUnit')
             ->expectsQuestion('What is the primary category of the post?', 'general')
             ->expectsOutput('Creating a post with the following details:')
+
+            ->expectsOutput('Title: Test Post')
+            ->expectsOutput('Description: A short description')
+            ->expectsOutput('Category: general')
+            ->expectsOutput('Author: PHPUnit')
+            ->expectsOutputToContain('Date: '.date('Y-m-d')) // Don't check min/sec to avoid flaky tests
+            ->expectsOutput('Identifier: test-post')
+
             ->expectsConfirmation('Do you wish to continue?', 'yes')
 
             ->assertExitCode(0);
 
-        $this->assertFileExists($this->getPath());
+        $this->assertFileExists(Hyde::path('_posts/test-post.md'));
         $this->assertStringContainsString(
             "title: 'Test Post'",
-            file_get_contents($this->getPath())
+            file_get_contents(Hyde::path('_posts/test-post.md'))
         );
+
+        Filesystem::unlink('_posts/test-post.md');
     }
 
     public function test_that_files_are_not_overwritten_when_force_flag_is_not_set()
     {
-        file_put_contents($this->getPath(), 'This should not be overwritten');
+        file_put_contents(Hyde::path('_posts/test-post.md'), 'This should not be overwritten');
         $this->artisan('make:post')
             ->expectsQuestion('What is the title of the post?', 'Test Post')
             ->expectsQuestion('Write a short post excerpt/description', 'A short description')
@@ -70,13 +59,15 @@ class MakePostCommandTest extends TestCase
 
         $this->assertStringContainsString(
             'This should not be overwritten',
-            file_get_contents($this->getPath())
+            file_get_contents(Hyde::path('_posts/test-post.md'))
         );
+
+        Filesystem::unlink('_posts/test-post.md');
     }
 
     public function test_that_files_are_overwritten_when_force_flag_is_set()
     {
-        file_put_contents($this->getPath(), 'This should be overwritten');
+        file_put_contents(Hyde::path('_posts/test-post.md'), 'This should be overwritten');
         $this->artisan('make:post --force')
             ->expectsQuestion('What is the title of the post?', 'Test Post')
             ->expectsQuestion('Write a short post excerpt/description', 'A short description')
@@ -89,12 +80,14 @@ class MakePostCommandTest extends TestCase
 
         $this->assertStringNotContainsString(
             'This should be overwritten',
-            file_get_contents($this->getPath())
+            file_get_contents(Hyde::path('_posts/test-post.md'))
         );
         $this->assertStringContainsString(
             "title: 'Test Post'",
-            file_get_contents($this->getPath())
+            file_get_contents(Hyde::path('_posts/test-post.md'))
         );
+
+        Filesystem::unlink('_posts/test-post.md');
     }
 
     public function test_that_title_can_be_specified_in_command_signature()
@@ -107,6 +100,8 @@ class MakePostCommandTest extends TestCase
             ->expectsConfirmation('Do you wish to continue?', 'yes')
 
             ->assertExitCode(0);
+
+        Filesystem::unlink('_posts/test-post.md');
     }
 
     public function test_that_command_can_be_canceled()
@@ -120,6 +115,6 @@ class MakePostCommandTest extends TestCase
         ->expectsOutput('Aborting.')
         ->assertExitCode(130);
 
-        $this->assertFileDoesNotExist($this->getPath());
+        $this->assertFileDoesNotExist(Hyde::path('_posts/test-post.md'));
     }
 }

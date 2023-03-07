@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Hyde\Framework\Foundation\Concerns;
+namespace Hyde\Foundation\Concerns;
 
 /**
  * @internal Single-use trait for the HydeKernel class.
  *
- * @see \Hyde\Framework\HydeKernel
+ * @see \Hyde\Foundation\HydeKernel
  */
 trait ForwardsHyperlinks
 {
@@ -21,18 +21,23 @@ trait ForwardsHyperlinks
         return $this->hyperlinks->relativeLink($destination);
     }
 
-    public function image(string $name, bool $preferQualifiedUrl = false): string
+    public function mediaLink(string $destination, bool $validate = false): string
     {
-        return $this->hyperlinks->image($name, $preferQualifiedUrl);
+        return $this->hyperlinks->mediaLink($destination, $validate);
     }
 
-    public function hasSiteUrl(): bool
+    public function asset(string $name, bool $preferQualifiedUrl = false): string
     {
-        return $this->hyperlinks->hasSiteUrl();
+        return $this->hyperlinks->asset($name, $preferQualifiedUrl);
     }
 
     public function url(string $path = ''): string
     {
         return $this->hyperlinks->url($path);
+    }
+
+    public function hasSiteUrl(): bool
+    {
+        return $this->hyperlinks->hasSiteUrl();
     }
 }
