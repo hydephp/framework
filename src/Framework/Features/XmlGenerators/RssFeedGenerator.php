@@ -52,9 +52,9 @@ class RssFeedGenerator extends BaseXmlGenerator
 
     protected function addDynamicItemData(SimpleXMLElement $item, MarkdownPost $post): void
     {
-        if (isset($post->canonicalUrl)) {
-            $this->addChild($item, 'link', $post->canonicalUrl);
-            $this->addChild($item, 'guid', $post->canonicalUrl);
+        if ($post->getCanonicalUrl() !== null) {
+            $this->addChild($item, 'link', $post->getCanonicalUrl());
+            $this->addChild($item, 'guid', $post->getCanonicalUrl());
         }
 
         if (isset($post->date)) {
@@ -110,11 +110,11 @@ class RssFeedGenerator extends BaseXmlGenerator
 
     public static function getFilename(): string
     {
-        return Config::getString('hyde.rss_filename', 'feed.xml');
+        return Config::getString('hyde.rss.filename', 'feed.xml');
     }
 
     public static function getDescription(): string
     {
-        return Config::getString('hyde.rss_description', Site::name().' RSS Feed');
+        return Config::getString('hyde.rss.description', Site::name().' RSS Feed');
     }
 }
