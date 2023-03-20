@@ -33,13 +33,13 @@ jobs:
         if: "github.ref != 'refs/heads/master'"
         run: git clone -b develop https://github.com/hydephp/hyde.git
 
-      - name: Require latest master version
+      - name: Require latest framework version
         if: "github.ref == 'refs/heads/master'"
         run: cd hyde && composer require hyde/framework:dev-master --no-install
 
-      - name: Require latest development version
+      - name: Require proper framework version
         if: "github.ref != 'refs/heads/master'"
-        run: cd hyde && composer require hyde/framework:dev-develop --no-install
+        run: cd hyde && composer require hyde/framework:dev-${{ github.head_ref }} --no-install
 
       - name: Install Dependencies
         run: |
