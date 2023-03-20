@@ -39,7 +39,7 @@ jobs:
 
       - name: Require latest development framework version
         if: "github.ref == 'refs/heads/develop'"
-        run: cd hyde && composer require hyde/framework:dev-master --no-install
+        run: cd hyde && composer require hyde/framework:dev-develop --no-install
 
       - name: Require pull request framework version
         if: "github.ref != 'refs/heads/master' && github.ref != 'refs/heads/develop'"
