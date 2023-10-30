@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Http;
 use Hyde\Framework\Exceptions\FileNotFoundException;
 use Hyde\Markdown\Contracts\FrontMatter\SubSchemas\FeaturedImageSchema;
 
-use function in_array;
 use function array_key_exists;
 use function array_flip;
 use function file_exists;
@@ -217,7 +216,7 @@ class FeaturedImage implements Stringable, FeaturedImageSchema
         $storagePath = Hyde::mediaPath($this->source);
 
         if (! file_exists($storagePath)) {
-            throw new FileNotFoundException(sprintf('Image at %s does not exist', Hyde::pathToRelative($storagePath)));
+            throw new FileNotFoundException(customMessage: sprintf('Featured image [%s] not found.', Hyde::pathToRelative($storagePath)));
         }
 
         return filesize($storagePath);
@@ -225,10 +224,9 @@ class FeaturedImage implements Stringable, FeaturedImageSchema
 
     protected function getContentLengthForRemoteImage(): int
     {
-        // TODO: We may want to globalize this check in the config, but for now,
-        // we just check the server arguments and skip remote requests if
-        // the --no-api flag is present (in the build command call)
-        if (! (isset($_SERVER['argv']) && in_array('--no-api', $_SERVER['argv'], true))) {
+        // Check if the --no-api flag is set when running the build command, and if so, skip the API call.
+        if (Config::getBool('hyde.api_calls', true)) {
+            /** @var string[][] $headers */
             $headers = Http::withHeaders([
                 'User-Agent' => Config::getString('hyde.http_user_agent', 'RSS Request Client'),
             ])->head($this->getSource())->headers();

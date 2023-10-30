@@ -20,9 +20,16 @@ use function implode;
  */
 class MetadataBag implements Htmlable
 {
+    /** @var array<string, MetadataElementContract> */
     protected array $links = [];
+
+    /** @var array<string, MetadataElementContract> */
     protected array $metadata = [];
+
+    /** @var array<string, MetadataElementContract> */
     protected array $properties = [];
+
+    /** @var array<string> */
     protected array $generics = [];
 
     public function toHtml(): string
@@ -47,19 +54,12 @@ class MetadataBag implements Htmlable
 
     public function add(MetadataElementContract|string $element): static
     {
-        if ($element instanceof LinkElement) {
-            return $this->addElement('links', $element);
-        }
-
-        if ($element instanceof MetadataElement) {
-            return $this->addElement('metadata', $element);
-        }
-
-        if ($element instanceof OpenGraphElement) {
-            return $this->addElement('properties', $element);
-        }
-
-        return $this->addGenericElement($element);
+        return match (true) {
+            $element instanceof LinkElement => $this->addElement('links', $element),
+            $element instanceof MetadataElement => $this->addElement('metadata', $element),
+            $element instanceof OpenGraphElement => $this->addElement('properties', $element),
+            default => $this->addGenericElement((string) $element),
+        };
     }
 
     protected function addElement(string $type, MetadataElementContract $element): static
@@ -76,12 +76,15 @@ class MetadataBag implements Htmlable
         return $this;
     }
 
+    /** @return array<string, MetadataElementContract> */
     protected function getPrefixedArray(string $type): array
     {
+        /** @var array<string, MetadataElementContract> $bag */
+        $bag = $this->{$type};
+
         $array = [];
 
-        /** @var MetadataElementContract $element */
-        foreach ($this->{$type} as $key => $element) {
+        foreach ($bag as $key => $element) {
             $array["$type:$key"] = $element;
         }
 

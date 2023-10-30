@@ -89,9 +89,8 @@ class NavigationDataFactory extends Concerns\PageDataFactory implements Navigati
     {
         return $this->isInstanceOf(MarkdownPost::class)
             || $this->searchForHiddenInFrontMatter()
-            || in_array($this->routeKey, Config::getArray('hyde.navigation.exclude', ['404']))
-            || (! $this->isInstanceOf(DocumentationPage::class) && $this->pageIsInSubdirectory() && ($this->getSubdirectoryConfiguration() === 'hidden'))
-            && (basename($this->identifier) !== 'index');
+            || $this->isPageHiddenInNavigationConfiguration()
+            || $this->isNonDocumentationPageInHiddenSubdirectory();
     }
 
     protected function makePriority(): int
@@ -119,6 +118,19 @@ class NavigationDataFactory extends Concerns\PageDataFactory implements Navigati
             ?? $this->invert($this->getMatter('navigation.visible'));
     }
 
+    private function isPageHiddenInNavigationConfiguration(): ?bool
+    {
+        return in_array($this->routeKey, Config::getArray('hyde.navigation.exclude', ['404']));
+    }
+
+    private function isNonDocumentationPageInHiddenSubdirectory(): bool
+    {
+        return ! $this->isInstanceOf(DocumentationPage::class)
+            && $this->pageIsInSubdirectory()
+            && $this->getSubdirectoryConfiguration() === 'hidden'
+            && basename($this->identifier) !== 'index';
+    }
+
     private function searchForPriorityInFrontMatter(): ?int
     {
         return $this->getMatter('navigation.priority')
@@ -127,10 +139,13 @@ class NavigationDataFactory extends Concerns\PageDataFactory implements Navigati
 
     private function searchForLabelInConfig(): ?string
     {
-        return Config::getArray('hyde.navigation.labels', [
+        /** @var array<string, string> $config */
+        $config = Config::getArray('hyde.navigation.labels', [
             'index' => 'Home',
             DocumentationPage::homeRouteName() => 'Docs',
-        ])[$this->routeKey] ?? null;
+        ]);
+
+        return $config[$this->routeKey] ?? null;
     }
 
     private function searchForPriorityInConfigs(): ?int
@@ -148,19 +163,25 @@ class NavigationDataFactory extends Concerns\PageDataFactory implements Navigati
         // Adding an offset makes so that pages with a front matter priority that is lower can be shown first.
         // This is all to make it easier to mix ways of adding priorities.
 
+        /** @var array<string> $config */
+        $config = Config::getArray('docs.sidebar_order', []);
+
         return $this->offset(
-            array_flip(Config::getArray('docs.sidebar_order', []))[$this->identifier] ?? null,
+            array_flip($config)[$this->identifier] ?? null,
             self::CONFIG_OFFSET
         );
     }
 
     private function searchForPriorityInNavigationConfig(): ?int
     {
-        return Config::getArray('hyde.navigation.order', [
+        /** @var array<string, int> $config */
+        $config = Config::getArray('hyde.navigation.order', [
             'index' => 0,
             'posts' => 10,
             'docs/index' => 100,
-        ])[$this->routeKey] ?? null;
+        ]);
+
+        return $config[$this->routeKey] ?? null;
     }
 
     private function canUseSubdirectoryForGroups(): bool
@@ -189,6 +210,7 @@ class NavigationDataFactory extends Concerns\PageDataFactory implements Navigati
         return Config::getString('hyde.navigation.subdirectories', 'hidden');
     }
 
+    /** @param class-string $class */
     protected function isInstanceOf(string $class): bool
     {
         return is_a($this->pageClass, $class, true);

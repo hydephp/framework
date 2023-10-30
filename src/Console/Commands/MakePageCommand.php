@@ -9,7 +9,7 @@ use Hyde\Framework\Exceptions\UnsupportedPageTypeException;
 use Hyde\Pages\BladePage;
 use Hyde\Pages\DocumentationPage;
 use Hyde\Pages\MarkdownPage;
-use LaravelZero\Framework\Commands\Command;
+use Hyde\Console\Concerns\Command;
 
 use function strtolower;
 use function ucfirst;
@@ -80,7 +80,7 @@ class MakePageCommand extends Command
     protected function getTitle(): string
     {
         return $this->argument('title')
-            ?? $this->ask('What is the title of the page?')
+            ?? $this->askForString('What is the title of the page?')
             ?? 'My New Page';
     }
 

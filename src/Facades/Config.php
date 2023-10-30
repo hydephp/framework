@@ -7,6 +7,7 @@ namespace Hyde\Facades;
 use TypeError;
 
 use function sprintf;
+use function call_user_func;
 
 /**
  * An extension of the Laravel Config facade with extra
@@ -45,6 +46,7 @@ class Config extends \Illuminate\Support\Facades\Config
     /** @experimental Could possibly be merged by allowing null returns if default is null? Preferably with generics so the type is matched by IDE support. */
     public static function getNullableString(string $key, string $default = null): ?string
     {
+        /** @var array|string|int|bool|float|null $value */
         $value = static::get($key, $default);
 
         if ($value === null) {
@@ -56,7 +58,7 @@ class Config extends \Illuminate\Support\Facades\Config
 
     protected static function validated(mixed $value, string $type, string $key): mixed
     {
-        if (! ("is_$type")($value)) {
+        if (! call_user_func("is_$type", $value)) {
             throw new TypeError(sprintf('%s(): Config value %s must be of type %s, %s given', __METHOD__, $key, $type, gettype($value)));
         }
 

@@ -7,7 +7,6 @@ namespace Hyde\Facades;
 use Hyde\Foundation\HydeKernel;
 use Hyde\Framework\Concerns\Internal\ForwardsIlluminateFilesystem;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 
 use function app;
 
@@ -63,7 +62,7 @@ class Filesystem
      *
      * @param  string  $pattern
      * @param  int  $flags
-     * @return \Illuminate\Support\Collection<string>
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public static function smartGlob(string $pattern, int $flags = 0): Collection
     {
