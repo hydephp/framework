@@ -17,10 +17,12 @@ use Hyde\Pages\DocumentationPage;
 use Hyde\Foundation\Facades\Routes;
 use Hyde\Framework\Concerns\TracksExecutionTime;
 
+use function filled;
 use function filemtime;
 use function in_array;
 use function date;
 use function time;
+use function str_starts_with;
 
 /**
  * @see https://www.sitemaps.org/protocol.html
@@ -57,7 +59,7 @@ class SitemapGenerator extends BaseXmlGenerator
     {
         $urlItem = $this->xmlElement->addChild('url');
 
-        $this->addChild($urlItem, 'loc', Hyde::url($route->getOutputPath()));
+        $this->addChild($urlItem, 'loc', $this->resolveRouteLink($route));
         $this->addChild($urlItem, 'lastmod', $this->getLastModDate($route->getSourcePath()));
         $this->addChild($urlItem, 'changefreq', 'daily');
 
@@ -102,5 +104,18 @@ class SitemapGenerator extends BaseXmlGenerator
     protected function getFormattedProcessingTime(): string
     {
         return (string) $this->getExecutionTimeInMs();
+    }
+
+    protected function resolveRouteLink(Route $route): string
+    {
+        $baseUrl = Config::getNullableString('hyde.url');
+
+        $canUseQualifiedUrl = filled($baseUrl) && ! str_starts_with($baseUrl, 'http://localhost');
+
+        if ($canUseQualifiedUrl) {
+            return Hyde::url($route->getOutputPath());
+        }
+
+        return $route->getLink();
     }
 }
