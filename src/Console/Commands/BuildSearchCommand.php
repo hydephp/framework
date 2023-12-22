@@ -8,7 +8,7 @@ use Hyde\Framework\Actions\PostBuildTasks\GenerateSearch;
 use LaravelZero\Framework\Commands\Command;
 
 /**
- * Hyde command to run the build process for the documentation search index.
+ * Run the build process for the documentation search index.
  */
 class BuildSearchCommand extends Command
 {
@@ -16,7 +16,7 @@ class BuildSearchCommand extends Command
     protected $signature = 'build:search';
 
     /** @var string */
-    protected $description = 'Generate the docs/search.json';
+    protected $description = 'Generate the documentation search index';
 
     public function handle(): int
     {

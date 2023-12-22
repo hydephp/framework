@@ -21,13 +21,16 @@ use function str_replace;
 use function basename;
 use function realpath;
 
+/**
+ * Change the source directory for your project.
+ */
 class ChangeSourceDirectoryCommand extends Command
 {
     /** @var string */
     protected $signature = 'change:sourceDirectory {name : The new source directory name }';
 
     /** @var string */
-    protected $description = 'Change the source directory for your project.';
+    protected $description = 'Change the source directory for your project';
 
     protected $hidden = true;
 

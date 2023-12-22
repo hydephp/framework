@@ -15,7 +15,7 @@ use function file_exists;
 use function sprintf;
 
 /**
- * Hyde command to display the list of site routes.
+ * Display the list of site routes.
  */
 class RouteListCommand extends Command
 {
@@ -23,7 +23,7 @@ class RouteListCommand extends Command
     protected $signature = 'route:list';
 
     /** @var string */
-    protected $description = 'Display all registered routes.';
+    protected $description = 'Display all the registered routes';
 
     public function handle(): int
     {

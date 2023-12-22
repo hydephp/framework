@@ -25,7 +25,7 @@ use function class_exists;
 class ServeCommand extends Command
 {
     /** @var string */
-    protected $signature = 'serve 
+    protected $signature = 'serve
         {--host= : <comment>[default: "localhost"]</comment>}}
         {--port= : <comment>[default: 8080]</comment>}
         {--save-preview= : Should the served page be saved to disk? (Overrides config setting)}
@@ -36,7 +36,7 @@ class ServeCommand extends Command
     ';
 
     /** @var string */
-    protected $description = 'Start the realtime compiler server.';
+    protected $description = 'Start the realtime compiler server';
 
     protected ConsoleOutput $console;
 

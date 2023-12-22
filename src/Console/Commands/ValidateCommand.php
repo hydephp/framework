@@ -13,6 +13,9 @@ use function microtime;
 use function sprintf;
 use function sizeof;
 
+/**
+ * Run a series of tests to validate your setup and help you optimize your site.
+ */
 class ValidateCommand extends Command
 {
     use TracksExecutionTime;
@@ -21,10 +24,10 @@ class ValidateCommand extends Command
     protected $signature = 'validate';
 
     /** @var string */
-    protected $description = 'Test and validate your project to optimize your site.';
+    protected $description = 'Test and validate your project to optimize your site';
 
     /** @var string */
-    protected $help = 'Run a series of tests to validate your setup and help you optimize your site.';
+    protected $help = 'Run a series of tests to validate your setup and help you optimize your site';
 
     protected ValidationService $service;
 
