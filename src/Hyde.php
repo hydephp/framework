@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde;
 
+use Hyde\Enums\Feature;
 use Hyde\Facades\Features;
 use Hyde\Foundation\HydeKernel;
 use Hyde\Foundation\Kernel\FileCollection;
@@ -57,7 +58,7 @@ use JetBrains\PhpStorm\Pure;
  * @method static HydeKernel getInstance()
  * @method static Filesystem filesystem()
  * @method static array getRegisteredExtensions()
- * @method static bool hasFeature(string $feature)
+ * @method static bool hasFeature(Feature $feature)
  * @method static bool hasSiteUrl()
  * @method static void setInstance(HydeKernel $instance)
  * @method static void setBasePath(string $basePath)
