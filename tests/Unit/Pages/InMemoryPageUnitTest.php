@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit\Pages;
 
-use Hyde\Foundation\HydeKernel;
-use Hyde\Foundation\Kernel\PageCollection;
-use Hyde\Framework\Factories\Concerns\CoreDataObject;
-use Hyde\Framework\Features\Metadata\PageMetadataBag;
 use Hyde\Hyde;
-use Hyde\Markdown\Models\FrontMatter;
 use Hyde\Pages\InMemoryPage;
 use Hyde\Support\Models\Route;
-
-require_once __DIR__.'/BaseHydePageUnitTest.php';
+use Hyde\Foundation\HydeKernel;
+use Hyde\Markdown\Models\FrontMatter;
+use Hyde\Foundation\Kernel\PageCollection;
+use Hyde\Testing\Common\BaseHydePageUnitTest;
+use Hyde\Framework\Features\Metadata\PageMetadataBag;
+use Hyde\Framework\Factories\Concerns\CoreDataObject;
 
 /**
  * @covers \Hyde\Pages\InMemoryPage
