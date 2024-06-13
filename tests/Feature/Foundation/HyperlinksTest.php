@@ -56,7 +56,8 @@ class HyperlinksTest extends TestCase
 
     public function testAssetHelperReturnsQualifiedAbsoluteUriWhenRequestedAndSiteHasBaseUrl()
     {
-        $this->assertEquals('http://localhost/media/test.jpg', $this->class->asset('test.jpg', true));
+        config(['hyde.url' => 'https://example.org']);
+        $this->assertSame('https://example.org/media/test.jpg', $this->class->asset('test.jpg', true));
     }
 
     public function testAssetHelperReturnsDefaultRelativePathWhenQualifiedAbsoluteUriIsRequestedButSiteHasNoBaseUrl()
@@ -65,9 +66,20 @@ class HyperlinksTest extends TestCase
         $this->assertEquals('media/test.jpg', $this->class->asset('test.jpg', true));
     }
 
+    public function testAssetHelperReturnsDefaultRelativePathWhenQualifiedAbsoluteUriIsRequestedButSiteBaseUrlIsLocalhost()
+    {
+        $this->assertSame('media/test.jpg', $this->class->asset('test.jpg', true));
+    }
+
     public function testAssetHelperReturnsInputWhenQualifiedAbsoluteUriIsRequestedButImageIsAlreadyQualified()
     {
         $this->assertEquals('http://localhost/media/test.jpg', $this->class->asset('http://localhost/media/test.jpg', true));
+    }
+
+    public function testAssetHelperReturnsInputWhenQualifiedAbsoluteUriIsRequestedButImageIsAlreadyQualifiedRegardlessOfMatchingTheConfiguredUrl()
+    {
+        config(['hyde.url' => 'https://example.org']);
+        $this->assertSame('http://localhost/media/test.jpg', $this->class->asset('http://localhost/media/test.jpg', true));
     }
 
     public function testAssetHelperUsesConfiguredMediaDirectory()
