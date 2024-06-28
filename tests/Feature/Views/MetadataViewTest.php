@@ -25,7 +25,7 @@ class MetadataViewTest extends TestCase
     {
         parent::setUp();
 
-        config(['hyde.url' => 'http://localhost']);
+        $this->withSiteUrl();
         config(['hyde.enable_cache_busting' => false]);
     }
 
