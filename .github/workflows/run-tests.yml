@@ -37,8 +37,7 @@ jobs:
       - name: Copy over framework source code
         run: |
           mkdir -p ./hyde/packages/hyde/framework/src
-          cp -r ./src/. ./hyde/packages/hyde/framework/src
-          cp ./composer.json ./hyde/packages/hyde/framework/composer.json
+          rsync -a --exclude=hyde/ ./ ./hyde/packages/hyde/framework/src
 
       # Update the Hyde project's composer.json to load the framework from the local source
       - name: Update composer.json to load framework from local source
@@ -46,10 +45,6 @@ jobs:
           cd hyde
           composer config repositories.framework path ./packages/hyde/framework
           composer require hyde/testing:dev-master hyde/framework:dev-develop
-
-      # Copy over the test files to the Hyde project
-      - name: Copy over test files
-        run: cp -r ./tests/. ./hyde/tests
 
       - name: Download test runner configuration
         run: cd hyde && curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
