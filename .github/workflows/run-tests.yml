@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir -p ./hyde/packages/hyde/framework/src
 
-          # Since we can't use rsync on Windows, we have to setup a temporary directory to copy the files to
+          # Since we can't use rsync on Windows, we need to copy the files to a temporary directory and then copy them back
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
               mkdir ../temp
               cp -r ./ ../temp
