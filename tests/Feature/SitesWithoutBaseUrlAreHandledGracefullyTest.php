@@ -37,7 +37,7 @@ class SitesWithoutBaseUrlAreHandledGracefullyTest extends TestCase
     /** @dataProvider pageClassProvider */
     public function testLocalhostLinksAreNotAddedToCompiledHtmlWhenBaseUrlIsNull(string $class)
     {
-        $this->withoutSiteUrl();
+        config(['hyde.url' => null]);
 
         $this->assertStringNotContainsString('http://localhost', $this->getHtml($class));
     }
@@ -45,7 +45,7 @@ class SitesWithoutBaseUrlAreHandledGracefullyTest extends TestCase
     /** @dataProvider pageClassProvider */
     public function testLocalhostLinksAreNotAddedToCompiledHtmlWhenBaseUrlIsNotSet(string $class)
     {
-        $this->withoutSiteUrl();
+        config(['hyde.url' => '']);
 
         $this->assertStringNotContainsString('http://localhost', $this->getHtml($class));
     }
@@ -61,7 +61,7 @@ class SitesWithoutBaseUrlAreHandledGracefullyTest extends TestCase
     /** @dataProvider pageClassProvider */
     public function testSiteUrlLinksAreAddedToCompiledHtmlWhenBaseUrlIsSetToValidUrl(string $class)
     {
-        $this->withSiteUrl();
+        config(['hyde.url' => 'https://example.com']);
 
         $this->assertStringNotContainsString('http://localhost', $this->getHtml($class));
     }
