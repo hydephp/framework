@@ -48,7 +48,7 @@ jobs:
         run: |
           cd hyde
           composer config repositories.framework path ./packages/framework
-          composer require hyde/framework:dev-master
+          composer require hyde/framework:dev-develop
 
       # We also need to install the testing package
       - name: Require latest testing package version
