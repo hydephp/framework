@@ -139,16 +139,16 @@ class Hyperlinks
     /**
      * Return a qualified URL to the supplied path if a base URL is set.
      *
-     * @param  string  $path  optional relative path suffix. Omit to return base url.
+     * @param  string  $path  An optional relative path suffix. Omit to return the base URL.
      *
-     * @throws BaseUrlNotSetException If no site URL is set and no default is provided
+     * @throws BaseUrlNotSetException If no site URL is set and no path is provided.
      */
     public function url(string $path = ''): string
     {
         $path = $this->formatLink(trim($path, '/'));
 
         if ($this->hasSiteUrl()) {
-            return rtrim(rtrim((string) Config::getNullableString('hyde.url'), '/')."/$path", '/');
+            return rtrim(rtrim(Config::getString('hyde.url'), '/')."/$path", '/');
         }
 
         // Since v1.7.0, we return the relative path even if the base URL is not set,

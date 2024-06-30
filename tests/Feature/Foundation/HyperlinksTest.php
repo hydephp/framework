@@ -35,7 +35,7 @@ class HyperlinksTest extends TestCase
         ];
 
         foreach ($tests as $input => $expected) {
-            $this->assertEquals($this->class->asset($input), $expected);
+            $this->assertSame($this->class->asset($input), $expected);
         }
     }
 
@@ -50,7 +50,7 @@ class HyperlinksTest extends TestCase
 
         foreach ($tests as $input => $expected) {
             $this->mockCurrentPage('foo/bar');
-            $this->assertEquals($this->class->asset($input), $expected);
+            $this->assertSame($this->class->asset($input), $expected);
         }
     }
 
@@ -63,7 +63,7 @@ class HyperlinksTest extends TestCase
     public function testAssetHelperReturnsDefaultRelativePathWhenQualifiedAbsoluteUriIsRequestedButSiteHasNoBaseUrl()
     {
         config(['hyde.url' => null]);
-        $this->assertEquals('media/test.jpg', $this->class->asset('test.jpg', true));
+        $this->assertSame('media/test.jpg', $this->class->asset('test.jpg', true));
     }
 
     public function testAssetHelperReturnsDefaultRelativePathWhenQualifiedAbsoluteUriIsRequestedButSiteBaseUrlIsLocalhost()
@@ -73,7 +73,7 @@ class HyperlinksTest extends TestCase
 
     public function testAssetHelperReturnsInputWhenQualifiedAbsoluteUriIsRequestedButImageIsAlreadyQualified()
     {
-        $this->assertEquals('http://localhost/media/test.jpg', $this->class->asset('http://localhost/media/test.jpg', true));
+        $this->assertSame('http://localhost/media/test.jpg', $this->class->asset('http://localhost/media/test.jpg', true));
     }
 
     public function testAssetHelperReturnsInputWhenQualifiedAbsoluteUriIsRequestedButImageIsAlreadyQualifiedRegardlessOfMatchingTheConfiguredUrl()
@@ -85,7 +85,7 @@ class HyperlinksTest extends TestCase
     public function testAssetHelperUsesConfiguredMediaDirectory()
     {
         Hyde::setMediaDirectory('_assets');
-        $this->assertEquals('assets/test.jpg', $this->class->asset('test.jpg'));
+        $this->assertSame('assets/test.jpg', $this->class->asset('test.jpg'));
     }
 
     public function testMediaLinkHelper()
