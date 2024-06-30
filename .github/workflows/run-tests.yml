@@ -43,11 +43,11 @@ jobs:
           cp ./composer.json ./hyde/packages/framework/composer.json
 
       # Update the Hyde project's composer.json to load the framework from the local source
-        - name: Update composer.json to load framework from local source
-          run: |
-            cd hyde
-            composer config repositories.framework path ../packages/framework
-            composer require hyde/framework:dev-master
+      - name: Update composer.json to load framework from local source
+        run: |
+          cd hyde
+          composer config repositories.framework path ../packages/framework
+          composer require hyde/framework:dev-master
 
       # We also need to install the testing package
       - name: Require latest testing package version
