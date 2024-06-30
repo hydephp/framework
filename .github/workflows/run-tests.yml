@@ -35,6 +35,7 @@ jobs:
 
       # Now, we copy the framework source code to the Hyde project
       - name: Copy over framework source code
+        shell: bash
         run: |
           mkdir -p ./hyde/packages/hyde/framework/src
           rsync -a --exclude=hyde/ ./ ./hyde/packages/hyde/framework/src
