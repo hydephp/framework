@@ -42,11 +42,11 @@ jobs:
           # Since we can't use rsync on Windows, we have to setup a temporary directory to copy the files to
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
             mkdir ../temp
-            cp -r ./ ./temp
-            rm -rf ./temp/hyde
+            cp -r ./ ../temp
+            rm -rf ../temp/hyde
             cp -r ./temp/. ./hyde/packages/hyde/framework/src
           else
-              rsync -a --exclude=hyde ./packages/framework/. ./hyde/packages/hyde/framework/src
+              rsync -a --exclude=hyde ./. ./hyde/packages/hyde/framework/src
           fi
           
       # Update the Hyde project's composer.json to load the framework from the local source
