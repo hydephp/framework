@@ -23,7 +23,6 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: fileinfo, zip
 
-      # First we need to clone the Hyde repository so we have a project to serve as the test runner environment
       - name: Install Hyde
         shell: bash
         run: |
@@ -33,7 +32,6 @@ jobs:
             git clone -b develop https://github.com/hydephp/hyde.git
           fi
 
-      # Now, we copy the framework source code to the Hyde project
       - name: Copy over framework source code
         shell: bash
         run: |
@@ -49,7 +47,6 @@ jobs:
               rsync -a --exclude=hyde ./. ./hyde/packages/hyde/framework/src
           fi
           
-      # Update the Hyde project's composer.json to load the framework from the local source
       - name: Update composer.json to load framework from local source
         run: |
           cd hyde
