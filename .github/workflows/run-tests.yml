@@ -39,6 +39,7 @@ jobs:
       # Now, we copy the framework source code to the Hyde project
       - name: Copy over framework source code
         run: |
+          mkdir -p ./hyde/packages/framework/src
           cp -r ./src/. ./hyde/packages/framework/src
           cp ./composer.json ./hyde/packages/framework/composer.json
 
