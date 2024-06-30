@@ -26,13 +26,13 @@ jobs:
       - name: Echo GitHub ref
         run: echo ${{ github.ref }}
 
-      - name: Install Hyde (master)
-        if: "github.ref == 'refs/heads/master'"
-        run: git clone -b master https://github.com/hydephp/hyde.git
-
-      - name: Install Hyde (develop)
-        if: "github.ref != 'refs/heads/master'"
-        run: git clone -b develop https://github.com/hydephp/hyde.git
+      - name: Install Hyde
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            git clone -b master https://github.com/hydephp/hyde.git
+          else
+            git clone -b develop https://github.com/hydephp/hyde.git
+          fi
 
       - name: Require latest framework version
         if: "github.ref == 'refs/heads/master'"
