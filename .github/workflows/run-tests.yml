@@ -38,15 +38,19 @@ jobs:
 
       - name: Require latest framework version
         if: "github.ref == 'refs/heads/master'"
-        run: cd hyde && composer require hyde/framework:dev-master hyde/testing:dev-master
+        run: cd hyde && composer require hyde/framework:dev-master
 
       - name: Require latest development framework version
         if: "github.ref == 'refs/heads/develop'"
-        run: cd hyde && composer require hyde/framework:dev-develop hyde/testing:dev-master
+        run: cd hyde && composer require hyde/framework:dev-develop
 
       - name: Require pull request framework version
         if: "github.ref != 'refs/heads/master' && github.ref != 'refs/heads/develop'"
-        run: cd hyde && composer require hyde/framework:dev-${{ github.head_ref }} hyde/testing:dev-master
+        run: cd hyde && composer require hyde/framework:dev-${{ github.head_ref }}
+
+      # We also need to install the testing package
+      - name: Require latest testing package version
+        run: cd hyde && composer require hyde/testing:dev-master
 
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
