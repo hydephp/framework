@@ -39,7 +39,6 @@ jobs:
           mkdir -p ./hyde/packages/hyde/framework/src
           cp -r ./src/. ./hyde/packages/hyde/framework/src
           cp ./composer.json ./hyde/packages/hyde/framework/composer.json
-          ls -la ./hyde/packages/hyde/framework/src
 
       # Update the Hyde project's composer.json to load the framework from the local source
       - name: Update composer.json to load framework from local source
