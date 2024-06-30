@@ -54,6 +54,7 @@ jobs:
       - name: Require latest testing package version
         run: cd hyde && composer require hyde/testing:dev-master --no-install
 
+      # Copy over the test files to the Hyde project
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
 
