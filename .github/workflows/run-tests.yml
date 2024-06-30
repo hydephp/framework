@@ -47,7 +47,7 @@ jobs:
           else
               rsync -a --exclude=hyde ./. ./hyde/packages/hyde/framework/src
           fi
-          
+
       - name: Update composer.json to load framework from local source
         run: |
           cd hyde
