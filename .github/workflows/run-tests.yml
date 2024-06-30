@@ -44,17 +44,12 @@ jobs:
       - name: Update composer.json to load framework from local source
         run: |
           cd hyde
-          composer require hyde/testing:dev-master --no-install
           composer config repositories.framework path ./packages/hyde/framework
-          composer require hyde/framework:dev-develop --no-install
+          composer require hyde/testing:dev-master hyde/framework:dev-develop
 
       # Copy over the test files to the Hyde project
       - name: Copy over test files
         run: cp -r ./tests/. ./hyde/tests
-
-      # Now we can install the Composer dependencies
-      - name: Install Composer dependencies
-        run: cd hyde && composer install
 
       - name: Download test runner configuration
         run: cd hyde && curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
