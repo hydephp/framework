@@ -36,6 +36,12 @@ jobs:
             git clone -b develop https://github.com/hydephp/hyde.git
           fi
 
+      # Now, we copy the framework source code to the Hyde project
+      - name: Copy over framework source code
+        run: |
+          cp -r ./src/. ./hyde/packages/framework/src
+          cp ./composer.json ./hyde/packages/framework/composer.json
+
       # We also need to install the testing package
       - name: Require latest testing package version
         run: cd hyde && composer require hyde/testing:dev-master
