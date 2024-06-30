@@ -39,15 +39,15 @@ jobs:
       # Now, we copy the framework source code to the Hyde project
       - name: Copy over framework source code
         run: |
-          mkdir -p ./hyde/packages/framework/src
-          cp -r ./src/. ./hyde/packages/framework/src
-          cp ./composer.json ./hyde/packages/framework/composer.json
+          mkdir -p ./hyde/packages/hyde/framework/src
+          cp -r ./src/. ./hyde/packages/hyde/framework/src
+          cp ./composer.json ./hyde/packages/hyde/framework/composer.json
 
       # Update the Hyde project's composer.json to load the framework from the local source
       - name: Update composer.json to load framework from local source
         run: |
           cd hyde
-          composer config repositories.framework path ./packages/framework
+          composer config repositories.framework path ./packages/hyde/framework
           composer require hyde/framework:dev-develop --no-install
 
       # We also need to install the testing package
