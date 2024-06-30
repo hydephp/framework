@@ -44,7 +44,7 @@ jobs:
               mkdir ../temp
               cp -r ./ ../temp
               rm -rf ../temp/hyde
-              cp -r ./temp/. ./hyde/packages/hyde/framework/src
+              cp -r ../temp/. ./hyde/packages/hyde/framework/src
           else
               rsync -a --exclude=hyde ./. ./hyde/packages/hyde/framework/src
           fi
