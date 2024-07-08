@@ -8,6 +8,7 @@ use AllowDynamicProperties;
 use Hyde\Pages\InMemoryPage;
 use Hyde\Testing\UnitTestCase;
 use Hyde\Testing\MocksKernelFeatures;
+use Hyde\Testing\FluentTestingHelpers;
 
 /**
  * Meta test for internal testing helpers.
@@ -21,6 +22,7 @@ use Hyde\Testing\MocksKernelFeatures;
 class TestingSupportHelpersMetaTest extends UnitTestCase
 {
     use MocksKernelFeatures;
+    use FluentTestingHelpers;
 
     protected static bool $needsKernel = true;
     protected static bool $needsConfig = true;
@@ -61,6 +63,44 @@ class TestingSupportHelpersMetaTest extends UnitTestCase
         $this->assertSame(['foo', 'bar', 'baz'], $this->getPageIdentifiers());
 
         $this->assertContainsOnlyInstancesOf(InMemoryPage::class, $this->kernel->pages());
+    }
+
+    public function testAssertAllSameAssertsAllValuesAreTheSame()
+    {
+        $string = 'foo';
+        $array = ['foo'];
+        $object = (object) ['foo' => 'bar'];
+
+        $this->assertAllSame($string, 'foo', 'foo');
+        $this->assertAllSame($array, $array, $array);
+        $this->assertAllSame($object, $object, $object);
+    }
+
+    public function testAssertAllSameFailsWhenValuesAreNotEqual()
+    {
+        $tests = [
+            ['foo', 'bar'],
+            [['foo'], ['bar']],
+            [(object) ['foo' => 'bar'], (object) ['foo' => 'baz']],
+        ];
+
+        foreach ($tests as $expected) {
+            try {
+                $this->assertAllSame(...$expected);
+            } catch (\PHPUnit\Framework\AssertionFailedError $exception) {
+                $this->assertStringContainsString('Failed asserting that two', $exception->getMessage());
+                $this->assertStringContainsString('are equal.', $exception->getMessage());
+            }
+        }
+    }
+
+    public function testAssertAllSameFailsWhenValuesAreNotIdentical()
+    {
+        try {
+            $this->assertAllSame((object) ['foo' => 'bar'], (object) ['foo' => 'bar']);
+        } catch (\PHPUnit\Framework\AssertionFailedError $exception) {
+            $this->assertSame('Failed asserting that two variables reference the same object.', $exception->getMessage());
+        }
     }
 
     protected function getPageIdentifiers()
