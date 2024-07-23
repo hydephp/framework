@@ -233,6 +233,18 @@ class MarkdownPostUnitTest extends BaseMarkdownPageUnitTest
 
     public function testGetCanonicalUrl()
     {
-        $this->markTestSkipped('Not yet implemented');
+        $page = new MarkdownPost('foo');
+        $this->assertNull($page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com']);
+
+        $this->assertSame('https://example.com/posts/foo.html', $page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com', 'hyde.pretty_urls' => true]);
+
+        $this->assertSame('https://example.com/posts/foo', $page->getCanonicalUrl());
+
+        $page = new MarkdownPost('foo', ['canonicalUrl' => 'foo']);
+        $this->assertSame('foo', $page->getCanonicalUrl());
     }
 }

@@ -182,6 +182,18 @@ class BladePageUnitTest extends BaseHydePageUnitTest
 
     public function testGetCanonicalUrl()
     {
-        $this->markTestSkipped('Not yet implemented');
+        $page = new BladePage('foo');
+        $this->assertNull($page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com']);
+
+        $this->assertSame('https://example.com/foo.html', $page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com', 'hyde.pretty_urls' => true]);
+
+        $this->assertSame('https://example.com/foo', $page->getCanonicalUrl());
+
+        $page = new BladePage('foo', ['canonicalUrl' => 'foo']);
+        $this->assertSame('foo', $page->getCanonicalUrl());
     }
 }
