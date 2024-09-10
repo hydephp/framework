@@ -153,7 +153,7 @@ class BuildTaskUnitTest extends UnitTestCase
 
     public function testCreatedSiteFile()
     {
-        self::setupKernel();
+        self::resetKernel();
 
         $task = new BufferedTestBuildTask();
 
@@ -164,7 +164,7 @@ class BuildTaskUnitTest extends UnitTestCase
 
     public function testCreatedSiteFileWithAbsolutePath()
     {
-        self::setupKernel();
+        self::resetKernel();
 
         $task = new BufferedTestBuildTask();
 

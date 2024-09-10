@@ -25,8 +25,11 @@ use Mockery;
  */
 class NavItemTest extends UnitTestCase
 {
-    protected static bool $needsKernel = true;
-    protected static bool $needsConfig = true;
+    public static function setUpBeforeClass(): void
+    {
+        self::resetKernel();
+        self::mockConfig();
+    }
 
     protected function setUp(): void
     {

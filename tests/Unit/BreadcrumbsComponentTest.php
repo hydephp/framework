@@ -23,7 +23,7 @@ class BreadcrumbsComponentTest extends UnitTestCase
 {
     protected function setUp(): void
     {
-        self::setupKernel();
+        self::resetKernel();
         self::mockConfig();
     }
 
