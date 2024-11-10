@@ -106,7 +106,9 @@ class MediaFile extends ProjectFile
 
     protected static function getMediaAssetFiles(): array
     {
-        return glob(Hyde::path(static::getMediaGlobPattern()), GLOB_BRACE) ?: [];
+        $files = glob(Hyde::path(static::getMediaGlobPattern()), GLOB_BRACE) ?: [];
+
+        return array_filter($files, 'is_file');
     }
 
     protected static function getMediaGlobPattern(): string
