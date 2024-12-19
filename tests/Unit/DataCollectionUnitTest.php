@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
-use Hyde\Hyde;
+use Hyde\Framework\Actions\Internal\FileFinder;
 use Hyde\Support\DataCollections;
 use Hyde\Testing\UnitTestCase;
 use Illuminate\Filesystem\Filesystem;
@@ -45,52 +45,48 @@ class DataCollectionUnitTest extends UnitTestCase
         $this->assertSame('[]', (new DataCollections())->toJson());
     }
 
-    public function testFindMarkdownFilesCallsProperGlobPattern()
-    {
-        $filesystem = Mockery::mock(Filesystem::class, ['exists' => true]);
-        $filesystem->shouldReceive('glob')
-            ->with(Hyde::path('resources/collections/foo/*.{md}'), GLOB_BRACE)
-            ->once();
-
-        app()->instance(Filesystem::class, $filesystem);
-
-        DataCollections::markdown('foo')->keys()->toArray();
-
-        $this->addToAssertionCount(Mockery::getContainer()->mockery_getExpectationCount());
-        Mockery::close();
-    }
-
     public function testFindMarkdownFilesWithNoFiles()
     {
-        $filesystem = Mockery::mock(Filesystem::class, [
-            'exists' => true,
-            'glob' => [],
-        ]);
-
-        app()->instance(Filesystem::class, $filesystem);
+        $this->mockFileFinder([]);
 
         $this->assertSame([], DataCollections::markdown('foo')->keys()->toArray());
 
-        Mockery::close();
+        $this->verifyMockeryExpectations();
     }
 
     public function testFindMarkdownFilesWithFiles()
     {
-        $filesystem = Mockery::mock(Filesystem::class, [
-            'exists' => true,
-            'glob' => ['bar.md'],
-            'get' => 'foo',
-        ]);
-
-        app()->instance(Filesystem::class, $filesystem);
+        $this->mockFileFinder(['bar.md']);
 
         $this->assertSame(['bar.md'], DataCollections::markdown('foo')->keys()->toArray());
 
-        Mockery::close();
+        $this->verifyMockeryExpectations();
     }
 
     public function testStaticMarkdownHelperReturnsNewDataCollectionInstance()
     {
         $this->assertInstanceOf(DataCollections::class, DataCollections::markdown('foo'));
+    }
+
+    protected function mockFileFinder(array $files): void
+    {
+        $filesystem = Mockery::mock(Filesystem::class);
+        $filesystem->shouldReceive('exists')->andReturn(true);
+        $filesystem->shouldReceive('get')->andReturn('foo');
+
+        app()->instance(Filesystem::class, $filesystem);
+
+        $finder = Mockery::mock(FileFinder::class);
+        $finder->shouldReceive('handle')->andReturn(collect($files));
+
+        app()->instance(FileFinder::class, $finder);
+    }
+
+    protected function verifyMockeryExpectations(): void
+    {
+        parent::verifyMockeryExpectations();
+
+        app()->forgetInstance(Filesystem::class);
+        app()->forgetInstance(FileFinder::class);
     }
 }
