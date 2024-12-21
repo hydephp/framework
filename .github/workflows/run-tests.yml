@@ -59,7 +59,7 @@ jobs:
           composer require hyde/testing:dev-master hyde/framework:dev-develop
 
       - name: Download test runner configuration
-        run: cd hyde && curl https://raw.githubusercontent.com/hydephp/develop/master/phpunit.xml.dist -o phpunit.xml.dist
+        run: cd hyde && curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
