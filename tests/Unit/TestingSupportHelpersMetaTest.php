@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hyde\Framework\Testing\Unit;
 
+use AllowDynamicProperties;
 use Hyde\Pages\InMemoryPage;
 use Hyde\Testing\UnitTestCase;
 use Hyde\Testing\MocksKernelFeatures;
@@ -16,6 +17,7 @@ use Hyde\Testing\MocksKernelFeatures;
  *
  * @coversNothing
  */
+#[AllowDynamicProperties]
 class TestingSupportHelpersMetaTest extends UnitTestCase
 {
     use MocksKernelFeatures;
