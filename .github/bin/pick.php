@@ -33,3 +33,22 @@ if ($returnCode !== 0) {
 }
 
 echo "Successfully created branch '$branch' and cherry-picked commit '$hash'\n";
+
+// Get the commit message
+$command = "git show $hash --pretty=format:\"%s%n%b\" -s";
+exec($command, $output, $returnCode);
+
+if ($returnCode === 0 && !empty($output)) {
+    // Join output lines
+    $commitMessage = implode("\n", $output);
+    
+    // Check if this matches the subrepo sync format
+    if (preg_match('/^Merge pull request #(\d+).*\n(.*?)https:\/\/github\.com\/hydephp\/develop\/commit/', $commitMessage, $matches)) {
+        $prNumber = $matches[1];
+        $title = trim($matches[2]);
+        
+        echo "\nSuggested PR format:\n";
+        echo "Title: $title\n";
+        echo "Description: Merges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
+    }
+}
