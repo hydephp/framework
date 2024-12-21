@@ -63,7 +63,7 @@ class UnixsumTest extends UnitTestCase
 
     public function testMethodReturnsSameValueWhenLoadedFromFileUsingShorthand()
     {
-        self::needsKernel();
+        self::setupKernel();
 
         $string = "foo\nbar\r\nbaz\r\n";
 

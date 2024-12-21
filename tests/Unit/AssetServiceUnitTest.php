@@ -17,7 +17,7 @@ class AssetServiceUnitTest extends UnitTestCase
 {
     protected function setUp(): void
     {
-        self::needsKernel();
+        self::setupKernel();
         self::mockConfig();
     }
 

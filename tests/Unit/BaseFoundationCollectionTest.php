@@ -17,7 +17,7 @@ class BaseFoundationCollectionTest extends UnitTestCase
 {
     public function testInit()
     {
-        $this->needsKernel();
+        $this->setupKernel();
 
         $booted = BaseFoundationCollectionTestClass::init(HydeKernel::getInstance())->boot();
 
