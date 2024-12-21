@@ -15,6 +15,25 @@ if ($argc !== 3) {
 $hash = $argv[1];
 $branch = $argv[2];
 
+// Get the commit message
+$command = "git show $hash --pretty=format:\"%s%n%b\" -s";
+exec($command, $output, $returnCode);
+
+if ($returnCode === 0 && !empty($output)) {
+    // Join output lines
+    $commitMessage = implode("\n", $output);
+    
+    // Check if this matches the subrepo sync format
+    if (preg_match('/^Merge pull request #(\d+).*\n(.*?)https:\/\/github\.com\/hydephp\/develop\/commit/', $commitMessage, $matches)) {
+        $prNumber = $matches[1];
+        $title = trim($matches[2]);
+        
+        $echo = "\n\033[1mSuggested PR format:\033[0m\n";
+        $echo .= "\033[1mTitle:\033[0m $title\n";
+        $echo .= "\033[1mDescription:\033[0m Merges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
+    }
+}
+
 // Create new branch from master
 $checkoutCommand = "git checkout -b $branch master";
 echo "\033[36m> $checkoutCommand\033[0m\n";
@@ -37,21 +56,6 @@ if ($returnCode !== 0) {
 
 echo "\033[32mSuccessfully created branch '$branch' and cherry-picked commit '$hash'\033[0m\n";
 
-// Get the commit message
-$command = "git show $hash --pretty=format:\"%s%n%b\" -s";
-exec($command, $output, $returnCode);
-
-if ($returnCode === 0 && !empty($output)) {
-    // Join output lines
-    $commitMessage = implode("\n", $output);
-    
-    // Check if this matches the subrepo sync format
-    if (preg_match('/^Merge pull request #(\d+).*\n(.*?)https:\/\/github\.com\/hydephp\/develop\/commit/', $commitMessage, $matches)) {
-        $prNumber = $matches[1];
-        $title = trim($matches[2]);
-        
-        echo "\n\033[1mSuggested PR format:\033[0m\n";
-        echo "\033[1mTitle:\033[0m $title\n";
-        echo "\033[1mDescription:\033[0m Merges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
-    }
+if (isset($echo)) {
+    echo $echo;
 }
