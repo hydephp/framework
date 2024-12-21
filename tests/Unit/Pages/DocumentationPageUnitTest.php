@@ -202,4 +202,9 @@ class DocumentationPageUnitTest extends BaseMarkdownPageUnitTest
         $this->assertFileExists('_docs/foo.md');
         Filesystem::unlink('_docs/foo.md');
     }
+
+    public function testGetCanonicalUrl()
+    {
+        $this->markTestSkipped('Not yet implemented');
+    }
 }

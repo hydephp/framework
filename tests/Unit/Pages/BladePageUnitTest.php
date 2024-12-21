@@ -179,4 +179,9 @@ class BladePageUnitTest extends BaseHydePageUnitTest
     {
         $this->assertInstanceOf(FrontMatter::class, (new BladePage('foo'))->matter());
     }
+
+    public function testGetCanonicalUrl()
+    {
+        $this->markTestSkipped('Not yet implemented');
+    }
 }

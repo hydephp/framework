@@ -217,4 +217,9 @@ class HtmlPageUnitTest extends BaseHydePageUnitTest
     {
         $this->assertInstanceOf(FrontMatter::class, (new HtmlPage('404'))->matter());
     }
+
+    public function testGetCanonicalUrl()
+    {
+        $this->markTestSkipped('Not yet implemented');
+    }
 }

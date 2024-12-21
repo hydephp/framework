@@ -221,4 +221,9 @@ class InMemoryPageUnitTest extends BaseHydePageUnitTest
     {
         $this->assertInstanceOf(FrontMatter::class, (new InMemoryPage('404'))->matter());
     }
+
+    public function testGetCanonicalUrl()
+    {
+        $this->markTestSkipped('Not yet implemented');
+    }
 }
