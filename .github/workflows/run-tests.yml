@@ -33,19 +33,23 @@ jobs:
             git clone -b develop https://github.com/hydephp/hyde.git
           fi
 
-      - name: Copy over framework source code
+      - name: Copy over framework code
         shell: bash
         run: |
           mkdir -p ./hyde/packages/hyde/framework/src
+          mkdir -p ./hyde/packages/hyde/framework/tests
 
-          # Since we can't use rsync on Windows, we need to copy the files to a temporary directory and then copy them back
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
+              # For Windows, copy to temp then back to preserve structure
               mkdir ../temp
               cp -r ./ ../temp
               rm -rf ../temp/hyde
-              cp -r ../temp/. ./hyde/packages/hyde/framework/src
+              cp -r ../temp/src/. ./hyde/packages/hyde/framework/src
+              cp -r ../temp/tests/. ./hyde/packages/hyde/framework/tests
           else
-              rsync -a --exclude=hyde ./. ./hyde/packages/hyde/framework/src
+              # For Unix systems, use rsync
+              rsync -a --exclude=hyde ./src/. ./hyde/packages/hyde/framework/src
+              rsync -a --exclude=hyde ./tests/. ./hyde/packages/hyde/framework/tests
           fi
 
       - name: Update composer.json to load framework from local source
