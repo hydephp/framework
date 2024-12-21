@@ -14,7 +14,7 @@ if ($argc !== 3 && $argc !== 4) {
 // Get arguments
 $hash = $argv[1];
 $branch = $argv[2];
-$pretend = $argv[3] === '--pretend';
+$pretend = ($argv[3] ?? false) === '--pretend';
 
 // Get the commit message
 exec("git show $hash --pretty=format:\"%s%n%b\" -s", $output, $returnCode);
