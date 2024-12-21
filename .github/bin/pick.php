@@ -4,7 +4,7 @@
 // Internal helper to speed up branching up cherry picked commits for pull requests
 
 // Check if we have the correct number of arguments
-if ($argc !== 3) {
+if ($argc !== 3 && $argc !== 4) {
     echo "\033[31mError: Invalid number of arguments\033[0m\n";
     echo "\033[33mUsage:\033[0m php bin/pick.php <commit-hash> <new-branch-name>\n";
     echo "\033[33mExample:\033[0m php bin/pick.php abc123 feature-branch\n";
@@ -14,6 +14,7 @@ if ($argc !== 3) {
 // Get arguments
 $hash = $argv[1];
 $branch = $argv[2];
+$pretend = $argv[3] === '--pretend';
 
 // Get the commit message
 exec("git show $hash --pretty=format:\"%s%n%b\" -s", $output, $returnCode);
@@ -33,7 +34,7 @@ if ($returnCode === 0 && !empty($output)) {
 }
 
 // Create new branch from master
-exec("git checkout -b $branch master", $output, $returnCode);
+exec(($pretend ? 'echo ' : '') . "git checkout -b $branch master", $output, $returnCode);
 
 if ($returnCode !== 0) {
     echo "\033[31mError creating new branch: $branch\033[0m\n";
@@ -41,7 +42,7 @@ if ($returnCode !== 0) {
 }
 
 // Cherry-pick the commit
-exec("git cherry-pick $hash", $output, $returnCode);
+exec(($pretend ? 'echo ' : '') . "git cherry-pick $hash", $output, $returnCode);
 
 if ($returnCode !== 0) {
     echo "\033[31mError cherry-picking commit: $hash\033[0m\n";
