@@ -26,7 +26,7 @@ jobs:
 
       - name: Install Hyde
         shell: bash
-        run: git clone -b master https://github.com/hydephp/develop.git runner
+        run: git clone -b master https://github.com/hydephp/develop.git --depth 1 runner
 
       - name: Copy over framework code
         shell: bash
