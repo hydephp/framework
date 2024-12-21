@@ -6,7 +6,7 @@
 // Check if we have the correct number of arguments
 if ($argc !== 3 && $argc !== 4) {
     echo "\033[31mError: Invalid number of arguments\033[0m\n";
-    echo "\033[33mUsage:\033[0m php bin/pick.php <commit-hash> <new-branch-name>\n";
+    echo "\033[33mUsage:\033[0m php bin/pick.php <commit-hash> <branch-name> [--pretend]\n";
     echo "\033[33mExample:\033[0m php bin/pick.php abc123 feature-branch\n";
     exit(1);
 }
@@ -27,9 +27,8 @@ if ($returnCode === 0 && !empty($output)) {
         $prNumber = $matches[1];
         $title = trim($matches[2]);
 
-        $echo = "\n\033[33mSuggested PR format:\033[0m\n";
-        $echo .= "\033[33mTitle:\033[0m $title\n";
-        $echo .= "\033[33mDescription:\033[0m Merges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
+        $printWhenDone = "\n\033[33mSuggested PR format: (Line 1: title, Line 2: description)\033[0m\n";
+        $printWhenDone .= "$title\nMerges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
     }
 }
 
@@ -51,6 +50,6 @@ if ($returnCode !== 0) {
 
 echo "\033[32mSuccessfully created branch '$branch' and cherry-picked commit '$hash'\033[0m\n";
 
-if (isset($echo)) {
-    echo $echo;
+if (isset($printWhenDone)) {
+    echo $printWhenDone;
 }
