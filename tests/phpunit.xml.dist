@@ -7,12 +7,14 @@
     <testsuites>
         <testsuite name="Test Suite">
             <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">./packages/hyde/framework/tests</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./packages/hyde/framework/src</directory>
         </include>
     </source>
 </phpunit>
