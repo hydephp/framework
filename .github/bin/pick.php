@@ -26,9 +26,12 @@ if ($returnCode === 0 && !empty($output)) {
     if (preg_match('/^Merge pull request #(\d+).*\n(.*?)https:\/\/github\.com\/hydephp\/develop\/commit/', $commitMessage, $matches)) {
         $prNumber = $matches[1];
         $title = trim($matches[2]);
+        $body = "Merges pull request https://github.com/hydephp/develop/pull/$prNumber";
 
-        $printWhenDone = "\n\033[33mSuggested PR format: (Line 1: title, Line 2: description)\033[0m\n";
-        $printWhenDone .= "$title\nMerges pull request https://github.com/hydephp/develop/pull/$prNumber\n";
+        $printWhenDone = "\n\033[33mSuggested PR format: (Line 1: title, Line 2: description, Line 3: command)\033[0m\n";
+        $printWhenDone .= "$title\n$body\n";
+
+        $printWhenDone .= "\033[37mgh pr create --title \"$title\" --body \"$body\"\033[0m\n";
     }
 }
 
