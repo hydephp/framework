@@ -58,8 +58,12 @@ jobs:
           composer config repositories.framework path ./packages/hyde/framework
           composer require hyde/testing:dev-master hyde/framework:dev-develop
 
-      - name: Download test runner configuration
-        run: cd hyde && curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
+      - name: Download and update test runner configuration
+        shell: bash
+        run: |
+          cd hyde
+          curl https://raw.githubusercontent.com/hydephp/develop/master/packages/hyde/phpunit.xml.dist -o phpunit.xml.dist
+          sed -i.bak '/<directory suffix="Test.php">.\\/tests<\\/directory>/a\\            <directory suffix="Test.php">.\/packages\/hyde\/framework\/tests<\/directory>' phpunit.xml.dist
 
       - name: Set environment to testing
         run: cd hyde && echo "ENV=testing" > .env
