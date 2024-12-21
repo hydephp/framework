@@ -26,12 +26,7 @@ jobs:
 
       - name: Install Hyde
         shell: bash
-        run: |
-          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
-            git clone -b master https://github.com/hydephp/develop.git runner
-          else
-            git clone -b develop https://github.com/hydephp/develop.git runner
-          fi
+        run: git clone -b master https://github.com/hydephp/develop.git runner
 
       - name: Copy over framework code
         shell: bash
