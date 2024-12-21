@@ -205,6 +205,18 @@ class DocumentationPageUnitTest extends BaseMarkdownPageUnitTest
 
     public function testGetCanonicalUrl()
     {
-        $this->markTestSkipped('Not yet implemented');
+        $page = new DocumentationPage('foo');
+        $this->assertNull($page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com']);
+
+        $this->assertSame('https://example.com/docs/foo.html', $page->getCanonicalUrl());
+
+        self::mockConfig(['hyde.url' => 'https://example.com', 'hyde.pretty_urls' => true]);
+
+        $this->assertSame('https://example.com/docs/foo', $page->getCanonicalUrl());
+
+        $page = new DocumentationPage('foo', ['canonicalUrl' => 'foo']);
+        $this->assertSame('foo', $page->getCanonicalUrl());
     }
 }
