@@ -279,6 +279,7 @@ class HydeKernelTest extends TestCase
     {
         // AssertSame cannot be used as features is reinstantiated on each call
         $this->assertEquals([
+            'version' => Hyde::version(),
             'basePath' => Hyde::getBasePath(),
             'sourceRoot' => Hyde::getSourceRoot(),
             'outputDirectory' => Hyde::getOutputDirectory(),
@@ -363,6 +364,12 @@ class HydeKernelTest extends TestCase
     {
         Hyde::setOutputDirectory('/foo/');
         $this->assertSame('/foo', Hyde::getOutputDirectory());
+    }
+
+    public function testSiteOutputDirectoryPathIsNormalizedToTrimTrailingSlashes()
+    {
+        Hyde::setOutputDirectory('foo/bar/');
+        $this->assertSame('foo/bar', Hyde::kernel()->getOutputDirectory());
     }
 
     public function testCanGetMediaDirectory()

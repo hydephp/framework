@@ -101,7 +101,7 @@ class ServeCommand extends Command
     protected function printStartMessage(): void
     {
         $this->useBasicOutput()
-            ? $this->output->writeln('<info>Starting the HydeRC server...</info> Press Ctrl+C to stop')
+            ? $this->output->writeln('<info>Starting the HydeRC server...</info> Use Ctrl+C to stop')
             : $this->console->printStartMessage($this->getHostSelection(), $this->getPortSelection(), $this->getEnvironmentVariables());
     }
 
@@ -146,12 +146,7 @@ class ServeCommand extends Command
 
     protected function openInBrowser(string $path = '/'): void
     {
-        $binary = match (PHP_OS_FAMILY) {
-            'Windows' => 'start',
-            'Darwin' => 'open',
-            'Linux' => 'xdg-open',
-            default => null
-        };
+        $binary = $this->getOpenCommand(PHP_OS_FAMILY);
 
         $command = sprintf('%s http://%s:%d', $binary, $this->getHostSelection(), $this->getPortSelection());
         $command = rtrim("$command/$path", '/');
@@ -163,5 +158,15 @@ class ServeCommand extends Command
             $this->line(sprintf('  %s', str_replace("\n", "\n  ", $process ? $process->errorOutput() : "Missing suitable 'open' binary.")));
             $this->newLine();
         }
+    }
+
+    protected function getOpenCommand(string $osFamily): ?string
+    {
+        return match ($osFamily) {
+            'Windows' => 'start',
+            'Darwin' => 'open',
+            'Linux' => 'xdg-open',
+            default => null
+        };
     }
 }

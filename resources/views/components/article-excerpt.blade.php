@@ -1,8 +1,8 @@
 @php /** @var \Hyde\Pages\MarkdownPost $post */ @endphp
 <article class="mt-4 mb-8" itemscope itemtype="https://schema.org/Article">
     <meta itemprop="identifier" content="{{ $post->identifier }}">
-    @if(Hyde::hasSiteUrl())
-        <meta itemprop="url" content="{{ Hyde::url('posts/' . $post->identifier) }}">
+    @if($post->getCanonicalUrl())
+        <meta itemprop="url" content="{{ $post->getCanonicalUrl()  }}">
     @endif
 
     <header>
@@ -20,7 +20,7 @@
             </span>
         @endisset
         @isset($post->author)
-            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <span class="opacity-75">by</span>
             <span itemprop="name">
                 {{ $post->author->name ?? $post->author->username }}

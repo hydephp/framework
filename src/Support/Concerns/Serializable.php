@@ -14,8 +14,11 @@ use function collect;
  */
 trait Serializable
 {
-    /** @inheritDoc */
-    abstract public function toArray(): array;
+    /** Default implementation to dynamically serialize all public properties. Can be overridden for increased control. */
+    public function toArray(): array
+    {
+        return $this->automaticallySerialize();
+    }
 
     /** Recursively serialize Arrayables */
     public function arraySerialize(): array
@@ -33,5 +36,13 @@ trait Serializable
     public function toJson($options = 0): string
     {
         return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /** Automatically serialize all public properties. */
+    protected function automaticallySerialize(): array
+    {
+        // Calling the function from a different scope means we only get the public properties.
+
+        return get_object_vars(...)->__invoke($this);
     }
 }
