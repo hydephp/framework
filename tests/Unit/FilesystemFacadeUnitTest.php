@@ -11,12 +11,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 
 /**
- * @covers \Hyde\Facades\Filesystem
- * @covers \Hyde\Foundation\Kernel\Filesystem
- * @covers \Hyde\Framework\Concerns\Internal\ForwardsIlluminateFilesystem
- *
  * @see \Hyde\Framework\Testing\Feature\FilesystemFacadeTest
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Facades\Filesystem::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Foundation\Kernel\Filesystem::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Framework\Concerns\Internal\ForwardsIlluminateFilesystem::class)]
 class FilesystemFacadeUnitTest extends UnitTestCase
 {
     protected static bool $needsKernel = true;
@@ -332,6 +331,23 @@ class FilesystemFacadeUnitTest extends UnitTestCase
         $this->createExpectation('ensureDirectoryExists', null, Hyde::path('path'));
 
         Filesystem::ensureDirectoryExists('path');
+    }
+
+    public function testEnsureParentDirectoryExists()
+    {
+        $mock = $this->mockFilesystem();
+
+        $mock->shouldReceive('dirname')
+            ->with(Hyde::path('file.txt'))
+            ->once()
+            ->andReturn(Hyde::path('parent'));
+
+        $mock->shouldReceive('ensureDirectoryExists')
+            ->with(Hyde::path('parent'), 0755, true)
+            ->once()
+            ->andReturnNull();
+
+        Filesystem::ensureParentDirectoryExists('file.txt');
     }
 
     public function testMakeDirectory()

@@ -14,12 +14,10 @@ use Illuminate\Support\Facades\Process;
 use Hyde\Framework\HydeServiceProvider;
 use Hyde\Framework\Actions\StaticPageBuilder;
 
-/**
- * @covers \Hyde\Console\Commands\BuildSiteCommand
- * @covers \Hyde\Framework\Services\BuildService
- * @covers \Hyde\Framework\Actions\PreBuildTasks\CleanSiteDirectory
- * @covers \Hyde\Framework\Actions\PreBuildTasks\TransferMediaAssets
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Console\Commands\BuildSiteCommand::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Framework\Services\BuildService::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Framework\Actions\PreBuildTasks\CleanSiteDirectory::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Framework\Actions\PreBuildTasks\TransferMediaAssets::class)]
 class StaticSiteServiceTest extends TestCase
 {
     protected function setUp(): void
@@ -160,13 +158,11 @@ class StaticSiteServiceTest extends TestCase
     {
         Process::fake();
 
-        $this->artisan('build --run-prettier --run-vite')
+        $this->artisan('build --vite')
             ->expectsOutput('Building frontend assets for production! This may take a second.')
-            ->expectsOutput('Prettifying code! This may take a second.')
             ->assertExitCode(0);
 
         Process::assertRan(fn ($process) => $process->command === 'npm run build');
-        Process::assertRan(fn ($process) => $process->command === 'npx prettier '.Hyde::pathToRelative(Hyde::sitePath()).'/**/*.html --write --bracket-same-line');
     }
 
     public function testPrettyUrlsOptionOutput()

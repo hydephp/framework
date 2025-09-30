@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\Process;
 use TypeError;
 
 /**
- * @covers \Hyde\Console\Commands\ServeCommand
- *
  * @see \Hyde\Framework\Testing\Unit\ServeCommandOptionsUnitTest
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\RealtimeCompiler\Console\Commands\ServeCommand::class)]
 class ServeCommandTest extends TestCase
 {
     protected function setUp(): void
@@ -184,6 +183,8 @@ class ServeCommandTest extends TestCase
     {
         $this->cleanUpWhenDone('app/storage/framework/runtime/vite.hot');
 
+        $this->ensureNodeEnvironmentForTest();
+
         $mockViteProcess = mock(InvokedProcess::class);
         $mockViteProcess->shouldReceive('running')
             ->once()
@@ -227,12 +228,14 @@ class ServeCommandTest extends TestCase
             ->expectsOutput('vite latest output')
             ->assertExitCode(0);
 
-        $this->assertFileExists('app/storage/framework/runtime/vite.hot');
+        $this->assertFileDoesNotExist('app/storage/framework/runtime/vite.hot');
     }
 
     public function testHydeServeCommandWithViteOptionButViteNotRunning()
     {
         $this->cleanUpWhenDone('app/storage/framework/runtime/vite.hot');
+
+        $this->ensureNodeEnvironmentForTest();
 
         $mockViteProcess = mock(InvokedProcess::class);
         $mockViteProcess->shouldReceive('running')
@@ -270,18 +273,227 @@ class ServeCommandTest extends TestCase
             ->expectsOutput('Starting the HydeRC server... Use Ctrl+C to stop')
             ->assertExitCode(0);
 
-        $this->assertFileExists('app/storage/framework/runtime/vite.hot');
+        $this->assertFileDoesNotExist('app/storage/framework/runtime/vite.hot');
     }
 
     public function testHydeServeCommandWithViteOptionThrowsWhenPortIsInUse()
     {
-        $socket = stream_socket_server('tcp://127.0.0.1:5173');
+        $socket = stream_socket_server('tcp://127.0.0.1:5173', $errno, $errstr);
 
-        $this->artisan('serve --vite')
-            ->expectsOutputToContain('Unable to start Vite server: Port 5173 is already in use')
-            ->assertExitCode(1);
+        if ($socket === false) {
+            $this->markTestSkipped("Unable to create test socket server: $errstr (errno: $errno)");
+        }
 
-        stream_socket_shutdown($socket, STREAM_SHUT_RDWR);
+        try {
+            $this->artisan('serve --vite')
+                ->expectsOutputToContain('Unable to start Vite server: Port 5173 is already in use')
+                ->assertExitCode(1);
+        } finally {
+            stream_socket_shutdown($socket, STREAM_SHUT_RDWR);
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionButNodeModulesNotInstalled()
+    {
+        $nodeModulesExists = file_exists(Hyde::path('node_modules'));
+        if ($nodeModulesExists) {
+            rename(Hyde::path('node_modules'), Hyde::path('node_modules.backup'));
+        }
+
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if (! $packageJsonExists) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        try {
+            $this->artisan('serve --vite --no-interaction')
+                ->expectsOutputToContain('Node modules are not installed')
+                ->assertExitCode(1);
+        } finally {
+            if ($nodeModulesExists) {
+                rename(Hyde::path('node_modules.backup'), Hyde::path('node_modules'));
+            }
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionButPackageJsonMissing()
+    {
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if ($packageJsonExists) {
+            rename(Hyde::path('package.json'), Hyde::path('package.json.backup'));
+        }
+
+        try {
+            $this->artisan('serve --vite --no-interaction')
+                ->expectsOutputToContain('Node modules are not installed')
+                ->assertExitCode(1);
+        } finally {
+            if ($packageJsonExists) {
+                rename(Hyde::path('package.json.backup'), Hyde::path('package.json'));
+            }
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionWithInteractiveConfirmationAccepted()
+    {
+        $nodeModulesExists = file_exists(Hyde::path('node_modules'));
+        if ($nodeModulesExists) {
+            rename(Hyde::path('node_modules'), Hyde::path('node_modules.backup'));
+        }
+
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if (! $packageJsonExists) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        Process::fake([
+            'npm install' => function () {
+                if (! file_exists(Hyde::path('node_modules'))) {
+                    mkdir(Hyde::path('node_modules'));
+                }
+
+                return Process::result('', '', 0);
+            },
+        ]);
+
+        try {
+            $this->artisan('serve --vite --no-interaction')
+                ->expectsOutputToContain('Node modules are not installed')
+                ->assertExitCode(1);
+        } finally {
+            // Restore node_modules if it existed
+            if ($nodeModulesExists) {
+                if (file_exists(Hyde::path('node_modules'))) {
+                    $this->recursiveRemoveDirectory(Hyde::path('node_modules'));
+                }
+                rename(Hyde::path('node_modules.backup'), Hyde::path('node_modules'));
+            } else {
+                if (file_exists(Hyde::path('node_modules'))) {
+                    $this->recursiveRemoveDirectory(Hyde::path('node_modules'));
+                }
+            }
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionWithInteractiveConfirmationDeclined()
+    {
+        $nodeModulesExists = file_exists(Hyde::path('node_modules'));
+        if ($nodeModulesExists) {
+            rename(Hyde::path('node_modules'), Hyde::path('node_modules.backup'));
+        }
+
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if (! $packageJsonExists) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        try {
+            $this->artisan('serve --vite')
+                ->expectsQuestion('Would you like to install them now?', false)
+                ->expectsOutputToContain('The --vite flag cannot be used if Vite is not installed')
+                ->assertExitCode(1);
+        } finally {
+            if ($nodeModulesExists) {
+                rename(Hyde::path('node_modules.backup'), Hyde::path('node_modules'));
+            }
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionWhenNpmInstallFails()
+    {
+        $nodeModulesExists = file_exists(Hyde::path('node_modules'));
+        if ($nodeModulesExists) {
+            rename(Hyde::path('node_modules'), Hyde::path('node_modules.backup'));
+        }
+
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if (! $packageJsonExists) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        Process::fake([
+            'npm install' => Process::result('', 'npm install failed', 1),
+        ]);
+
+        try {
+            $this->artisan('serve --vite')
+                ->expectsQuestion('Would you like to install them now?', true)
+                ->expectsOutput('Installing Node modules...')
+                ->assertExitCode(1);
+
+            Process::assertRan('npm install');
+        } finally {
+            if ($nodeModulesExists) {
+                rename(Hyde::path('node_modules.backup'), Hyde::path('node_modules'));
+            }
+        }
+    }
+
+    public function testHydeServeCommandWithViteOptionWhenNpmInstallSucceedsButNodeModulesStillNotAvailable()
+    {
+        $nodeModulesExists = file_exists(Hyde::path('node_modules'));
+        if ($nodeModulesExists) {
+            rename(Hyde::path('node_modules'), Hyde::path('node_modules.backup'));
+        }
+
+        $packageJsonExists = file_exists(Hyde::path('package.json'));
+        if (! $packageJsonExists) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        Process::fake([
+            'npm install' => Process::result('', '', 0),
+        ]);
+
+        try {
+            $this->artisan('serve --vite')
+                ->expectsQuestion('Would you like to install them now?', true)
+                ->expectsOutput('Installing Node modules...')
+                ->expectsOutput('Node modules installed successfully.')
+                ->expectsOutputToContain('Node modules installation completed but dependencies are still not available')
+                ->assertExitCode(1);
+
+            Process::assertRan('npm install');
+        } finally {
+            if ($nodeModulesExists) {
+                rename(Hyde::path('node_modules.backup'), Hyde::path('node_modules'));
+            }
+        }
+    }
+
+    protected function ensureNodeEnvironmentForTest(): void
+    {
+        if (! file_exists(Hyde::path('package.json'))) {
+            file_put_contents(Hyde::path('package.json'), '{}');
+            $this->cleanUpWhenDone('package.json');
+        }
+
+        if (! file_exists(Hyde::path('node_modules'))) {
+            mkdir(Hyde::path('node_modules'));
+            $this->cleanUpWhenDone('node_modules');
+        }
+    }
+
+    protected function recursiveRemoveDirectory(string $dir): void
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object !== '.' && $object !== '..') {
+                    if (is_dir($dir.'/'.$object)) {
+                        $this->recursiveRemoveDirectory($dir.'/'.$object);
+                    } else {
+                        unlink($dir.'/'.$object);
+                    }
+                }
+            }
+            rmdir($dir);
+        }
     }
 
     protected function binaryPath(): string

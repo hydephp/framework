@@ -16,10 +16,8 @@ use Hyde\Pages\MarkdownPost;
 use Hyde\Support\Models\DateString;
 use Hyde\Testing\TestCase;
 
-/**
- * @covers \Hyde\Pages\MarkdownPost
- * @covers \Hyde\Framework\Factories\Concerns\HasFactory
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Pages\MarkdownPost::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\Hyde\Framework\Factories\Concerns\HasFactory::class)]
 class MarkdownPostTest extends TestCase
 {
     public function testConstructorCanCreateANewAuthorInstanceFromUsernameString()
@@ -190,6 +188,25 @@ class MarkdownPostTest extends TestCase
         Filesystem::unlink('_posts/test-post.md');
         Filesystem::unlink('_pages/feed-test.blade.php');
         Filesystem::unlink('_site/feed-test.html');
+    }
+
+    public function testConstructorCanUseExcerptAsAliasForDescription()
+    {
+        $post = new MarkdownPost(matter: FrontMatter::fromArray([
+            'excerpt' => 'This is the excerpt content',
+        ]));
+
+        $this->assertSame('This is the excerpt content', $post->description);
+    }
+
+    public function testConstructorPrioritizesDescriptionOverExcerptWhenBothAreSet()
+    {
+        $post = new MarkdownPost(matter: FrontMatter::fromArray([
+            'description' => 'This is the description',
+            'excerpt' => 'This is the excerpt',
+        ]));
+
+        $this->assertSame('This is the description', $post->description);
     }
 
     protected function setupMediaFileAndCacheBusting(bool $enableCacheBusting = false): void
