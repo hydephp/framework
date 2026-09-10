@@ -91,7 +91,7 @@ class Filesystem
     public function pathToRelative(string $path): string
     {
         return normalize_slashes(str_starts_with($path, $this->path())
-            ? unslash(str_replace($this->path(), '', $path))
+            ? unslash(substr($path, strlen($this->path())))
             : $path);
     }
 
